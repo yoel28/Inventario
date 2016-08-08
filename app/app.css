@@ -1,0 +1,31 @@
+.blue .main-sidebar{
+    background-color: #222d32 !important;
+}
+.wrapper{
+    background-color: #ecf0f5 !important;
+}
+.main-footer-container{
+    background-color: #222d32 !important;
+}
+.truncate{
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.treeview-menu{
+    margin-top: -2px !important;
+}
+
+@media print {
+    .noprint{
+        display:none;
+    }
+    .content-wrapper{
+        margin-left: 0 !important;
+    }
+}
+.tab-content {
+    background: black;
+}
+.control-sidebar-dark{
+    background: transparent;
+}
