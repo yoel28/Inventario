@@ -11,9 +11,7 @@
              <a x-editable [disabled]="!rules[key].update" [endpoint]="params.endpoint" [function]="onEditable" [data]="data" [rules]="rules" [field]="key"></a>
             </td>
             <td *ngIf="params.actions">
-                <div *ngFor="let key of getKeys(params.actions)">
-                    <i class="{{params.actions[key].icon || 'fa fa-list'}}"></i>
-                </div>
+                <i *ngFor="let key of getKeys(params.actions)" class="{{params.actions[key].icon || 'fa fa-list'}}"></i>
             </td>
         </tr>
     </tbody>

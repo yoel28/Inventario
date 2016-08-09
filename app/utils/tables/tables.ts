@@ -36,8 +36,7 @@ export class Tables extends RestController implements OnInit {
     }
 
 
-    initForm()
-    {
+    initForm() {
         let that = this;
         this.keys = Object.keys(this.rules);
 

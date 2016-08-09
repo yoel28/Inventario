@@ -27,8 +27,9 @@ export class Product extends RestController implements OnInit {
     }
     initParamsTable(){
         this.paramsTable.endpoint=this.endpoint;
-        this.paramsTable.actions={};
-        this.paramsTable.actions={'delete':{"icon":"fa fa-trash","exp":""}};
+        this.paramsTable.actions=[];
+        this.paramsTable.actions.delete={"icon":"fa fa-trash","exp":""};
+        this.paramsTable.actions.print={"icon":"fa fa-print","exp":""};
 
     }
 
@@ -39,8 +40,7 @@ export class Product extends RestController implements OnInit {
         this.viewOptions["errors"] = {"list": "no tiene permisos"};
     }
 
-    initRules()
-    {
+    initRules() {
         this.rules["code"]={"update":true,"visible":true,"type":"text","key":"code","title":"code","placeholder":"ingrese el codigo"};
         this.rules["description"]={"update":true,"visible":false,"type":"textarea","key":"description","title":"descripcion","placeholder":"ingrese el descripcion"};
         this.rules["type"]={"update":false,"visible":true,"type":"text","object":true,"key":"type","title":"tipo","placeholder":"ingrese el tipo"};
@@ -55,6 +55,8 @@ export class Product extends RestController implements OnInit {
 
         this.initOptions();
         this.initRules();
+        this.initParamsTable();
+
         //this.loadData();
         let successCallback= response => {
             Object.assign(that.dataList,response.json())
