@@ -11,6 +11,7 @@ import {LocationStrategy, HashLocationStrategy} from "@angular/common";
 import {RestController} from "./common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
+import {Product} from "./product/product";
 
 @Component({
   selector: 'my-app',
@@ -28,7 +29,8 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
   { path: '/account/recover',  name: 'AccountRecover',  component: AccountRecover },
   { path: '/account/recoverPassword/:id/:token',  name: 'AccountRecoverPassword',  component: AccountRecoverPassword },
   { path: '/dashboard',   name: 'Dashboard', component: Dashboard },
-  { path: '/**', redirectTo: ['Dashboard'] }
+  { path: '/product',   name: 'Product', component: Product },
+  { path: '/**', redirectTo: ['Product'] }
 
 ])
 export class AppComponent extends RestController implements OnInit{
@@ -39,7 +41,7 @@ export class AppComponent extends RestController implements OnInit{
 
       super(http)
         localStorage.setItem('urlAPI','http://54.234.235.119:8080/api');
-    localStorage.setItem('url','http://54.234.235.119s:8080');
+        localStorage.setItem('url','http://54.234.235.119:8080');
     let that=this;
     router.subscribe(
         function(data){
