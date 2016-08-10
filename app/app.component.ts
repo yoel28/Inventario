@@ -12,6 +12,7 @@ import {RestController} from "./common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {Product} from "./product/product";
+import {Warehouse} from "./warehouse/warehouse";
 
 @Component({
   selector: 'my-app',
@@ -30,7 +31,8 @@ import {Product} from "./product/product";
   { path: '/account/recoverPassword/:id/:token',  name: 'AccountRecoverPassword',  component: AccountRecoverPassword },
   { path: '/dashboard',   name: 'Dashboard', component: Dashboard },
   { path: '/product',   name: 'Product', component: Product },
-  { path: '/**', redirectTo: ['Product'] }
+  { path: '/warehouse',   name: 'Warehouse', component: Warehouse },
+  { path: '/**', redirectTo: ['Warehouse'] }
 
 ])
 export class AppComponent extends RestController implements OnInit{

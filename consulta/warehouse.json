@@ -1,0 +1,41 @@
+{
+  "list": [
+    {
+      "barCode": "143567",
+      "name": "Codigo descripcion",
+      "row": "1",
+      "column": "1",
+      "description": "dfjkllk"
+    },
+    {
+      "barCode": "143567",
+      "name": "Codigo descripcion",
+      "row": "1",
+      "column": "1",
+      "description": "dfjkllk"
+    },
+    {
+      "barCode": "143567",
+      "name": "Codigo descripcion",
+      "row": "1",
+      "column": "1",
+      "description": "dfjkllk"
+    },
+    {
+      "barCode": "143567",
+      "name": "Codigo descripcion",
+      "row": "1",
+      "column": "1",
+      "description": "dfjkllk"
+    },
+    {
+      "barCode": "143567",
+      "name": "Codigo descripcion",
+      "row": "1",
+      "column": "1",
+      "description": "dfjkllk"
+    }
+
+  ],
+  "count":12
+}
