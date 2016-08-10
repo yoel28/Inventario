@@ -43,8 +43,9 @@ export class Product extends RestController implements OnInit {
     initOptions() {
         this.viewOptions["title"] = 'products';
         this.viewOptions["permissions"] = {"list": this.myglobal.existsPermission('1')};
-        this.viewOptions["errors"] = {"notFound": "no se encontraron resultados"};
-        this.viewOptions["errors"] = {"list": "no tiene permisos"};
+        this.viewOptions["errors"] =[];
+        this.viewOptions["errors"].push({"notFound": "no se encontraron resultados"});
+        this.viewOptions["errors"].push({"list": "no tiene permisos"});
     }
     initRules() {
         this.rules["code"]={"update":true,"visible":true,"type":"text","key":"code","title":"code","placeholder":"ingrese el codigo"};
