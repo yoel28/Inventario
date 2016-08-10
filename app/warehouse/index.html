@@ -3,7 +3,11 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">{{viewOptions.title}}</h3>
-
+                <button
+                        type="button" class="btn btn-primary" data-toggle="modal"
+                        [attr.data-target]="'#'+paramsSave.idModal">
+                    <i class="fa fa-plus"></i>&nbsp;Agregar
+                </button>
             </div>
             <div *ngIf="viewOptions.permissions.list"  class="box-body">
                 <div *ngIf=" dataList && dataList.count > 0 ">
@@ -29,3 +33,5 @@
         </div>
     </section>
 </div>
+
+<save [params]="paramsSave" [rules]="rules" (save)="assignData($event)"> </save>
