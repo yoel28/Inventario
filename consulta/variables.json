@@ -1,0 +1,27 @@
+{
+  "list": [
+    {
+      "code": "code1",
+      "description": "des 1",
+      "type": "tipo 1",
+      "brand": "marca 1",
+      "model": "model 1"
+    },
+    {
+      "code": "code1",
+      "description": "des 1",
+      "type": "tipo 1",
+      "brand": "marca 1",
+      "model": "model 1"
+    },
+    {
+      "code": "code1",
+      "description": "des 1",
+      "type": "tipo 1",
+      "brand": "marca 1",
+      "model": "model 1"
+    }
+  ],
+  "count":12
+
+}
