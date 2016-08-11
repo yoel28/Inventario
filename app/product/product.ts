@@ -76,12 +76,16 @@ export class Product extends RestController implements OnInit {
             "update": true,
             "visible": true,
             'required':true,
+            'maxLength':5,
             'icon':'fa fa-barcode',
             "type": "text",
             "key": "code",
             "title": "code",
             'msg':{
-                'error':'El peso debe ser numerico',
+                'errors':{
+                    'required':'El campo es obligatorio',
+                    'maxlength':'Maximo numero de caracteres 5'
+                },
             },
             "placeholder": "ingrese el codigo"
         };
@@ -94,7 +98,9 @@ export class Product extends RestController implements OnInit {
             "key": "description",
             "title": "descripcion",
             'msg':{
-                'error':'El peso debe ser numerico',
+                'errors':{
+                    'required':'El campo es obligatorio',
+                },
             },
             "placeholder": "ingrese el descripcion"
         };
@@ -116,7 +122,10 @@ export class Product extends RestController implements OnInit {
             "key": "type",
             "title": "tipo",
             'msg':{
-                'error':'El peso debe ser numerico',
+                'errors':{
+                    'required':'El campo es obligatorio',
+                    'object':'Tipo no esta registrado',
+                },
             },
             "placeholder": "ingrese el tipo"
         };
@@ -138,7 +147,10 @@ export class Product extends RestController implements OnInit {
             "key": "brand",
             "title": "marca",
             'msg':{
-                'error':'El peso debe ser numerico',
+                'errors':{
+                    'required':'El campo es obligatorio',
+                    'object':'Regla no esta registrada',
+                },
             },
             "placeholder": "ingrese la marca"
         };
@@ -160,7 +172,10 @@ export class Product extends RestController implements OnInit {
             "key": "type",
             "title": "modelo",
             'msg':{
-                'error':'El peso debe ser numerico',
+                'errors':{
+                    'required':'El campo es obligatorio',
+                    'object':'Modelo no esta registrado',
+                },
             },
             "placeholder": "ingrese el modelo"
         };
