@@ -80,6 +80,9 @@ export class Save extends RestController implements OnInit{
         this.keys = Object.keys(this.rules);
         Object.keys(this.rules).forEach((key)=> {
             that.data[key] = [];
+            
+            
+            
             if(that.rules[key].required && that.rules[key].object)
             {
                 that.data[key] = new Control("",Validators.compose([Validators.required,

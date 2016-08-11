@@ -13,12 +13,13 @@ import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {Product} from "./product/product";
 import {Warehouse} from "./warehouse/warehouse";
+import {Save} from "./utils/save/save";
 
 @Component({
   selector: 'my-app',
   templateUrl: 'app/app.html',
   styleUrls:['app/app.css'],
-  directives: [ROUTER_DIRECTIVES],
+  directives: [ROUTER_DIRECTIVES,Save],
   providers: [
     ROUTER_PROVIDERS,
     provide(LocationStrategy, {useClass: HashLocationStrategy})
@@ -38,6 +39,8 @@ import {Warehouse} from "./warehouse/warehouse";
 export class AppComponent extends RestController implements OnInit{
 
   public saveUrl:string;
+
+
 
   constructor(public router: Router,http: Http,public myglobal:globalService,public toastr: ToastsManager) {
 

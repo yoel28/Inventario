@@ -122,6 +122,11 @@
 
                         </ul>
                     </li>
+                    <li>
+                        <a href="#" [routerLink]="['Product']">
+                            <i class="fa fa-product-hunt"></i> <span>Productos</span>
+                        </a>
+                    </li>
                 </ul>
                 <!-- /.sidebar-menu -->
             </section>
@@ -129,6 +134,7 @@
         </aside>
     </div>
     <router-outlet></router-outlet>
+
 
 </div>
 <div class="main-footer-container" *ngIf="validToken()">

@@ -24,6 +24,8 @@ export class Tables extends RestController implements OnInit {
     data:any = [];
     public keys:any = [];
     form:ControlGroup;
+    public dataDelete:any={};
+    public dataSelect:any={};
 
 
     constructor(public _formBuilder: FormBuilder,public http:Http,public toastr: ToastsManager, public myglobal:globalService) {
@@ -85,6 +87,23 @@ export class Tables extends RestController implements OnInit {
         });
         return data;
     }
+
+    actionPermissionKey()
+    {
+        let data=[];
+        let that=this;
+
+        Object.keys(this.params.actions).forEach((key)=>
+        {
+
+            if( that.myglobal.existsPermission(that.params.actions[key].permission) )
+                data.push(key);
+        });
+
+        return data;
+
+    }
+
     getKeys(data){
         return Object.keys(data);
     }
