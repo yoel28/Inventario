@@ -83,11 +83,11 @@ export class Save extends RestController implements OnInit{
             that.data[key] = [];
             let validators=[];
             if(that.rules[key].required)
-                validators.push(Validators.required)
+                validators.push(Validators.required);
             if(that.rules[key].maxLength)
-                validators.push(Validators.maxLength(that.rules[key].maxLength))
+                validators.push(Validators.maxLength(that.rules[key].maxLength));
             if(that.rules[key].minLength)
-                validators.push(Validators.minLength(that.rules[key].minLength))
+                validators.push(Validators.minLength(that.rules[key].minLength));
             if(that.rules[key].object)
             {
                 validators.push(
@@ -97,11 +97,12 @@ export class Save extends RestController implements OnInit{
                                 if(that.searchId[key].detail == c.value)
                                     return null;
                             }
-                            return {myobject: {valid: false}};
+                            return {object: {valid: false}};
                         }
                         return null;
                     });
             }
+            that.data[key] = new Control("",Validators.compose(validators));
 
 
             if(that.rules[key].object)
@@ -199,6 +200,9 @@ export class Save extends RestController implements OnInit{
             if(that.rules[key].readOnly)
                 that.rules[key].readOnly=false;
         })
+    }
+    getKeys(data){
+        return Object.keys(data);
     }
 }
 
