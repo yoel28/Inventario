@@ -79,13 +79,18 @@ export class Save extends RestController implements OnInit{
         let that = this;
         this.keys = Object.keys(this.rules);
         Object.keys(this.rules).forEach((key)=> {
+
             that.data[key] = [];
-            
-            
-            
-            if(that.rules[key].required && that.rules[key].object)
+            let validators=[];
+            if(that.rules[key].required)
+                validators.push(Validators.required)
+            if(that.rules[key].maxLength)
+                validators.push(Validators.maxLength(that.rules[key].maxLength))
+            if(that.rules[key].minLength)
+                validators.push(Validators.minLength(that.rules[key].minLength))
+            if(that.rules[key].object)
             {
-                that.data[key] = new Control("",Validators.compose([Validators.required,
+                validators.push(
                     (c:Control)=> {
                         if(c.value && c.value.length > 0){
                             if(that.searchId[key]){
@@ -95,15 +100,9 @@ export class Save extends RestController implements OnInit{
                             return {myobject: {valid: false}};
                         }
                         return null;
-                    }
-                ]));
+                    });
             }
-            else if (that.rules[key].required && that.rules[key].maxLength)
-                that.data[key] = new Control("",Validators.compose([Validators.required,Validators.maxLength(that.rules[key].maxLength)]));
-            else if (that.rules[key].required )
-                that.data[key] = new Control("",Validators.compose([Validators.required]));
-            else
-                that.data[key] = new Control("");
+
 
             if(that.rules[key].object)
             {
@@ -160,10 +159,12 @@ export class Save extends RestController implements OnInit{
     public search:any={};
     //Lista de id search
     public searchId:any={};
-    //Al hacer click en la lupa guarda los valores del objecto
+    //Al hacer click en la lupa guarda los valores del objecto del input (Izquierda)
     getLoadSearch(event,data){
         event.preventDefault();
+        this.findControl="";
         this.search=data;
+        this.getSearch(event,"");
     }
     //accion al dar click en el boton de buscar del formulario en el search
     getSearch(event,value){
