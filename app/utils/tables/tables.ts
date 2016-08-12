@@ -1,17 +1,19 @@
-import {Component, EventEmitter, OnInit} from "@angular/core";
+import {Component, EventEmitter, OnInit,ViewChild} from "@angular/core";
 import {FormBuilder, Validators, Control, ControlGroup} from "@angular/common";
 import {RestController} from "../../common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
 import {Xeditable} from "../../common/xeditable";
+import {Search} from "../search/search";
+
 
 @Component({
     selector: 'tables',
     templateUrl: 'app/utils/tables/index.html',
     styleUrls: ['app/utils/tables/style.css'],
     inputs:['params','rules','dataList'],
-    directives:[Xeditable]
+    directives:[Xeditable,Search]
 })
 
 
@@ -35,6 +37,7 @@ export class Tables extends RestController implements OnInit {
     ngOnInit()
     {
         this.initForm();
+        this.setEndpoint(this.params.endpoint);
     }
 
 
@@ -88,6 +91,26 @@ export class Tables extends RestController implements OnInit {
         return data;
     }
 
+
+    public searchTable:any = {}
+    public searchTableData:any = {}
+
+
+    //click en la lupa
+    @ViewChild(Search)
+    search:Search;
+
+    loadSearchTable(key,data) {
+        this.searchTable=this.rules[key].paramsSearch;
+        this.searchTable.idModal='searchTable';
+        //if(this.search)
+            this.search.params=this.searchTable
+        this.searchTableData=data;
+    }
+    getDataSearch(data){
+        this.onPatch(this.searchTable.field,this.searchTableData,data);
+    }
+
     actionPermissionKey()
     {
         let data=[];
@@ -95,7 +118,6 @@ export class Tables extends RestController implements OnInit {
 
         Object.keys(this.params.actions).forEach((key)=>
         {
-
             if( that.myglobal.existsPermission(that.params.actions[key].permission) )
                 data.push(key);
         });
