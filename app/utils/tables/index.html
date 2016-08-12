@@ -8,7 +8,24 @@
     <tbody>
         <tr *ngFor="let data of dataList.list">
             <td *ngFor="let key of keyVisible()">
-             <a x-editable [disabled]="!rules[key].update" [endpoint]="params.endpoint" [function]="onEditable" [data]="data" [rules]="rules" [field]="key"></a>
+
+             <a *ngIf="!rules[key].object" x-editable  [disabled]="!rules[key].update "  [endpoint]="params.endpoint" [function]="onEditable" [data]="data" [rules]="rules" [field]="key"></a>
+             <a *ngIf="rules[key].object">
+                 {{data[key]}}
+                 <label>
+                     <button type="button" class="btn btn-box-tool"
+                             (click)="loadSearchTable(key,data)"
+                             data-toggle="modal" data-target="#searchTable">
+                         <i class="fa fa-search text-blue"></i>
+                     </button>
+
+                     <button type="button" class="btn btn-box-tool"
+
+                             data-toggle="modal" data-target="#saveTipoEmpresa">
+                         <i class="fa fa-plus text-green"></i>
+                     </button>
+                 </label>
+             </a>
             </td>
             <td *ngIf="params.actions">
 
@@ -65,3 +82,14 @@
         </div>
     </div>
 </div>
+
+
+
+
+<div >
+    <search [params]="searchTable" (result)="getDataSearch($event)"></search>
+</div>
+
+<!--div >
+    <filter [rules]="rules" [params]="paramsFilter" (whereFilter)="loadWhere($event)"></filter>
+</div-->
