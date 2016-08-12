@@ -87,12 +87,12 @@
                                     <tbody>
                                     <tr *ngFor="let data of dataList.list" (click)="getDataSearch(data)">
                                         <td>
-                                            <img [src]=" data.image || search.paramsSearch.imageGuest "
+                                            <img [src]=" data.image || search.paramsSaveSearch.imageGuest "
                                                  style="display: inline-block" class="img-responsive img-search">
                                         </td>
                                         <td>
-                                            <strong>{{search.paramsSearch.label.title}} {{data.title}}</strong><br>
-                                            {{search.paramsSearch.label.detail}} {{data.detail}}
+                                            <strong>{{search.paramsSaveSearch.label.title}} {{data.title}}</strong><br>
+                                            {{search.paramsSaveSearch.label.detail}} {{data.detail}}
                                         </td>
                                         <td style="vertical-align: middle;">
                                             <i class="btn btn-box-tool text-green fa fa-check"></i>
