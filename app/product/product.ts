@@ -76,14 +76,14 @@ export class Product extends RestController implements OnInit {
         //TODO hacer que los update se realcionen con los permisos
 
         let update =true; /*this.myglobal.existsPermission("1");*/
-        this.rules["tipoProductoCode"] = {
+        this.rules["productoCode"] = {
             "update": update,
             "visible": true,
             'required':true,
             'maxLength':5,
             'icon':'fa fa-barcode',
             "type": "text",
-            "key": "tipoProductoCode",
+            "key": "productoCode",
             "title": "Codigo producto",
             'msg':{
                 'errors':{
@@ -93,13 +93,13 @@ export class Product extends RestController implements OnInit {
             },
             "placeholder": "ingrese el codigo"
         };
-        this.rules["tipoProductoNombre"] = {
+        this.rules["detail"] = {
             "update": update,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
-            "key": "tipoProductoNombre",
+            "key": "detail",
             "title": "Nombre Producto",
             'msg':{
                 'errors':{
@@ -119,14 +119,19 @@ export class Product extends RestController implements OnInit {
             'paramsSaveSearch': {
                 'title':'asdasda',
                 'label':{'title':"Placa: ",'detail':"Empresa: "},
-                'endpoint':"/search/tipo/",
-                'endpointForm':"/search/tipo/",
+                'endpoint':"/search/tipo/productos/",
                 'where':'',
                 'imageGuest':'/assets/img/truck-guest.png',
                 'field':'vehicle.id',
             },
             'paramsSearch':
-            {},
+            {
+                title: "Tipo de empresa",
+                idModal: "searchTipoEmpresa",
+                endpointForm: "/search/type/companies/",
+                placeholderForm: "Ingrese el tipo de empresa",
+                labelForm: {name: "Nombre: ", detail: "Detalle: "}
+            },
             "key": "tipoProductoNombre",
             "title": "Tipo Producto",
             'msg':{
@@ -137,7 +142,7 @@ export class Product extends RestController implements OnInit {
             },
             "placeholder": "ingrese el tipo"
         };
-        this.rules["marcaNombre"] = {
+        this.rules["marcaTitle"] = {
             "update": update,
             "visible": true,
             'required':true,
@@ -145,7 +150,7 @@ export class Product extends RestController implements OnInit {
             "type": "text",
             "object": true,
             'permissions':'1',
-            'paramsSearch': {
+            'paramsSaveSearch': {
                 'title':'asdasda',
                 'label':{'title':"Placa: ",'detail':"Empresa: "},
                 'endpoint':"/search/marcas/",
@@ -154,7 +159,16 @@ export class Product extends RestController implements OnInit {
                 'imageGuest':'/assets/img/truck-guest.png',
                 'field':'vehicle.id',
             },
-            "key": "marcaNombre",
+
+            'paramsSearch':
+            {
+                title: "Tipo de empresa",
+                idModal: "searchTipoEmpresa",
+                endpointForm: "/search/type/companies/",
+                placeholderForm: "Ingrese el tipo de empresa",
+                labelForm: {name: "Nombre: ", detail: "Detalle: "}
+            },
+            "key": "marcaTitle",
             "title": "Marca de Producto",
             'msg':{
                 'errors':{
@@ -164,7 +178,7 @@ export class Product extends RestController implements OnInit {
             },
             "placeholder": "ingrese la marca"
         };
-        this.rules["modeloNombre"] = {
+        this.rules["modeloTitle"] = {
             "update": update,
             "visible": true,
             'required':true,
@@ -172,7 +186,7 @@ export class Product extends RestController implements OnInit {
             "type": "text",
             "object": true,
             'permissions':'1',
-            'paramsSearch': {
+            'paramsSaveSearch': {
                 'title':'asdasda',
                 'label':{'title':"Placa: ",'detail':"Empresa: "},
                 'endpoint':"/search/modelos/",
@@ -181,7 +195,16 @@ export class Product extends RestController implements OnInit {
                 'imageGuest':'/assets/img/truck-guest.png',
                 'field':'vehicle.id',
             },
-            "key": "modeloNombre",
+
+            'paramsSearch':
+            {
+                title: "Tipo de empresa",
+                idModal: "searchTipoEmpresa",
+                endpointForm: "/search/type/companies/",
+                placeholderForm: "Ingrese el tipo de empresa",
+                labelForm: {name: "Nombre: ", detail: "Detalle: "}
+            },
+            "key": "modeloTitle",
             "title": "Tipo modelo",
             'msg':{
                 'errors':{
