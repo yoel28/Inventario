@@ -7,7 +7,7 @@
 
             <div class="pull-right">
 
-                <button class="btn btn-primary" type="button" data-toggle="modal" [attr.data-target]="'#'+params.idModal">
+                <button class="btn btn-primary" type="button" data-toggle="modal" [attr.data-target]="'#'+paramsSave.idModal">
                     <i class="fa fa-plus"></i>
                     Agregar producto
                 </button>
@@ -37,4 +37,4 @@
         </div>
     </section>
 </div>
-<save [rules]="rules" [params]="params"> </save>
+<save [rules]="rules" [params]="paramsSave"> </save>
