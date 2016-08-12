@@ -27,7 +27,7 @@ export class Product extends RestController implements OnInit {
     
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService) {
         super(http, toastr);
-        this.setEndpoint("/consulta/variables.json");
+        this.setEndpoint("/productos/");
     }
     initLang(){
         var userLang = navigator.language.split('-')[0]; // use navigator lang if available
@@ -58,29 +58,33 @@ export class Product extends RestController implements OnInit {
     }
     initOptions() {
         this.viewOptions["title"] = 'products';
-        this.viewOptions["permissions"] = {"list": this.myglobal.existsPermission('1')};
-        this.viewOptions["errors"] =[];
-        this.viewOptions["errors"].push({"notFound": "no se encontraron resultados"});
-        this.viewOptions["errors"].push({"list": "no tiene permisos"});
+        this.viewOptions["permissions"] = {"list": true};/*TODO PERMISO REAL this.myglobal.existsPermission('10')}*/
+        this.viewOptions["errors"] ={};
+        this.viewOptions["errors"].notFound= "no se encontraron resultados";
+        this.viewOptions["errors"].list="no tiene permisos para ver los productos";
     }
 
 
-    public params = {
+    public paramsSave = {
         title: "Agregar Productos",
         idModal: "searchProductos",
-        endpoint: "/consulta",
+        endpoint: this.endpoint,
         //TODO: Cambiar  endpoint
     }
     initRules() {
-        this.rules["code"] = {
-            "update": true,
+
+        //TODO hacer que los update se realcionen con los permisos
+
+        let update =true; /*this.myglobal.existsPermission("1");*/
+        this.rules["tipoProductoCode"] = {
+            "update": update,
             "visible": true,
             'required':true,
             'maxLength':5,
             'icon':'fa fa-barcode',
             "type": "text",
-            "key": "code",
-            "title": "code",
+            "key": "tipoProductoCode",
+            "title": "Codigo producto",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
@@ -89,38 +93,42 @@ export class Product extends RestController implements OnInit {
             },
             "placeholder": "ingrese el codigo"
         };
-        this.rules["description"] = {
-            "update": true,
+        this.rules["tipoProductoNombre"] = {
+            "update": update,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
-            "type": "textarea",
-            "key": "description",
-            "title": "descripcion",
+            "type": "text",
+            "key": "tipoProductoNombre",
+            "title": "Nombre Producto",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
                 },
             },
-            "placeholder": "ingrese el descripcion"
+            "placeholder": "ingrese el nombre del producto"
         };
-        this.rules["type"] = {
-            "update": false,
+        this.rules["tipoProductoNombre"] = {
+            "update": update,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
             "object": true,
             'permissions':'1',
-            'paramsSearch': {
+            'paramsSaveSearch': {
+                'title':'asdasda',
                 'label':{'title':"Placa: ",'detail':"Empresa: "},
-                'endpoint':"/tipo/productos",
+                'endpoint':"/search/tipo/",
+                'endpointForm':"/search/tipo/",
                 'where':'',
                 'imageGuest':'/assets/img/truck-guest.png',
                 'field':'vehicle.id',
             },
-            "key": "type",
-            "title": "tipo",
+            'paramsSearch':
+            {},
+            "key": "tipoProductoNombre",
+            "title": "Tipo Producto",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
@@ -129,8 +137,8 @@ export class Product extends RestController implements OnInit {
             },
             "placeholder": "ingrese el tipo"
         };
-        this.rules["brand"] = {
-            "update": true,
+        this.rules["marcaNombre"] = {
+            "update": update,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
@@ -138,14 +146,16 @@ export class Product extends RestController implements OnInit {
             "object": true,
             'permissions':'1',
             'paramsSearch': {
+                'title':'asdasda',
                 'label':{'title':"Placa: ",'detail':"Empresa: "},
-                'endpoint':"modelos",
+                'endpoint':"/search/marcas/",
+                'endpointForm':"/search/marcas/",
                 'where':'',
                 'imageGuest':'/assets/img/truck-guest.png',
                 'field':'vehicle.id',
             },
-            "key": "brand",
-            "title": "marca",
+            "key": "marcaNombre",
+            "title": "Marca de Producto",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
@@ -154,8 +164,8 @@ export class Product extends RestController implements OnInit {
             },
             "placeholder": "ingrese la marca"
         };
-        this.rules["model"] = {
-            "update": false,
+        this.rules["modeloNombre"] = {
+            "update": update,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
@@ -163,14 +173,16 @@ export class Product extends RestController implements OnInit {
             "object": true,
             'permissions':'1',
             'paramsSearch': {
+                'title':'asdasda',
                 'label':{'title':"Placa: ",'detail':"Empresa: "},
-                'endpoint':"/search/marcas",
+                'endpoint':"/search/modelos/",
+                'endpointForm':"/search/modelos/",
                 'where':'',
                 'imageGuest':'/assets/img/truck-guest.png',
                 'field':'vehicle.id',
             },
-            "key": "type",
-            "title": "modelo",
+            "key": "modeloNombre",
+            "title": "Tipo modelo",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
@@ -188,11 +200,11 @@ export class Product extends RestController implements OnInit {
         this.initRules();
         this.initParamsTable();
 
-        //this.loadData();
-        let successCallback= response => {
+        this.loadData();
+        /*let successCallback= response => {
             Object.assign(that.dataList,response.json())
         }
-        this.httputils.doGet(this.endpoint,successCallback,this.error,true)
+        this.httputils.doGet(this.endpoint,successCallback,this.error,true)*/
     }
 
 
