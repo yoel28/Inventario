@@ -1,4 +1,4 @@
-import {Component, OnInit,ViewChild} from "@angular/core";
+import {Component, OnInit,ViewChild,ReflectiveInjector,Inject} from "@angular/core";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {RestController} from "../common/restController";
@@ -6,14 +6,15 @@ import {globalService} from "../common/globalService";
 import {Tables} from "../utils/tables/tables";
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {Save} from "../utils/save/save";
+import {TypeProduct} from "../typeProduct/typeProduct";
 
 @Component({
-    selector: 'tables',
+    selector: 'products',
     templateUrl: 'app/product/index.html',
     styleUrls: ['app/product/style.css'],
     directives: [Tables,Save],
     pipes: [TranslatePipe],
-    providers: [TranslateService]
+    providers: [TranslateService,TypeProduct]
 })
 
 
@@ -25,11 +26,16 @@ export class Product extends RestController implements OnInit {
     public paramsTable:any={};
     public paramsSave :any ={};
     public rulesSave :any={};
+    public paramsSearch :any={};
+    public injector:any={};
 
 
-    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService) {
+    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,  @Inject(TypeProduct) public typesProduct) {
+        
         super(http, toastr);
         this.setEndpoint("/productos/");
+        typesProduct.initSearch();
+        
     }
     initLang(){
         var userLang = navigator.language.split('-')[0]; // use navigator lang if available
@@ -37,6 +43,8 @@ export class Product extends RestController implements OnInit {
         this.translate.setDefaultLang('en');
         this.translate.use(userLang);
     }
+
+
     initParamsTable(){
         this.paramsTable.endpoint=this.endpoint;
         this.paramsTable.actions={};
@@ -58,6 +66,7 @@ export class Product extends RestController implements OnInit {
         };
 
     }
+
     initOptions() {
         this.viewOptions["title"] = 'products';
         this.viewOptions["permissions"] = {"list": true};/*TODO PERMISO REAL this.myglobal.existsPermission('10')}*/
@@ -65,10 +74,6 @@ export class Product extends RestController implements OnInit {
         this.viewOptions["errors"].notFound= "no se encontraron resultados";
         this.viewOptions["errors"].list="no tiene permisos para ver los productos";
     }
-
-
-
-
 
     initRules() {
 
@@ -188,9 +193,7 @@ export class Product extends RestController implements OnInit {
         };
     }
 
-
-    ngInitSave()
-    {
+    initSave() {
         //TODO agregar los permisos
         this.paramsSave= {
                         title: "Agregar Productos",
@@ -299,11 +302,28 @@ export class Product extends RestController implements OnInit {
             },
         };
     }
-    
-    
-    
-    
 
+    initSearch() {
+
+        this.paramsSearch= {
+
+            //TODO apregar el permiso
+            'permissions':'1',
+            'title': "Productos",
+            'idModal': "searchProductos",
+            'endpointForm': "/search/productos",
+            'placeholderForm': "Ingrese el producto",
+            'labelForm': {name: "Nombre: ", detail: "Detalle: "},
+            'msg': {
+                'errors': {
+                    'noAuthorized': 'No posee permisos para esta accion',
+                },
+            }
+        };
+    }
+
+
+    
     ngOnInit()
     {
         let that = this;
@@ -311,12 +331,11 @@ export class Product extends RestController implements OnInit {
         this.initOptions();
         this.initRules();
         this.initParamsTable();
-        this.ngInitSave();
+        this.initSave();
+        this.initSearch();
         this.loadData();
-        /*let successCallback= response => {
-            Object.assign(that.dataList,response.json())
-        }
-        this.httputils.doGet(this.endpoint,successCallback,this.error,true)*/
+
+
     }
 
 
