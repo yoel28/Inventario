@@ -7,6 +7,8 @@ import {Tables} from "../utils/tables/tables";
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {Save} from "../utils/save/save";
 import {TypeProduct} from "../typeProduct/typeProduct";
+import {BrandProduct} from "../brandProduct/brand";
+import {ModelProduct} from "../modelProduct/modelProduct";
 
 @Component({
     selector: 'products',
@@ -14,7 +16,7 @@ import {TypeProduct} from "../typeProduct/typeProduct";
     styleUrls: ['app/product/style.css'],
     directives: [Tables,Save],
     pipes: [TranslatePipe],
-    providers: [TranslateService,TypeProduct]
+    providers: [TranslateService,TypeProduct,BrandProduct,ModelProduct]
 })
 
 
@@ -27,23 +29,25 @@ export class Product extends RestController implements OnInit {
     public paramsSave :any ={};
     public rulesSave :any={};
     public paramsSearch :any={};
-    public injector:any={};
+    public rulesSearch :any={};
 
 
-    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,  @Inject(TypeProduct) public typesProduct) {
+    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,  @Inject(TypeProduct) public typesProduct,@Inject(BrandProduct) public brandProduct, @Inject(ModelProduct) public modelProduct) {
         
         super(http, toastr);
         this.setEndpoint("/productos/");
         typesProduct.initSearch();
-        
+        brandProduct.initSearch();
+        modelProduct.initSearch();
+    
     }
+
     initLang(){
         var userLang = navigator.language.split('-')[0]; // use navigator lang if available
         userLang = /(es|en)/gi.test(userLang) ? userLang : 'es';
         this.translate.setDefaultLang('en');
         this.translate.use(userLang);
     }
-
 
     initParamsTable(){
         this.paramsTable.endpoint=this.endpoint;
@@ -90,13 +94,14 @@ export class Product extends RestController implements OnInit {
             "type": "text",
             "key": "code",
             "title": "Codigo producto",
+            "placeholder": "ingrese el codigo",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
                     'maxlength':'Maximo numero de caracteres 5'
                 },
             },
-            "placeholder": "ingrese el codigo"
+
         };
         this.rules["detail"] = {
             "update": update,
@@ -106,14 +111,14 @@ export class Product extends RestController implements OnInit {
             "type": "text",
             "key": "detail",
             "title": "Nombre Producto",
+            "placeholder": "ingrese el nombre del producto",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
                 },
-            },
-            "placeholder": "ingrese el nombre del producto"
+            }
         };
-        this.rules["tipoProductoNombre"] = {
+        this.rules["tipoProductoTitle"] = {
             "update": update,
             "visible": true,
             'required':true,
@@ -121,23 +126,15 @@ export class Product extends RestController implements OnInit {
             "type": "text",
             "object": true,
             'permissions':'1',
-            'paramsSearch':
-            {
-                title: "Tipo de empresa",
-                idModal: "searchTipoEmpresa",
-                endpointForm: "/search/type/companies/",
-                placeholderForm: "Ingrese el tipo de empresa",
-                labelForm: {name: "Nombre: ", detail: "Detalle: "}
-            },
             "key": "tipoProductoNombre",
             "title": "Tipo Producto",
+            "placeholder": "ingrese el tipo",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
                     'object':'Tipo no esta registrado',
                 },
             },
-            "placeholder": "ingrese el tipo"
         };
         this.rules["marcaTitle"] = {
             "update": update,
@@ -147,23 +144,15 @@ export class Product extends RestController implements OnInit {
             "type": "text",
             "object": true,
             'permissions':'1',
-            'paramsSearch':
-            {
-                title: "Tipo de empresa",
-                idModal: "searchTipoEmpresa",
-                endpointForm: "/search/type/companies/",
-                placeholderForm: "Ingrese el tipo de empresa",
-                labelForm: {name: "Nombre: ", detail: "Detalle: "}
-            },
             "key": "marcaTitle",
             "title": "Marca de Producto",
+            "placeholder": "ingrese la marca",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
                     'object':'Regla no esta registrada',
                 },
-            },
-            "placeholder": "ingrese la marca"
+            }
         };
         this.rules["modeloTitle"] = {
             "update": update,
@@ -173,23 +162,15 @@ export class Product extends RestController implements OnInit {
             "type": "text",
             "object": true,
             'permissions':'1',
-            'paramsSearch':
-            {
-                title: "Tipo de empresa",
-                idModal: "searchTipoEmpresa",
-                endpointForm: "/search/type/companies/",
-                placeholderForm: "Ingrese el tipo de empresa",
-                labelForm: {name: "Nombre: ", detail: "Detalle: "}
-            },
             "key": "modeloTitle",
             "title": "Tipo modelo",
+            "placeholder": "ingrese el modelo",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
                     'object':'Modelo no esta registrado',
                 },
-            },
-            "placeholder": "ingrese el modelo"
+            }
         };
     }
 
@@ -322,10 +303,14 @@ export class Product extends RestController implements OnInit {
         };
     }
 
-
+    initRulesSearch() {
+        this.rulesSearch["tipoProductoTitle"] = this.typesProduct.paramsSearch;
+        this.rulesSearch["marcaTitle"] = this.brandProduct.paramsSearch;
+        this.rulesSearch["modeloTitle"] = this.modelProduct.paramsSearch;
+    }
     
-    ngOnInit()
-    {
+    ngOnInit() {
+
         let that = this;
         this.initLang();
         this.initOptions();
@@ -333,17 +318,17 @@ export class Product extends RestController implements OnInit {
         this.initParamsTable();
         this.initSave();
         this.initSearch();
+        this.initRulesSearch();
+    
+    
         this.loadData();
-
+    
 
     }
-
-
-
+    
     @ViewChild(Tables)
     tables:Tables;
-    asignData(data)
-    {
+    asignData(data) {
         if(this.dataList.page && this.dataList.page.length>1)
         {
             this.dataList.list.pop();
