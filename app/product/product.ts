@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit,ViewChild} from "@angular/core";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {RestController} from "../common/restController";
@@ -23,8 +23,10 @@ export class Product extends RestController implements OnInit {
     public rules: any = {};
     public viewOptions: any = {};
     public paramsTable:any={};
+    public paramsSave :any ={};
+    public rulesSave :any={};
 
-    
+
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService) {
         super(http, toastr);
         this.setEndpoint("/productos/");
@@ -65,25 +67,23 @@ export class Product extends RestController implements OnInit {
     }
 
 
-    public paramsSave = {
-        title: "Agregar Productos",
-        idModal: "searchProductos",
-        endpoint: this.endpoint,
-        //TODO: Cambiar  endpoint
-    }
+
+
+
     initRules() {
 
-        //TODO hacer que los update se realcionen con los permisos
 
+        //TODO hacer que los update se realcionen con los permisos
+        //rules de la clase
         let update =true; /*this.myglobal.existsPermission("1");*/
-        this.rules["productoCode"] = {
+        this.rules["code"] = {
             "update": update,
             "visible": true,
             'required':true,
             'maxLength':5,
             'icon':'fa fa-barcode',
             "type": "text",
-            "key": "productoCode",
+            "key": "code",
             "title": "Codigo producto",
             'msg':{
                 'errors':{
@@ -116,14 +116,6 @@ export class Product extends RestController implements OnInit {
             "type": "text",
             "object": true,
             'permissions':'1',
-            'paramsSaveSearch': {
-                'title':'asdasda',
-                'label':{'title':"Placa: ",'detail':"Empresa: "},
-                'endpoint':"/search/tipo/productos/",
-                'where':'',
-                'imageGuest':'/assets/img/truck-guest.png',
-                'field':'vehicle.id',
-            },
             'paramsSearch':
             {
                 title: "Tipo de empresa",
@@ -150,16 +142,6 @@ export class Product extends RestController implements OnInit {
             "type": "text",
             "object": true,
             'permissions':'1',
-            'paramsSaveSearch': {
-                'title':'asdasda',
-                'label':{'title':"Placa: ",'detail':"Empresa: "},
-                'endpoint':"/search/marcas/",
-                'endpointForm':"/search/marcas/",
-                'where':'',
-                'imageGuest':'/assets/img/truck-guest.png',
-                'field':'vehicle.id',
-            },
-
             'paramsSearch':
             {
                 title: "Tipo de empresa",
@@ -186,16 +168,6 @@ export class Product extends RestController implements OnInit {
             "type": "text",
             "object": true,
             'permissions':'1',
-            'paramsSaveSearch': {
-                'title':'asdasda',
-                'label':{'title':"Placa: ",'detail':"Empresa: "},
-                'endpoint':"/search/modelos/",
-                'endpointForm':"/search/modelos/",
-                'where':'',
-                'imageGuest':'/assets/img/truck-guest.png',
-                'field':'vehicle.id',
-            },
-
             'paramsSearch':
             {
                 title: "Tipo de empresa",
@@ -215,6 +187,123 @@ export class Product extends RestController implements OnInit {
             "placeholder": "ingrese el modelo"
         };
     }
+
+
+    ngInitSave()
+    {
+        //TODO agregar los permisos
+        this.paramsSave= {
+                        title: "Agregar Productos",
+                        idModal: "searchProductos",
+                        endpoint: this.endpoint,
+                         }
+
+
+        this.rulesSave["code"] = {
+            'required':true,
+            'maxLength':5,
+            'icon':'fa fa-barcode',
+            "type": "text",
+            "key": "code",
+            "title": "Codigo producto",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio',
+                    'maxlength':'Maximo numero de caracteres 5'
+                },
+            },
+            "placeholder": "ingrese el codigo"
+        };
+        this.rulesSave["detail"] = {
+            'required':true,
+            'icon':'fa fa-list',
+            "type": "text",
+            "key": "detail",
+            "title": "Nombre Producto",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio',
+                },
+            },
+            "placeholder": "ingrese el nombre del producto"
+        };
+        
+        this.rulesSave["tipoProducto"] = {
+            'required':true,
+            'icon':'fa fa-list',
+            "type": "text",
+            "object": true,
+            'permissions':'1',
+            "key": "tipoProducto",
+            "title": "Tipo Producto",
+            "placeholder": "ingrese el tipo",
+            'paramsSaveSearch': {
+                'label':{'title':"Placa: ",'detail':"Empresa: "},
+                'endpoint':"/search/tipo/productos/",
+                'where':'',
+                'imageGuest':'/assets/img/truck-guest.png'
+            },
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio',
+                    'object':'Tipo no esta registrado',
+                },
+            },
+        };
+
+
+        this.rulesSave["marca"] = {
+            'required':true,
+            'icon':'fa fa-list',
+            "type": "text",
+            "object": true,
+            'permissions':'1',
+            "key": "marca",
+            "title": "Marca",
+            "placeholder": "ingrese la marca",
+            'paramsSaveSearch': {
+                'label':{'title':"Placa: ",'detail':"Empresa: "},
+                'endpoint':"/search/marcas/",
+                'where':'',
+                'imageGuest':'/assets/img/truck-guest.png'
+            },
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio',
+                    'object':'Tipo no esta registrado',
+                },
+            },
+        };
+
+
+        this.rulesSave["modelo"] = {
+            'required':true,
+            'icon':'fa fa-list',
+            "type": "text",
+            "object": true,
+            'permissions':'1',
+            "key": "modelo",
+            "title": "Modelo",
+            "placeholder": "ingrese el modelo",
+            'paramsSaveSearch': {
+                'label':{'title':"Placa: ",'detail':"Empresa: "},
+                'endpoint':"/search/modelos/",
+                'where':'',
+                'imageGuest':'/assets/img/truck-guest.png'
+            },
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio',
+                    'object':'Tipo no esta registrado',
+                },
+            },
+        };
+    }
+    
+    
+    
+    
+
     ngOnInit()
     {
         let that = this;
@@ -222,7 +311,7 @@ export class Product extends RestController implements OnInit {
         this.initOptions();
         this.initRules();
         this.initParamsTable();
-
+        this.ngInitSave();
         this.loadData();
         /*let successCallback= response => {
             Object.assign(that.dataList,response.json())
@@ -231,6 +320,22 @@ export class Product extends RestController implements OnInit {
     }
 
 
+
+    @ViewChild(Tables)
+    tables:Tables;
+    asignData(data)
+    {
+        if(this.dataList.page && this.dataList.page.length>1)
+        {
+            this.dataList.list.pop();
+        }
+        this.dataList.list.unshift(data);
+        
+        if(this.tables )
+        {
+            Object.assign(this.tables.dataList,this.dataList);
+        }
+    }
 
 
 
