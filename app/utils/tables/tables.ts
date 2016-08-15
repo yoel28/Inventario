@@ -12,7 +12,7 @@ import {Search} from "../search/search";
     selector: 'tables',
     templateUrl: 'app/utils/tables/index.html',
     styleUrls: ['app/utils/tables/style.css'],
-    inputs:['params','rules','dataList'],
+    inputs:['params','rules','rulesSearch','dataList'],
     directives:[Xeditable,Search]
 })
 
@@ -22,6 +22,7 @@ export class Tables extends RestController implements OnInit {
 
     public params:any={};
     public rules:any={};
+    public rulesSearch:any={};
     public searchId:any={};
     data:any = [];
     public keys:any = [];
@@ -99,13 +100,20 @@ export class Tables extends RestController implements OnInit {
     //click en la lupa
     @ViewChild(Search)
     search:Search;
-
     loadSearchTable(key,data) {
-        this.searchTable=this.rules[key].paramsSearch;
-        this.searchTable.idModal='searchTable';
-        //if(this.search)
-            this.search.params=this.searchTable
+
+
+        this.searchTable=this.rulesSearch[key];
+
+        if(this.search)
+        {
+            this.search.setNewModal();
+            this.search.params=this.searchTable;
+        }
+
+
         this.searchTableData=data;
+
     }
     getDataSearch(data){
         this.onPatch(this.searchTable.field,this.searchTableData,data);
