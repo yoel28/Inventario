@@ -1,4 +1,4 @@
-import {Component,Injectable, OnInit,ViewChild} from "@angular/core";
+import {Component,Injectable, OnInit} from "@angular/core";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {RestController} from "../common/restController";
@@ -11,7 +11,6 @@ import {Save} from "../utils/save/save";
     selector: 'type-product',
     templateUrl: 'app/typeProduct/index.html',
     styleUrls: ['app/typeProduct/style.css'],
-    directives: [Tables,Save],
     pipes: [TranslatePipe],
     providers: [TranslateService]
 })
@@ -19,7 +18,7 @@ import {Save} from "../utils/save/save";
 export class TypeProduct extends RestController implements OnInit {
 
 
-    public paramsSearchP:any = {};
+    public paramsSearch:any = {};
 
 
     constructor(public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
@@ -42,7 +41,7 @@ export class TypeProduct extends RestController implements OnInit {
     initSearch()
     {
 
-        this.paramsSearchP= {
+        this.paramsSearch= {
 
             //TODO apregar el permiso
             'permissions':'1',
