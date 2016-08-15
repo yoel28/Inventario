@@ -1,4 +1,5 @@
 import { Component,EventEmitter } from '@angular/core';
+import {Control,ControlGroup,FormBuilder} from "@angular/common";
 import { Http} from '@angular/http';
 import {RestController} from "../../common/restController";
 
@@ -23,14 +24,26 @@ export class Search extends RestController{
 
     public params:any={};
     public result:any;
+    public  valueInput:Control;
+    public form:ControlGroup;
 
-    constructor(public http:Http) {
+    constructor(public _formBuilder:FormBuilder,public http:Http) {
         super(http);
         this.setEndpoint(this.params.endpointForm);
         this.result = new EventEmitter();
     }
-    getSearch(search){
-        this.endpoint=this.params.endpointForm+search;
+    ngOnInit(){
+        this.initForm();
+
+    }
+    initForm(){
+        this.valueInput = new Control("");
+        this.form = this._formBuilder.group({
+            valueInput:this.valueInput
+        })
+    }
+    getSearch(){
+        this.endpoint=this.params.endpointForm+this.valueInput.value;
         this.loadData();
     }
     loadData(offset=0){
@@ -42,6 +55,14 @@ export class Search extends RestController{
     };
     getData(data){
         this.result.emit(data);
+    }
+    
+    
+    setNewModal()
+    {
+        this.dataList={};
+        this.valueInput.updateValue("");
+        
     }
 }
 
