@@ -181,7 +181,7 @@ export class Save extends RestController implements OnInit{
     }
     //accion al seleccion un parametro del search
     getDataSearch(data){
-        this.searchId[this.search.key]={'id':data.id,'title':data.title,'detail':data.detail,'balance':data.balance || null,'minBalance':data.minBalance || null};
+        this.searchId[this.search.key]={'id':data.id,'title':data.title,'detail':data.detail};
         (<Control>this.form.controls[this.search.key]).updateValue(data.detail);
         this.dataList=[];
     }
