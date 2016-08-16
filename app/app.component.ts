@@ -14,6 +14,7 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {Product} from "./product/product";
 import {Warehouse} from "./warehouse/warehouse";
 import {Save} from "./utils/save/save";
+import {Location_product} from "./location/location";
 
 @Component({
   selector: 'my-app',
@@ -31,7 +32,8 @@ import {Save} from "./utils/save/save";
   { path: '/account/recover',  name: 'AccountRecover',  component: AccountRecover },
   { path: '/account/recoverPassword/:id/:token',  name: 'AccountRecoverPassword',  component: AccountRecoverPassword },
   { path: '/dashboard',   name: 'Dashboard', component: Dashboard },
-  { path: '/product',   name: 'Product', component: Product },
+  { path: '/product',   name: 'Product', component: Product }, 
+  { path: '/location',   name: 'Location_product', component: Location_product },
   { path: '/warehouse',   name: 'Warehouse', component: Warehouse },
   { path: '/**', redirectTo: ['Warehouse'] }
 
@@ -43,10 +45,10 @@ export class AppComponent extends RestController implements OnInit{
 
 
   constructor(public router: Router,http: Http,public myglobal:globalService,public toastr: ToastsManager) {
-
+    
       super(http)
-        localStorage.setItem('urlAPI','http://54.234.235.119:8080/api');
-        localStorage.setItem('url','http://54.234.235.119:8080');
+        localStorage.setItem('urlAPI','http://dev.zippyttech.com:8080/api');
+        localStorage.setItem('url','http://dev.zippyttech.com:8080/');
     let that=this;
     router.subscribe(
         function(data){
