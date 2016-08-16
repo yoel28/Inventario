@@ -30,15 +30,26 @@ export class Product extends RestController implements OnInit {
     public rulesSave :any={};
     public paramsSearch :any={};
     public rulesSearch :any={};
+    public externalSave :any={};
+
+
 
 
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,  @Inject(TypeProduct) public typesProduct,@Inject(BrandProduct) public brandProduct, @Inject(ModelProduct) public modelProduct) {
         
         super(http, toastr);
         this.setEndpoint("/productos/");
+
+        //Search para los objetos en el momento de hacer un Save
         typesProduct.initSearch();
         brandProduct.initSearch();
         modelProduct.initSearch();
+
+
+        // para agregar dentro de una tabla que  no es la propia
+        typesProduct.initSaveRules();
+        brandProduct.initSaveRules();
+        modelProduct.initSaveRules();
     
     }
 
@@ -72,7 +83,7 @@ export class Product extends RestController implements OnInit {
     }
 
     initOptions() {
-        this.viewOptions["title"] = 'products';
+        this.viewOptions["title"] = 'productos';
         this.viewOptions["permissions"] = {"list": true};/*TODO PERMISO REAL this.myglobal.existsPermission('10')}*/
         this.viewOptions["errors"] ={};
         this.viewOptions["errors"].notFound= "no se encontraron resultados";
@@ -126,7 +137,7 @@ export class Product extends RestController implements OnInit {
             "type": "text",
             "object": true,
             'permissions':'1',
-            "key": "tipoProductoNombre",
+            "key": "tipoProducto",
             "title": "Tipo Producto",
             "placeholder": "ingrese el tipo",
             'msg':{
@@ -144,7 +155,7 @@ export class Product extends RestController implements OnInit {
             "type": "text",
             "object": true,
             'permissions':'1',
-            "key": "marcaTitle",
+            "key": "marca",
             "title": "Marca de Producto",
             "placeholder": "ingrese la marca",
             'msg':{
@@ -162,7 +173,7 @@ export class Product extends RestController implements OnInit {
             "type": "text",
             "object": true,
             'permissions':'1',
-            "key": "modeloTitle",
+            "key": "modelo",
             "title": "Tipo modelo",
             "placeholder": "ingrese el modelo",
             'msg':{
@@ -303,15 +314,25 @@ export class Product extends RestController implements OnInit {
         };
     }
 
+    initExternalSave() {
+
+        this.externalSave["tipoProducto"] = {"paramsSave":this.typesProduct.paramsSave,"rulesSave":this.typesProduct.rulesSave}
+        this.externalSave["marca"] = {"paramsSave":this.brandProduct.paramsSave,"rulesSave":this.brandProduct.rulesSave}
+        this.externalSave["modelo"] = {"paramsSave":this.modelProduct.paramsSave,"rulesSave":this.modelProduct.rulesSave}
+
+    }
+
     initRulesSearch() {
+
         this.rulesSearch["tipoProductoTitle"] = this.typesProduct.paramsSearch;
         this.rulesSearch["marcaTitle"] = this.brandProduct.paramsSearch;
         this.rulesSearch["modeloTitle"] = this.modelProduct.paramsSearch;
+
     }
     
     ngOnInit() {
 
-        let that = this;
+//        let that = this;
         this.initLang();
         this.initOptions();
         this.initRules();
@@ -319,7 +340,7 @@ export class Product extends RestController implements OnInit {
         this.initSave();
         this.initSearch();
         this.initRulesSearch();
-    
+        this.initExternalSave();
     
         this.loadData();
     
