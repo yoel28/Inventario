@@ -20,6 +20,8 @@ export class BrandProduct extends RestController implements OnInit {
 
     public paramsSearch:any = {};
 
+    public paramsSave :any ={};
+    public rulesSave :any={};
 
     constructor(public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
         super(http, toastr);
@@ -36,6 +38,35 @@ export class BrandProduct extends RestController implements OnInit {
         this.translate.use(userLang);
     }
 
+
+
+    initSaveRules()
+    {
+
+        this.paramsSave= {
+            title: "Agregar marca de producto",
+            idModal: "searchProductos",
+            endpoint: this.endpoint,
+        }
+
+        this.rulesSave = {
+            'title': {
+                'type': 'text',
+                'display': null,
+                'title': 'Nombre de titulo',
+                'placeholder': 'Ingrese el titulo',
+                'search': true
+            },
+            'detail': {
+                'type': 'text',
+                'display': null,
+                'title': 'Detalle',
+                'placeholder': 'Ingrese el  detalle',
+                'search': true
+            }
+        };
+
+    }
 
 
     initSearch()
