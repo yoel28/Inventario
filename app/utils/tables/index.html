@@ -19,9 +19,10 @@
                          <i class="fa fa-search text-blue"></i>
                      </button>
 
-                     <button type="button" class="btn btn-box-tool"
+                     <button *ngIf="externalSave[rules[key].key]" type="button" class="btn btn-box-tool"
+                             (click)="loadSaveTable(rules[key].key,data)" type="button" class="btn btn-box-tool"
 
-                             data-toggle="modal" data-target="#saveTipoEmpresa">
+                             data-toggle="modal" [attr.data-target]="'#'+externalSave[rules[key].key].paramsSave.idModal">
                          <i class="fa fa-plus text-green"></i>
                      </button>
                  </label>
@@ -83,6 +84,9 @@
     </div>
 </div>
 
+<div *ngIf="dataSave && dataSave.params && dataSave.params.idModal">
+    <save [rules]="dataSave.rules" [params]="dataSave.params" (save)="asignData($event)"> </save>
+</div>
 
 
 
@@ -90,6 +94,6 @@
     <search [params]="searchTable" (result)="getDataSearch($event)"></search>
 </div>
 
-<!--div >
+<!--div>
     <filter [rules]="rules" [params]="paramsFilter" (whereFilter)="loadWhere($event)"></filter>
 </div-->
