@@ -2,13 +2,21 @@
     <section class="content">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">{{viewOptions.title}}</h3>
-
+                <h3 class="box-title">{{viewOptions.title | translate }}</h3>
             </div>
+
+            <div class="pull-right">
+
+                <button class="btn btn-primary" type="button" data-toggle="modal" [attr.data-target]="'#'+paramsSave.idModal">
+                    <i class="fa fa-plus"></i>
+                    Agregar ubicacion
+                </button>
+            </div>
+
             <div *ngIf="viewOptions.permissions.list"  class="box-body">
                 <div *ngIf=" dataList && dataList.count > 0 ">
 
-                    <tables [dataList]="dataList" [rules]="rules" [params]="paramsTable"></tables>
+                    <tables [dataList]="dataList" [rules]="rules" [params]="paramsTable" [rulesSearch]="rulesSearch"></tables>
 
                 </div>
                 <div *ngIf="dataList && dataList.count == 0">
@@ -29,3 +37,4 @@
         </div>
     </section>
 </div>
+<save [rules]="rulesSave" [params]="paramsSave" (save)="asignData($event)"> </save>
