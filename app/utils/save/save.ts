@@ -4,6 +4,7 @@ import {RestController} from "../../common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
+import {Xcropit} from "../../common/xeditable";
 
 @Component({
     selector: 'save',
@@ -11,6 +12,7 @@ import {globalService} from "../../common/globalService";
     styleUrls: ['app/utils/save/style.css'],
     inputs:['params','rules'],
     outputs:['save'],
+    directives:[Xcropit]
 })
 export class Save extends RestController implements OnInit{
 
@@ -100,6 +102,14 @@ export class Save extends RestController implements OnInit{
                             return {object: {valid: false}};
                         }
                         return null;
+                    });
+            }
+            if(that.rules[key].type=='email')
+            {
+                validators.push(
+                    (c:Control)=> {
+                        let EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+                        return EMAIL_REGEXP.test(c.value) ? null : {email: {valid: false}};
                     });
             }
             that.data[key] = new Control("",Validators.compose(validators));
@@ -203,6 +213,9 @@ export class Save extends RestController implements OnInit{
     }
     getKeys(data){
         return Object.keys(data);
+    }
+    changeImage(data,key){
+        (<Control>this.form.controls[key]).updateValue(data);
     }
 }
 
