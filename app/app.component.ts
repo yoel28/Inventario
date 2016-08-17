@@ -137,5 +137,9 @@ export class AppComponent extends RestController implements OnInit{
             this.activeMenuId=id;
 
     }
-
+    public menu={};
+    loadMenu(){
+        
+    }
+    
 }
