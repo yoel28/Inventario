@@ -18,6 +18,8 @@ import {Client} from "./client/client";
 import {User} from "./user/user";
 import {Profile} from "./account/profile/profile";
 import {Roles} from "./roles/roles";
+import {Permissions} from "./permissions/permissions";
+import {Operation} from "./operation/operation";
 
 @Component({
   selector: 'my-app',
@@ -41,6 +43,8 @@ import {Roles} from "./roles/roles";
   { path: '/user',   name: 'User', component: User },
   { path: '/user/profile',   name: 'Profile', component: Profile },
   { path: '/roles',   name: 'Roles', component: Roles },
+  { path: '/permissions',   name: 'Permissions', component: Permissions },
+  { path: '/operation',   name: 'Operation', component: Operation },
   { path: '/**', redirectTo: ['Product'] }
 
 ])
