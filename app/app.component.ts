@@ -15,6 +15,8 @@ import {Product} from "./product/product";
 import {Save} from "./utils/save/save";
 import {Location_product} from "./location/location";
 import {Client} from "./client/client";
+import {User} from "./user/user";
+import {Profile} from "./account/profile/profile";
 
 @Component({
   selector: 'my-app',
@@ -35,6 +37,8 @@ import {Client} from "./client/client";
   { path: '/product',   name: 'Product', component: Product }, 
   { path: '/location',   name: 'Location_product', component: Location_product },
   { path: '/client',   name: 'Client', component: Client },
+  { path: '/user',   name: 'User', component: User },
+  { path: '/user/profile',   name: 'Profile', component: Profile },
   { path: '/**', redirectTo: ['Product'] }
 
 ])
