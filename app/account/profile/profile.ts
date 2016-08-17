@@ -7,17 +7,21 @@ import {Search} from "../../utils/search/search";
 import {RestController} from "../../common/restController";
 import {globalService} from "../../common/globalService";
 import {User} from "../../user/user";
+import {TranslatePipe, TranslateService} from "ng2-translate/ng2-translate";
+
 
 @Component({
     selector: 'profile',
     templateUrl: 'app/account/profile/index.html',
     styleUrls: ['app/account/profile/style.css'],
     directives: [Xeditable,Xcropit,Search,Xfile],
+    pipes: [TranslatePipe],
+    providers: [TranslateService,User]
 })
 export class Profile extends RestController implements OnInit{
 
     public rules: any = {};
-    constructor(public router: Router,public http: Http,public myglobal:globalService,public toastr: ToastsManager,@Inject(User) public user) {
+    constructor(public router: Router,public http: Http,public myglobal:globalService,public toastr: ToastsManager, @Inject(User) public  user) {
         super(http,toastr);
         this.setEndpoint('/users/');
         user.initRules();

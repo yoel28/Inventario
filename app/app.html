@@ -136,6 +136,10 @@
                         <a href="#" [routerLink]="['Client']">
                             <i class="fa fa-product-hunt"></i> <span>Cliente</span>
                         </a>
+                    </li><li *ngIf="myglobal.existsPermission('162')">
+                        <a href="#" [routerLink]="['Roles']">
+                            <i class="fa fa-product-hunt"></i> <span>Roles</span>
+                        </a>
                     </li>
                 </ul>
                 <!-- /.sidebar-menu -->

@@ -1,24 +1,25 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Injectable} from '@angular/core';
 import { Http} from '@angular/http';
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
-import {Xfile, Xcropit, Xeditable} from "../common/xeditable";
-import {Search} from "../utils/search/search";
 import {RestController} from "../common/restController";
 import {globalService} from "../common/globalService";
-import {TranslateService} from "ng2-translate/ng2-translate";
+import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 
 @Component({
-    selector: 'user',
+    selector: 'users',
     templateUrl: 'app/user/index.html',
     styleUrls: ['app/user/style.css'],
-    directives: [Xeditable,Xcropit,Search,Xfile],
+    pipes: [TranslatePipe],
+    providers: [TranslateService]
 })
+@Injectable()
 export class User extends RestController implements OnInit{
     public rules: any = {};
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService) {
         super(http,toastr);
         this.setEndpoint('/users/');
     }
+
     ngOnInit(){
         this.initLang();
         this.initRules();
@@ -30,7 +31,7 @@ export class User extends RestController implements OnInit{
         this.translate.use(userLang);
     }
     initRules() {
-        let update =true; /*this.myglobal.existsPermission("1");*/
+        let update =true; /!*this.myglobal.existsPermission("1");*!/
 
         this.rules["username"] = {
             "update": update,
@@ -153,7 +154,7 @@ export class User extends RestController implements OnInit{
             "visible": true,
             'required':false,
             'icon':'fa fa-phone',
-            "type": "phone",
+            "type": "number",
             "key": "phone",
             "title": "Telefono",
             "placeholder": "Ingrese un numero de telefono",
@@ -173,7 +174,6 @@ export class User extends RestController implements OnInit{
     loadImage(){
         this.onPatch('image',this.myglobal.user,this.image);
     }
-
 
 }
 
