@@ -12,9 +12,9 @@ import {RestController} from "./common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {Product} from "./product/product";
-import {Warehouse} from "./warehouse/warehouse";
 import {Save} from "./utils/save/save";
 import {Location_product} from "./location/location";
+import {Client} from "./client/client";
 
 @Component({
   selector: 'my-app',
@@ -34,8 +34,8 @@ import {Location_product} from "./location/location";
   { path: '/dashboard',   name: 'Dashboard', component: Dashboard },
   { path: '/product',   name: 'Product', component: Product }, 
   { path: '/location',   name: 'Location_product', component: Location_product },
-  { path: '/warehouse',   name: 'Warehouse', component: Warehouse },
-  { path: '/**', redirectTo: ['Warehouse'] }
+  { path: '/client',   name: 'Client', component: Client },
+  { path: '/**', redirectTo: ['Product'] }
 
 ])
 export class AppComponent extends RestController implements OnInit{
