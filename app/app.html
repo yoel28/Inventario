@@ -122,14 +122,19 @@
 
                         </ul>
                     </li>
-                    <li>
+                    <li *ngIf="myglobal.existsPermission('162')">
                         <a href="#" [routerLink]="['Product']">
                             <i class="fa fa-product-hunt"></i> <span>Productos</span>
                         </a>
                     </li>
-                    <li>
+                    <li *ngIf="myglobal.existsPermission('162')">
                         <a href="#" [routerLink]="['Location_product']">
                             <i class="fa fa-product-hunt"></i> <span>Ubicacion</span>
+                        </a>
+                    </li>
+                    <li *ngIf="myglobal.existsPermission('162')">
+                        <a href="#" [routerLink]="['Client']">
+                            <i class="fa fa-product-hunt"></i> <span>Cliente</span>
                         </a>
                     </li>
                 </ul>
