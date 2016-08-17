@@ -16,6 +16,7 @@ import {Save} from "./utils/save/save";
 import {Location_product} from "./location/location";
 import {Client} from "./client/client";
 import {Roles} from "./roles/roles";
+import {Permissions} from "./permissions/permissions";
 
 @Component({
   selector: 'my-app',
@@ -37,6 +38,7 @@ import {Roles} from "./roles/roles";
   { path: '/location',   name: 'Location_product', component: Location_product },
   { path: '/client',   name: 'Client', component: Client },
   { path: '/roles',   name: 'Roles', component: Roles },
+  { path: '/permissions',   name: 'Permissions', component: Permissions },
   { path: '/**', redirectTo: ['Product'] }
 
 ])
