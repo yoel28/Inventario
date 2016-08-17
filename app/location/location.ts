@@ -215,7 +215,7 @@ export class Location_product extends RestController implements OnInit {
             'icon':'fa fa-list',
             "type": "text",
             "key": "title",
-            "title": "Titulo",
+            "title": "Nombre",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
