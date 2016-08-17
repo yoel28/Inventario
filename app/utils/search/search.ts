@@ -29,7 +29,7 @@ export class Search extends RestController{
 
     constructor(public _formBuilder:FormBuilder,public http:Http) {
         super(http);
-        this.setEndpoint(this.params.endpointForm);
+        this.setEndpoint(this.params.endpoint);
         this.result = new EventEmitter();
     }
     ngOnInit(){
@@ -43,7 +43,7 @@ export class Search extends RestController{
         })
     }
     getSearch(){
-        this.endpoint=this.params.endpointForm+this.valueInput.value;
+        this.endpoint=this.params.endpoint+this.valueInput.value;
         this.loadData();
     }
     loadData(offset=0){
