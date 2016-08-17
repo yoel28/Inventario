@@ -4,17 +4,25 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {RestController} from "../common/restController";
 import {globalService} from "../common/globalService";
 import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
+import {Save} from "../utils/save/save";
 
 @Component({
     selector: 'users',
     templateUrl: 'app/user/index.html',
     styleUrls: ['app/user/style.css'],
     pipes: [TranslatePipe],
-    providers: [TranslateService]
+    providers: [TranslateService],
+    directives:[Save]
 })
 @Injectable()
 export class User extends RestController implements OnInit{
     public rules: any = {};
+    public paramsSave: any = {};
+    public paramsSearch: any = {};
+    public rulesSave: any = {};
+    public viewOptions: any = {};
+    public viewCardOption: any = {};
+
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService) {
         super(http,toastr);
         this.setEndpoint('/users/');
@@ -23,6 +31,10 @@ export class User extends RestController implements OnInit{
     ngOnInit(){
         this.initLang();
         this.initRules();
+        this.initSave();
+        this.initSearch();
+        this.initOptions();
+        this.initViewCardOption();
     }
     initLang(){
         var userLang = navigator.language.split('-')[0]; // use navigator lang if available
@@ -31,17 +43,28 @@ export class User extends RestController implements OnInit{
         this.translate.use(userLang);
     }
     initRules() {
-        let update =true; /!*this.myglobal.existsPermission("1");*!/
+        this.rules["image"] = {
+            "visible": true,
+            'required':false,
+            'icon':'fa fa-email',
+            "type": "image",
+            "key": "image",
+            "title": "Imagen",
+            "placeholder": "Imagen de perfil",
+            'msg':{
+                'errors':{
 
+                },
+            },
+        };
         this.rules["username"] = {
-            "update": update,
             "visible": true,
             'required':true,
             'maxLength':30,
             'icon':'fa fa-user',
             "type": "text",
             "key": "username",
-            "title": "Nombre de usuario",
+            "title": "Usuario",
             "placeholder": "Ingrese un nombre de usuaruio",
             'msg':{
                 'errors':{
@@ -52,14 +75,13 @@ export class User extends RestController implements OnInit{
 
         };
         this.rules["name"] = {
-            "update": update,
             "visible": true,
             'required':true,
             'maxLength':30,
             'icon':'fa fa-user',
             "type": "text",
             "key": "name",
-            "title": "Ingrese el nombre",
+            "title": "Nombre",
             "placeholder": "Ingrese el nombre",
             'msg':{
                 'errors':{
@@ -70,7 +92,6 @@ export class User extends RestController implements OnInit{
 
         };
         this.rules["detail"] = {
-            "update": update,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
@@ -85,32 +106,32 @@ export class User extends RestController implements OnInit{
             }
         };
         this.rules["email"] = {
-            "update": update,
             "visible": true,
             'required':true,
             'maxLength':30,
             'icon':'fa fa-email',
             "type": "email",
             "key": "email",
-            "title": "Ingrese un correo electronico",
+            "title": "Email",
             "placeholder": "Ingrese un correo electronico",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
-                    'maxlength':'Maximo numero de caracteres 30'
+                    'maxlength':'Maximo numero de caracteres 30',
+                    'email':'Ingrese un correo valido'
                 },
             },
 
         };
         this.rules["enabled"] = {
-            "update": update,
             "visible": true,
             'required':true,
             'icon':'fa fa-email',
             "type": "boolean",
             "key": "enabled",
-            "title": "Cuenta habilitada",
+            "title": "Habilitada",
             "placeholder": "Cuenta habilitada",
+
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
@@ -118,23 +139,7 @@ export class User extends RestController implements OnInit{
             },
 
         };
-        this.rules["image"] = {
-            "update": update,
-            "visible": true,
-            'required':false,
-            'icon':'fa fa-email',
-            "type": "image",
-            "key": "image",
-            "title": "Imagen de perfil",
-            "placeholder": "Imagen de perfil",
-            'msg':{
-                'errors':{
-
-                },
-            },
-        };
         this.rules["password"] = {
-            "update": update,
             "visible": true,
             'required':true,
             'icon':'fa fa-key',
@@ -150,7 +155,6 @@ export class User extends RestController implements OnInit{
 
         };
         this.rules["phone"] = {
-            "update": update,
             "visible": true,
             'required':false,
             'icon':'fa fa-phone',
@@ -166,6 +170,68 @@ export class User extends RestController implements OnInit{
 
         };
     }
+    initSave() {
+        this.paramsSave = {
+            title: "Agregar usuario",
+            idModal: "modalUser",
+            endpoint: this.endpoint,
+        }
+        this.rulesSave = this.rules;
+        delete this.rulesSave["enabled"];
+    }
+    initSearch() {
+        this.paramsSearch= {
+            'permissions':'1',
+            'title': "Usuario",
+            'idModal': "searchUser",
+            'endpointForm': "/search/usuarios/",
+            'placeholderForm': "Ingrese el usuario",
+            'labelForm': {name: "Nombre: ", detail: "Detalle: "},
+            'msg': {
+                'errors': {
+                    'noAuthorized': 'No posee permisos para esta accion',
+                },
+            },
+            'where':'',
+            'imageGuest':'/assets/img/truck-guest.png'
+        };
+    }
+    initOptions() {
+        this.viewOptions["title"] = 'Usuarios';
+        this.viewOptions["button"]=[];
+        this.viewOptions["button"].push({
+            'title':'Agregar',
+            'class':'btn btn-primary',
+            'icon':'fa fa-plus',
+            'modal':this.paramsSave.idModal
+        })
+        this.viewOptions["permissions"] = {"list": true};/*TODO PERMISO REAL this.myglobal.existsPermission('10')}*/
+        this.viewOptions["errors"] ={};
+        this.viewOptions["errors"].notFound= "no se encontraron resultados";
+        this.viewOptions["errors"].list="no tiene permisos para ver los productos";
+    }
+    initViewCardOption(){
+        this.viewCardOption.field=[0,3,6];
+        this.viewCardOption.offset=3;
+        this.viewCardOption.class="col-lg-4 col-md-4 col-xs-12 col-sm-12";
+        this.viewCardOption.actions={};
+        this.viewCardOption.actions.delete = {
+            "icon": "fa fa-trash",
+            "exp": "",
+            'title': 'Eliminar',
+            'permission': '1',
+            'message': 'Esta seguro de eliminar',
+            'keyAction':'description'
+        };
+        this.viewCardOption.actions.print = {
+            "icon": "fa fa-print",
+            "exp": "",
+            'title': 'Imprimir',
+            'permission': '1',
+            'message': 'wii imprimir',
+            'keyAction':'description'
+        };
+    }
 
     public image:string;
     changeImage(data){
@@ -174,6 +240,7 @@ export class User extends RestController implements OnInit{
     loadImage(){
         this.onPatch('image',this.myglobal.user,this.image);
     }
+
 
 }
 
