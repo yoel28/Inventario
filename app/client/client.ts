@@ -18,11 +18,11 @@ export class Client extends RestController implements OnInit {
     public rules:any={} ;
     public viewOptions:any={};
     public paramsTable:any={};
+    public paramsSearch:any={};
 
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService) {
         super(http, toastr);
         this.setEndpoint("/consulta/warehouse.json");
-        //this.setEndpoint("/warehouse/");
     }
 
     ngOnInit()
@@ -32,6 +32,7 @@ export class Client extends RestController implements OnInit {
         this.initOptionsView();
         this.initRules();
         this.initParamsTable();
+        this.initSearch();
 
 
         let successCallback= response => {
@@ -64,6 +65,25 @@ export class Client extends RestController implements OnInit {
         this.paramsTable.actions.delete={"icon":"fa fa-trash","exp":""};
         this.paramsTable.actions.print={"icon":"fa fa-print","exp":""};
 
+    }
+    initSearch()
+    {
+
+        this.paramsSearch= {
+            'permissions':'1',
+            'title': "Cliente",
+            'idModal': "searchClient",
+            'endpointForm': "/search/clientes/",
+            'placeholderForm': "Ingrese el cliente",
+            'labelForm': {name: "Nombre: ", detail: "Detalle: "},
+            'msg': {
+                'errors': {
+                    'noAuthorized': 'No posee permisos para esta accion',
+                },
+            },
+            'where':'',
+            'imageGuest':'/assets/img/truck-guest.png'
+        };
     }
 
 

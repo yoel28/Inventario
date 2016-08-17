@@ -53,7 +53,9 @@ export class ModelProduct extends RestController implements OnInit {
                 'errors': {
                     'noAuthorized': 'No posee permisos para esta accion',
                 },
-            }
+            },
+            'where':'',
+            'imageGuest':'/assets/img/truck-guest.png'
         };
     }
 

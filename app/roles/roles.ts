@@ -219,6 +219,7 @@ export class Roles extends RestController implements OnInit {
         this.initRules();
         this.initParamsTable();
         this.initSave();
+        this.initSearch();
      
         this.loadData();
 
@@ -238,6 +239,26 @@ export class Roles extends RestController implements OnInit {
         {
             Object.assign(this.tables.dataList,this.dataList);
         }
+    }
+    initSearch() {
+
+        this.paramsSearch = {
+
+            //TODO apregar el permiso
+            'permissions': '1',
+            'title': "Roles",
+            'idModal': "searchRol",
+            'endpointForm': "/search/roles/",
+            'placeholderForm': "Ingrese el rol",
+            'labelForm': {name: "Nombre: ", detail: "Detalle: "},
+            'msg': {
+                'errors': {
+                    'noAuthorized': 'No posee permisos para esta accion',
+                },
+            },
+            'where':'',
+            'imageGuest':'/assets/img/truck-guest.png'
+        };
     }
     
     

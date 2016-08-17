@@ -262,6 +262,7 @@ export class Location_product extends RestController implements OnInit {
         this.initRules();
         this.initParamsTable();
         this.initSave();
+        this.initSearch();
     
         this.loadData();
     
@@ -282,7 +283,25 @@ export class Location_product extends RestController implements OnInit {
             Object.assign(this.tables.dataList,this.dataList);
         }
     }
-    
+    initSearch()
+    {
+
+        this.paramsSearch= {
+            'permissions':'1',
+            'title': "Ubicación",
+            'idModal': "searchLocation",
+            'endpointForm': "/search/ubicaciones/",
+            'placeholderForm': "Ingrese la ubicacion",
+            'labelForm': {name: "Nombre: ", detail: "Detalle: "},
+            'msg': {
+                'errors': {
+                    'noAuthorized': 'No posee permisos para esta accion',
+                },
+            },
+            'where':'',
+            'imageGuest':'/assets/img/truck-guest.png'
+        };
+    }
     
     
     
