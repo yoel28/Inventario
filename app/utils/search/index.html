@@ -32,8 +32,8 @@
                                 <i *ngIf="data.icon" class="i-search {{data.icon}}" ></i>
                             </td>
                             <td>
-                                <strong>{{params.labelForm.name}} {{data.title}}</strong><br>
-                                {{params.labelForm.detail}} {{data.detail}}
+                                <strong>{{params.label.title}} {{data.title}}</strong><br>
+                                {{params.label.detail}} {{data.detail}}
                             </td>
                             <td style="vertical-align: middle;">
                                 <button (click)="getData(data)" data-dismiss="modal" type="button" class="btn btn-success">
