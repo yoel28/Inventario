@@ -19,3 +19,26 @@
 .alert{
     margin-bottom: 0px !important;
 }
+.image-profile{
+    background-color: rgba(128, 128, 128, 0.06);
+    padding: 2pt 0pt 10pt;
+    border-radius: 5pt;
+    margin-bottom: 10pt;
+}
+.separacion{
+    margin-bottom: 10pt;
+}
+.rotate-cw ,.rotate-ccw{
+    margin: 0px !important;
+}
+.margenes{
+    margin-bottom: 10pt;
+    margin-top: 10pt;
+}
+.boton-guardar{
+    padding: 8pt;
+    margin-top: 0px !important;
+}
+.padding-error{
+    padding: 5pt;
+}
