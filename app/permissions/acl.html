@@ -1,0 +1,67 @@
+<div class="content-wrapper">
+    <section class="content">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">{{viewOptions.title | translate }}</h3>
+            </div>
+
+            <div *ngIf="permissions.listPermissions"  class="box-body">
+                <div class="row">
+                    <div *ngIf="rolesPermissionsAll.count" class="col-lg-4">
+                        <select [(ngModel)]="roleSelect"  (ngModelChange)="setRole($event)"  sm-dropdown class="ui fluid search selection dropdown">
+                            <option data-hidden="true"></option>
+                            <option *ngFor="let n of itemsSelect"  [attr.value]="n.id" >{{n.text}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="!permissions['listRoles']">
+                        {{viewOptions["errors"].listRoles}}
+                    </div>
+                </div>
+                <div *ngIf="role.id" class="col-lg-12">
+                    <div *ngFor="let modulo of getKeys(permissionsAll)" class="col-lg-12 modulo">
+                        <h4>{{modulo}}</h4>
+                        <div *ngFor="let data of permissionsAll[modulo]">
+                            <div class="col-lg-4 padding-bottom">
+                                <label>
+                                    <div class="material-switch">
+                                        <input (click)="assignPermission(data.id)" value="{{data.id}}" [attr.id]="data.id" type="checkbox" [checked]="existsPermission(data.id)"/>
+                                        <label [attr.for]="data.id" class="label-success"></label>
+                                        &nbsp;<strong>{{data.title}}</strong>&nbsp;[{{data.id}}]
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div *ngIf="getKeys(permissionsAll).length == 0">
+                    <div class="alert alert-warning alert-dismissable">
+                        <button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button>
+                        <strong><i class="fa fa-warning"></i></strong> {{viewOptions.errors.notFound}}
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="role.id" class="box-footer with-border margin-top-5">
+                <div class="pull-right">
+                    <button type="button" class="btn btn-success" (click)="selectPermission(true)">
+                        <i class="fa fa-plus"></i>&nbsp;Seleccionar todos
+                    </button>
+                    <button type="button" class="btn btn-success" (click)="selectPermission(false)">
+                        <i class="fa fa-minus"></i>&nbsp;Eliminar todos
+                    </button>
+
+                    <button *ngIf="myglobal.existsPermission('40')" type="button" class="btn btn-success" (click)="savePermissions()">
+                        <i class="fa fa-save"></i>&nbsp;Guardar
+                    </button>
+
+                </div>
+            </div>
+            <div *ngIf="!permissions.listPermissions">
+                <div class="btn-red padding-error">
+                    <h5><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h5>
+                    {{viewOptions.errors.listPermissions}}
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
