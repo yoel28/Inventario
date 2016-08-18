@@ -67,6 +67,8 @@ export class AppComponent extends RestController implements OnInit{
       super(http)
         localStorage.setItem('urlAPI','http://dev.zippyttech.com:8080/api');
         localStorage.setItem('url','http://dev.zippyttech.com:8080/');
+        //localStorage.setItem('urlAPI','http://192.168.0.95:8080/api');
+        //localStorage.setItem('url','http://192.168.0.95:8080/');
     let that=this;
     router.subscribe(
         function(data){
@@ -166,19 +168,19 @@ export class AppComponent extends RestController implements OnInit{
                 {
                     'visible':this.myglobal.existsPermission("1"),
                     'icon':'fa fa-list',
-                    'title':'Tipo de prodcuto',
+                    'title':'Tipo',
                     'routerLink':'TypeProduct'
                 },
                 {
                     'visible':this.myglobal.existsPermission("1"),
                     'icon':'fa fa-list',
-                    'title':'Marca de producto',
+                    'title':'Marca',
                     'routerLink':'BrandProduct'
                 },
                 {
                     'visible':this.myglobal.existsPermission("1"),
                     'icon':'fa fa-list',
-                    'title':'modelo de producto',
+                    'title':'Modelo',
                     'routerLink':'ModelProduct'
                 }
 
