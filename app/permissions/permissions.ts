@@ -110,7 +110,6 @@ export class Permissions extends RestController implements OnInit {
         this.rules["detail"] = {
             "update": update,
             "visible": true,
-            'required':true,
             'icon':'fa fa-list',
             "type": "text",
             "key": "detail",
@@ -125,7 +124,6 @@ export class Permissions extends RestController implements OnInit {
         this.rules["controlador"] = {
             "update": update,
             "visible": true,
-            'required':true,
             'icon':'fa fa-list',
             "type": "text",
             'permissions':'1',
@@ -141,7 +139,6 @@ export class Permissions extends RestController implements OnInit {
         this.rules["accion"] = {
             "update": update,
             "visible": true,
-            'required':true,
             'icon':'fa fa-barcode',
             "type": "text",
             "key": "accion",
@@ -169,75 +166,8 @@ export class Permissions extends RestController implements OnInit {
             idModal: "savePermissions",
             endpoint: this.endpoint,
         }
+        this.rulesSave = this.rules;
 
-
-        this.rulesSave["accion"] = {
-            'required':true,
-            'icon':'fa fa-barcode',
-            "type": "text",
-            "key": "accion",
-            "title": "Accion",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio'
-                },
-            },
-            "placeholder": "ingrese la accion"
-        };
-
-
-        this.rulesSave["controlador"] = {
-            'required':true,
-            'icon':'fa fa-barcode',
-            "type": "text",
-            "key": "controlador",
-            "title": "Controlador",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio'
-                },
-            },
-            "placeholder": "ingrese el controlador"
-        };
-
-        this.rulesSave["module"] = {
-            'required':true,
-            'icon':'fa fa-barcode',
-            "type": "text",
-            "key": "module",
-            "title": "modulo",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio'},
-            },
-            "placeholder": "ingrese el modulo"
-        };
-
-        this.rulesSave["title"] = {
-            'required':true,
-            'icon':'fa fa-barcode',
-            "type": "text",
-            "key": "title",
-            "title": "titulo",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio'
-                },
-            },
-            "placeholder": "ingrese el titulo"
-        };
-
-        this.rulesSave["detail"] = {
-            'required':true,
-            'icon':'fa fa-barcode',
-            "type": "text",
-            "key": "detail",
-            "title": "detalle",
-            'msg':{
-                'errors':{},
-            },
-            "placeholder": "ingrese el detalle"
-        };
 
     }
 
