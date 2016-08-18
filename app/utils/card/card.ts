@@ -3,7 +3,7 @@ import {RestController} from "../../common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
-import {Xeditable} from "../../common/xeditable";
+import {Xeditable, Xcropit} from "../../common/xeditable";
 import {Search} from "../search/search";
 import {Filter} from "../filter/filter";
 import {Save} from "../save/save";
@@ -13,7 +13,7 @@ import {Save} from "../save/save";
     templateUrl: 'app/utils/card/index.html',
     styleUrls: ['app/utils/card/style.css'],
     inputs: ['params', 'rules', 'rulesSearch', 'dataList', 'externalSave'],
-    directives: [Xeditable, Search, Filter, Save]
+    directives: [Xeditable, Search, Filter, Save,Xcropit]
 })
 
 export class Card extends RestController implements OnInit {
@@ -98,13 +98,15 @@ export class Card extends RestController implements OnInit {
     }
 
     public dataSelectImage:any={};
-    changeImage(data,value,key){
-        this.dataSelect=data;
-        this.dataSelect[key]=value;
+    changeImage(newImage,id,key){
+        this.dataSelectImage[id]={};
+        this.dataSelectImage[id].image=newImage;
+        this.dataSelectImage[id].key=key;
     }
-    loadImage(event,data,key)
-    {
-        //this.onPatch(key,data,value);
+    loadImage(event, data) {
+        event.preventDefault();
+        if(this.dataSelectImage[data.id])
+            this.onPatch(this.dataSelectImage[data.id].key,data,this.dataSelectImage[data.id].image);
     }
 
 }
