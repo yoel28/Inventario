@@ -230,19 +230,24 @@ export class User extends RestController implements OnInit{
         this.viewCardOption.actions={};
         this.viewCardOption.actions.delete = {
             "icon": "fa fa-trash",
-            "exp": "",
             'title': 'Eliminar',
-            'permission': '1',
+            'permission': this.myglobal.existsPermission('1'),
             'message': 'Esta seguro de eliminar',
-            'keyAction':'description'
+            'keyAction':'username'
         };
-        this.viewCardOption.actions.print = {
-            "icon": "fa fa-print",
-            "exp": "",
-            'title': 'Imprimir',
-            'permission': '1',
-            'message': 'wii imprimir',
-            'keyAction':'description'
+        this.viewCardOption.actions.onPatch = {
+            "type":"boolean",
+            "field":"accountLocked",
+            "icon": "fa fa-list",
+            'permission': this.myglobal.existsPermission('1'),
+            "titleTrue":"Verificar",
+            "titleFalse":"No Verificado",
+        };
+        this.viewCardOption.actions.onLock = {
+            "icon": "fa fa-warning",
+            'permission': this.myglobal.existsPermission('1'),
+            "titleTrue":"Bloquear",
+            "titleFalse":"Habilitar",
         };
 
     }
