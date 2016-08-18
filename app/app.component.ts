@@ -20,6 +20,7 @@ import {Profile} from "./account/profile/profile";
 import {Roles} from "./roles/roles";
 import {Permissions} from "./permissions/permissions";
 import {Operation} from "./operation/operation";
+import {PermissionsAcl} from "./permissions/acl";
 
 @Component({
   selector: 'my-app',
@@ -44,6 +45,7 @@ import {Operation} from "./operation/operation";
   { path: '/user/profile',   name: 'Profile', component: Profile },
   { path: '/roles',   name: 'Roles', component: Roles },
   { path: '/permissions',   name: 'Permissions', component: Permissions },
+  { path: '/permissions/acl',   name: 'PermissionsAcl', component: PermissionsAcl },
   { path: '/operation',   name: 'Operation', component: Operation },
   { path: '/**', redirectTo: ['Product'] }
 
@@ -185,6 +187,13 @@ export class AppComponent extends RestController implements OnInit{
             'routerLink':'User',
             'icon':'fa fa-list',
             'title':'Usuarios'
+
+        });
+        this.menuItems.push({
+            'visible':this.myglobal.existsPermission("1"),
+            'routerLink':'PermissionsAcl',
+            'icon':'fa fa-list',
+            'title':'ACL'
 
         });
         this.menuItems.push({
