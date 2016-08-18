@@ -3,7 +3,7 @@ import {RestController} from "../../common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
-import {Xeditable, Xcropit} from "../../common/xeditable";
+import {Xeditable, Xcropit, Xfile} from "../../common/xeditable";
 import {Search} from "../search/search";
 import {Filter} from "../filter/filter";
 import {Save} from "../save/save";
@@ -13,7 +13,7 @@ import {Save} from "../save/save";
     templateUrl: 'app/utils/card/index.html',
     styleUrls: ['app/utils/card/style.css'],
     inputs: ['params', 'rules', 'rulesSearch', 'dataList', 'externalSave'],
-    directives: [Xeditable, Search, Filter, Save,Xcropit]
+    directives: [Xeditable, Search, Filter, Save,Xcropit,Xfile]
 })
 
 export class Card extends RestController implements OnInit {
