@@ -5,6 +5,7 @@ import {RestController} from "../common/restController";
 import {globalService} from "../common/globalService";
 import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 import {Save} from "../utils/save/save";
+import {Card} from "../utils/card/card";
 
 @Component({
     selector: 'users',
@@ -12,7 +13,7 @@ import {Save} from "../utils/save/save";
     styleUrls: ['app/user/style.css'],
     pipes: [TranslatePipe],
     providers: [TranslateService],
-    directives:[Save]
+    directives:[Save,Card]
 })
 @Injectable()
 export class User extends RestController implements OnInit{
@@ -34,7 +35,9 @@ export class User extends RestController implements OnInit{
         this.initSave();
         this.initSearch();
         this.initOptions();
-        this.initViewCardOption();
+        this.initViewCard();
+
+        this.loadData();
     }
     initLang(){
         var userLang = navigator.language.split('-')[0]; // use navigator lang if available
@@ -44,6 +47,7 @@ export class User extends RestController implements OnInit{
     }
     initRules() {
         this.rules["image"] = {
+            "update":true,
             "visible": true,
             'required':false,
             'icon':'fa fa-email',
@@ -51,6 +55,7 @@ export class User extends RestController implements OnInit{
             "key": "image",
             "title": "Imagen",
             "placeholder": "Imagen de perfil",
+            'default': '/assets/img/user-guest.png',
             'msg':{
                 'errors':{
 
@@ -59,6 +64,7 @@ export class User extends RestController implements OnInit{
         };
         this.rules["username"] = {
             "visible": true,
+            "update":true,
             'required':true,
             'maxLength':30,
             'icon':'fa fa-user',
@@ -75,6 +81,7 @@ export class User extends RestController implements OnInit{
 
         };
         this.rules["name"] = {
+            "update":true,
             "visible": true,
             'required':true,
             'maxLength':30,
@@ -94,6 +101,7 @@ export class User extends RestController implements OnInit{
         this.rules["detail"] = {
             "visible": true,
             'required':true,
+            "update":true,
             'icon':'fa fa-list',
             "type": "text",
             "key": "detail",
@@ -108,6 +116,7 @@ export class User extends RestController implements OnInit{
         this.rules["email"] = {
             "visible": true,
             'required':true,
+            "update":true,
             'maxLength':30,
             'icon':'fa fa-email',
             "type": "email",
@@ -126,6 +135,7 @@ export class User extends RestController implements OnInit{
         this.rules["enabled"] = {
             "visible": true,
             'required':true,
+            "update":true,
             'icon':'fa fa-email',
             "type": "boolean",
             "key": "enabled",
@@ -142,6 +152,7 @@ export class User extends RestController implements OnInit{
         this.rules["password"] = {
             "visible": true,
             'required':true,
+            "update":true,
             'icon':'fa fa-key',
             "type": "password",
             "key": "password",
@@ -157,6 +168,7 @@ export class User extends RestController implements OnInit{
         this.rules["phone"] = {
             "visible": true,
             'required':false,
+            "update":true,
             'icon':'fa fa-phone',
             "type": "number",
             "key": "phone",
@@ -210,9 +222,10 @@ export class User extends RestController implements OnInit{
         this.viewOptions["errors"].notFound= "no se encontraron resultados";
         this.viewOptions["errors"].list="no tiene permisos para ver los productos";
     }
-    initViewCardOption(){
+    initViewCard(){
         this.viewCardOption.field=[0,3,6];
         this.viewCardOption.offset=3;
+        this.viewCardOption.endpoint=this.endpoint;
         this.viewCardOption.class="col-lg-4 col-md-4 col-xs-12 col-sm-12";
         this.viewCardOption.actions={};
         this.viewCardOption.actions.delete = {
@@ -231,6 +244,7 @@ export class User extends RestController implements OnInit{
             'message': 'wii imprimir',
             'keyAction':'description'
         };
+
     }
 
     public image:string;
