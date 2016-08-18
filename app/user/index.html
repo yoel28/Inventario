@@ -15,7 +15,7 @@
 
             <div *ngIf="viewOptions.permissions.list"  class="box-body">
                 <div *ngIf=" dataList && dataList.count > 0 ">
-
+                    <card [dataList]="dataList" [rules]="rules" [params]="viewCardOption" ></card>
                 </div>
                 <div *ngIf="dataList && dataList.count == 0">
                     <div class="alert alert-warning alert-dismissable">
