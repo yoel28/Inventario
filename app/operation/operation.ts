@@ -19,12 +19,14 @@ import {SMDropdown} from "../common/xeditable";
 export class Operation extends RestController implements OnInit {
 
     
-    public lastLocaltion ='';
+    public lastLocaltion :any={};
     public form_operation:ControlGroup;
     public tipe_actions :any={};
     public producto:Control;
     public ubicacion:Control;
     public tipoAccion:Control;
+    public listAccion=[];
+    public accionList="";
 
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService, public formBuilder:FormBuilder) {
 
@@ -34,17 +36,32 @@ export class Operation extends RestController implements OnInit {
 
 
 
-    getResult()
-    {   let that=this;
+    getResult(event)
+    {
+        event.preventDefault();
+        let that=this;
         if(!this.form_operation.valid)
         {
             this.toastr.error("por favor ingrese un tipo de accion y un codigo de barras");
         }
         else{
+
         let successCallback= response => {
+
+
             if(response.status==200){
-                that.ubicacion.updateValue(response.json().code)
+                this.toastr.success("Ubicacion cargada");
+                that.ubicacion.updateValue(response.json().id)
+                that.lastLocaltion.name=response.json().title;
+                that.lastLocaltion.id=response.json().id;
             }
+            else if(response.status==201){
+                this.toastr.success("accion realizada");
+
+                that.listAccion.push({"Producto":that.producto.value,"Ubicacion":that.lastLocaltion.name,"Accion":this.accionList});
+            }
+
+            this.producto.updateValue(null);
 
         }
         this.httputils.doPost('/acciones/',JSON.stringify(this.form_operation.value),successCallback, this.error);
@@ -59,10 +76,7 @@ export class Operation extends RestController implements OnInit {
         {
             this.tipoAccion.updateValue(value);
             let index = this.dataList.list.findIndex(obj=>obj.id == value);
-            if(index >-1)
-            {
-                this.lastLocaltion = this.dataList.list[index].title;
-            }
+            this.accionList = this.dataList.list[index].title;
         }
 
     }

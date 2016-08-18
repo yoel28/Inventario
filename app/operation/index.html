@@ -2,10 +2,6 @@
     <section class="content">
         <div class="box">
 
-
-
-
-
             <div class="box-body">
 
                 <div *ngIf="lastLocaltion && lastLocaltion.name" class="form-group">
@@ -13,8 +9,8 @@
 
                 </div>
 
-                <form role="form" [ngFormModel]="form_operation" (submit)="getResult()">
-                    <button class="hidden" (submit)="getResult()"></button>
+                <form role="form" [ngFormModel]="form_operation" (submit)="getResult($event)">
+                    <button class="hidden" (submit)="getResult($event)"></button>
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label for="usr">Codigo de Barras:</label>
@@ -31,6 +27,22 @@
                             </select>
                         </div>
                     </div>
+                    <div *ngIf="listAccion && listAccion.length > 0">
+                        <h3>Historial de acciones realizadas</h3>
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <td>Codigo de Producto</td><td>Ubicacion</td><td>Accion</td>
+                            </tr>
+                            </thead>
+                            <tbody *ngFor="let carga of listAccion">
+                            <tr>
+                                <td>{{carga.Producto}}</td><td>{{carga.Ubicacion}}</td><td>{{carga.Accion}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
                 </form>
 
 

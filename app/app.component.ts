@@ -67,6 +67,8 @@ export class AppComponent extends RestController implements OnInit{
       super(http)
         localStorage.setItem('urlAPI','http://dev.zippyttech.com:8080/api');
         localStorage.setItem('url','http://dev.zippyttech.com:8080/');
+      /*localStorage.setItem('urlAPI','http://192.168.0.95:8080/api');
+        localStorage.setItem('url','http://192.168.0.95:8080/');*/
     let that=this;
     router.subscribe(
         function(data){
@@ -227,28 +229,16 @@ export class AppComponent extends RestController implements OnInit{
             'title':'ACL'
 
         });
+
         this.menuItems.push({
             'visible':this.myglobal.existsPermission("1"),
+            'routerLink':'Operation',
             'icon':'fa fa-list',
-            'title':'Transaccion',
-            'key':'menu1',
-            'treeview':[
-                {
-                    'visible':this.myglobal.existsPermission("1"),
-                    'icon':'fa fa-list',
-                    'title':'entrada',
-                    'routerLink':'User'
-                },
-                {
-                    'visible':this.myglobal.existsPermission("1"),
-                    'icon':'fa fa-list',
-                    'title':'salida',
-                    'routerLink':'User'
-                }
-
-            ]
+            'title':'Operacion'
 
         });
+
+
     }
     menuItemsVisible(menu){
         let data=[];
