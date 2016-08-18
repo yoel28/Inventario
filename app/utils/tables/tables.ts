@@ -35,6 +35,8 @@ export class Tables extends RestController implements OnInit {
 
     public dataSave :any={};
 
+    //la cantidad de acciones que posee la talbla
+    public keyActions =[];
 
 
     constructor(public _formBuilder: FormBuilder,public http:Http,public toastr: ToastsManager, public myglobal:globalService) {
@@ -44,6 +46,7 @@ export class Tables extends RestController implements OnInit {
     ngOnInit()
     {
         this.initForm();
+        this.keyActions=Object.keys(this.params.actions);
         this.setEndpoint(this.params.endpoint);
     }
 
