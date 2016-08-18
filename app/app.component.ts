@@ -229,28 +229,16 @@ export class AppComponent extends RestController implements OnInit{
             'title':'ACL'
 
         });
+
         this.menuItems.push({
             'visible':this.myglobal.existsPermission("1"),
+            'routerLink':'Operation',
             'icon':'fa fa-list',
-            'title':'Transaccion',
-            'key':'menu1',
-            'treeview':[
-                {
-                    'visible':this.myglobal.existsPermission("1"),
-                    'icon':'fa fa-list',
-                    'title':'entrada',
-                    'routerLink':'User'
-                },
-                {
-                    'visible':this.myglobal.existsPermission("1"),
-                    'icon':'fa fa-list',
-                    'title':'salida',
-                    'routerLink':'User'
-                }
-
-            ]
+            'title':'Operacion'
 
         });
+
+
     }
     menuItemsVisible(menu){
         let data=[];
