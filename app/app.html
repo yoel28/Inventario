@@ -96,56 +96,27 @@
 
                     <li class="header" ><i class="fa fa-circle text-success"></i> {{myglobal.user.email}}</li>
 
-
-
-                    <li class="treeview" [class.active]="activeMenuId=='trans'"
-                        *ngIf="myglobal.existsPermission('21') || myglobal.existsPermission('14')
-                        || myglobal.existsPermission('158') || myglobal.existsPermission('159')"
+                    <li  *ngFor="let item of menuItemsVisible(menuItems)"
+                         [class.treeview]="item.treeview"
+                         [class.active]="item.key && activeMenuId==item.key"
                     >
-                        <a (click)="activeMenu($event,'trans')">
-                            <i class="fa fa-gears"></i>
-                            <span>Transacciones</span>
+                        <a *ngIf="item.routerLink" href="#" [routerLink]="[item.routerLink]">
+                            <i class="{{item.icon}}"></i>
+                            <span>{{item.title}}</span>
+                        </a>
+                        <a *ngIf="item.key" (click)="activeMenu($event,item.key)">
+                            <i class="{{item.icon}}"></i>
+                            <span>{{item.title}}</span>
                             <i class="fa fa-angle-left pull-right"></i>
                         </a>
-                        <ul class="treeview-menu">
-
-                            <li *ngIf="myglobal.existsPermission('161')">
-                                <a>
-                                    <i class="fa fa-sign-in"></i> <span>Entrada</span>
+                        <ul *ngIf="item.treeview" class="treeview-menu">
+                            <li  *ngFor="let subItem of menuItemsVisible(item.treeview)">
+                                <a *ngIf="subItem.routerLink" href="#" [routerLink]="[subItem.routerLink]">
+                                    <i class="{{subItem.icon}}"></i>
+                                    <span>{{subItem.title}}</span>
                                 </a>
                             </li>
-                            <li *ngIf="myglobal.existsPermission('162')">
-                                <a>
-                                    <i class="fa fa-sign-out"></i> <span>Salida</span>
-                                </a>
-                            </li>
-
                         </ul>
-                    </li>
-                    <li *ngIf="myglobal.existsPermission('162')">
-                        <a href="#" [routerLink]="['Product']">
-                            <i class="fa fa-product-hunt"></i> <span>Productos</span>
-                        </a>
-                    </li>
-                    <li *ngIf="myglobal.existsPermission('162')">
-                        <a href="#" [routerLink]="['Location_product']">
-                            <i class="fa fa-product-hunt"></i> <span>Ubicacion</span>
-                        </a>
-                    </li>
-                    <li *ngIf="myglobal.existsPermission('162')">
-                        <a href="#" [routerLink]="['Client']">
-                            <i class="fa fa-product-hunt"></i> <span>Cliente</span>
-                        </a>
-                    </li>
-                    <li *ngIf="myglobal.existsPermission('162')">
-                        <a href="#" [routerLink]="['Roles']">
-                            <i class="fa fa-product-hunt"></i> <span>Roles</span>
-                        </a>
-                    </li>
-                    <li *ngIf="myglobal.existsPermission('162')">
-                        <a href="#" [routerLink]="['Permissions']">
-                            <i class="fa fa-product-hunt"></i> <span>Permisos</span>
-                        </a>
                     </li>
                 </ul>
                 <!-- /.sidebar-menu -->
