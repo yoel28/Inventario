@@ -21,6 +21,7 @@ export class BrandProduct extends RestController implements OnInit {
 
 
     public rules: any = {};
+    public ruleObject: any = {};
     public paramsTable:any={};
     public paramsSearch:any = {};
     public paramsSave :any ={};
@@ -133,19 +134,18 @@ export class BrandProduct extends RestController implements OnInit {
     initSearch() {
 
         this.paramsSearch= {
-
-            //TODO apregar el permiso
-            'permissions':'1',
+            'permissions':this.permissions['list'],
             'title': this.viewOptions["title"],
             'idModal': "searchBrandProduct",
             'endpoint': "/search/marcas/",
             'placeholderForm': "Ingrese la marca de producto",
-            'label': {name: "title: ", detail: "detail: "},
+            'label': {'title': "titulo: ", 'detail': "detalle: "},
             'msg': {
                 'errors': {
                     'noAuthorized': 'No posee permisos para esta accion',
                 },
             },
+            'field':'marca',
             'where':'',
             'imageGuest':'/assets/img/truck-guest.png'
         };
@@ -173,6 +173,24 @@ export class BrandProduct extends RestController implements OnInit {
         this.initSaveRules();
         this.initSearch();
         this.initPermissions();
+        this.initRuleObject();
+    }
+    initRuleObject(){
+        this.ruleObject={
+            'icon':'fa fa-list',
+            "type": "text",
+            "key": "marca",
+            "title": "Marca",
+            'object':true,
+            "placeholder": "Ingrese el codigo de la marca",
+            'paramsSaveSearch':this.paramsSearch,
+            'msg':{
+                'errors':{
+                    'object':'La marca no esta registrado',
+                    'required':'El campo es obligatorio'
+                },
+            }
+        }
     }
 
     @ViewChild(Tables)

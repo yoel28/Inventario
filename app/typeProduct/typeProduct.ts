@@ -20,7 +20,7 @@ export class TypeProduct extends RestController implements OnInit {
 
 
     public rules: any = {};
-    public rulesObject: any = {};
+    public ruleObject: any = {};
     public paramsTable:any={};
     public paramsSearch:any = {};
     public paramsSave :any ={};
@@ -124,7 +124,7 @@ export class TypeProduct extends RestController implements OnInit {
         this.viewOptions["errors"].list="no tiene permisos para ver los tipo de productos";
         this.viewOptions["button"]=[];
         this.viewOptions["button"].push({
-            'title':'Agregar tipo de producto',
+            'title':'Agregar',
             'class':'btn btn-primary',
             'icon':'fa fa-plus',
             'modal':this.paramsSave.idModal
@@ -134,19 +134,18 @@ export class TypeProduct extends RestController implements OnInit {
     initSearch() {
 
         this.paramsSearch= {
-
-            //TODO apregar el permiso
-            'permissions':'1',
+            'permissions':this.permissions['list'],
             'title': this.viewOptions["title"],
             'idModal': "searchProductType",
             'endpoint': "/search/tipo/productos/",
             'placeholderForm': "Ingrese el tipo de producto",
-            'label': {name: "title: ", detail: "detail: "},
+            'label': {'title': "titulo: ",'detail': "detalle: "},
             'msg': {
                 'errors': {
                     'noAuthorized': 'No posee permisos para esta accion',
                 },
             },
+            'field':'tipoProducto',
             'where':'',
             'imageGuest':'/assets/img/truck-guest.png'
         };
@@ -174,6 +173,24 @@ export class TypeProduct extends RestController implements OnInit {
         this.initSaveRules();
         this.initSearch();
         this.initPermissions();
+        this.initRuleObject();
+    }
+    initRuleObject(){
+        this.ruleObject={
+            'icon':'fa fa-list',
+            "type": "text",
+            "key": "tipoProducto",
+            "title": "Tipo de producto",
+            'object':true,
+            "placeholder": "Ingrese el codigo del tipo",
+            'paramsSaveSearch':this.paramsSearch,
+            'msg':{
+                'errors':{
+                    'object':'El tipo no esta registrado',
+                    'required':'El campo es obligatorio'
+                },
+            }
+        }
     }
 
     @ViewChild(Tables)

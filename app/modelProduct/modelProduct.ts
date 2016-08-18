@@ -20,6 +20,7 @@ export class ModelProduct extends RestController implements OnInit {
 
 
     public rules: any = {};
+    public ruleObject: any = {};
     public paramsTable:any={};
     public paramsSearch:any = {};
     public paramsSave :any ={};
@@ -133,30 +134,23 @@ export class ModelProduct extends RestController implements OnInit {
     initSearch() {
 
         this.paramsSearch= {
-
-            //TODO apregar el permiso
-            'permissions':'1',
+            'permissions':this.permissions['list'],
             'title': this.viewOptions["title"],
             'idModal': "searchProductModel",
             'endpoint': "/search/modelos",
             'placeholderForm': "Ingrese el modelo de producto",
-            'label': {name: "title: ", detail: "detail: "},
+            'label': {'title': "titulo: ", 'detail': "detalle: "},
             'msg': {
                 'errors': {
                     'noAuthorized': 'No posee permisos para esta accion',
                 },
             },
+            'field':'modelo',
             'where':'',
             'imageGuest':'/assets/img/truck-guest.png'
         };
     }
 
-    initPermissions() {
-        this.permissions['list']= this.myglobal.existsPermission(1);
-        this.permissions['udpate']= this.myglobal.existsPermission(1);
-        this.permissions['delete']= this.myglobal.existsPermission(1);
-    }
-    
     initPermissions()
     {
         this.permissions['list']= this.myglobal.existsPermission(1);
@@ -182,6 +176,24 @@ export class ModelProduct extends RestController implements OnInit {
         this.initSaveRules();
         this.initSearch();
         this.initPermissions();
+        this.initRuleObject();
+    }
+    initRuleObject(){
+        this.ruleObject={
+            'icon':'fa fa-list',
+            "type": "text",
+            "key": "modelo",
+            "title": "Modelo",
+            'object':true,
+            "placeholder": "Ingrese el codigo del modelo",
+            'paramsSaveSearch':this.paramsSearch,
+            'msg':{
+                'errors':{
+                    'object':'El modelo no esta registrado',
+                    'required':'El campo es obligatorio'
+                },
+            }
+        }
     }
     
     @ViewChild(Tables)
