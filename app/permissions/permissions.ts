@@ -73,38 +73,6 @@ export class Permissions extends RestController implements OnInit {
         //TODO hacer que los update se realcionen con los permisos
         //rules de la clase
         let update =true; /*this.myglobal.existsPermission("1");*/
-        this.rules["accion"] = {
-            "update": update,
-            "visible": true,
-            'required':true,
-            'icon':'fa fa-barcode',
-            "type": "text",
-            "key": "accion",
-            "title": "Accion",
-            "placeholder": "ingrese la accion",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio'
-                },
-            },
-        };
-
-        this.rules["controlador"] = {
-            "update": update,
-            "visible": true,
-            'required':true,
-            'icon':'fa fa-list',
-            "type": "text",
-            'permissions':'1',
-            "key": "controlador",
-            "title": "Controlador",
-            "placeholder": "ingrese el controlador",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                },
-            },
-        };
 
         this.rules["module"] = {
             "update": update,
@@ -122,7 +90,6 @@ export class Permissions extends RestController implements OnInit {
                 },
             }
         };
-
         this.rules["title"] = {
             "update": update,
             "visible": true,
@@ -140,7 +107,6 @@ export class Permissions extends RestController implements OnInit {
                 },
             }
         };
-
         this.rules["detail"] = {
             "update": update,
             "visible": true,
@@ -156,6 +122,41 @@ export class Permissions extends RestController implements OnInit {
                 },
             }
         };
+        this.rules["controlador"] = {
+            "update": update,
+            "visible": true,
+            'required':true,
+            'icon':'fa fa-list',
+            "type": "text",
+            'permissions':'1',
+            "key": "controlador",
+            "title": "Controlador",
+            "placeholder": "ingrese el controlador",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio',
+                },
+            },
+        };
+        this.rules["accion"] = {
+            "update": update,
+            "visible": true,
+            'required':true,
+            'icon':'fa fa-barcode',
+            "type": "text",
+            "key": "accion",
+            "title": "Accion",
+            "placeholder": "ingrese la accion",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio'
+                },
+            },
+        };
+
+
+
+
     }
 
 
