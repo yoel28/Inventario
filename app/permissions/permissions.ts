@@ -50,7 +50,7 @@ export class Permissions extends RestController implements OnInit {
             'title': 'Eliminar',
             'permission': '1',
             'message': 'Esta seguro de eliminar',
-            'keyAction': 'description'
+            'keyAction': 'title'
         };
 
     }
