@@ -96,7 +96,7 @@ export class AppComponent extends RestController implements OnInit{
     );//this.onSocket();
   }
     ngOnInit(){
-
+        this.loadMenu();
     }
 
   public urlPublic=['AccountLogin','AccountActivate','AccountRecover','AccountRecoverPassword'];
@@ -141,9 +141,80 @@ export class AppComponent extends RestController implements OnInit{
             this.activeMenuId=id;
 
     }
-    public menu={};
+    public menuItems=[];
     loadMenu(){
-        
+        this.menuItems.push({
+            'visible':this.myglobal.existsPermission("1"),
+            'routerLink':'Product',
+            'icon':'fa fa-product-hunt',
+            'title':'Productos'
+
+        });
+        this.menuItems.push({
+            'visible':this.myglobal.existsPermission("1"),
+            'routerLink':'Location_product',
+            'icon':'fa fa-list',
+            'title':'Ubicacion'
+
+        });
+        this.menuItems.push({
+            'visible':this.myglobal.existsPermission("1"),
+            'routerLink':'Client',
+            'icon':'fa fa-list',
+            'title':'Cliente'
+
+        });
+        this.menuItems.push({
+            'visible':this.myglobal.existsPermission("1"),
+            'routerLink':'Roles',
+            'icon':'fa fa-list',
+            'title':'Roles'
+
+        });
+        this.menuItems.push({
+            'visible':this.myglobal.existsPermission("1"),
+            'routerLink':'Permissions',
+            'icon':'fa fa-list',
+            'title':'Permisos'
+
+        });
+        this.menuItems.push({
+            'visible':this.myglobal.existsPermission("1"),
+            'routerLink':'User',
+            'icon':'fa fa-list',
+            'title':'Usuarios'
+
+        });
+        this.menuItems.push({
+            'visible':this.myglobal.existsPermission("1"),
+            'icon':'fa fa-list',
+            'title':'Transaccion',
+            'key':'menu1',
+            'treeview':[
+                {
+                    'visible':this.myglobal.existsPermission("1"),
+                    'icon':'fa fa-list',
+                    'title':'entrada',
+                    'routerLink':'User'
+                },
+                {
+                    'visible':this.myglobal.existsPermission("1"),
+                    'icon':'fa fa-list',
+                    'title':'salida',
+                    'routerLink':'User'
+                }
+
+            ]
+
+        });
+    }
+    menuItemsVisible(menu){
+        let data=[];
+        menu.forEach(obj=>{
+            if(obj.visible)
+                data.push(obj)
+        })
+        return data;
     }
     
 }
