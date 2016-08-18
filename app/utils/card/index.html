@@ -13,28 +13,26 @@
                                                 aria-haspopup="true" aria-expanded="false">
                                             <i class="fa fa-gears fa-lg"></i>
                                         </button>
-                                        <!--<ul role="menu" class="dropdown-menu text-left submenu-config">-->
-                                            <!--<li>-->
-                                                <!--<a (click)="onPatch('accountLocked',data)">-->
-                                                    <!--<span class="fa fa-list"></span>-->
-                                                    <!--{{data.accountLocked?"Verificar":"No Verificado"}}-->
-                                                <!--</a>-->
-                                            <!--</li>-->
-                                            <!--<li>-->
-                                                <!--<a (click)="onLock('enabled',data)">-->
-                                                    <!--<span class="fa fa-warning"></span>-->
-                                                    <!--{{data.enabled?"Bloquear":"Habilitar"}}-->
-                                                <!--</a>-->
-                                            <!--</li>-->
-                                            <!--<li>-->
-                                                <!--<a data-toggle="modal"-->
-                                                   <!--[attr.data-target]="'#modalDelete'"-->
-                                                   <!--(click)="dataSelect = data">-->
-                                                    <!--<span class="fa fa-trash"></span>-->
-                                                    <!--Eliminar-->
-                                                <!--</a>-->
-                                            <!--</li>-->
-                                        <!--</ul>-->
+                                        <ul role="menu" class="dropdown-menu text-left submenu-config">
+                                            <li *ngFor="let key of actionPermissionKey()">
+                                                <a *ngIf="key == 'delete'"
+                                                   data-toggle="modal" [attr.data-target]="'#modalDelete'"
+                                                   (click)="dataSelect = data" href="#">
+                                                    <i class="{{params.actions[key].icon}}"></i>
+                                                    &nbsp;{{params.actions[key].title}}
+                                                </a>
+                                                <a *ngIf="key == 'onPatch' && params.actions[key].type=='boolean'"
+                                                        (click)="onPatch(params.actions[key].field,data)">
+                                                    <span class="{{params.actions[key].icon}}"></span>
+                                                    {{data[key]?params.actions[key].titleTrue:params.actions[key].titleFalse}}
+                                                </a>
+                                                <a *ngIf="key == 'onLock'"
+                                                   (click)="onLock('enabled',data)">
+                                                   <span class="{{params.actions[key].icon}}"></span>
+                                                    {{data.enabled?params.actions[key].titleTrue:params.actions[key].titleFalse}}
+                                                </a>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center separacion">
@@ -78,6 +76,31 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="params && params.actions && params.actions.delete && myglobal.existsPermission(params.actions.delete.permission)">
+    <div class="modal fade" [attr.id]="'modalDelete'" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header btn-red text-center">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel"><i
+                            class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h4>
+                </div>
+                <div class="modal-body">
+                    {{params.actions.delete.message}} <strong>{{dataSelect[params.actions.delete.keyAction]}}</strong> ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outlined btn-red fa fa-close" data-dismiss="modal">&nbsp;Cancelar</button>
+                    <button (click)="onDelete($event,dataSelect.id)" data-dismiss="modal" type="button"
+                            class="btn btn-red fa fa-trash">&nbsp;Eliminar
+                    </button>
                 </div>
             </div>
         </div>
