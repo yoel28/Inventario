@@ -4,7 +4,7 @@ import {RestController} from "../../common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
-import {Xcropit} from "../../common/xeditable";
+import {Xcropit, Xfile} from "../../common/xeditable";
 
 @Component({
     selector: 'save',
@@ -12,7 +12,7 @@ import {Xcropit} from "../../common/xeditable";
     styleUrls: ['app/utils/save/style.css'],
     inputs:['params','rules'],
     outputs:['save'],
-    directives:[Xcropit]
+    directives:[Xcropit,Xfile]
 })
 export class Save extends RestController implements OnInit{
 
