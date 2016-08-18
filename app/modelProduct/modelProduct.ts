@@ -1,4 +1,4 @@
-import {Component,Injectable, OnInit} from "@angular/core";
+import {Component,Injectable, OnInit,ViewChild} from "@angular/core";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {RestController} from "../common/restController";
@@ -11,6 +11,7 @@ import {Save} from "../utils/save/save";
     selector: 'model-product',
     templateUrl: 'app/modelProduct/index.html',
     styleUrls: ['app/modelProduct/style.css'],
+    directives: [Tables,Save],
     pipes: [TranslatePipe],
     providers: [TranslateService]
 })
@@ -18,10 +19,13 @@ import {Save} from "../utils/save/save";
 export class ModelProduct extends RestController implements OnInit {
 
 
+    public rules: any = {};
+    public paramsTable:any={};
     public paramsSearch:any = {};
-
     public paramsSave :any ={};
     public rulesSave :any={};
+    public viewOptions:any={};
+    public permissions:any={};
 
 
     constructor(public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
@@ -37,18 +41,106 @@ export class ModelProduct extends RestController implements OnInit {
         this.translate.use(userLang);
     }
 
+    initRules() {
+
+        //TODO hacer que los update se realcionen con los permisos
+
+        let update =this.myglobal.existsPermission("1");
+        this.rules["title"] = {
+            "update": update,
+            "visible": true,
+            'required':true,
+            'icon':'fa fa-list',
+            "type": "text",
+            "key": "title",
+            "title": "Titulo",
+            "placeholder": "ingrese el nombre del titulo",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio'
+                },
+            }
+        };
+        this.rules["detail"] = {
+            "update": update,
+            "visible": true,
+            'icon':'fa fa-list',
+            "type": "text",
+            "key": "detail",
+            "title": "detalle",
+            "placeholder": "ingrese el detalle",
+            'msg':{
+                'errors':{
+                },
+            }
+        };
+    }
+
+    initParamsTable(){
+        this.paramsTable.endpoint=this.endpoint;
+        this.paramsTable.actions={};
+        this.paramsTable.actions.delete = {
+            "icon": "fa fa-trash",
+            "exp": "",
+            'title': 'Eliminar',
+            'permission': '1',
+            'message': '¿ Esta seguro de eliminar el modelo de producto: ',
+            'keyAction':'title'
+        };
+    }
+
+    initSaveRules(){
+
+        this.paramsSave= {
+            title: "Agregar de modelo de producto",
+            idModal: "saveProductType",
+            endpoint: this.endpoint,
+        }
+
+        this.rulesSave = {
+            'title': {
+                'type': this.rules['title'].type,
+                'required':true,
+                'title': this.rules['title'].title,
+                'placeholder': this.rules['title'].placeholder,
+                'msg':this.rules['title'].msg
+            },
+            'detail': {
+                'type': this.rules['detail'].type,
+                'title': this.rules['detail'].title,
+                'placeholder': this.rules['detail'].placeholder,
+                'msg':this.rules['detail'].msg
+            }
+        };
+
+    }
+
+    initOptions() {
+        this.viewOptions["title"] = 'Modelo de producto';
+        this.viewOptions["permissions"] = {"list": true};/*TODO PERMISO REAL this.myglobal.existsPermission('10')}*/
+        this.viewOptions["errors"] ={};
+        this.viewOptions["errors"].notFound= "no se encontraron resultados";
+        this.viewOptions["errors"].list="no tiene permisos para ver los tipo de productos";
+        this.viewOptions["button"]=[];
+        this.viewOptions["button"].push({
+            'title':'Agregar modelo de producto',
+            'class':'btn btn-primary',
+            'icon':'fa fa-plus',
+            'modal':this.paramsSave.idModal
+        });
+    }
 
     initSearch() {
 
-        this.paramsSearch = {
+        this.paramsSearch= {
 
             //TODO apregar el permiso
-            'permissions': '1',
-            'title': "Modelo Producto",
-            'idModal': "searchModelProduct",
-            'endpointForm': "/search/modelos/",
-            'placeholderForm': "Ingrese del modelo producto",
-            'labelForm': {name: "Nombre: ", detail: "Detalle: "},
+            'permissions':'1',
+            'title': this.viewOptions["title"],
+            'idModal': "searchProductModel",
+            'endpoint': "/search/modelos",
+            'placeholderForm': "Ingrese el modelo de producto",
+            'label': {name: "title: ", detail: "detail: "},
             'msg': {
                 'errors': {
                     'noAuthorized': 'No posee permisos para esta accion',
@@ -59,37 +151,52 @@ export class ModelProduct extends RestController implements OnInit {
         };
     }
 
-    initSaveRules()
+    initPermissions() {
+        this.permissions['list']= this.myglobal.existsPermission(1);
+        this.permissions['udpate']= this.myglobal.existsPermission(1);
+        this.permissions['delete']= this.myglobal.existsPermission(1);
+    }
+    
+    initPermissions()
     {
-
-        this.paramsSave= {
-            title: "Agregar modelo de producto",
-            idModal: "searchProductos",
-            endpoint: this.endpoint,
-        }
-        
-        this.rulesSave = {
-            'title': {
-                'type': 'text',
-                'display': null,
-                'title': 'Nombre de titulo',
-                'placeholder': 'Ingrese el titulo',
-                'search': true
-            },
-            'detail': {
-                'type': 'text',
-                'display': null,
-                'title': 'Detalle',
-                'placeholder': 'Ingrese el  detalle',
-                'search': true
-            }
-        };
-        
+        this.permissions['list']= this.myglobal.existsPermission(1);
+        this.permissions['udpate']= this.myglobal.existsPermission(1);
+        this.permissions['delete']= this.myglobal.existsPermission(1);
+    }
+    
+    ngOnInit() {
+        this.initLang();
+        this.initRules();
+        this.initParamsTable();
+        this.initSaveRules();
+        this.initOptions();
+        this.initSearch();
+        this.loadData();
     }
 
-
-    ngOnInit() {
+    
+    
+    externalRules(){
+        this.initRules();
+        this.initParamsTable();
+        this.initSaveRules();
         this.initSearch();
+        this.initPermissions();
+    }
+    
+    @ViewChild(Tables)
+    tables:Tables;
+    asignData(data) {
+        if(this.dataList.page && this.dataList.page.length>1)
+        {
+            this.dataList.list.pop();
+        }
+        this.dataList.list.unshift(data);
+
+        if(this.tables )
+        {
+            Object.assign(this.tables.dataList,this.dataList);
+        }
     }
 
 }

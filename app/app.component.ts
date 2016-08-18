@@ -21,6 +21,9 @@ import {Roles} from "./roles/roles";
 import {Permissions} from "./permissions/permissions";
 import {Operation} from "./operation/operation";
 import {PermissionsAcl} from "./permissions/acl";
+import {TypeProduct} from "./typeProduct/typeProduct";
+import {BrandProduct} from "./brandProduct/brand";
+import {ModelProduct} from "./modelProduct/modelProduct";
 
 @Component({
   selector: 'my-app',
@@ -47,6 +50,9 @@ import {PermissionsAcl} from "./permissions/acl";
   { path: '/permissions',   name: 'Permissions', component: Permissions },
   { path: '/permissions/acl',   name: 'PermissionsAcl', component: PermissionsAcl },
   { path: '/operation',   name: 'Operation', component: Operation },
+  { path: '/typeProduct',   name: 'TypeProduct', component: TypeProduct },
+  { path: '/brandProduct',   name: 'BrandProduct', component: BrandProduct },
+  { path: '/modelProduct',   name: 'ModelProduct', component: ModelProduct },
   { path: '/**', redirectTo: ['Product'] }
 
 ])
@@ -59,10 +65,8 @@ export class AppComponent extends RestController implements OnInit{
   constructor(public router: Router,http: Http,public myglobal:globalService,public toastr: ToastsManager) {
     
       super(http)
-        //localStorage.setItem('urlAPI','http://dev.zippyttech.com:8080/api');
-        //localStorage.setItem('url','http://dev.zippyttech.com:8080/');
-      localStorage.setItem('urlAPI','http://dev.zippyttech.com:8080/api');
-      localStorage.setItem('url','http://dev.zippyttech.com:8080/');
+        localStorage.setItem('urlAPI','http://dev.zippyttech.com:8080/api');
+        localStorage.setItem('url','http://dev.zippyttech.com:8080/');
     let that=this;
     router.subscribe(
         function(data){
@@ -149,9 +153,36 @@ export class AppComponent extends RestController implements OnInit{
     loadMenu(){
         this.menuItems.push({
             'visible':this.myglobal.existsPermission("1"),
-            'routerLink':'Product',
-            'icon':'fa fa-product-hunt',
-            'title':'Productos'
+            'icon':'fa fa-list',
+            'title':'Panel de Productos',
+            'key':'menu2',
+            'treeview':[
+                {
+                    'visible':this.myglobal.existsPermission("1"),
+                    'icon':'fa fa-list',
+                    'title':'Producto',
+                    'routerLink':'Product'
+                },
+                {
+                    'visible':this.myglobal.existsPermission("1"),
+                    'icon':'fa fa-list',
+                    'title':'Tipo de prodcuto',
+                    'routerLink':'TypeProduct'
+                },
+                {
+                    'visible':this.myglobal.existsPermission("1"),
+                    'icon':'fa fa-list',
+                    'title':'Marca de producto',
+                    'routerLink':'BrandProduct'
+                },
+                {
+                    'visible':this.myglobal.existsPermission("1"),
+                    'icon':'fa fa-list',
+                    'title':'modelo de producto',
+                    'routerLink':'ModelProduct'
+                }
+
+            ]
 
         });
         this.menuItems.push({

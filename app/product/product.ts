@@ -32,24 +32,17 @@ export class Product extends RestController implements OnInit {
     public rulesSearch :any={};
     public externalSave :any={};
 
-
-
-
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,  @Inject(TypeProduct) public typesProduct,@Inject(BrandProduct) public brandProduct, @Inject(ModelProduct) public modelProduct) {
         
         super(http, toastr);
         this.setEndpoint("/productos/");
 
         //Search para los objetos en el momento de hacer un Save
-        typesProduct.initSearch();
-        brandProduct.initSearch();
-        modelProduct.initSearch();
+        typesProduct.externalRules();
+        brandProduct.externalRules();
+        modelProduct.externalRules();
 
 
-        // para agregar dentro de una tabla que  no es la propia
-        typesProduct.initSaveRules();
-        brandProduct.initSaveRules();
-        modelProduct.initSaveRules();
     
     }
 
@@ -60,34 +53,20 @@ export class Product extends RestController implements OnInit {
         this.translate.use(userLang);
     }
 
-    initParamsTable(){
-        this.paramsTable.endpoint=this.endpoint;
-        this.paramsTable.actions={};
-        this.paramsTable.actions.delete = {
-            "icon": "fa fa-trash",
-            "exp": "",
-            'title': 'Eliminar',
-            'permission': '1',
-            'message': 'Esta seguro de eliminar',
-            'keyAction':'description'
-        };
-        this.paramsTable.actions.print = {
-            "icon": "fa fa-print",
-            "exp": "",
-            'title': 'Imprimir',
-            'permission': '1',
-            'message': 'wii imprimir',
-            'keyAction':'description'
-        };
+    initExternalSave() {
+
+        this.externalSave["tipoProducto"] = {"paramsSave":this.typesProduct.paramsSave,"rulesSave":this.typesProduct.rulesSave}
+        this.externalSave["marca"] = {"paramsSave":this.brandProduct.paramsSave,"rulesSave":this.brandProduct.rulesSave}
+        this.externalSave["modelo"] = {"paramsSave":this.modelProduct.paramsSave,"rulesSave":this.modelProduct.rulesSave}
 
     }
 
-    initOptions() {
-        this.viewOptions["title"] = 'productos';
-        this.viewOptions["permissions"] = {"list": true};/*TODO PERMISO REAL this.myglobal.existsPermission('10')}*/
-        this.viewOptions["errors"] ={};
-        this.viewOptions["errors"].notFound= "no se encontraron resultados";
-        this.viewOptions["errors"].list="no tiene permisos para ver los productos";
+    initExternalRulesSearch() {
+
+        this.rulesSearch["tipoProductoTitle"] = this.typesProduct.paramsSearch;
+        this.rulesSearch["marcaTitle"] = this.brandProduct.paramsSearch;
+        this.rulesSearch["modeloTitle"] = this.modelProduct.paramsSearch;
+
     }
 
     initRules() {
@@ -129,63 +108,48 @@ export class Product extends RestController implements OnInit {
                 },
             }
         };
-        this.rules["tipoProductoTitle"] = {
-            "update": update,
-            "visible": true,
-            'required':true,
-            'icon':'fa fa-list',
-            "type": "text",
-            "object": true,
-            'permissions':'1',
-            "key": "tipoProducto",
-            "title": "Tipo Producto",
-            "placeholder": "ingrese el tipo",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                    'object':'Tipo no esta registrado',
-                },
-            },
+
+        this.rules["tipoProductoTitle"] = this.typesProduct.rules['title'];
+        this.rules["tipoProductoTitle"].object=true;
+        this.rules["tipoProductoTitle"].key="tipoProducto";
+        this.rules["tipoProductoTitle"].permissions=this.typesProduct.permissions['list'];;
+        this.rules["modeloTitle"] = this.modelProduct.rules['title'];
+        this.rules["modeloTitle"].key="modelo";
+        this.rules["modeloTitle"].object=true;
+        this.rules["modeloTitle"].permissions=this.modelProduct.permissions['list'];
+        this.rules["marcaTitle"] = this.brandProduct.rules['title'];
+        this.rules["marcaTitle"].object=true;
+        this.rules["marcaTitle"].key="marca";
+        this.rules["marcaTitle"].permissions=this.brandProduct.permissions['list'];
+
+
+    }
+    
+    initParamsTable(){
+        this.paramsTable.endpoint=this.endpoint;
+        this.paramsTable.actions={};
+        this.paramsTable.actions.delete = {
+            "icon": "fa fa-trash",
+            "exp": "",
+            'title': 'Eliminar',
+            'permission': '1',
+            'message': 'Esta seguro de eliminar',
+            'keyAction':'description'
         };
-        this.rules["marcaTitle"] = {
-            "update": update,
-            "visible": true,
-            'required':true,
-            'icon':'fa fa-list',
-            "type": "text",
-            "object": true,
-            'permissions':'1',
-            "key": "marca",
-            "title": "Marca de Producto",
-            "placeholder": "ingrese la marca",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                    'object':'Regla no esta registrada',
-                },
-            }
+        this.paramsTable.actions.print = {
+            "icon": "fa fa-print",
+            "exp": "",
+            'title': 'Imprimir',
+            'permission': '1',
+            'message': 'wii imprimir',
+            'keyAction':'description'
         };
-        this.rules["modeloTitle"] = {
-            "update": update,
-            "visible": true,
-            'required':true,
-            'icon':'fa fa-list',
-            "type": "text",
-            "object": true,
-            'permissions':'1',
-            "key": "modelo",
-            "title": "Tipo modelo",
-            "placeholder": "ingrese el modelo",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                    'object':'Modelo no esta registrado',
-                },
-            }
-        };
+
+
+
     }
 
-    initSave() {
+    initSaveRules() {
         //TODO agregar los permisos
         this.paramsSave= {
                         title: "Agregar Productos",
@@ -196,103 +160,83 @@ export class Product extends RestController implements OnInit {
 
         this.rulesSave["code"] = {
             'required':true,
-            'maxLength':5,
-            'icon':'fa fa-barcode',
-            "type": "text",
-            "key": "code",
-            "title": "Codigo producto",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                    'maxlength':'Maximo numero de caracteres 5'
-                },
-            },
-            "placeholder": "ingrese el codigo"
-        };
-        this.rulesSave["detail"] = {
-            'required':true,
-            'icon':'fa fa-list',
-            "type": "text",
-            "key": "detail",
-            "title": "Nombre Producto",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                },
-            },
-            "placeholder": "ingrese el nombre del producto"
+            'maxLength':this.rules["code"].maxLength,
+            'icon':this.rules["code"].icon,
+            "type": this.rules["code"].type,
+            "key": this.rules["code"].key,
+            "title": this.rules["code"].title,
+            'msg':this.rules["code"].msg,
+            "placeholder": this.rules["code"].placeholder
         };
         
+        
+        this.rulesSave["detail"] = {
+            'required':true,
+            'icon':  this.rules["detail"].icon,
+            "type":  this.rules["detail"].type,
+            "key":   this.rules["detail"].detail,
+            "title": this.rules["detail"].title,
+            'msg':   this.rules["detail"].msg ,
+            "placeholder": this.rules["detail"].placeholder
+        };
         this.rulesSave["tipoProducto"] = {
             'required':true,
-            'icon':'fa fa-list',
-            "type": "text",
+            'icon':        this.rules['tipoProductoTitle'].icon,
+            "type":        this.rules['tipoProductoTitle'].type,
             "object": true,
             'permissions':'1',
             "key": "tipoProducto",
-            "title": "Tipo Producto",
-            "placeholder": "ingrese el tipo",
-            'paramsSaveSearch': {
-                'label':{'title':"Placa: ",'detail':"Empresa: "},
-                'endpoint':"/search/tipo/productos/",
-                'where':'',
-                'imageGuest':'/assets/img/truck-guest.png'
-            },
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                    'object':'Tipo no esta registrado',
-                },
-            },
-        };
+            "title":       this.rules['tipoProductoTitle'].title,
+            "placeholder": this.rules['tipoProductoTitle'].placeholder,
+            'paramsSaveSearch': this.typesProduct.paramsSearch,
+            'msg':this.rules['tipoProductoTitle'].msg,
+         };
 
 
         this.rulesSave["marca"] = {
-            'required':true,
-            'icon':'fa fa-list',
-            "type": "text",
-            "object": true,
+            'required':         true,
+            'icon':             this.rules['marcaTitle'].icon,
+            "type":             this.rules['marcaTitle'].type,
+            "object":           true,
             'permissions':'1',
             "key": "marca",
-            "title": "Marca",
-            "placeholder": "ingrese la marca",
-            'paramsSaveSearch': {
-                'label':{'title':"Placa: ",'detail':"Empresa: "},
-                'endpoint':"/search/marcas/",
-                'where':'',
-                'imageGuest':'/assets/img/truck-guest.png'
-            },
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                    'object':'Tipo no esta registrado',
-                },
-            },
+            "title":            this.rules['marcaTitle'].title,
+            "placeholder":      this.rules['marcaTitle'].placeholder,
+            'paramsSaveSearch': this.brandProduct.paramsSearch,
+            'msg':              this.rules['marcaTitle'].msg,
+
         };
 
 
         this.rulesSave["modelo"] = {
             'required':true,
-            'icon':'fa fa-list',
-            "type": "text",
+            'icon':    this.rules['modeloTitle'].icon,
+            "type":    this.rules['modeloTitle'].type,
             "object": true,
             'permissions':'1',
             "key": "modelo",
-            "title": "Modelo",
-            "placeholder": "ingrese el modelo",
-            'paramsSaveSearch': {
-                'label':{'title':"Placa: ",'detail':"Empresa: "},
-                'endpoint':"/search/modelos/",
-                'where':'',
-                'imageGuest':'/assets/img/truck-guest.png'
-            },
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                    'object':'Tipo no esta registrado',
-                },
-            },
+            "title": this.rules['modeloTitle'].title,
+            "placeholder": this.rules['modeloTitle'].placeholder,
+            'paramsSaveSearch': this.modelProduct.paramsSearch,
+            'msg':this.rules['modeloTitle'].msg,
         };
+
+    }
+
+    initOptions() {
+        this.viewOptions["title"] = 'Productos';
+        this.viewOptions["permissions"] = {"list": true};/*TODO PERMISO REAL this.myglobal.existsPermission('10')}*/
+        this.viewOptions["errors"] ={};
+        this.viewOptions["errors"].notFound= "no se encontraron resultados";
+        this.viewOptions["errors"].list="no tiene permisos para ver los productos";
+        this.viewOptions["button"]=[];
+        this.viewOptions["button"].push({
+            'title':'Agegar producto',
+            'class':'btn btn-primary',
+            'icon':'fa fa-plus',
+            'modal':this.paramsSave.idModal
+        });
+
     }
 
     initSearch() {
@@ -301,7 +245,7 @@ export class Product extends RestController implements OnInit {
 
             //TODO apregar el permiso
             'permissions':'1',
-            'title': "Productos",
+            'title': this.viewOptions["title"],
             'idModal': "searchProductos",
             'endpointForm': "/search/productos",
             'placeholderForm': "Ingrese el producto",
@@ -316,34 +260,18 @@ export class Product extends RestController implements OnInit {
         };
     }
 
-    initExternalSave() {
 
-        this.externalSave["tipoProducto"] = {"paramsSave":this.typesProduct.paramsSave,"rulesSave":this.typesProduct.rulesSave}
-        this.externalSave["marca"] = {"paramsSave":this.brandProduct.paramsSave,"rulesSave":this.brandProduct.rulesSave}
-        this.externalSave["modelo"] = {"paramsSave":this.modelProduct.paramsSave,"rulesSave":this.modelProduct.rulesSave}
-
-    }
-
-    initRulesSearch() {
-
-        this.rulesSearch["tipoProductoTitle"] = this.typesProduct.paramsSearch;
-        this.rulesSearch["marcaTitle"] = this.brandProduct.paramsSearch;
-        this.rulesSearch["modeloTitle"] = this.modelProduct.paramsSearch;
-
-    }
-    
     ngOnInit() {
 
-//        let that = this;
         this.initLang();
-        this.initOptions();
+        this.initExternalSave();
+        this.initExternalRulesSearch();
         this.initRules();
         this.initParamsTable();
-        this.initSave();
+        this.initSaveRules();
+        this.initOptions();
         this.initSearch();
-        this.initRulesSearch();
-        this.initExternalSave();
-    
+
         this.loadData();
     
 
