@@ -15,7 +15,7 @@
                                     <div class="form-group input-icon right" *ngIf="!rules[key].hidden">
                                         <div class="col-lg-12">
                                             <div class="row" *ngIf="rules[key].type!='image'">
-                                                <div class="col-lg-12">
+                                                <div [class.col-lg-12]="!rules[key].object" [class.col-lg-10]="rules[key].object" >
                                                     <div class="input-group input-icon right form-group">
                                                         <i class="{{rules[key].icon}} z-index"></i>
                                                         <span class="input-group-addon" [attr.id]="key">{{rules[key].title}}
@@ -44,7 +44,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-2 padding-top-4">
+                                                <div *ngIf="rules[key].object" class="col-lg-2 padding-top-4">
                                                     <button *ngIf="rules[key].object"
                                                             class="btn btn-box-tool fa fa-search text-blue"
                                                             (click)="getLoadSearch($event,rules[key])">
