@@ -154,7 +154,7 @@ export class Tables extends RestController implements OnInit {
 
 
     getDataSearch(data){
-        this.onPatch(this.searchTable.field,this.searchTableData,data);
+        this.onPatch(this.searchTable.field,this.searchTableData,data.id);
     }
 
     actionPermissionKey()
