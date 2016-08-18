@@ -29,10 +29,8 @@ export class Roles extends RestController implements OnInit {
 
 
     constructor(public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
-
         super(http, toastr);
         this.setEndpoint("/roles/");
-
     }
 
     initLang() {
@@ -179,34 +177,6 @@ export class Roles extends RestController implements OnInit {
             },
             "placeholder": "ingrese el nombre del producto"
         };
-
-        /* PERMISOS
-        
-        this.rulesSave["tipoProducto"] = {
-            'required':true,
-            'icon':'fa fa-list',
-            "type": "text",
-            "object": true,
-            'permissions':'1',
-            "key": "tipoProducto",
-            "title": "Tipo Producto",
-            "placeholder": "ingrese el tipo",
-            'paramsSaveSearch': {
-                'label':{'title':"Placa: ",'detail':"Empresa: "},
-                'endpoint':"/search/tipo/productos/",
-                'where':'',
-                'imageGuest':'/assets/img/truck-guest.png'
-            },
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                    'object':'Tipo no esta registrado',
-                },
-            },
-        };*/
-
-
-
     }
 
 
