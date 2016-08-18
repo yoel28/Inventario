@@ -83,7 +83,7 @@ export class Product extends RestController implements OnInit {
             'icon':'fa fa-barcode',
             "type": "text",
             "key": "code",
-            "title": "Codigo producto",
+            "title": "Codigo",
             "placeholder": "ingrese el codigo",
             'msg':{
                 'errors':{
@@ -100,8 +100,8 @@ export class Product extends RestController implements OnInit {
             'icon':'fa fa-list',
             "type": "text",
             "key": "detail",
-            "title": "Nombre Producto",
-            "placeholder": "ingrese el nombre del producto",
+            "title": "Detalle",
+            "placeholder": "ingrese el detalle del producto",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
@@ -112,15 +112,23 @@ export class Product extends RestController implements OnInit {
         this.rules["tipoProductoTitle"] = this.typesProduct.rules['title'];
         this.rules["tipoProductoTitle"].object=true;
         this.rules["tipoProductoTitle"].key="tipoProducto";
-        this.rules["tipoProductoTitle"].permissions=this.typesProduct.permissions['list'];;
+        this.rules["tipoProductoTitle"].permissions=this.typesProduct.permissions['list'];
+        this.rules["tipoProductoTitle"].title="Tipo de producto";
+
+
+
         this.rules["modeloTitle"] = this.modelProduct.rules['title'];
         this.rules["modeloTitle"].key="modelo";
         this.rules["modeloTitle"].object=true;
         this.rules["modeloTitle"].permissions=this.modelProduct.permissions['list'];
+        this.rules["modeloTitle"].title="Modelo";
+
+
         this.rules["marcaTitle"] = this.brandProduct.rules['title'];
         this.rules["marcaTitle"].object=true;
         this.rules["marcaTitle"].key="marca";
         this.rules["marcaTitle"].permissions=this.brandProduct.permissions['list'];
+        this.rules["marcaTitle"].title="Marca";
 
 
     }
@@ -179,47 +187,15 @@ export class Product extends RestController implements OnInit {
             'msg':   this.rules["detail"].msg ,
             "placeholder": this.rules["detail"].placeholder
         };
-        this.rulesSave["tipoProducto"] = {
-            'required':true,
-            'icon':        this.rules['tipoProductoTitle'].icon,
-            "type":        this.rules['tipoProductoTitle'].type,
-            "object": true,
-            'permissions':'1',
-            "key": "tipoProducto",
-            "title":       this.rules['tipoProductoTitle'].title,
-            "placeholder": this.rules['tipoProductoTitle'].placeholder,
-            'paramsSaveSearch': this.typesProduct.paramsSearch,
-            'msg':this.rules['tipoProductoTitle'].msg,
-         };
 
+        this.rulesSave["tipoProducto"] = this.typesProduct.ruleObject;
+        this.rulesSave["tipoProducto"].required=true;
 
-        this.rulesSave["marca"] = {
-            'required':         true,
-            'icon':             this.rules['marcaTitle'].icon,
-            "type":             this.rules['marcaTitle'].type,
-            "object":           true,
-            'permissions':'1',
-            "key": "marca",
-            "title":            this.rules['marcaTitle'].title,
-            "placeholder":      this.rules['marcaTitle'].placeholder,
-            'paramsSaveSearch': this.brandProduct.paramsSearch,
-            'msg':              this.rules['marcaTitle'].msg,
+        this.rulesSave["marca"] = this.brandProduct.ruleObject;
+        this.rulesSave["marca"].required=true;
 
-        };
-
-
-        this.rulesSave["modelo"] = {
-            'required':true,
-            'icon':    this.rules['modeloTitle'].icon,
-            "type":    this.rules['modeloTitle'].type,
-            "object": true,
-            'permissions':'1',
-            "key": "modelo",
-            "title": this.rules['modeloTitle'].title,
-            "placeholder": this.rules['modeloTitle'].placeholder,
-            'paramsSaveSearch': this.modelProduct.paramsSearch,
-            'msg':this.rules['modeloTitle'].msg,
-        };
+        this.rulesSave["modelo"] = this.modelProduct.ruleObject;
+        this.rulesSave["modelo"].required=true;
 
     }
 
@@ -231,7 +207,7 @@ export class Product extends RestController implements OnInit {
         this.viewOptions["errors"].list="no tiene permisos para ver los productos";
         this.viewOptions["button"]=[];
         this.viewOptions["button"].push({
-            'title':'Agegar producto',
+            'title':'Agregar',
             'class':'btn btn-primary',
             'icon':'fa fa-plus',
             'modal':this.paramsSave.idModal
