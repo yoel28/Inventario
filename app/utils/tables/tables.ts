@@ -35,7 +35,6 @@ export class Tables extends RestController implements OnInit {
 
     public dataSave :any={};
 
-    //la cantidad de acciones que posee la talbla
     public keyActions =[];
 
 
@@ -48,6 +47,7 @@ export class Tables extends RestController implements OnInit {
         this.initForm();
         this.keyActions=Object.keys(this.params.actions);
         this.setEndpoint(this.params.endpoint);
+        this.pagerFunction();
     }
 
 
@@ -125,7 +125,6 @@ export class Tables extends RestController implements OnInit {
 
     }
 
-
     //click en la mas
     @ViewChild(Save)
     save:Save;
@@ -148,17 +147,16 @@ export class Tables extends RestController implements OnInit {
 //        this.searchTableData=data;
 
     }
+    
     asignData(data){
         this.onPatch(this.dataSave.column,this.dataSave.data,data.id);
     }
-
-
+    
     getDataSearch(data){
         this.onPatch(this.searchTable.field,this.searchTableData,data.id);
     }
 
-    actionPermissionKey()
-    {
+    actionPermissionKey() {
         let data=[];
         let that=this;
 
@@ -175,14 +173,11 @@ export class Tables extends RestController implements OnInit {
     getKeys(data){
         return Object.keys(data);
     }
-    loadAll(event){
-        event.preventDefault();
-        this.max = this.dataList.count;
-        this.loadData();
-    }
-    onPrint(idElement){
-        
-    }
+    
+
+
+
+
 
 
 }

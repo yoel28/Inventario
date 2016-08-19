@@ -100,9 +100,12 @@
         <tr>
             <td [attr.colspan]="keyVisible().length + 1">
                 <div class="btn-group pull-right">
-                    <button (click)="loadData(max*(val-1))" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
+
+                    <button *ngFor="let val of pagesPager" (click)="pagerFunction(val)" type="button" class="btn btn-default">
                         {{val}}
                     </button>
+
+
                     <button (click)="loadAll($event)" type="button" class="btn btn-default">
                         <i class="fa fa-list"></i>
                     </button>
