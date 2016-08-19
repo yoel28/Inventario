@@ -181,6 +181,18 @@ export class User extends RestController implements OnInit{
             },
 
         };
+        this.rules["roles"] = {
+            'update':true,
+            'type': 'checklist',
+            "visible": true,
+            'display': null,
+            'title': 'Rol',
+            'mode': 'popup',
+            'showbuttons': true,
+            'placeholder': 'Roles',
+            'search': false,
+            'source': []
+        };
     }
     initSave() {
         this.paramsSave = {
