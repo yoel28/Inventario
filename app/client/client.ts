@@ -69,7 +69,7 @@ export class Client extends RestController implements OnInit {
             'icon':'fa fa-list',
             "type": "text",
             "key": "nombreEmpresa",
-            "title": "Nombre de la empresa",
+            "title": "Empresa",
             "placeholder": "ingrese el nombre de la empresa",
             'msg':{
                 'errors':{
@@ -129,8 +129,8 @@ export class Client extends RestController implements OnInit {
             "exp": "",
             'title': 'Eliminar',
             'permission': '1',
-            'message': '¿ Esta seguro de eliminar este  cliente : ',
-            'keyAction':'nombreEmpresa'
+            'message': '¿ Esta seguro de eliminar el cliente con el codigo: ',
+            'keyAction':'codigo'
         };
     }
 
@@ -182,7 +182,7 @@ export class Client extends RestController implements OnInit {
         this.viewOptions["errors"].list="no tiene permisos para ver los clientes";
         this.viewOptions["button"]=[];
         this.viewOptions["button"].push({
-            'title':'Agregar Cliente',
+            'title':'Agregar',
             'class':'btn btn-primary',
             'icon':'fa fa-plus',
             'modal':this.paramsSave.idModal
@@ -196,7 +196,7 @@ export class Client extends RestController implements OnInit {
             'title': this.viewOptions["title"],
             'idModal': "searchProductType",
             'endpoint': "/search/clientes/",
-            'placeholderForm': "Ingrese el cliente",
+            'placeholder': "Ingrese el cliente",
             'label': {'title': "titulo: ",'detail': "detalle: "},
             'msg': {
                 'errors': {
