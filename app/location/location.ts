@@ -73,6 +73,13 @@ export class Location_product extends RestController implements OnInit {
         this.viewOptions["errors"] ={};
         this.viewOptions["errors"].notFound= "no se encontraron resultados";
         this.viewOptions["errors"].list="no tiene permisos para ver los productos";
+        this.viewOptions["button"]=[];
+        this.viewOptions["button"].push({
+            'title':'Agregar',
+            'class':'btn btn-primary',
+            'icon':'fa fa-plus',
+            'modal':this.paramsSave.idModal
+        });
     }
 
 
