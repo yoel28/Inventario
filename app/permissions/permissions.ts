@@ -63,6 +63,13 @@ export class Permissions extends RestController implements OnInit {
         this.viewOptions["errors"] ={};
         this.viewOptions["errors"].notFound= "no se encontraron resultados";
         this.viewOptions["errors"].list="no tiene permisos para ver los productos";
+        this.viewOptions["button"]=[];
+        this.viewOptions["button"].push({
+            'title':'Agregar',
+            'class':'btn btn-primary',
+            'icon':'fa fa-plus',
+            'modal':this.paramsSave.idModal
+        });
     }
 
 
@@ -195,10 +202,12 @@ export class Permissions extends RestController implements OnInit {
     ngOnInit() {
 
         this.initLang();
-        this.initOptions();
         this.initRules();
-        this.initParamsTable();
         this.initSave();
+        
+        this.initOptions();
+        this.initParamsTable();
+
         this.initSearch();
         this.loadData();
 
