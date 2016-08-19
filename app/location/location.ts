@@ -52,16 +52,15 @@ export class Location_product extends RestController implements OnInit {
             "exp": "",
             'title': 'Eliminar',
             'permission': '1',
-            'message': 'Esta seguro de eliminar',
-            'keyAction':'description'
+            'message': 'Esta seguro de eliminar la ubicacion con el codigo',
+            'keyAction':'code'
         };
         this.paramsTable.actions.print = {
             "icon": "fa fa-print",
             "exp": "",
             'title': 'Imprimir',
             'permission': '1',
-            'message': 'wii imprimir',
-            'keyAction':'description'
+            'element':''
         };
 
     }
