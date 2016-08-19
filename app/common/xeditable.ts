@@ -2,11 +2,13 @@ import {ElementRef, Directive, EventEmitter, Component, OnInit} from "@angular/c
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {HttpUtils} from "../common/http-utils";
-import moment from 'moment/moment';
+
 import {globalService} from "./globalService";
 
 
 declare var jQuery:any;
+declare var moment:any;
+
 @Directive({
     selector: "[x-editable]",
     inputs: ['data', 'rules', 'field', 'function', 'endpoint','disabled'],
@@ -205,11 +207,16 @@ export class Datepicker implements OnInit {
 
 @Directive({
     selector: "[daterangepicker]",
-    inputs:['format'],
+    inputs:['params'],
     outputs:['fecha']
 })
 export class DateRangepPicker implements OnInit {
-    public format:any = {};
+    /*
+        format={
+        }
+    */
+
+    public params:any={};
     public fecha:any;
     public element:any;
     constructor(public el: ElementRef) {
@@ -217,8 +224,12 @@ export class DateRangepPicker implements OnInit {
     }
     ngOnInit(){
         let that = this;
-        that.element = jQuery(this.el.nativeElement).daterangepicker();
-
+        that.element = jQuery(this.el.nativeElement).daterangepicker({
+                showDropdowns: true
+            },
+            function(start, end) {
+                that.fecha.emit({'start':start.format(that.params.format),'end':end.format(that.params.format)})
+            });
     }
 }
 
