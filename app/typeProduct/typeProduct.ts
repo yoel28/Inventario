@@ -138,7 +138,7 @@ export class TypeProduct extends RestController implements OnInit {
             'title': this.viewOptions["title"],
             'idModal': "searchProductType",
             'endpoint': "/search/tipo/productos/",
-            'placeholderForm': "Ingrese el tipo de producto",
+            'placeholder': "Ingrese el tipo de producto",
             'label': {'title': "titulo: ",'detail': "detalle: "},
             'msg': {
                 'errors': {
