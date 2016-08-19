@@ -180,9 +180,9 @@ export class TypeProduct extends RestController implements OnInit {
             'icon':'fa fa-list',
             "type": "text",
             "key": "tipoProducto",
-            "title": "Tipo de producto",
+            "title": "Tipo",
             'object':true,
-            "placeholder": "Ingrese el codigo del tipo",
+            "placeholder": "Ingrese el codigo del tipo de producto",
             'paramsSaveSearch':this.paramsSearch,
             'msg':{
                 'errors':{
