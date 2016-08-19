@@ -49,7 +49,7 @@ export class Roles extends RestController implements OnInit {
             'title': 'Eliminar',
             'permission': '1',
             'message': 'Esta seguro de eliminar',
-            'keyAction':'description'
+            'keyAction':'authority'
         }
 
     }
@@ -61,15 +61,18 @@ export class Roles extends RestController implements OnInit {
         this.viewOptions["errors"] ={};
         this.viewOptions["errors"].notFound= "no se encontraron resultados";
         this.viewOptions["errors"].list="no tiene permisos para ver los productos";
+        this.viewOptions["button"]=[];
+        this.viewOptions["button"].push({
+            'title':'Agregar',
+            'class':'btn btn-primary',
+            'icon':'fa fa-plus',
+            'modal':this.paramsSave.idModal
+        });
     }
 
 
     initRules() {
-
-
-        //TODO hacer que los update se realcionen con los permisos
-        //rules de la clase
-        let update =true; /*this.myglobal.existsPermission("1");*/
+        let update =true;
         this.rules["authority"] = {
             "update": update,
             "visible": true,
@@ -77,7 +80,7 @@ export class Roles extends RestController implements OnInit {
             'icon':'fa fa-list-ul',
             "type": "text",
             "key": "authority",
-            "title": "Nombre de rol",
+            "title": "Rol",
             "placeholder": "ingrese el rol",
             'msg':{
                 'errors':{
@@ -92,39 +95,19 @@ export class Roles extends RestController implements OnInit {
             'icon':'fa fa-list',
             "type": "text",
             "key": "detail",
-            "title": "Detalles",
+            "title": "Detalle",
             "placeholder": "ingrese detalles del rol",
             'msg':{
                 'errors':{},
             }
         };
-        /*
-        this.rules["permissions"] = {
-            "update": update,
-            "visible": true,
-            'required':true,
-            'icon':'fa fa-list',
-            "type": "text",
-            "object": true,
-            'permissions':'1',
-            "key": "tipoProducto",
-            "title": "Tipo Producto",
-            "placeholder": "ingrese el tipo",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                    'object':'Tipo no esta registrado',
-                },
-            },
-        };
-        */
-
         this.rules["enabled"] = {
             "update": update,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
-            "type": "text",
+            "type": "boolean",
+            'states':["Habilitado","Deshabilitado"],
             'permissions':'1',
             "key": "enabled",
             "title": "Habilitado",
@@ -141,54 +124,25 @@ export class Roles extends RestController implements OnInit {
 
 
     initSave() {
-        //TODO agregar los permisos
-        //todo falta agregar los permisos
         this.paramsSave= {
             title: "Agregar rol",
             idModal: "saveRol",
             endpoint: this.endpoint,
         }
-
-
-        this.rulesSave["authority"] = {
-            'required':true,
-            'icon':'fa fa-list-ul',
-            "type": "text",
-            "key": "authority",
-            "title": "Nombre del rol",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                },
-            },
-            "placeholder": "ingrese el nombre"
-        };
-        
-        this.rulesSave["detail"] = {
-            'required':true,
-            'icon':'fa fa-list',
-            "type": "text",
-            "key": "detail",
-            "title": "descripcion del rol",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                },
-            },
-            "placeholder": "ingrese el nombre del producto"
-        };
+        this.rulesSave["authority"] = this.rules["authority"]
+        this.rulesSave["detail"] = this.rules["detail"]
     }
 
 
 
     ngOnInit() {
-
-//        let that = this;
         this.initLang();
-        this.initOptions();
         this.initRules();
-        this.initParamsTable();
         this.initSave();
+
+        this.initOptions();
+        this.initParamsTable();
+
         this.initSearch();
      
         this.loadData();
@@ -211,16 +165,13 @@ export class Roles extends RestController implements OnInit {
         }
     }
     initSearch() {
-
         this.paramsSearch = {
-
-            //TODO apregar el permiso
             'permissions': '1',
             'title': "Roles",
             'idModal': "searchRol",
-            'endpointForm': "/search/roles/",
-            'placeholderForm': "Ingrese el rol",
-            'labelForm': {name: "Nombre: ", detail: "Detalle: "},
+            'endpoint': "/search/roles/",
+            'placeholder': "Ingrese el rol",
+            'label': {name: "Nombre: ", detail: "Detalle: "},
             'msg': {
                 'errors': {
                     'noAuthorized': 'No posee permisos para esta accion',
