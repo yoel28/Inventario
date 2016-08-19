@@ -24,6 +24,7 @@ import {PermissionsAcl} from "./permissions/acl";
 import {TypeProduct} from "./typeProduct/typeProduct";
 import {BrandProduct} from "./brandProduct/brand";
 import {ModelProduct} from "./modelProduct/modelProduct";
+import {ProductAvailable} from "./reports/productAvailable";
 
 @Component({
   selector: 'my-app',
@@ -53,6 +54,8 @@ import {ModelProduct} from "./modelProduct/modelProduct";
   { path: '/typeProduct',   name: 'TypeProduct', component: TypeProduct },
   { path: '/brandProduct',   name: 'BrandProduct', component: BrandProduct },
   { path: '/modelProduct',   name: 'ModelProduct', component: ModelProduct },
+
+    { path: '/product/available',   name: 'ProductAvailable', component: ProductAvailable },
   { path: '/**', redirectTo: ['Product'] }
 
 ])
@@ -184,6 +187,21 @@ export class AppComponent extends RestController implements OnInit{
                     'routerLink':'ModelProduct'
                 }
 
+            ]
+
+        });
+        this.menuItems.push({
+            'visible':this.myglobal.existsPermission("1"),
+            'icon':'fa fa-list',
+            'title':'Reportes',
+            'key':'reportes',
+            'treeview':[
+                {
+                    'visible':this.myglobal.existsPermission("1"),
+                    'icon':'fa fa-list',
+                    'title':'Producto en existencia',
+                    'routerLink':'ProductAvailable'
+                },
             ]
 
         });
