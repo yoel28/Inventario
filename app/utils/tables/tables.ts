@@ -180,6 +180,9 @@ export class Tables extends RestController implements OnInit {
         this.max = this.dataList.count;
         this.loadData();
     }
+    onPrint(idElement){
+        
+    }
 
 
 }
