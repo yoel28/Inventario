@@ -124,7 +124,7 @@ export class BrandProduct extends RestController implements OnInit {
         this.viewOptions["errors"].list="no tiene permisos para ver los productos";
         this.viewOptions["button"]=[];
         this.viewOptions["button"].push({
-            'title':'Agregar marca de producto',
+            'title':'Agregar',
             'class':'btn btn-primary',
             'icon':'fa fa-plus',
             'modal':this.paramsSave.idModal

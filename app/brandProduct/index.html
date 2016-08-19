@@ -3,14 +3,14 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">{{viewOptions.title | translate }}</h3>
-            </div>
-            <div class="pull-right" *ngIf="viewOptions['button']">
-                <button *ngFor="let buttom of viewOptions['button']"
-                        class="{{buttom.class}}" type="button" data-toggle="modal"
-                        [attr.data-target]="'#'+buttom.modal">
-                    <i class="{{buttom.icon}}"></i>
-                    {{buttom.title | translate}}
-                </button>
+                <div class="pull-right" *ngIf="viewOptions['button']">
+                    <button *ngFor="let buttom of viewOptions['button']"
+                            class="{{buttom.class}}" type="button" data-toggle="modal"
+                            [attr.data-target]="'#'+buttom.modal">
+                        <i class="{{buttom.icon}}"></i>
+                        {{buttom.title | translate}}
+                    </button>
+                </div>
             </div>
             <div *ngIf="viewOptions.permissions.list"  class="box-body">
                 <div *ngIf=" dataList && dataList.count > 0 ">
