@@ -109,4 +109,21 @@ export class Card extends RestController implements OnInit {
             this.onPatch(this.dataSelectImage[data.id].key,data,this.dataSelectImage[data.id].image);
     }
 
+    public dataRoles:any = [];
+    public roles:boolean=false;
+    loadRoles() {
+        if(!this.roles){
+            this.roles=true;
+            let that = this;
+            let successCallback = response => {
+                Object.assign(that.dataRoles, response.json());
+                that.rules.roles['source']=[];
+                that.dataRoles.list.forEach(obj=> {
+                    that.rules.roles.source.push({'value': obj.id, 'text': obj.authority});
+                });
+            };
+            this.httputils.doGet('/roles/', successCallback, this.error)
+        }
+    }
+
 }

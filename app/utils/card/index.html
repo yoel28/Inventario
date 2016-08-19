@@ -39,7 +39,18 @@
                                     <div *ngFor="let key of keyVisible()">
                                         <div *ngIf="rules[key].type!='image'">
                                             <strong>{{rules[key].title}}:</strong>
-                                            <a *ngIf="!rules[key].object" x-editable  [disabled]="!rules[key].update "  [endpoint]="params.endpoint" [function]="onEditable" [data]="data" [rules]="rules" [field]="key"></a>
+                                            <a *ngIf="!rules[key].object && key!='roles'" x-editable  [disabled]="!rules[key].update "  [endpoint]="params.endpoint" [function]="onEditable" [data]="data" [rules]="rules" [field]="key"></a>
+                                            <p *ngIf="key=='roles'">
+                                                {{loadRoles()}}
+                                                <a x-editable
+                                                   *ngIf="dataRoles && dataRoles.count>0"
+                                                   [disabled]="!rules[key].update"
+                                                   [endpoint]="'/users/'+data.id+'/roles'"
+                                                   [function]="onEditableRole" [data]="data" [rules]="rules"
+                                                   field="roles">
+                                                </a>
+                                            </p>
+
                                         </div>
                                         <div *ngIf="rules[key].type=='image'">
                                             <figure>
