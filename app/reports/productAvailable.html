@@ -5,7 +5,12 @@
                 <h3 class="box-title">{{viewOptions.title | translate }}</h3>
             </div>
             <div *ngIf="viewOptions.permissions.list"  class="box-body">
-
+                <div class="col-lg-4">
+                    <div daterangepicker [params]="paramsDate" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%" (fecha)="assignDate($event)">
+                        <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+                        <span>{{(date.start || 'Inicio') +' - '+ (date.end || 'Fin') }}</span> <b class="caret"></b>
+                    </div>
+                </div>
             </div>
             <div *ngIf="!viewOptions.permissions.list">
                 <div class="btn-red padding-error">

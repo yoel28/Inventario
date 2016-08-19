@@ -9,21 +9,24 @@ import {Save} from "../utils/save/save";
 import {TypeProduct} from "../typeProduct/typeProduct";
 import {BrandProduct} from "../brandProduct/brand";
 import {ModelProduct} from "../modelProduct/modelProduct";
+import {DateRangepPicker} from "../common/xeditable";
 
 @Component({
-    selector: 'products',
-    templateUrl: 'app/product/index.html',
-    styleUrls: ['app/product/style.css'],
-    directives: [Tables,Save],
+    selector: 'products-available',
+    templateUrl: 'app/reports/productAvailable.html',
+    styleUrls: ['app/reports/style.css'],
+    directives: [Tables,Save,DateRangepPicker],
     pipes: [TranslatePipe],
     providers: [TranslateService,TypeProduct,BrandProduct,ModelProduct]
 })
 
 
-export class Product extends RestController implements OnInit {
+export class ProductAvailable extends RestController implements OnInit {
     
     public viewOptions:any={};
-    
+    public paramsDate:any={};
+    public date:any={};
+
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,  @Inject(TypeProduct) public typesProduct,@Inject(BrandProduct) public brandProduct, @Inject(ModelProduct) public modelProduct) {
         super(http, toastr);
         this.setEndpoint("/productos/");
@@ -41,6 +44,10 @@ export class Product extends RestController implements OnInit {
         this.translate.use(userLang);
     }
 
+    initPermissions(){
+        
+    }
+    
     initOptions() {
         this.viewOptions["title"] = 'Productos disponibles';
         this.viewOptions["permissions"] = {"list": true};/*TODO PERMISO REAL this.myglobal.existsPermission('10')}*/
@@ -48,6 +55,16 @@ export class Product extends RestController implements OnInit {
         this.viewOptions["errors"].notFound= "no se encontraron resultados";
         this.viewOptions["errors"].list="no tiene permisos para ver los productos";
 
+    }
+    ngOnInit(){
+        this.initOptions();
+        this.initParamsDate();
+    }
+    assignDate(data){
+        this.date=data;
+    }
+    initParamsDate(){
+        this.paramsDate['format']="DD/MM/YYYY";
     }
 
 }
