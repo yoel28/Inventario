@@ -27,43 +27,69 @@
                      </button>
                  </label>
              </a>
-             <button  *ngIf="!rules[key].object &&  rules[key].type =='boolean'" class="btn-primary" [class.btn-green]="data[key]" [class.btn-red]="data[key]" (click)="onPatch(key,data)">{{data[key]?rules[key].states[0]:rules[key].states[1]}}</button>
+             <button  *ngIf="!rules[key].object &&  rules[key].type =='boolean'" class="btn" [class.btn-green]="data[key]" [class.btn-red]="data[key]" (click)="onPatch(key,data)">{{data[key]?rules[key].states[0]:rules[key].states[1]}}</button>
 
             </td>
             <td *ngIf="params.actions">
 
-                <div *ngIf="keyActions.length > 1" class="btn-group dropdown pull-right">
+                <div class="btn-group dropdown pull-right"  *ngIf="keyActions.length > 1">
                     <button type="button" data-toggle="dropdown"
                             class="btn btn-box-tool dropdown-toggle"
                             aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-gears fa-lg"></i>
                     </button>
-                    <ul  role="menu" class="dropdown-menu text-left submenu-config">
-
-
+                    <ul role="menu" class="dropdown-menu text-left submenu-config">
                         <li *ngFor="let key of actionPermissionKey()">
-                            <a data-toggle="modal" [attr.data-target]="'#modalDelete'"
+                            <a *ngIf="key == 'delete'"
+                               data-toggle="modal" [attr.data-target]="'#modalDelete'"
                                (click)="dataSelect = data" href="#">
-
-
-
-                                <i class="{{params.actions[key].icon || 'fa fa-list'}}"></i>
+                                <i class="{{params.actions[key].icon}}"></i>
                                 &nbsp;{{params.actions[key].title}}
-
-
+                            </a>
+                            <a *ngIf="key == 'onPatch' && params.actions[key].type=='boolean'"
+                               (click)="onPatch(params.actions[key].field,data)">
+                                <span class="{{params.actions[key].icon}}"></span>
+                                {{data[key]?params.actions[key].titleTrue:params.actions[key].titleFalse}}
+                            </a>
+                            <a *ngIf="key == 'onLock'"
+                               (click)="onLock('enabled',data)">
+                                <span class="{{params.actions[key].icon}}"></span>
+                                {{data.enabled?params.actions[key].titleTrue:params.actions[key].titleFalse}}
+                            </a>
+                            <a *ngIf="key == 'print'"
+                               (click)="onPrint(params.actions[key].element)">
+                                <span class="{{params.actions[key].icon}}"></span>
+                                &nbsp;{{params.actions[key].title}}
                             </a>
                         </li>
                     </ul>
                 </div>
-                <div *ngIf="keyActions.length <= 1" >
+
+
+                <div *ngIf="keyActions.length == 1" >
 
                    <div *ngFor="let key of actionPermissionKey()">
-                        <a data-toggle="modal" [attr.data-target]="'#modalDelete'"
-                           (click)="dataSelect = data" href="#">
-
-                             <i class="{{params.actions[key].icon || 'fa fa-list'}}"></i>
-                            &nbsp;{{params.actions[key].title}}
-                        </a>
+                       <a *ngIf="key == 'delete'"
+                          data-toggle="modal" [attr.data-target]="'#modalDelete'"
+                          (click)="dataSelect = data" href="#">
+                           <i class="{{params.actions[key].icon}}"></i>
+                           &nbsp;{{params.actions[key].title}}
+                       </a>
+                       <a *ngIf="key == 'onPatch' && params.actions[key].type=='boolean'"
+                          (click)="onPatch(params.actions[key].field,data)">
+                           <span class="{{params.actions[key].icon}}"></span>
+                           {{data[key]?params.actions[key].titleTrue:params.actions[key].titleFalse}}
+                       </a>
+                       <a *ngIf="key == 'onLock'"
+                          (click)="onLock('enabled',data)">
+                           <span class="{{params.actions[key].icon}}"></span>
+                           {{data.enabled?params.actions[key].titleTrue:params.actions[key].titleFalse}}
+                       </a>
+                       <a *ngIf="key == 'print'"
+                          (click)="onPrint(params.actions[key].element)">
+                           <span class="{{params.actions[key].icon}}"></span>
+                           &nbsp;{{params.actions[key].title}}
+                       </a>
                     </div>
                 </div>
 
