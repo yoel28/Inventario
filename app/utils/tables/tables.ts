@@ -175,6 +175,11 @@ export class Tables extends RestController implements OnInit {
     getKeys(data){
         return Object.keys(data);
     }
+    loadAll(event){
+        event.preventDefault();
+        this.max = this.dataList.count;
+        this.loadData();
+    }
 
 
 }

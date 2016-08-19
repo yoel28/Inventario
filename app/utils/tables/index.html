@@ -68,6 +68,20 @@
             </td>
         </tr>
     </tbody>
+    <tfoot *ngIf="dataList && dataList.page.length > 1">
+        <tr>
+            <td [attr.colspan]="keyVisible().length + 1">
+                <div class="btn-group pull-right">
+                    <button (click)="loadData(max*(val-1))" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
+                        {{val}}
+                    </button>
+                    <button (click)="loadAll($event)" type="button" class="btn btn-default">
+                        <i class="fa fa-list"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </tfoot>
 </table>
 
 <div *ngIf="params && params.actions && params.actions.delete && myglobal.existsPermission(params.actions.delete.permission)">
