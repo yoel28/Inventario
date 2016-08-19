@@ -203,4 +203,24 @@ export class Datepicker implements OnInit {
 }
 
 
+@Directive({
+    selector: "[daterangepicker]",
+    inputs:['format'],
+    outputs:['fecha']
+})
+export class DateRangepPicker implements OnInit {
+    public format:any = {};
+    public fecha:any;
+    public element:any;
+    constructor(public el: ElementRef) {
+        this.fecha = new EventEmitter();
+    }
+    ngOnInit(){
+        let that = this;
+        that.element = jQuery(this.el.nativeElement).daterangepicker();
+
+    }
+}
+
+
 
