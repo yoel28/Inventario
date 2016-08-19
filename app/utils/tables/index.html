@@ -9,8 +9,8 @@
         <tr *ngFor="let data of dataList.list">
             <td *ngFor="let key of keyVisible()">
 
-             <a *ngIf="!rules[key].object" x-editable  [disabled]="!rules[key].update "  [endpoint]="params.endpoint" [function]="onEditable" [data]="data" [rules]="rules" [field]="key"></a>
-             <a *ngIf="rules[key].object">
+             <a *ngIf="!rules[key].object &&  rules[key].type !='boolean'" x-editable  [disabled]="!rules[key].update "  [endpoint]="params.endpoint" [function]="onEditable" [data]="data" [rules]="rules" [field]="key"></a>
+             <a *ngIf="rules[key].object &&   rules[key].type !='boolean'">
                  {{data[key]}}
                  <label>
                      <button *ngIf="rulesSearch[key]" type="button" class="btn btn-box-tool"
@@ -27,6 +27,8 @@
                      </button>
                  </label>
              </a>
+             <button  *ngIf="!rules[key].object &&  rules[key].type =='boolean'" class="btn-primary" [class.btn-green]="data[key]" [class.btn-red]="data[key]" (click)="onPatch(key,data)">{{data[key]?rules[key].states[0]:rules[key].states[1]}}</button>
+
             </td>
             <td *ngIf="params.actions">
 
