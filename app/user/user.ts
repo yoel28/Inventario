@@ -6,6 +6,7 @@ import {globalService} from "../common/globalService";
 import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 import {Save} from "../utils/save/save";
 import {Card} from "../utils/card/card";
+import {LessList} from "../utils/lessList/lessList";
 
 @Component({
     selector: 'users',
@@ -13,7 +14,7 @@ import {Card} from "../utils/card/card";
     styleUrls: ['app/user/style.css'],
     pipes: [TranslatePipe],
     providers: [TranslateService],
-    directives:[Save,Card]
+    directives:[Save,Card,LessList]
 })
 @Injectable()
 export class User extends RestController implements OnInit{
@@ -37,7 +38,7 @@ export class User extends RestController implements OnInit{
         this.initOptions();
         this.initViewCard();
 
-        this.loadData();
+      //  this.loadData();
     }
     initLang(){
         var userLang = navigator.language.split('-')[0]; // use navigator lang if available
@@ -208,9 +209,9 @@ export class User extends RestController implements OnInit{
             'permissions':'1',
             'title': "Usuario",
             'idModal': "searchUser",
-            'endpointForm': "/search/usuarios/",
-            'placeholderForm': "Ingrese el usuario",
-            'labelForm': {name: "Nombre: ", detail: "Detalle: "},
+            'endpoint': "/search/users/",
+            'placeholder': "Ingrese el usuario",
+            'label': {title: "Nombre: ", detail: "Detalle: "},
             'msg': {
                 'errors': {
                     'noAuthorized': 'No posee permisos para esta accion',
