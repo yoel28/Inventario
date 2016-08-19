@@ -113,7 +113,7 @@ export class Product extends RestController implements OnInit {
         this.rules["tipoProductoTitle"].object=true;
         this.rules["tipoProductoTitle"].key="tipoProducto";
         this.rules["tipoProductoTitle"].permissions=this.typesProduct.permissions['list'];
-        this.rules["tipoProductoTitle"].title="Tipo de producto";
+        this.rules["tipoProductoTitle"].title="Tipo";
 
 
 
@@ -141,8 +141,8 @@ export class Product extends RestController implements OnInit {
             "exp": "",
             'title': 'Eliminar',
             'permission': '1',
-            'message': 'Esta seguro de eliminar',
-            'keyAction':'description'
+            'message': 'Esta seguro de eliminar el producto con el codigo ',
+            'keyAction':'code'
         };
         this.paramsTable.actions.print = {
             "icon": "fa fa-print",
