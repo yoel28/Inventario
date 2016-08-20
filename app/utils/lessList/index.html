@@ -1,4 +1,4 @@
-<div class="col-lg-10">
+<div class="col-lg-7">
     <div class="panel-group" id="accordion" >
 
         <div *ngFor="let data of dataList.list" class="panel panel-default">
@@ -10,18 +10,19 @@
                 </h4>
             </div>
             <div  [attr.id]="data['id']" class="panel-collapse collapse">
-                <div  *ngIf="detailsSearh['id']" class="panel-body">
-                    <div *ngFor="let key of getKeys()">
-                        <div *ngIf="key =='image'" class="col-lg-6">
-                            <img  src="{{detailsSearh[key]}}">
+                <div  *ngIf="detailsSearh['id']" class="panel panel-default">
+                    <div class="panel-body">
+                        <div *ngFor="let key of getKeys()" class="col-centered " >
+
+                            <div *ngIf="key =='image'" class="col-centered">
+                                <figure>
+                                    <img class="img-circle"  src="{{detailsSearh[key]}}">
+                                </figure>
+                            </div>
+                            <label *ngIf="key!='image'" class="col-centered"><strong class="text-bold">{{rulesDetalis[key].title}}:</strong> <label>{{detailsSearh[key]}}</label></label>
+
                         </div>
-
-                        <label *ngIf="key!='image'" >{{rulesDetalis[key].title}}: <label>{{detailsSearh[key]}}</label></label>
-
                     </div>
-
-
-
                 </div>
             </div>
         </div>

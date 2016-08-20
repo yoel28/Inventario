@@ -35,10 +35,13 @@ export class LessList extends RestController implements OnInit {
     }
 
     searchDetalles(data) {
-        if (this.detailsSearh['id']) {
+
+        if(this.detailsSearh['id'] && this.detailsSearh['id'] == data.id )
+        {
             this.detailsSearh = {}
         }
         else {
+            this.detailsSearh = {}
             let that = this;
             let successCallback = response => {
                 Object.assign(that.detailsSearh, response.json());
@@ -51,6 +54,7 @@ export class LessList extends RestController implements OnInit {
         let data = [];
         let that = this;
         Object.keys(this.rulesDetalis).forEach((key)=> {
+            if(this.detailsSearh[key])
             data.push(key)
         });
         return data;
