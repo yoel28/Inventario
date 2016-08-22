@@ -1,4 +1,4 @@
-import {Component, OnInit, Injectable} from '@angular/core';
+import {Component, OnInit, Injectable,ViewChild} from '@angular/core';
 import { Http} from '@angular/http';
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {RestController} from "../common/restController";
@@ -271,6 +271,25 @@ export class User extends RestController implements OnInit{
     }
     loadImage(){
         this.onPatch('image',this.myglobal.user,this.image);
+    }
+
+
+
+    @ViewChild(LessList)
+    lessList:LessList;
+    asignData(data) {
+
+        if(this.lessList )
+        {
+            this.lessList.dataList.list.unshift({"title":data.email,"detail":data.username});
+
+            if(this.lessList.dataList.page && this.lessList.dataList.page.length>1)
+            {
+                this.lessList.dataList.list.pop();
+            }
+
+        }
+
     }
 
 

@@ -47,7 +47,6 @@ export class Tables extends RestController implements OnInit {
         this.initForm();
         this.keyActions=Object.keys(this.params.actions);
         this.setEndpoint(this.params.endpoint);
-        this.pagerFunction();
     }
 
 
