@@ -54,7 +54,7 @@ export class LessList extends RestController implements OnInit {
         let data = [];
         let that = this;
         Object.keys(this.rulesDetalis).forEach((key)=> {
-            if(this.detailsSearh[key])
+            if(that.detailsSearh[key] || key == 'image')
             data.push(key)
         });
         return data;

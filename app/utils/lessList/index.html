@@ -1,13 +1,21 @@
 <div class="col-lg-7">
     <div class="panel-group" id="accordion" >
 
-        <div *ngFor="let data of dataList.list" class="panel panel-default">
+        <div *ngFor="let data of dataList.list" class="panel panel-default ">
             <div class="panel-heading">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" [attr.href]="'#'+data['id']" (click)="searchDetalles(data)">
-                        <div><label>{{paramSearch.label['title']}} </label>{{data['title']}}</div>
-                        <div><label>{{paramSearch.label['detail']}} </label>{{data['detail']}}</div></a>
-                </h4>
+
+                <a data-toggle="collapse" data-parent="#accordion" [attr.href]="'#'+data['id']" (click)="searchDetalles(data)">
+                        <div class="col-lg-2">
+                            <span class="fa fa-user fa-lg" style="margin-top: 5px; font-size: 45px;"></span>
+                        </div>
+                        <div>
+                            <h4 class="panel-title">
+                                <div><label>{{paramSearch.label['title']}} </label>{{data['title']}}</div>
+                                <div><label>{{paramSearch.label['detail']}} </label>{{data['detail']}}</div>
+                            </h4>
+                        </div>
+
+                </a>
             </div>
             <div  [attr.id]="data['id']" class="panel-collapse collapse">
                 <div  *ngIf="detailsSearh['id']" class="panel panel-default">
@@ -16,7 +24,7 @@
 
                             <div *ngIf="key =='image'" class="col-centered">
                                 <figure>
-                                    <img class="img-circle"  src="{{detailsSearh[key]}}">
+                                    <img class="img-circle"  src="{{detailsSearh[key] || '/img/user.png' }}">
                                 </figure>
                             </div>
                             <label *ngIf="key!='image'" class="col-centered"><strong class="text-bold">{{rulesDetalis[key].title}}:</strong> <label>{{detailsSearh[key]}}</label></label>
