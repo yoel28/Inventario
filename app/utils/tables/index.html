@@ -96,18 +96,22 @@
             </td>
         </tr>
     </tbody>
-    <tfoot *ngIf="dataList && dataList.page.length > 1">
+    <tfoot *ngIf="dataList && dataList.page && dataList.page.length > 1 ">
         <tr>
             <td [attr.colspan]="keyVisible().length + 1">
                 <div class="btn-group pull-right">
 
-                    <button *ngFor="let val of pagesPager" (click)="pagerFunction(val)" type="button" class="btn btn-default">
+                    <button *ngIf="MaxPager()>5" (click)="loadData(1)" type="button" class="btn btn-default">
+                        <<
+                    </button>
+                    <button *ngFor="let val of dataList.page" (click)="loadData(val)" type="button" class="btn btn-default">
                         {{val}}
                     </button>
-
-
                     <button (click)="loadAll($event)" type="button" class="btn btn-default">
                         <i class="fa fa-list"></i>
+                    </button>
+                    <button *ngIf="MaxPager()>5" (click)="loadData(MaxPager())" type="button" class="btn btn-default">
+                        >>
                     </button>
                 </div>
             </td>
