@@ -1,10 +1,12 @@
-<div class="col-lg-7">
-    <div class="panel-group" id="accordion" >
 
-        <div *ngFor="let data of dataList.list" class="panel panel-default ">
-            <div class="panel-heading">
+<div class="row">
+    <div class="col-lg-11 ">
+        <div class="panel-group" id="accordion" >
 
-                <a data-toggle="collapse" data-parent="#accordion" [attr.href]="'#'+data['id']" (click)="searchDetalles(data)">
+            <div  *ngFor="let data of dataList.list" class="  panel panel-default ">
+                <div class="panel-heading">
+
+                    <a data-toggle="collapse" data-parent="#accordion" [attr.href]="'#'+data['id']" (click)="searchDetalles(data)">
                         <div class="col-lg-2">
                             <span class="fa fa-user fa-lg" style="margin-top: 5px; font-size: 45px;"></span>
                         </div>
@@ -15,25 +17,58 @@
                             </h4>
                         </div>
 
-                </a>
-            </div>
-            <div  [attr.id]="data['id']" class="panel-collapse collapse">
-                <div  *ngIf="detailsSearh['id']" class="panel panel-default">
-                    <div class="panel-body">
-                        <div *ngFor="let key of getKeys()" class="col-centered " >
+                    </a>
+                </div>
+                <div  [attr.id]="data['id']" class="panel-collapse collapse">
+                    <div  *ngIf="detailsSearh['id']" class="panel panel-default">
+                        <div class="panel-body">
+                            <div *ngFor="let key of getKeys()" class="col-centered " >
 
-                            <div *ngIf="key =='image'" class="col-centered">
-                                <figure>
-                                    <img class="img-circle"  src="{{detailsSearh[key] || '/img/user.png' }}">
-                                </figure>
+                                <div *ngIf="key =='image'" class="col-centered">
+                                    <figure>
+                                        <img class="img-circle"  src="{{detailsSearh[key] || '/img/user.png' }}">
+                                    </figure>
+                                </div>
+                                <label *ngIf="key!='image'" class="col-centered"><strong class="text-bold">{{rulesDetalis[key].title}}:</strong> <label>{{detailsSearh[key]}}</label></label>
+
                             </div>
-                            <label *ngIf="key!='image'" class="col-centered"><strong class="text-bold">{{rulesDetalis[key].title}}:</strong> <label>{{detailsSearh[key]}}</label></label>
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
+    </div>
+</div>
+
+
+<div *ngIf="dataList && dataList.page && dataList.page.length > 1 " class="row text-right">
+    <table class="col-lg-11">
+        <tbody>
+            <tr>
+                <td>
+                    <div class="btn-group pull-right">
+
+
+                        <button *ngIf="MaxPager()>5" (click)="loadData(1)" type="button" class="btn btn-default">
+                            <<
+                        </button>
+
+                        <button *ngFor="let val of dataList.page" (click)="loadData(val)" type="button" class="btn btn-default">
+                            {{val}}
+                        </button>
+
+
+                        <button (click)="loadAll($event)" type="button" class="btn btn-default">
+                            <i class="fa fa-list"></i>
+                        </button>
+
+                        <button *ngIf="MaxPager()>5" (click)="loadData(MaxPager())" type="button" class="btn btn-default">
+                            >>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>

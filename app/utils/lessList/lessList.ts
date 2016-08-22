@@ -23,6 +23,7 @@ export class LessList extends RestController implements OnInit {
     public externalEndPoint = "";
     public detailsSearh:any = {};
     public rulesDetalis:any = {};
+    public dataList:any ={}
 
 
     constructor(public _formBuilder:FormBuilder, public http:Http, public toastr:ToastsManager, public myglobal:globalService) {
@@ -32,6 +33,7 @@ export class LessList extends RestController implements OnInit {
     ngOnInit() {
         this.setEndpoint(this.paramSearch.endpoint);
         this.loadData();
+
     }
 
     searchDetalles(data) {
@@ -59,4 +61,11 @@ export class LessList extends RestController implements OnInit {
         });
         return data;
     }
+
+
+    MaxPager()
+    {
+        return Math.ceil(this.dataList.count/this.max);
+    }
+    
 }
