@@ -14,7 +14,7 @@ export class RestController implements OnInit {
     max=5;
     page:any=[];
     where:string="";
-    public pagesPager=[];
+ 
 
     constructor(public http: Http,public toastr?: ToastsManager) {
         this.httputils = new HttpUtils(http,toastr || null);
@@ -33,8 +33,10 @@ export class RestController implements OnInit {
     }
 
     loadData(offset=0){
-        this.offset=offset;
-        this.httputils.onLoadList(this.endpoint+"?max="+this.max+"&offset="+this.offset+this.where,this.dataList,this.max,this.error);
+        let val =offset;
+        if(offset !=0)
+            this.offset=(offset-1)*this.max;
+        this.httputils.onLoadList(this.endpoint+"?max="+this.max+"&offset="+this.offset+this.where,this.dataList,this.max,this.error,false,val);
     };
     onUpdate(event,data){
         event.preventDefault();
@@ -91,97 +93,11 @@ export class RestController implements OnInit {
         return (this.httputils.doPost(endpoint, body,successCallback, error));
     }
 
-    pagerFunction(val=null) {
-        let quantity =Math.ceil(this.dataList.count/5);
-        let start =0;
-        let end=0;
-        if(val) {
-
-            this.loadData(this.max * (val - 1));
-
-        if(val - 2 > 0 && val + 2 <= quantity){
-                start = val - 2;
-                end   = val + 2;
-            }
-            else if(val - 1 > 0 && val + 3 <= quantity){
-                start = val - 1;
-                end   = val + 3;
-            }
-            else if( val + 4 <= quantity){
-                start = val;
-                end   = val + 4;
-            }
-            else if(val - 3 > 0 && val + 1 <= quantity){
-                start = val - 3;
-                end   = val + 1;
-            }
-            else if(val - 1 > 0 && val + 2 <= quantity){
-                start = val - 1;
-                end   = val + 2;
-            }
-            else if(val - 2 > 0 && val + 1 <= quantity){
-                start = val - 2;
-                end   = val + 1;
-            }
-            else if(val - 4 > 0){
-                start = val - 4;
-                end   = val;
-            }
-            else if(val - 1 > 0 && val + 1 <= quantity){
-                start = val - 1;
-                end   = val + 1;
-            }
-            else if(val - 3 > 0 ){
-                start = val - 3;
-                end   = val ;
-            }
-            else if( val + 3 <= quantity){
-                start = val ;
-                end   = val + 3;
-            }
-            else if(val - 2 > 0 ){
-                start = val - 2;
-                end   = val ;
-            }
-            else if( val + 2 <= quantity){
-                start = val ;
-                end   = val + 2;
-            }
-            else if(val - 1 > 0 ){
-                start = val - 1;
-                end   = val ;
-            }
-            else if( val + 1 <= quantity){
-                start = val ;
-                end   = val + 1;
-            }
-
-        }
-        else if(quantity == 1)
-        {
-            start=end=1;
-        }
-        else if(quantity <5) {
-            start = 1;
-            end = quantity;
-        }
-        else
-        {
-            start =1;
-            end=5;
-        }
-
-        this.pagesPager=[];
-        for(let i =start;i<=end;i++) {
-            this.pagesPager.push(i);
-        }
-
-
+    
+    MaxPager()
+    {
+     return Math.ceil(this.dataList.count/this.max);
     }
 
-    loadAll(event) {
-        event.preventDefault();
-        this.max = this.dataList.count;
-        this.loadData();
-    }
+
 }

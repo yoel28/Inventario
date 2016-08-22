@@ -3,6 +3,8 @@ import {contentHeaders} from '../common/headers';
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 
 export class HttpUtils {
+    
+
 
     constructor(public http:Http,public toastr?: ToastsManager) {
     }
@@ -97,22 +99,18 @@ export class HttpUtils {
         return this.doPost(endpoint,body,successCallback,errorCallback,isEndpointAbsolute)
     }
 
-    onLoadList(endpoint:string, list,max, errorCallback = null,isEndpointAbsolute = false) {
+    onLoadList(endpoint:string, list,max, errorCallback = null,isEndpointAbsolute = false, offset) {
         let that = this;
         let successCallback= response => {
             Object.assign(list, response.json());
             if(list.count)
             {
-                list['page']=[];
-                for (var i=1;i<=Math.ceil(list.count/max);i++)
-                {
-                    list['page'].push(i);
-                }
+                this.pagerFunction(offset,list);
             }
         }
         this.doGet(endpoint,successCallback,errorCallback,isEndpointAbsolute)
     }
-
+    
     onDelete(endpoint:string,id, list ,errorCallback = null,isEndpointAbsolute = false) {
         let that = this;
         let successCallback= response => {
@@ -135,4 +133,104 @@ export class HttpUtils {
         }
        return this.doPut(endpoint,body,successCallback,errorCallback,isEndpointAbsolute)
     }
+
+
+
+
+
+    pagerFunction(val=null,list) {
+        let quantity =Math.ceil(list.count/5);
+        let start =0;
+        let end=0;
+        if(val != 0) {
+
+         //   this.loadData(this.max * (val - 1));
+
+            if(val - 2 > 0 && val + 2 <= quantity){
+                start = val - 2;
+                end   = val + 2;
+            }
+            else if(val - 1 > 0 && val + 3 <= quantity){
+                start = val - 1;
+                end   = val + 3;
+            }
+            else if( val + 4 <= quantity){
+                start = val;
+                end   = val + 4;
+            }
+            else if(val - 3 > 0 && val + 1 <= quantity){
+                start = val - 3;
+                end   = val + 1;
+            }
+            else if(val - 1 > 0 && val + 2 <= quantity){
+                start = val - 1;
+                end   = val + 2;
+            }
+            else if(val - 2 > 0 && val + 1 <= quantity){
+                start = val - 2;
+                end   = val + 1;
+            }
+            else if(val - 4 > 0){
+                start = val - 4;
+                end   = val;
+            }
+            else if(val - 1 > 0 && val + 1 <= quantity){
+                start = val - 1;
+                end   = val + 1;
+            }
+            else if(val - 3 > 0 ){
+                start = val - 3;
+                end   = val ;
+            }
+            else if( val + 3 <= quantity){
+                start = val ;
+                end   = val + 3;
+            }
+            else if(val - 2 > 0 ){
+                start = val - 2;
+                end   = val ;
+            }
+            else if( val + 2 <= quantity){
+                start = val ;
+                end   = val + 2;
+            }
+            else if(val - 1 > 0 ){
+                start = val - 1;
+                end   = val ;
+            }
+            else if( val + 1 <= quantity){
+                start = val ;
+                end   = val + 1;
+            }
+
+        }
+        else if(quantity == 1)
+        {
+            start=end=1;
+        }
+        else if(quantity <5) {
+            start = 1;
+            end = quantity;
+        }
+        else
+        {
+            start =1;
+            end=5;
+        }
+
+        list['page']=[];
+        for(let i =start;i<=end;i++) {
+            list['page'].push(i);
+        }
+
+
+    }
+
+    loadAll(event) {
+        event.preventDefault();
+        this.max = this.dataList.count;
+        this.loadData();
+    }
+
+
 }
