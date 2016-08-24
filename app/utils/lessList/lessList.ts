@@ -48,7 +48,7 @@ export class LessList extends RestController implements OnInit {
             let successCallback = response => {
                 Object.assign(that.detailsSearh, response.json());
             }
-            this.httputils.doGet(this.externalEndPoint + "/" + data.id, successCallback, this.error)
+            this.httputils.doGet(this.externalEndPoint  + data.id, successCallback, this.error)
         }
     }
 
@@ -56,7 +56,7 @@ export class LessList extends RestController implements OnInit {
         let data = [];
         let that = this;
         Object.keys(this.rulesDetalis).forEach((key)=> {
-            if(that.detailsSearh[key] || key == 'image')
+            if(that.detailsSearh[key] && key != 'image')
             data.push(key)
         });
         return data;
