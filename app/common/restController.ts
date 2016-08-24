@@ -99,5 +99,11 @@ export class RestController implements OnInit {
      return Math.ceil(this.dataList.count/this.max);
     }
 
+    loadAll(event) {
+        event.preventDefault();
+        this.max = this.dataList.count;
+        this.loadData();
+    }
+
 
 }
