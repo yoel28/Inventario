@@ -4,7 +4,180 @@
 
             <div class="box-body">
 
-                <div *ngIf="lastLocaltion && lastLocaltion.name" class="form-group">
+
+                <div class="col-lg-12">
+                    <div class="portlet box portlet-green">
+                        <div class="portlet-header">
+                        </div>
+                        <div class="portlet-body">
+                            <div id="rootwizard-custom-circle">
+                                <div class="navbar">
+                                    <div class="navbar-inner">
+                                        <ul class="bwizard-steps-o">
+                                            <li [class.active]="positionForm==1" (click)="inc(null,1)" ><a data-toggle="tab"><i class="glyphicon glyphicon-user"></i>
+                                                <p class="anchor">1 .- Usuario y accion</p>
+                                                <p class="description"></p></a></li>
+                                            <li [class.active]="positionForm==2 " (click)="inc(null,2)"><a data-toggle="tab"><i class="glyphicon glyphicon-send mln"></i>
+                                                <p class="anchor">2.- Producto y ubicacion</p>
+                                                <p class="description"></p></a></li>
+                                            <li [class.active]="positionForm==3" (click)="inc(null,3)"><a data-toggle="tab"><i class="glyphicon glyphicon glyphicon-list"></i>
+                                                <p class="anchor">3.- Registros Validos</p>
+                                                <p class="description"></p></a></li>
+                                            <li [class.active]="positionForm==4" (click)="inc(null,3)"><a data-toggle="tab"><i class="glyphicon glyphicon glyphicon-floppy-saved"></i>
+                                                <p class="anchor">4.- Resultados</p>
+                                                <p class="description"></p></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div id="bar" class="progress active">
+                                    <div class="bar progress-bar progress-bar-primary" [style.width.%]="100/4*positionForm"></div>
+                                </div>
+                                <div class="tab-content" [ngSwitch]="positionForm">
+                                    <div *ngSwitchWhen="1" >
+                                        <h3 class="mbxl">Ingresar los primeros datos</h3>
+                                        <form action="#" class="form-horizontal ng-pristine ng-valid">
+
+
+                                            <div class="col-lg-12">
+
+                                                <div class=" form-group col-lg-5">
+                                                    <div *ngIf="dataList.list" class="form-group">
+                                                        <label >Tipo de accion:</label>
+                                                        <select [(ngModel)]="tipoAccion_2" (ngModelChange)="setTipoAccion($event)" sm-dropdown class="ui fluid search selection dropdown">
+
+                                                            <option value="-1">Seleccione un valor</option>
+                                                            <option *ngFor="let data of dataList.list" [attr.value]="data.id">{{data.title}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class=" form-group col-lg-5 pull-right">
+                                                    <div *ngIf="dataList.list && listClient.list" class="form-group">
+
+                                                        <div *ngIf="!tipoAccion.valid" ><label>Por favor Ingrese un tipo de accion valida</label></div>
+                                                        <div *ngIf="tipoAccion.valid" >
+
+                                                            <label >seleccione {{tipoAccion.value==1?'cliente':'proveedor'}}:</label>
+                                                            <select [(ngModel)]="tipoAccion_2" (ngModelChange)="changeClients($event)" sm-dropdown class="ui fluid search selection dropdown">
+
+                                                                <option value="-1">Seleccione un valor</option>
+                                                                <option *ngFor="let data of listClient.list" [attr.value]="data.id">{{data.title}}</option>
+                                                            </select>
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+
+
+
+                                        </form>
+                                    </div>
+                                    <div *ngSwitchWhen="2"  >
+
+
+                                        <div *ngIf="lastLocaltion && lastLocaltion.name" class="row">
+                                            <h3 class="mbxl"><label ><strong class="text-bold"> Ubicacion usada: {{lastLocaltion.name}}</strong></label></h3>
+
+
+                                        </div>
+
+
+
+                                        <form class="row" role="form" [ngFormModel]="form_operation[1]" (submit)="getResult($event)">
+                                            <button class="hidden" (submit)="getResult($event)"></button>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label for="usr" class="text-bold">Codigo de Barras:</label>
+                                                    <input ngControl="producto" class="form-control" type="text" id="usr">
+                                                </div>
+                                            </div>
+
+                                            <div class="row col-lg-12" *ngIf="listAccion && listAccion.length > 0">
+                                                <h3>Acciones realizadas</h3>
+                                                <table class="table table-striped table-hover text-center">
+                                                    <thead>
+                                                    <tr>
+                                                        <td>Codigo <Ingresado></Ingresado></td><td>Ubicacion</td><td>Mensaje</td>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody >
+                                                    <tr *ngFor="let carga of listAccion" [class.success]="carga.Status" [class.danger]="!carga.Status">
+                                                        <td>{{carga.Producto.code}}</td><td>{{carga.Ubicacion.name}}</td><td>{{carga.Mensaje}}</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            </form>
+
+                                    </div>
+                                    <div *ngSwitchWhen="3"  >
+                                        <h3 class="mbxl">Checking products</h3>
+                                        <form action="#" class="form-horizontal ng-pristine ng-valid">
+                                            <div class="form-group">
+
+                                                <div class="row col-lg-12" *ngIf="getValidateList().length > 0">
+                                                    <h3>Acciones realizadas</h3>
+                                                    <table class="table table-striped table-hover text-center">
+                                                        <thead>
+                                                        <tr>
+                                                            <td>Estado</td><td>Codigo <Ingresado></Ingresado></td><td>Ubicacion</td>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody >
+                                                        <tr *ngFor="let carga of getValidateList()">
+                                                            <td  class="col-lg-1"><input type="checkbox" [checked]="carga.Validate" (click)="unSelect(carga)" > </td><td>{{carga.Producto.code}}</td><td>{{carga.Ubicacion.name}}</td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div *ngSwitchWhen="4"  >
+                                        <h3 class="mbxl">Resultados</h3>
+                                        <form action="#" class="form-horizontal ng-pristine ng-valid">
+                                            <div class="form-group">
+
+                                                <div class="row col-lg-12" *ngIf="listResult.length > 0">
+                                                    <h3>Acciones realizadas</h3>
+                                                    <table class="table table-striped table-hover text-center">
+                                                        <thead>
+                                                        <tr>
+                                                            <td>Codigo</td><td>Ubicacion</td><td>Resultado</td>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody >
+                                                        <tr *ngFor="let carga of listResult">
+                                                            <td>{{carga.accion.producto.codigo}}</td><td>{{carga.accion.ubicacion.title}}</td><td>{{carga.status}}</td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="action text-right">
+                                    <button [disabled]="positionForm==1"        (click)="inc(2)" type="button" name="previous" value="Previous" class="btn btn-info button-previous"><i class="fa fa-arrow-circle-o-left mrx"></i>{{positionForm!=4?'Previous':'Nueva carga'}}</button>
+                                    <button [class.hidden]="positionForm >= 3"  (click)="inc(1)" type="button"  name="next" value="Next" class="btn btn-info button-next mlm">Next<i class="fa fa-arrow-circle-o-right mlx"></i></button>
+                                    <button [class.hidden]="positionForm != 3"  (click)="saveResult($event)"   type="button" name="next" value="Guardar" class="btn btn-success button-next mlm">Guardar <i class="fa fa-save"></i></button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!--div *ngIf="lastLocaltion && lastLocaltion.name" class="form-group">
                     <label ><strong> Ubicacion usada: {{lastLocaltion.name}}</strong></label>
 
                 </div>
@@ -43,7 +216,7 @@
                         </table>
                     </div>
 
-                </form>
+                </form-->
 
 
             </div>
