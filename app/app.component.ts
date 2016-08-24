@@ -25,7 +25,8 @@ import {TypeProduct} from "./typeProduct/typeProduct";
 import {BrandProduct} from "./brandProduct/brand";
 import {ModelProduct} from "./modelProduct/modelProduct";
 import {ProductAvailable} from "./reports/productAvailable";
-import {DemoApp} from "./upload/upload";
+import {UploadFile} from "./uploadFile/upload";
+
 
 @Component({
   selector: 'my-app',
@@ -55,11 +56,12 @@ import {DemoApp} from "./upload/upload";
   { path: '/typeProduct',   name: 'TypeProduct', component: TypeProduct },
   { path: '/brandProduct',   name: 'BrandProduct', component: BrandProduct },
   { path: '/modelProduct',   name: 'ModelProduct', component: ModelProduct },
-  { path: '/upload',   name: 'DemoApp', component: DemoApp },
+  { path: '/upload',   name: 'UploadFile', component: UploadFile },
+
+    
 
 
-
-    { path: '/product/available',   name: 'ProductAvailable', component: ProductAvailable },
+  { path: '/product/available',   name: 'ProductAvailable', component: ProductAvailable },
   { path: '/**', redirectTo: ['Product'] }
 
 ])
@@ -74,8 +76,8 @@ export class AppComponent extends RestController implements OnInit{
       super(http)
         //localStorage.setItem('urlAPI','http://dev.zippyttech.com:8080/api');
         //localStorage.setItem('url','http://dev.zippyttech.com:8080/');
-        localStorage.setItem('urlAPI','http://192.168.0.96:8080/api');
-            localStorage.setItem('url','http://192.168.0.96:8080/');
+        localStorage.setItem('urlAPI','http://192.168.0.112:9090/api');
+        localStorage.setItem('url','http://192.168.0.112:9090/');
     let that=this;
     router.subscribe(
         function(data){
