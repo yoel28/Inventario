@@ -99,7 +99,7 @@ export class HttpUtils {
         return this.doPost(endpoint,body,successCallback,errorCallback,isEndpointAbsolute)
     }
 
-    onLoadList(endpoint:string, list,max, errorCallback = null,isEndpointAbsolute = false, offset) {
+    onLoadList(endpoint:string, list,max, errorCallback = null,isEndpointAbsolute = false, offset=0) {
         let that = this;
         let successCallback= response => {
             Object.assign(list, response.json());
@@ -226,11 +226,7 @@ export class HttpUtils {
 
     }
 
-    loadAll(event) {
-        event.preventDefault();
-        this.max = this.dataList.count;
-        this.loadData();
-    }
+    
 
 
 }
