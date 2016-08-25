@@ -12,6 +12,7 @@ export class RestController implements OnInit {
     endpoint:string;
     offset=0;
     max=5;
+    loadAllData=false;
     page:any=[];
     where:string="";
  
@@ -32,11 +33,16 @@ export class RestController implements OnInit {
         console.log(err);
     }
 
-    loadData(offset=0){
-        let val =offset;
-        if(offset !=0)
-            this.offset=(offset-1)*this.max;
+    loadData(offset=0) {
+        let val = offset;
+        if (this.loadAllData)
+            this.max=this.dataList.list.length;
+        if (offset != 0)
+            this.offset = (offset - 1) * this.max;
+        this.loadAllData=false;
         this.httputils.onLoadList(this.endpoint+"?max="+this.max+"&offset="+this.offset+this.where,this.dataList,this.max,this.error,false,val);
+
+
     };
     onUpdate(event,data){
         event.preventDefault();
@@ -103,6 +109,7 @@ export class RestController implements OnInit {
         event.preventDefault();
         this.max = this.dataList.count;
         this.loadData();
+        this.loadAllData=true;
     }
 
 
