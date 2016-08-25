@@ -105,7 +105,8 @@ export class HttpUtils {
             Object.assign(list, response.json());
             if(list.count)
             {
-                this.pagerFunction(offset,list);
+                max=list.list.length;
+                that.pagerFunction(offset,list,max);
             }
         }
         this.doGet(endpoint,successCallback,errorCallback,isEndpointAbsolute)
@@ -138,8 +139,8 @@ export class HttpUtils {
 
 
 
-    pagerFunction(val=null,list) {
-        let quantity =Math.ceil(list.count/5);
+    pagerFunction(val=null,list,max) {
+        let quantity =Math.ceil(list.count/max);
         let start =0;
         let end=0;
         if(val != 0) {
