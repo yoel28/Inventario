@@ -120,7 +120,7 @@ export class Client extends RestController implements OnInit {
                 },
             }
         };
-        this.rules["enabled"] = {
+        this.rules["onLock"] = {
             "update": update,
             "visible": true,
             'required':true,
