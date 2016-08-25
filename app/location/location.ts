@@ -96,7 +96,7 @@ export class Location_product extends RestController implements OnInit {
             'icon':'fa fa-barcode',
             "type": "text",
             "key": "code",
-            "title": "Codigo de ubicaion",
+            "title": "Código",
             "placeholder": "ingrese la ubicacion",
             'msg':{
                 'errors':{
@@ -114,7 +114,7 @@ export class Location_product extends RestController implements OnInit {
             'icon':'fa fa-barcode',
             "type": "text",
             "key": "title",
-            "title": "Titulo de ubicacion",
+            "title": "Titulo",
             "placeholder": "ingrese el titulo de ubicacion",
             'msg':{
                 'errors':{
@@ -161,6 +161,36 @@ export class Location_product extends RestController implements OnInit {
             },
 
         };
+        this.rules["maximo"] = {
+            "update": update,
+            "visible": true,
+            'required':true,
+            'icon':'fa fa-list',
+            "type": "number",
+            "key": "maximo",
+            "title": "Maximo",
+            "placeholder": "Maximo",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio',
+                },
+            },
+        };
+        this.rules["minimo"] = {
+            "update": update,
+            "visible": true,
+            'required':true,
+            'icon':'fa fa-list',
+            "type": "number",
+            "key": "minimo",
+            "title": "Minimo",
+            "placeholder": "Minimo",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio',
+                },
+            },
+        };
 
 
         this.rules["id"] = {
@@ -169,8 +199,8 @@ export class Location_product extends RestController implements OnInit {
             'required': true,
             'icon': 'fa fa-barcode',
             "type": "text",
-            "key": "fila",
-            "title": "Fila",
+            "key": "id",
+            "title": "Id",
             'msg': {
                 'errors': {
                     'required': 'El campo es obligatorio'
@@ -199,75 +229,18 @@ export class Location_product extends RestController implements OnInit {
             idModal: "searchProductos",
             endpoint: this.endpoint,
         }
-
-
-        this.rulesSave["code"] = {
-            'required':true,
-            'maxLength':5,
-            'icon':'fa fa-barcode',
-            "type": "text",
-            "key": "code",
-            "title": "Codigo ",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                    'maxlength':'Maximo numero de caracteres 5'
-                },
-            },
-            "placeholder": "ingrese el codigo"
-        };
-        this.rulesSave["title"] = {
-            'required':true,
-            'icon':'fa fa-list',
-            "type": "text",
-            "key": "title",
-            "title": "Nombre",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                },
-            },
-            "placeholder": "ingrese el titulo"
-        };
-
-        this.rulesSave["columna"] = {
-            'required':true,
-            'icon':'fa fa-list',
-            "type": "text",
-            "key": "columna",
-            "title": "Columna",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                },
-            },
-            "placeholder": "ingrese la columna"
-        };
-
-        
-        this.rulesSave["fila"] = {
-            'required':true,
-            'icon':'fa fa-list',
-            "type": "text",
-            "key": "detail",
-            "title": "fila",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                },
-            },
-            "placeholder": "ingrese la fila"
-        };
+        this.rulesSave = this.rules;
+        delete this.rulesSave['id'];
     }
 
     ngOnInit()
     {
 
         this.initLang();
-        this.initOptions();
         this.initRules();
-        this.initParamsTable();
         this.initSave();
+        this.initOptions();
+        this.initParamsTable();
         this.initSearch();
     
         this.loadData();

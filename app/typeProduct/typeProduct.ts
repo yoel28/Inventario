@@ -182,7 +182,7 @@ export class TypeProduct extends RestController implements OnInit {
             "key": "tipoProducto",
             "title": "Tipo",
             'object':true,
-            "placeholder": "Ingrese el codigo del tipo de producto",
+            "placeholder": "Ingrese el titulo del tipo",
             'paramsSaveSearch':this.paramsSearch,
             'msg':{
                 'errors':{

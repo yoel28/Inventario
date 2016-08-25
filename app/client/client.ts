@@ -47,13 +47,13 @@ export class Client extends RestController implements OnInit {
         //TODO hacer que los update se realcionen con los permisos
 
         let update =this.myglobal.existsPermission("1");
-        this.rules["codigo"] = {
+        this.rules["code"] = {
             "update": update,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
-            "key": "codigo",
+            "key": "code",
             "title": "Codigo",
             "placeholder": "ingrese el codigo",
             'msg':{
@@ -62,13 +62,28 @@ export class Client extends RestController implements OnInit {
                 },
             }
         };
-        this.rules["nombreEmpresa"] = {
+        this.rules["direccion"] = {
             "update": update,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
-            "key": "nombreEmpresa",
+            "key": "direccion",
+            "title": "Dirección",
+            "placeholder": "Ingrese la dirección",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio'
+                },
+            }
+        };
+        this.rules["title"] = {
+            "update": update,
+            "visible": true,
+            'required':true,
+            'icon':'fa fa-list',
+            "type": "text",
+            "key": "title",
             "title": "Empresa",
             "placeholder": "ingrese el nombre de la empresa",
             'msg':{
@@ -108,14 +123,17 @@ export class Client extends RestController implements OnInit {
         this.rules["enabled"] = {
             "update": update,
             "visible": true,
+            'required':true,
             'icon':'fa fa-list',
             "type": "boolean",
+            'states':["Habilitado","Deshabilitado"],
+            'permissions':true,
             "key": "enabled",
-            "title": "Estado",
-            "placeholder": "ingrese el estado",
-            'states':["habilitado","deshabilitado"],
+            "title": "Habilitado",
+            "placeholder": "",
             'msg':{
                 'errors':{
+                    'required':'El campo es obligatorio',
                 },
             }
         };
@@ -130,7 +148,7 @@ export class Client extends RestController implements OnInit {
             'title': 'Eliminar',
             'permission': '1',
             'message': '¿ Esta seguro de eliminar el cliente con el codigo: ',
-            'keyAction':'codigo'
+            'keyAction':'code'
         };
     }
 
@@ -141,37 +159,8 @@ export class Client extends RestController implements OnInit {
             idModal: "saveClient",
             endpoint: this.endpoint,
         }
-
-        this.rulesSave = {
-            'codigo': {
-                'type': this.rules['codigo'].type,
-                'required':true,
-                'title': this.rules['codigo'].title,
-                'placeholder': this.rules['codigo'].placeholder,
-                'msg':this.rules['codigo'].msg
-            },
-            'nombreEmpresa': {
-                'type': this.rules['nombreEmpresa'].type,
-                'required':true,
-                'title': this.rules['nombreEmpresa'].title,
-                'placeholder': this.rules['nombreEmpresa'].placeholder,
-                'msg':this.rules['nombreEmpresa'].msg
-            },
-            'ruc': {
-                'type': this.rules['ruc'].type,
-                'required':true,
-                'title': this.rules['ruc'].title,
-                'placeholder': this.rules['ruc'].placeholder,
-                'msg':this.rules['ruc'].msg
-            },
-            'detail': {
-                'type': this.rules['detail'].type,
-                'title': this.rules['detail'].title,
-                'placeholder': this.rules['detail'].placeholder,
-                'msg':this.rules['detail'].msg
-            }
-        };
-
+        this.rulesSave = this.rules;
+        delete this.rulesSave['enabled'];
     }
 
     initOptions() {

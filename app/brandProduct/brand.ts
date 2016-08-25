@@ -182,7 +182,7 @@ export class BrandProduct extends RestController implements OnInit {
             "key": "marca",
             "title": "Marca",
             'object':true,
-            "placeholder": "Ingrese el codigo de la marca",
+            "placeholder": "Ingrese el titulo de la marca",
             'paramsSaveSearch':this.paramsSearch,
             'msg':{
                 'errors':{
