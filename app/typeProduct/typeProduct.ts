@@ -102,6 +102,7 @@ export class TypeProduct extends RestController implements OnInit {
             'title': {
                 'type': this.rules['title'].type,
                 'required':true,
+                "search":true,
                 'title': this.rules['title'].title,
                 'placeholder': this.rules['title'].placeholder,
                 'msg':this.rules['title'].msg
@@ -109,6 +110,7 @@ export class TypeProduct extends RestController implements OnInit {
             'detail': {
                 'type': this.rules['detail'].type,
                 'title': this.rules['detail'].title,
+                "search":true,
                 'placeholder': this.rules['detail'].placeholder,
                 'msg':this.rules['detail'].msg
             }
