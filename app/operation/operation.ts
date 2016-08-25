@@ -62,19 +62,75 @@ export class Operation extends RestController implements OnInit {
     }
 
 
+    onDelete()
+    {
+        this.positionForm=1;
+        this.lastLocaltion ={};
+        this.listAccion=[];
+        this.accionList="";
+        this.user.updateValue(null);
+        this.tipoAccion.updateValue(null);
+        this.producto.updateValue(null);
+        this.ubicacion.updateValue(null);
+        this.listResult={};
+
+        this.initSearchTypeActions();
+
+    }
+
+
     inc(data =null,position=0) {
 
-        if((  this.positionForm-1 ==0  && !this.form_operation[this.positionForm-1].valid ) || ( this.positionForm-1 >0 && this.listAccion.length == 0))
-        {
-            this.toastr.error("error");
-        }
-        else {
+        let flag =true;
 
-            if(data)
+        switch (this.positionForm)
+        {
+            case 1:
+
+                    if(!this.form_operation[0].valid)
+                    {
+                        this.toastr.error("por favor selccione una accion y un cliente valido");
+                        flag =false;
+                    }
+
+                break;
+            case 2:
+
+                    if(this.getValidateList().length == 0 && (data == 1 || position == 3))
+                    {
+                        this.toastr.warning("la lista de acciones valida es nula");
+                        flag =false;
+                    }
+
+                break;
+
+            case 4:
+                    if(position != 0 && position != 1)
+                    {
+                        this.toastr.warning("debe realizar una lista de acciones nueva");
+                        flag =false;
+                    }
+                break;
+
+            default:
+                    this.toastr.warning("no abarcado");
+                break;
+
+        }
+
+        if(flag)
+        {
+            if(data && this.positionForm!=4)
                 this.positionForm=data==1?(this.positionForm+1):(this.positionForm-1);
+            else if(data)
+                this.onDelete();
             else
                 this.positionForm=position;
         }
+
+
+
+
     }
 
     getResult(event) {
@@ -114,7 +170,7 @@ export class Operation extends RestController implements OnInit {
             this.producto.updateValue(null);
 
         }
-        this.httputils.doPost('/acciones/check/type/element/',JSON.stringify(this.form_operation[1].value),successCallback, this.error);
+        this.httputils.doGet('/acciones/check/type/element/'+this.producto.value,successCallback, this.error);
         }
     }
     
@@ -179,14 +235,9 @@ export class Operation extends RestController implements OnInit {
         this.initSearchClients();
     }
 
-
     //tercer formulario
 
-
-
-
-
-    getValidateList(type =null) {
+    getValidateList() {
         let listAccionArray=[];
         for(var acctions of this.listAccion)
         {
@@ -195,8 +246,6 @@ export class Operation extends RestController implements OnInit {
         }
         return listAccionArray
     }
-
-
 
     //deseleccionar
     unSelect(data) {
