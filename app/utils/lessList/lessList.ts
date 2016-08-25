@@ -21,7 +21,6 @@ export class LessList extends RestController implements OnInit {
     public rules:any = {};
     public paramSearch:any = {};
     public externalEndPoint = "";
-    public detailsSearh:any = {};
     public rulesDetalis:any = {};
     public dataList:any ={}
 
@@ -38,25 +37,31 @@ export class LessList extends RestController implements OnInit {
 
     searchDetalles(data) {
 
-        if(this.detailsSearh['id'] && this.detailsSearh['id'] == data.id )
+        if(!data.detailsSearh)
         {
-            this.detailsSearh = {}
+            for(let item of this.dataList.list)
+            {
+                item.detailsSearh ={};
+            }
         }
-        else {
-            this.detailsSearh = {}
+        
+        if(! data.detailsSearh['id'])
+        {
             let that = this;
             let successCallback = response => {
-                Object.assign(that.detailsSearh, response.json());
+                Object.assign(data.detailsSearh, response.json());
             }
             this.httputils.doGet(this.externalEndPoint  + data.id, successCallback, this.error)
         }
+
+        
     }
 
-    getKeys() {
+    getKeys(item) {
         let data = [];
         let that = this;
-        Object.keys(this.rulesDetalis).forEach((key)=> {
-            if(that.detailsSearh[key] && key != 'image')
+        Object.keys(that.rulesDetalis).forEach((key)=> {
+            if(item.detailsSearh[key] && key != 'image')
             data.push(key)
         });
         return data;
