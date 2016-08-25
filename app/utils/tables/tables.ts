@@ -172,9 +172,34 @@ export class Tables extends RestController implements OnInit {
     getKeys(data){
         return Object.keys(data);
     }
+
+
+
+    //Cargar Where del filter
+    public paramsFilter:any = {
+        title: "Filtrar roles",
+        idModal: "modalFilter",
+        endpointForm: "",
+    };
+
+
+    existFilter()
+    {
+        let flag = false;
+        let  that =this;
+        Object.keys(this.rules).forEach(key=>{
+            if(that.rules[key].search  && that.rules[key].search == true)
+                flag = true
+        })
+        return flag
+    }
     
-
-
+    loadWhere(where) {
+        this.where = where;
+        if (this.myglobal.existsPermission('1')) {
+            this.loadData();
+        }
+    }
 
 
 
