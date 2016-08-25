@@ -85,6 +85,7 @@ export class Product extends RestController implements OnInit {
             "key": "code",
             "title": "Codigo",
             "placeholder": "ingrese el codigo",
+            "search":true,
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
@@ -101,6 +102,7 @@ export class Product extends RestController implements OnInit {
             "type": "text",
             "key": "detail",
             "title": "Detalle",
+            "search":true,
             "placeholder": "ingrese el detalle del producto",
             'msg':{
                 'errors':{
