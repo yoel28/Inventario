@@ -20,18 +20,18 @@
                     </a>
                 </div>
                 <div  [attr.id]="data['id']" class="panel-collapse collapse">
-                    <div  *ngIf="detailsSearh['id']" class="panel panel-default">
+                    <div  *ngIf="data.detailsSearh && data.detailsSearh['id']" class="panel panel-default">
                         <div class="panel-body">
 
                             <div *ngIf="rulesDetalis.image" class="col-lg-3 col-centered">
                                 <figure>
-                                    <img class="img-circle"  src="{{detailsSearh[image] || '/img/user.png' }}">
+                                    <img class="img-circle"  src="{{data.detailsSearh[image] || '/img/user.png' }}">
                                 </figure>
                             </div>
 
                             <div  class="col-lg-4 col-centered">
 
-                                <label *ngFor="let key of getKeys()" class="col-centered col-lg-12"><strong class="text-bold">{{rulesDetalis[key].title}}:</strong> <label>{{detailsSearh[key]}}</label></label>
+                                <label *ngFor="let key of getKeys(data)" class="col-centered col-lg-12"><strong class="text-bold">{{rulesDetalis[key].title}}:</strong> <label>{{data.detailsSearh[key]}}</label></label>
 
                             </div>
 
