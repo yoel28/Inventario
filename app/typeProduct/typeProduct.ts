@@ -185,7 +185,7 @@ export class TypeProduct extends RestController implements OnInit {
             "title": "Tipo",
             'object':true,
             "placeholder": "Ingrese el titulo del tipo",
-            'paramsSaveSearch':this.paramsSearch,
+            'paramsSearch':this.paramsSearch,
             'msg':{
                 'errors':{
                     'object':'El tipo no esta registrado',
