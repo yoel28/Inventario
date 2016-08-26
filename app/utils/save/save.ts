@@ -30,7 +30,7 @@ export class Save extends RestController implements OnInit{
              'type':'text',
              'required':true,
              'key':'vehicle',
-             'paramsSaveSearch': {
+             'paramsSearch': {
                  'label':{'title':"Placa: ",'detail':"Empresa: "},
                  'endpoint':"/search/vehicles/",
                  'where':'',
@@ -122,7 +122,7 @@ export class Save extends RestController implements OnInit{
                         that.search=that.rules[key];
                         that.findControl = value;
                         that.dataList=[];
-                        that.setEndpoint(that.rules[key].paramsSaveSearch.endpoint+value);
+                        that.setEndpoint(that.rules[key].paramsSearch.endpoint+value);
                         if( !that.searchId[key]){
                             that.loadData();
                         }
@@ -180,7 +180,7 @@ export class Save extends RestController implements OnInit{
     //accion al dar click en el boton de buscar del formulario en el search
     getSearch(event,value){
         event.preventDefault();
-        this.setEndpoint(this.search.paramsSaveSearch.endpoint+value);
+        this.setEndpoint(this.search.paramsSearch.endpoint+value);
         this.loadData();
     }
     //accion al dar click en el boton de cerrar el formulario
