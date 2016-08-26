@@ -269,9 +269,9 @@ export class Location_product extends RestController implements OnInit {
             'permissions':'1',
             'title': "Ubicación",
             'idModal': "searchLocation",
-            'endpointForm': "/search/ubicaciones/",
-            'placeholderForm': "Ingrese la ubicacion",
-            'labelForm': {name: "Nombre: ", detail: "Detalle: "},
+            'endpoint': "/search/ubicaciones/",
+            'placeholder': "Ingrese la ubicacion",
+            'label': {name: "Nombre: ", detail: "Detalle: "},
             'msg': {
                 'errors': {
                     'noAuthorized': 'No posee permisos para esta accion',
