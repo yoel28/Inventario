@@ -140,7 +140,7 @@ export class ModelProduct extends RestController implements OnInit {
             'title': this.viewOptions["title"],
             'idModal': "searchProductModel",
             'endpoint': "/search/modelos",
-            'placeholderForm': "Ingrese el modelo de producto",
+            'placeholder': "Ingrese el modelo de producto",
             'label': {'title': "titulo: ", 'detail': "detalle: "},
             'msg': {
                 'errors': {
@@ -188,7 +188,7 @@ export class ModelProduct extends RestController implements OnInit {
             "title": "Modelo",
             'object':true,
             "placeholder": "Ingrese el codigo del modelo",
-            'paramsSaveSearch':this.paramsSearch,
+            'paramsSearch':this.paramsSearch,
             'msg':{
                 'errors':{
                     'object':'El modelo no esta registrado',
