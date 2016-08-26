@@ -176,7 +176,8 @@ export class Product extends RestController implements OnInit {
             "key": this.rules["code"].key,
             "title": this.rules["code"].title,
             'msg':this.rules["code"].msg,
-            "placeholder": this.rules["code"].placeholder
+            "placeholder": this.rules["code"].placeholder,
+            "search": this.rules["code"].search
         };
         
         
@@ -187,17 +188,26 @@ export class Product extends RestController implements OnInit {
             "key":   this.rules["detail"].detail,
             "title": this.rules["detail"].title,
             'msg':   this.rules["detail"].msg ,
-            "placeholder": this.rules["detail"].placeholder
+            "placeholder": this.rules["detail"].placeholder,
+            "search": this.rules["detail"].search
+
         };
 
         this.rulesSave["tipoProducto"] = this.typesProduct.ruleObject;
         this.rulesSave["tipoProducto"].required=true;
+        this.rulesSave["tipoProducto"].required=true;
+
+
 
         this.rulesSave["marca"] = this.brandProduct.ruleObject;
         this.rulesSave["marca"].required=true;
+        this.rulesSave["marca"].search=true;
+
 
         this.rulesSave["modelo"] = this.modelProduct.ruleObject;
         this.rulesSave["modelo"].required=true;
+        this.rulesSave["modelo"].search=true;
+
 
     }
 
@@ -225,9 +235,9 @@ export class Product extends RestController implements OnInit {
             'permissions':'1',
             'title': this.viewOptions["title"],
             'idModal': "searchProductos",
-            'endpointForm': "/search/productos",
-            'placeholderForm': "Ingrese el producto",
-            'labelForm': {name: "Nombre: ", detail: "Detalle: "},
+            'endpoint': "/search/productos",
+            'placeholder': "Ingrese el producto",
+            'label': {'title': "titulo: ", 'detail': "detalle: "},
             'msg': {
                 'errors': {
                     'noAuthorized': 'No posee permisos para esta accion',
