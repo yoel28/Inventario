@@ -1,7 +1,7 @@
 
 
-<div *ngIf="myglobal.existsPermission('1')">
-    <filter [rules]="rules" [params]="paramsFilter" (whereFilter)="loadWhere($event)"></filter>
+<div *ngIf="myglobal.existsPermission('1') && rulesFilter">
+    <filter [rules]="rulesFilter" [params]="paramsFilter" (whereFilter)="loadWhere($event)"></filter>
 </div>
 
 
