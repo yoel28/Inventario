@@ -140,7 +140,7 @@ export class BrandProduct extends RestController implements OnInit {
             'title': this.viewOptions["title"],
             'idModal': "searchBrandProduct",
             'endpoint': "/search/marcas/",
-            'placeholderForm': "Ingrese la marca de producto",
+            'placeholder': "Ingrese la marca de producto",
             'label': {'title': "titulo: ", 'detail': "detalle: "},
             'msg': {
                 'errors': {
@@ -185,7 +185,7 @@ export class BrandProduct extends RestController implements OnInit {
             "title": "Marca",
             'object':true,
             "placeholder": "Ingrese el titulo de la marca",
-            'paramsSaveSearch':this.paramsSearch,
+            'paramsSearch':this.paramsSearch,
             'msg':{
                 'errors':{
                     'object':'La marca no esta registrado',
