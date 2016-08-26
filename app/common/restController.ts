@@ -35,12 +35,17 @@ export class RestController implements OnInit {
 
     loadData(offset=0) {
         let val = offset;
+        let flag=false;
         if (this.loadAllData)
+        {
             this.max=this.dataList.list.length;
+            flag=true;
+        }
+            
         if (offset != 0)
             this.offset = (offset - 1) * this.max;
         this.loadAllData=false;
-        this.httputils.onLoadList(this.endpoint+"?max="+this.max+"&offset="+this.offset+this.where,this.dataList,this.max,this.error,false,val);
+        this.httputils.onLoadList(this.endpoint+"?max="+this.max+"&offset="+this.offset+this.where,this.dataList,this.max,this.error,false,val,flag);
 
 
     };

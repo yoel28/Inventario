@@ -99,12 +99,13 @@ export class HttpUtils {
         return this.doPost(endpoint,body,successCallback,errorCallback,isEndpointAbsolute)
     }
 
-    onLoadList(endpoint:string, list,max, errorCallback = null,isEndpointAbsolute = false, offset=0) {
+    onLoadList(endpoint:string, list,max, errorCallback = null,isEndpointAbsolute = false, offset=0,flag=false) {
         let that = this;
         let successCallback= response => {
             Object.assign(list, response.json());
             if(list.count)
             {
+                if(flag)
                 max=list.list.length;
                 that.pagerFunction(offset,list,max);
             }
