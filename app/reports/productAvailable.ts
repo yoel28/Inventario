@@ -35,16 +35,6 @@ export class ProductAvailable extends RestController implements OnInit {
         //Search para los objetos en el momento de hacer un Save
     }
 
-    initLang(){
-        var userLang = navigator.language.split('-')[0]; // use navigator lang if available
-        userLang = /(es|en)/gi.test(userLang) ? userLang : 'es';
-        this.translate.setDefaultLang('en');
-        this.translate.use(userLang);
-    }
-
-    initPermissions(){
-        
-    }
     
     initOptions() {
         this.viewOptions["title"] = 'Productos disponibles';
@@ -64,9 +54,9 @@ export class ProductAvailable extends RestController implements OnInit {
         let start = data.start.split("/");
         let end   = data.end.split("/")
 
-        this.dateWhere=[[{'op':'ge','field':'dia','value':start[0]},{'op':'le','field':'dia','value':end[0]}],
-                        [{'op':'ge','field':'mes','value':start[1]},{'op':'le','field':'mes','value':end[1]}],
-                        [{'op':'ge','field':'year','value':start[2]},{'op':'le','field':'day','year':end[2]}]];
+        this.dateWhere=[{'op':'ge','field':'dia','type':'int','value':start[0]},{'op':'le','field':'dia','type':'int','value':end[0]},
+                        {'op':'ge','field':'mes','type':'int','value':start[1]},{'op':'le','field':'mes','type':'int','value':end[1]},
+                        {'op':'ge','field':'year','type':'int','value':start[2]},{'op':'le','field':'year','type':'int','value':end[2]}];
 
 
 
