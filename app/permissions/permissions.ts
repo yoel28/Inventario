@@ -187,9 +187,9 @@ export class Permissions extends RestController implements OnInit {
             'permissions':'1',
             'title': "Permisos",
             'idModal': "searchPermissions",
-            'endpointForm': "/search/permissions",
-            'placeholderForm': "Ingrese el permiso",
-            'labelForm': {name: "Nombre: ", detail: "Detalle: "},
+            'endpoint': "/search/permissions",
+            'placeholder': "Ingrese el permiso",
+            'label': {name: "Nombre: ", detail: "Detalle: "},
             'msg': {
                 'errors': {
                     'noAuthorized': 'No posee permisos para esta accion',
