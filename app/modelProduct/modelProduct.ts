@@ -64,11 +64,11 @@ export class ModelProduct extends RestController implements OnInit {
             }
         };
         this.rules["detail"] = {
-            "update": update,
+            "update": this.permissions['update'],
             "visible": true,
             'icon':'fa fa-list',
             "search":true,
-            "type": "text",
+            "type": "textarea",
             "key": "detail",
             "title": "detalle",
             "placeholder": "ingrese el detalle",
@@ -77,6 +77,7 @@ export class ModelProduct extends RestController implements OnInit {
                 },
             }
         };
+        
     }
 
     initParamsTable(){
