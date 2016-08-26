@@ -231,7 +231,7 @@ export class Client extends RestController implements OnInit {
             "title": "cliente",
             'object':true,
             "placeholder": "Ingrese el cliente",
-            'paramsSaveSearch':this.paramsSearch,
+            'paramsSearch':this.paramsSearch,
             'msg':{
                 'errors':{
                     'object':'El tipo no esta registrado',
