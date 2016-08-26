@@ -17,7 +17,7 @@ import {DateRangepPicker} from "../common/xeditable";
     styleUrls: ['app/reports/style.css'],
     directives: [Tables,Save,DateRangepPicker],
     pipes: [TranslatePipe],
-    providers: [TranslateService,TypeProduct,BrandProduct,ModelProduct]
+    providers: [TranslateService]
 })
 
 
@@ -26,15 +26,13 @@ export class ProductAvailable extends RestController implements OnInit {
     public viewOptions:any={};
     public paramsDate:any={};
     public date:any={};
+    public dateWhere=[];
 
-    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,  @Inject(TypeProduct) public typesProduct,@Inject(BrandProduct) public brandProduct, @Inject(ModelProduct) public modelProduct) {
+    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService) {
         super(http, toastr);
-        this.setEndpoint("/productos/");
+        this.setEndpoint("/inventario/historico/cantidad/");
 
         //Search para los objetos en el momento de hacer un Save
-        typesProduct.externalRules();
-        brandProduct.externalRules();
-        modelProduct.externalRules();
     }
 
     initLang(){
@@ -62,6 +60,23 @@ export class ProductAvailable extends RestController implements OnInit {
     }
     assignDate(data){
         this.date=data;
+
+        let start = data.start.split("/");
+        let end   = data.end.split("/")
+
+        this.dateWhere=[[{'op':'ge','field':'dia','value':start[0]},{'op':'le','field':'dia','value':end[0]}],
+                        [{'op':'ge','field':'mes','value':start[1]},{'op':'le','field':'mes','value':end[1]}],
+                        [{'op':'ge','field':'year','value':start[2]},{'op':'le','field':'day','year':end[2]}]];
+
+
+
+
+        this.where="&where="+encodeURI(JSON.stringify(this.dateWhere).split('{').join('[').split('}').join(']'));
+
+
+        this.loadData();
+
+
     }
     initParamsDate(){
         this.paramsDate['format']="DD/MM/YYYY";
