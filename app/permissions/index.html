@@ -15,7 +15,7 @@
 
 
 
-            <div *ngIf="viewOptions.permissions.list"  class="box-body">
+            <div *ngIf="permissions['list']"  class="box-body">
                 <div *ngIf=" dataList && dataList.count > 0 ">
 
                     <tables [dataList]="dataList" [rules]="rules" [params]="paramsTable" [rulesSearch]="rulesSearch" [externalSave]="externalSave"></tables>
@@ -29,9 +29,9 @@
                 </div>
             </div>
 
-            <div *ngIf="!viewOptions.permissions.list">
+            <div *ngIf="!permissions['list']">
                 <div class="btn-red padding-error">
-                    <h5><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h5>
+                    <h5><i class="fa fa-warning"></i>&nbsp;<strong>{{viewOptions.errors.title}}</strong></h5>
                     {{viewOptions.errors.list}}
                 </div>
             </div>

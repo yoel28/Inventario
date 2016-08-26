@@ -26,14 +26,27 @@ export class Permissions extends RestController implements OnInit {
     public paramsSave:any = {};
     public rulesSave:any = {};
     public paramsSearch:any ={};
+    public permissions:any ={};
 
     constructor(public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
-
         super(http, toastr);
         this.setEndpoint("/permissions/");
-        }
+    }
+    ngOnInit() {
+        this.initLang();
+        this.initPermissions();
+        this.initRules();
 
 
+        this.initSave();
+        this.initOptions();
+        this.initParamsTable();
+
+        this.initSearch();
+        this.loadData();
+
+
+    }
     initLang() {
         var userLang = navigator.language.split('-')[0]; // use navigator lang if available
         userLang = /(es|en)/gi.test(userLang) ? userLang : 'es';
@@ -41,6 +54,14 @@ export class Permissions extends RestController implements OnInit {
         this.translate.use(userLang);
     }
 
+    initPermissions(){
+        this.permissions['list']=this.myglobal.existsPermission('PE_LIST');
+        this.permissions['add']=this.myglobal.existsPermission('PE_ADD');
+        this.permissions['update']=this.myglobal.existsPermission('PE_UPDATE');
+        this.permissions['delete']=this.myglobal.existsPermission('PE_DELETE');
+        this.permissions['filter']=this.myglobal.existsPermission('PE_FILTER');
+        this.permissions['lock']=this.myglobal.existsPermission('PE_LOCK');
+    }
     initParamsTable() {
         this.paramsTable.endpoint = this.endpoint;
         this.paramsTable.actions = {};
@@ -59,8 +80,8 @@ export class Permissions extends RestController implements OnInit {
 
     initOptions() {
         this.viewOptions["title"] = 'Permisos';
-        this.viewOptions["permissions"] = {"list": true};/*TODO PERMISO REAL this.myglobal.existsPermission('10')}*/
         this.viewOptions["errors"] ={};
+        this.viewOptions["errors"].title= "ADVERTENCIA";
         this.viewOptions["errors"].notFound= "no se encontraron resultados";
         this.viewOptions["errors"].list="no tiene permisos para ver los productos";
         this.viewOptions["button"]=[];
@@ -75,22 +96,30 @@ export class Permissions extends RestController implements OnInit {
 
 
     initRules() {
-
-
-        //TODO hacer que los update se realcionen con los permisos
-        //rules de la clase
-        let update =true; /*this.myglobal.existsPermission("1");*/
-
-        this.rules["module"] = {
-            "update": update,
+        this.rules["code"] = {
+            "update": this.permissions['update'],
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
-            'permissions':'1',
+            "key": "code",
+            "title": "Código",
+            "placeholder": "Ingrese el código",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio'
+                },
+            }
+        };
+        this.rules["module"] = {
+            "update": this.permissions['update'],
+            "visible": true,
+            'required':true,
+            'icon':'fa fa-list',
+            "type": "text",
             "key": "module",
             "title": "Modulo",
-            "placeholder": "ingrese el modulo",
+            "placeholder": "Ingrese el modulo",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio'
@@ -98,29 +127,27 @@ export class Permissions extends RestController implements OnInit {
             }
         };
         this.rules["title"] = {
-            "update": update,
+            "update": this.permissions['update'],
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
-            'permissions':'1',
             "key": "title",
             "title": "Titulo",
-            "placeholder": "ingrese el modelo",
+            "placeholder": "Ingrese el titulo",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
-                    'object':'Modelo no esta registrado',
                 },
             }
         };
         this.rules["detail"] = {
-            "update": update,
+            "update": this.permissions['update'],
             "visible": true,
             'icon':'fa fa-list',
             "type": "text",
             "key": "detail",
-            "title": "Detalle de permiso",
+            "title": "Detalle",
             "placeholder": "ingrese detalle de permiso",
             'msg':{
                 'errors':{
@@ -129,11 +156,10 @@ export class Permissions extends RestController implements OnInit {
             }
         };
         this.rules["controlador"] = {
-            "update": update,
+            "update": this.permissions['update'],
             "visible": true,
             'icon':'fa fa-list',
             "type": "text",
-            'permissions':'1',
             "key": "controlador",
             "title": "Controlador",
             "placeholder": "ingrese el controlador",
@@ -144,7 +170,7 @@ export class Permissions extends RestController implements OnInit {
             },
         };
         this.rules["accion"] = {
-            "update": update,
+            "update": this.permissions['update'],
             "visible": true,
             'icon':'fa fa-barcode',
             "type": "text",
@@ -197,23 +223,7 @@ export class Permissions extends RestController implements OnInit {
             }
         };
     }
-
-
-    ngOnInit() {
-
-        this.initLang();
-        this.initRules();
-        this.initSave();
-        
-        this.initOptions();
-        this.initParamsTable();
-
-        this.initSearch();
-        this.loadData();
-
-
-    }
-
+    
     @ViewChild(Tables)
     tables:Tables;
     asignData(data) {
