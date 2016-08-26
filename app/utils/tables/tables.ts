@@ -14,7 +14,7 @@ import {Save} from "../save/save";
     selector: 'tables',
     templateUrl: 'app/utils/tables/index.html',
     styleUrls: ['app/utils/tables/style.css'],
-    inputs:['params','rules','rulesSearch','dataList','externalSave'],
+    inputs:['params','rules','rulesSearch','dataList','externalSave','rulesFilter'],
     directives:[Xeditable,Search,Filter,Save]
 })
 
@@ -36,6 +36,9 @@ export class Tables extends RestController implements OnInit {
     public dataSave :any={};
 
     public keyActions =[];
+    
+    
+    public rulesFilter :any ={};
 
 
     constructor(public _formBuilder: FormBuilder,public http:Http,public toastr: ToastsManager, public myglobal:globalService) {
@@ -179,7 +182,7 @@ export class Tables extends RestController implements OnInit {
     public paramsFilter:any = {
         title: "Filtrar roles",
         idModal: "modalFilter",
-        endpointForm: "",
+        endpoint: "",
     };
 
 
@@ -187,10 +190,14 @@ export class Tables extends RestController implements OnInit {
     {
         let flag = false;
         let  that =this;
-        Object.keys(this.rules).forEach(key=>{
-            if(that.rules[key].search  && that.rules[key].search == true)
+        
+        Object.keys(this.rulesFilter).forEach(key=>{
+            if(that.rulesFilter[key].search  && that.rulesFilter[key].search == true)
                 flag = true
         })
+
+        
+        
         return flag
     }
     
