@@ -16,9 +16,9 @@ export class Search extends RestController{
     // public searchVehiculo={
     //     title:"Vehiculo",
     //     idModal:"searchVehiculo",
-    //     endpointForm:"/search/vehicles/",
-    //     placeholderForm:"Ingrese la placa",
-    //     labelForm:{name:"Nombre: ",detail:": "},
+    //     endpoint:"/search/vehicles/",
+    //     placeholder:"Ingrese la placa",
+    //     label:{name:"Nombre: ",detail:": "},
     //     where:&where[['op':'eq','field':'vehicle','value':'IsNull']]
     // }
 
