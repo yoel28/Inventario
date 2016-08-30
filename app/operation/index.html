@@ -18,7 +18,7 @@
                                                 <p class="anchor">1 .- Usuario y accion</p>
                                                 <p class="description"></p></a></li>
                                             <li [class.active]="positionForm==2 " (click)="inc(null,2)"><a data-toggle="tab"><i class="glyphicon glyphicon-send mln"></i>
-                                                <p class="anchor">2.- Producto y ubicacion</p>
+                                                <p class="anchor">2.- Ubicacion y  Producto</p>
                                                 <p class="description"></p></a></li>
                                             <li [class.active]="positionForm==3" (click)="inc(null,3)"><a data-toggle="tab"><i class="glyphicon glyphicon glyphicon-list"></i>
                                                 <p class="anchor">3.- Registros Validos</p>
@@ -59,7 +59,7 @@
                                                         <div *ngIf="!tipoAccion.valid" ><label>Por favor Ingrese un tipo de accion valida</label></div>
                                                         <div *ngIf="tipoAccion.valid" >
 
-                                                            <label >seleccione {{tipoAccion.value==1?'cliente':'proveedor'}}:</label>
+                                                            <label >seleccione <strong class="text-blod">{{tipoAccion.value==1?'Proveedor':'Cliente'}} </strong>:</label>
                                                             <select [(ngModel)]="tipoAccion_2" (ngModelChange)="changeClients($event)" sm-dropdown class="ui fluid search selection dropdown">
 
                                                                 <option value="-1">Seleccione un valor</option>

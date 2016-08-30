@@ -9,6 +9,7 @@ import { Dashboard }         from './dashboard/dashboard';
 import {globalService} from "./common/globalService";
 import {LocationStrategy, HashLocationStrategy} from "@angular/common";
 import {RestController} from "./common/restController";
+
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {Product} from "./product/product";
@@ -26,6 +27,7 @@ import {BrandProduct} from "./brandProduct/brand";
 import {ModelProduct} from "./modelProduct/modelProduct";
 import {ProductAvailable} from "./reports/productAvailable";
 import {UploadFile} from "./uploadFile/upload";
+import {TypeCompany} from "./typeCompany/typeCompany";
 
 
 @Component({
@@ -58,11 +60,17 @@ import {UploadFile} from "./uploadFile/upload";
   { path: '/modelProduct',   name: 'ModelProduct', component: ModelProduct },
   { path: '/upload',   name: 'UploadFile', component: UploadFile },
 
+  { path: '/type/company',   name: 'TypeCompany', component: TypeCompany },
+
+
+
+
+
     
 
 
   { path: '/product/available',   name: 'ProductAvailable', component: ProductAvailable },
-  { path: '/**', redirectTo: ['Product'] }
+  { path: '/**', redirectTo: ['Dashboard'] }
 
 ])
 export class AppComponent extends RestController implements OnInit{
@@ -74,10 +82,12 @@ export class AppComponent extends RestController implements OnInit{
   constructor(public router: Router,http: Http,public myglobal:globalService,public toastr: ToastsManager) {
     
       super(http)
-        localStorage.setItem('urlAPI','http://dev.zippyttech.com:8080/api');
-        localStorage.setItem('url','http://dev.zippyttech.com:8080/');
+        //localStorage.setItem('urlAPI','http://dev.zippyttech.com:8080/api');
+        //localStorage.setItem('url','http://dev.zippyttech.com:8080/');
         //localStorage.setItem('urlAPI','http://192.168.0.113:8080/api');
         //localStorage.setItem('url','http://192.168.0.113:8080/');
+        localStorage.setItem('urlAPI','http://192.168.0.95:8080/api');
+        localStorage.setItem('url','http://192.168.0.95:8080/');
     let that=this;
     router.subscribe(
         function(data){
@@ -220,11 +230,28 @@ export class AppComponent extends RestController implements OnInit{
         });
         this.menuItems.push({
             'visible':this.myglobal.existsPermission("1"),
-            'routerLink':'Client',
             'icon':'fa fa-list',
-            'title':'Cliente'
+            'title':'Panel de Clientes',
+            'key':'menu3',
+            'treeview':[
+                {
+                    'visible':this.myglobal.existsPermission("1"),
+                    'icon':'fa fa-list',
+                    'title':'Clientes',
+                    'routerLink':'Client'
+                },
+                {
+                    'visible':this.myglobal.existsPermission("1"),
+                    'icon':'fa fa-list',
+                    'title':'Tipo de clientes',
+                    'routerLink':'TypeCompany'
+                }
+
+            ]
 
         });
+
+
         this.menuItems.push({
             'visible':this.myglobal.existsPermission("1"),
             'routerLink':'Roles',

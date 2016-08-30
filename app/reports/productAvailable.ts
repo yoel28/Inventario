@@ -184,6 +184,57 @@ export class ProductAvailable extends BasicConfiguration implements OnInit {
             }
         };
 
+
+        this.rules["day"] = {
+            "update": false,
+            "visible": true,
+            'required':true,
+            'icon':'fa fa-list',
+            "type": "text",
+            "key": "day",
+            "title": "Dia",
+            "placeholder": "Ingrese el dia",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio'
+                },
+            }
+        };
+
+
+        this.rules["month"] = {
+            "update": false,
+            "visible": true,
+            'required':true,
+            'icon':'fa fa-list',
+            "type": "text",
+            "key": "month",
+            "title": "Meses",
+            "placeholder": "Ingrese el mes",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio'
+                },
+            }
+        };
+
+
+        this.rules["year"] = {
+            "update": false,
+            "visible": true,
+            'required':true,
+            'icon':'fa fa-list',
+            "type": "text",
+            "key": "year",
+            "title": "Año",
+            "placeholder": "Ingrese la el año",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio'
+                },
+            }
+        };
+
     }
 
     initSearch() {
@@ -229,9 +280,17 @@ export class ProductAvailable extends BasicConfiguration implements OnInit {
         let val;
 
         this.setEndpoint("/inventario/historico/cantidad/");
+        this.rules['day'].visible=true;
+        this.rules['month'].visible=true;
+        this.rules['year'].visible=true;
+
         if(id == 1 )
         {
             this.setEndpoint("/inventario/diario/cantidad/");
+
+            this.rules['day'].visible=false;
+            this.rules['month'].visible=false;
+            this.rules['year'].visible=false;
 
         }
         switch (id)

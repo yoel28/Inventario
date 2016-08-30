@@ -6,6 +6,7 @@ import {globalService} from "../common/globalService";
 import {Tables} from "../utils/tables/tables";
 import {Save} from "../utils/save/save";
 import {TranslatePipe, TranslateService} from "ng2-translate/ng2-translate";
+import {BasicConfiguration} from "../common/basic-configuration";
 
 @Component({
     selector: 'location_product',
@@ -16,33 +17,147 @@ import {TranslatePipe, TranslateService} from "ng2-translate/ng2-translate";
 })
 
 
-export class Location_product extends RestController implements OnInit {
+export class Location_product extends BasicConfiguration implements OnInit {
 
-    public rules: any = {};
-    public viewOptions: any = {};
     public paramsTable:any={};
-    public paramsSave :any ={};
-    public rulesSave :any={};
-    public paramsSearch :any={};
-    public rulesSearch :any={};
-    public externalSave :any={};
 
     
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService) {
-        super(http, toastr);
-        this.setEndpoint("/ubicaciones/");
+        super("LO","/ubicaciones/",http, toastr,myglobal,translate);
+    
     }
 
 
+    initRules() {
 
-    initLang(){
-        var userLang = navigator.language.split('-')[0]; // use navigator lang if available
-        userLang = /(es|en)/gi.test(userLang) ? userLang : 'es';
-        this.translate.setDefaultLang('en');
-        this.translate.use(userLang);
+        let tempRules = this.rules;
+        this.rules={};
+
+
+        this.rules["code"] = {
+            "update": this.permissions['update'],
+            "visible": true,
+            'required':true,
+            'maxLength':5,
+            'icon':'fa fa-barcode',
+            "type": "text",
+            "key": "code",
+            "title": "Código",
+            "placeholder": "ingrese la ubicacion",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio',
+                    'maxlength':'Maximo numero de caracteres 5'
+                },
+            },
+
+        };
+
+        this.rules["title"] = {
+            "update": this.permissions['update'],
+            "visible": true,
+            'required':true,
+            'icon':'fa fa-barcode',
+            "type": "text",
+            "key": "title",
+            "title": "Titulo",
+            "placeholder": "ingrese el titulo de ubicacion",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio'
+                },
+            },
+
+        };
+
+        this.rules["columna"] = {
+            "update": this.permissions['update'],
+            "visible": true,
+            'required':true,
+            'maxLength':5,
+            'icon':'fa fa-barcode',
+            "type": "text",
+            "key": "columna",
+            "title": "Columna",
+            "placeholder": "ingrese columna",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio',
+                    'maxlength':'Maximo numero de caracteres 5'
+                },
+            },
+
+        };
+
+        this.rules["fila"] = {
+            "update": this.permissions['update'],
+            "visible": true,
+            'required':true,
+            'maxLength':5,
+            'icon':'fa fa-barcode',
+            "type": "text",
+            "key": "fila",
+            "title": "Fila",
+            "placeholder": "ingrese la fila",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio',
+                    'maxlength':'Maximo numero de caracteres 5'
+                },
+            },
+
+        };
+        this.rules["maximo"] = {
+            "update": this.permissions['update'],
+            "visible": true,
+            'required':true,
+            'icon':'fa fa-list',
+            "type": "number",
+            "key": "maximo",
+            "title": "Maximo",
+            "placeholder": "Maximo",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio',
+                },
+            },
+        };
+        this.rules["minimo"] = {
+            "update": this.permissions['update'],
+            "visible": true,
+            'required':true,
+            'icon':'fa fa-list',
+            "type": "number",
+            "key": "minimo",
+            "title": "Minimo",
+            "placeholder": "Minimo",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio',
+                },
+            },
+        };
+
+
+        this.rules["id"] = {
+            "update": this.permissions['update'],
+            "visible": false,
+            'required': true,
+            'icon': 'fa fa-barcode',
+            "type": "text",
+            "key": "id",
+            "title": "Id",
+            'msg': {
+                'errors': {
+                    'required': 'El campo es obligatorio'
+                },
+            },
+
+        };
+
+
+        
     }
-
-
 
     initParamsTable(){
         this.paramsTable.endpoint=this.endpoint;
@@ -65,14 +180,44 @@ export class Location_product extends RestController implements OnInit {
 
     }
 
+    initRuleObject(){
+        this.ruleObject={
+            'icon':'fa fa-list',
+            "type": "text",
+            "key": "ubicacion",
+            "title": "Ubicacion",
+            'object':true,
+            "placeholder": "Ingrese la Ubicacion",
+            'paramsSearch':this.paramsSearch,
+            'msg':{
+                'errors':{
+                    'object':'El tipo no esta registrado',
+                    'required':'El campo es obligatorio'
+                },
+            }
+
+
+        }
+    }
+
+    initSaveRules(){
+
+        this.paramsSave= {
+            title: "Agregar Ubicacion",
+            idModal: "searchLocation",
+            endpoint: this.endpoint,
+        }
+
+
+
+        this.rulesSave = this.rules;
+        delete this.rulesSave['id'];
+    }
 
     initOptions() {
+
         this.viewOptions["title"] = 'Ubicacion';
-        this.viewOptions["permissions"] = {"list": true};/*TODO PERMISO REAL this.myglobal.existsPermission('10')}*/
-        this.viewOptions["errors"] ={};
-        this.viewOptions["errors"].notFound= "no se encontraron resultados";
-        this.viewOptions["errors"].list="no tiene permisos para ver los productos";
-        this.viewOptions["button"]=[];
+
         this.viewOptions["button"].push({
             'title':'Agregar',
             'class':'btn btn-primary',
@@ -81,173 +226,33 @@ export class Location_product extends RestController implements OnInit {
         });
     }
 
-
-    initRules()
-    {
-        //TODO hacer que los update se realcionen con los permisos
-        //todo las claves unicas
-        //rules de la clase
-        let update =true; /*this.myglobal.existsPermission("1");*/
-        this.rules["code"] = {
-            "update": update,
-            "visible": true,
-            'required':true,
-            'maxLength':5,
-            'icon':'fa fa-barcode',
-            "type": "text",
-            "key": "code",
-            "title": "Código",
-            "placeholder": "ingrese la ubicacion",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                    'maxlength':'Maximo numero de caracteres 5'
-                },
-            },
-
-        };
-
-        this.rules["title"] = {
-            "update": update,
-            "visible": true,
-            'required':true,
-            'icon':'fa fa-barcode',
-            "type": "text",
-            "key": "title",
-            "title": "Titulo",
-            "placeholder": "ingrese el titulo de ubicacion",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio'
-                },
-            },
-
-        };
-
-        this.rules["columna"] = {
-            "update": update,
-            "visible": true,
-            'required':true,
-            'maxLength':5,
-            'icon':'fa fa-barcode',
-            "type": "text",
-            "key": "columna",
-            "title": "Columna",
-            "placeholder": "ingrese columna",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                    'maxlength':'Maximo numero de caracteres 5'
-                },
-            },
-
-        };
-
-        this.rules["fila"] = {
-            "update": update,
-            "visible": true,
-            'required':true,
-            'maxLength':5,
-            'icon':'fa fa-barcode',
-            "type": "text",
-            "key": "fila",
-            "title": "Fila",
-            "placeholder": "ingrese la fila",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                    'maxlength':'Maximo numero de caracteres 5'
-                },
-            },
-
-        };
-        this.rules["maximo"] = {
-            "update": update,
-            "visible": true,
-            'required':true,
-            'icon':'fa fa-list',
-            "type": "number",
-            "key": "maximo",
-            "title": "Maximo",
-            "placeholder": "Maximo",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                },
-            },
-        };
-        this.rules["minimo"] = {
-            "update": update,
-            "visible": true,
-            'required':true,
-            'icon':'fa fa-list',
-            "type": "number",
-            "key": "minimo",
-            "title": "Minimo",
-            "placeholder": "Minimo",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                },
-            },
-        };
-
-
-        this.rules["id"] = {
-            "update": false,
-            "visible": false,
-            'required': true,
-            'icon': 'fa fa-barcode',
-            "type": "text",
-            "key": "id",
-            "title": "Id",
-            'msg': {
-                'errors': {
-                    'required': 'El campo es obligatorio'
-                },
-            },
-
-        };
-
-
+    initSearch() {
+        this.paramsSearch['title']="Ubicacion";
+        this.paramsSearch['idModal']="searchlocation";
+        this.paramsSearch['placeholder']="Ingrese el ubicacion";
     }
 
-    initOptionsView()
-    {
-        this.viewOptions["title"] = "Ubicacion";
-        this.viewOptions["permissions"] = {"list": this.myglobal.existsPermission('1')};
-        this.viewOptions["errors"] = {"notFound": "no se encontraron resultados"};
-        this.viewOptions["errors"] = {"list": "no tiene permisos"};
-    }
-
-
-
-    initSave() {
-        //TODO agregar los permisos
-        this.paramsSave= {
-            title: "Agregar Productos",
-            idModal: "searchProductos",
-            endpoint: this.endpoint,
-        }
-        this.rulesSave = this.rules;
-        delete this.rulesSave['id'];
-    }
-
-    ngOnInit()
-    {
-
-        this.initLang();
+    ngOnInit() {
         this.initRules();
-        this.initSave();
-        this.initOptions();
         this.initParamsTable();
+        this.initSaveRules();
+        this.initOptions();
         this.initSearch();
-    
         this.loadData();
-    
     }
 
 
+    externalRules() {
+
+        this.initRules();
+        this.initSearch();
+        this.initRuleObject();
+        this.initSaveRules();
+        
+    }
+    
+
+    
     @ViewChild(Tables)
     tables:Tables;
     asignData(data) {
@@ -262,26 +267,6 @@ export class Location_product extends RestController implements OnInit {
             Object.assign(this.tables.dataList,this.dataList);
         }
     }
-    initSearch()
-    {
-
-        this.paramsSearch= {
-            'permissions':'1',
-            'title': "Ubicación",
-            'idModal': "searchLocation",
-            'endpoint': "/search/ubicaciones/",
-            'placeholder': "Ingrese la ubicacion",
-            'label': {name: "Nombre: ", detail: "Detalle: "},
-            'msg': {
-                'errors': {
-                    'noAuthorized': 'No posee permisos para esta accion',
-                },
-            },
-            'where':'',
-            'imageGuest':'/assets/img/truck-guest.png'
-        };
-    }
-    
     
     
 
