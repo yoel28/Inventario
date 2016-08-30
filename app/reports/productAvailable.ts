@@ -92,7 +92,7 @@ export class ProductAvailable extends BasicConfiguration implements OnInit {
         this.rules ={};
 
         this.rules["code"] = {
-            "update": this.permissions['update'],
+            "update": false,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
@@ -107,7 +107,7 @@ export class ProductAvailable extends BasicConfiguration implements OnInit {
             }
         };
         this.rules["productoDetail"] = {
-            "update": this.permissions['update'],
+            "update": false,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
@@ -123,7 +123,7 @@ export class ProductAvailable extends BasicConfiguration implements OnInit {
         };
 
         this.rules["cantidad"] = {
-            "update": this.permissions['update'],
+            "update": false,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
@@ -138,7 +138,7 @@ export class ProductAvailable extends BasicConfiguration implements OnInit {
             }
         };
         this.rules["modelo"] = {
-            "update": this.permissions['update'],
+            "update": false,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
@@ -153,7 +153,7 @@ export class ProductAvailable extends BasicConfiguration implements OnInit {
             }
         };
         this.rules["tipoProducto"] = {
-            "update": this.permissions['update'],
+            "update": false,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
@@ -169,7 +169,7 @@ export class ProductAvailable extends BasicConfiguration implements OnInit {
         };
 
         this.rules["tipoOperacion"] = {
-            "update": this.permissions['update'],
+            "update": false,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
@@ -267,7 +267,7 @@ export class ProductAvailable extends BasicConfiguration implements OnInit {
     }
 
 
-    
+
     assignDate(event?){
 
         
