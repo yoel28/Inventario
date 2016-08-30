@@ -1,18 +1,72 @@
+
 <div class="content-wrapper">
     <section class="content">
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">{{viewOptions.title | translate }}</h3>
             </div>
-            <div *ngIf="viewOptions.permissions.list"  class="box-body">
-                <div class="col-lg-4">
-                    <div daterangepicker [params]="paramsDate" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%" (fecha)="assignDate($event)">
-                        <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
-                        <span>{{(date.start || 'Inicio') +' - '+ (date.end || 'Fin') }}</span> <b class="caret"></b>
-                    </div>
+
+
+
+
+
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <form role="form" [ngFormModel]="form" (submit)="assignDate($event)">
+                        <div class="form-group input-icon right col-lg-2">
+                            Lapso
+                            <div class="input-icon right">
+                                <select [(ngModel)]="fechaSelect"  (ngModelChange)="setFecha($event)"  sm-dropdown class="ui fluid search selection dropdown">
+                                    <option data-hidden="true" value="-1"></option>
+                                    <option *ngFor="let n of itemsFecha"  [attr.value]="n.id" >{{n.text}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group input-icon right col-lg-3">
+                            Inicio
+                            <div class="input-icon right">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                                <input datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event)" accesskey="1" value="Periodo inicial" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group input-icon right col-lg-3">
+                            Fin
+                            <div class="input-icon right">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                                <input datepicker [format]="formatDateFact" (fecha)="loadFechaFac($event)" accesskey="2" value="Periodo final" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div *ngIf="rechargeTypes && rechargeTypes.list" class="form-group input-icon right col-lg-2">
+                            Tipo de recarga
+                            <select [(ngModel)]="typeSelect"  (ngModelChange)="setType($event)"  sm-dropdown class="ui fluid search selection dropdown">
+                                <option data-hidden="true" value="-1" >Todos</option>
+                                <option *ngFor="let n of rechargeTypes.list"  [attr.value]="n.id" >{{n.title}}</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-2 center-margin padding-top">
+                            <button (click)="assignDate($event)" type="button" class="btn btn-success pull-right"
+                                    id="cntrlsubmit" [disabled]="!form.valid">
+                                <i class="fa fa-bank"></i>
+                                Consultar
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <div *ngIf="!viewOptions.permissions.list">
+
+
+
+
+
+            <div *ngIf=" dataList && dataList.count > 0 ">
+
+                <tables [dataList]="dataList" [rules]="rules"  [params]="paramsTable" [rulesSearch]="rulesSearch" ></tables>
+
+            </div>
+
+
+            <div *ngIf="!permissions.list">
                 <div class="btn-red padding-error">
                     <h5><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h5>
                     {{viewOptions.errors.list}}
