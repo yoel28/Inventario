@@ -52,22 +52,6 @@ export class TypeCompany extends BasicConfiguration implements OnInit {
             }
         };
 
-        this.rules["companies"] = {
-            "update": this.permissions['update'],
-            "visible": true,
-            'required':true,
-            'icon':'fa fa-list',
-            "type": "text",
-            "key": "companies",
-            "title": "Compañia",
-            "placeholder": "ingrese el codigo",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio'
-                },
-            }
-        };
-
         this.rules["title"] = {
             "update": this.permissions['update'],
             "visible": true,
@@ -75,8 +59,8 @@ export class TypeCompany extends BasicConfiguration implements OnInit {
             'icon':'fa fa-list',
             "type": "text",
             "key": "title",
-            "title": "Titulo",
-            "placeholder": "ingrese el codigo",
+            "title": "Nombre",
+            "placeholder": "ingrese el Nombre",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio'
@@ -88,6 +72,47 @@ export class TypeCompany extends BasicConfiguration implements OnInit {
         this.rules['detail'] = tempRules['detail'];
         this.rules['enabled'] = tempRules['enabled'];
 
+    }
+
+    initRuleObject(){
+        this.ruleObject={
+            'icon':'fa fa-list',
+            "type": "text",
+            "key": "tipoProducto",
+            "title": "Tipo",
+            'object':true,
+            "placeholder": "Ingrese el tipo de compañia",
+            'paramsSearch':this.paramsSearch,
+            'msg':{
+                'errors':{
+                    'object':'El tipo no esta registrado',
+                    'required':'El campo es obligatorio'
+                },
+            }
+
+
+        }
+    }
+
+    externalRules() {
+
+    }
+
+    initOptions() {
+        this.viewOptions["title"] = 'Tipo de Compañia';
+
+        this.viewOptions["button"].push({
+            'title':'Agregar',
+            'class':'btn btn-primary',
+            'icon':'fa fa-plus',
+            'modal':this.paramsSave.idModal
+        });
+    }
+
+    initSearch() {
+        this.paramsSearch['title']="Tipo de Compañia";
+        this.paramsSearch['idModal']="searchTypeCompany";
+        this.paramsSearch['placeholder']="Ingrese la compañia";
     }
 
     initParamsTable(){
@@ -106,12 +131,20 @@ export class TypeCompany extends BasicConfiguration implements OnInit {
     initSaveRules(){
 
         this.paramsSave= {
-            title: "Agregar de tipo de producto",
+            title: "Agregar de tipo de compañia",
             idModal: "saveProductType",
             endpoint: this.endpoint,
         }
 
         this.rulesSave = {
+            'code': {
+                'type': this.rules['code'].type,
+                'required':true,
+                "search":true,
+                'title': this.rules['code'].title,
+                'placeholder': this.rules['code'].placeholder,
+                'msg':this.rules['code'].msg
+            },
             'title': {
                 'type': this.rules['title'].type,
                 'required':true,
@@ -131,22 +164,6 @@ export class TypeCompany extends BasicConfiguration implements OnInit {
 
     }
 
-    initOptions() {
-        this.viewOptions["title"] = 'Tipo de producto';
-
-        this.viewOptions["button"].push({
-            'title':'Agregar',
-            'class':'btn btn-primary',
-            'icon':'fa fa-plus',
-            'modal':this.paramsSave.idModal
-        });
-    }
-
-    initSearch() {
-        this.paramsSearch['title']="Tipo Producto";
-        this.paramsSearch['idModal']="searchProducto";
-        this.paramsSearch['placeholder']="Ingrese el producto";
-    }
 
 
 
@@ -162,30 +179,6 @@ export class TypeCompany extends BasicConfiguration implements OnInit {
     }
 
 
-    initRuleObject(){
-        this.ruleObject={
-            'icon':'fa fa-list',
-            "type": "text",
-            "key": "tipoProducto",
-            "title": "Tipo",
-            'object':true,
-            "placeholder": "Ingrese el titulo del tipo",
-            'paramsSearch':this.paramsSearch,
-            'msg':{
-                'errors':{
-                    'object':'El tipo no esta registrado',
-                    'required':'El campo es obligatorio'
-                },
-            }
-        
-        
-        }
-    }
-
-    externalRules()
-    {
-
-    }
 
 
     @ViewChild(Tables)
