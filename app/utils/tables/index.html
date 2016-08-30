@@ -22,7 +22,8 @@
             <td *ngFor="let key of keyVisible()">
 
              <a *ngIf="!rules[key].object &&  rules[key].type !='boolean'" x-editable  [disabled]="!rules[key].update "  [endpoint]="params.endpoint" [function]="onEditable" [data]="data" [rules]="rules" [field]="key"></a>
-             <a *ngIf="rules[key].object &&   rules[key].type !='boolean'">
+
+              <a *ngIf="rules[key].object &&   rules[key].type =='text'">
                  {{data[key]}}
                  <label>
                      <button *ngIf="rulesSearch[key]" type="button" class="btn btn-box-tool"
@@ -40,6 +41,16 @@
                  </label>
              </a>
              <button  *ngIf="!rules[key].object &&  rules[key].type =='boolean' &&  key =='enabled'" class="btn" [class.btn-green]="data[key]" [class.btn-red]="!data[key]" (click)="onLock(key,data)">{{data[key]?rules[key].states[0]:rules[key].states[1]}}</button>
+
+
+
+                <button  data-toggle="modal"  data-target='#modalArray'  *ngIf="rules[key].object &&   rules[key].type =='array'" class="btn " type="button">
+                    {{rules[key].buttonTitle}}
+                </button>
+
+
+
+
 
             </td>
             <td *ngIf="params.actions">
@@ -155,6 +166,21 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" [attr.id]="'modalArray'" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+
+            hola
+
+        </div>
+    </div>
+</div>
+
+
 
 <div *ngIf="dataSave && dataSave.params && dataSave.params.idModal">
     <save [rules]="dataSave.rules" [params]="dataSave.params" (save)="asignData($event)"> </save>

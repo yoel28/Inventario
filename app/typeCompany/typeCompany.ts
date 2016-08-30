@@ -78,10 +78,10 @@ export class TypeCompany extends BasicConfiguration implements OnInit {
         this.ruleObject={
             'icon':'fa fa-list',
             "type": "text",
-            "key": "tipoProducto",
-            "title": "Tipo",
+            "key": "companyTypes",
+            "title": "Tipo Cliente",
             'object':true,
-            "placeholder": "Ingrese el tipo de compañia",
+            "placeholder": "Ingrese el tipo de cliente",
             'paramsSearch':this.paramsSearch,
             'msg':{
                 'errors':{
@@ -95,6 +95,11 @@ export class TypeCompany extends BasicConfiguration implements OnInit {
     }
 
     externalRules() {
+
+        this.initRules();
+        this.initSearch();
+        this.initRuleObject();
+        this.initSaveRules();
 
     }
 

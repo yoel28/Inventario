@@ -14,7 +14,7 @@ import {Save} from "../save/save";
     selector: 'tables',
     templateUrl: 'app/utils/tables/index.html',
     styleUrls: ['app/utils/tables/style.css'],
-    inputs:['params','rules','rulesSearch','dataList','externalSave','rulesFilter'],
+    inputs:['params','rules','rulesSearch','dataList','externalSave','rulesFilter','externalList'],
     directives:[Xeditable,Search,Filter,Save]
 })
 
@@ -23,6 +23,7 @@ export class Tables extends RestController implements OnInit {
 
 
     public params:any={};
+    public externalList:any={};
     public rules:any={};
     public rulesSearch:any={};
     public searchId:any={};
