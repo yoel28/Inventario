@@ -9,6 +9,7 @@ import {Save} from "../utils/save/save";
 import {TypeProduct} from "../typeProduct/typeProduct";
 import {BrandProduct} from "../brandProduct/brand";
 import {ModelProduct} from "../modelProduct/modelProduct";
+import {BasicConfiguration} from "../common/basic-configuration";
 
 @Component({
     selector: 'products',
@@ -20,22 +21,19 @@ import {ModelProduct} from "../modelProduct/modelProduct";
 })
 
 
-export class Product extends RestController implements OnInit {
+export class Product extends BasicConfiguration implements OnInit {
 
 
-    public rules: any = {};
-    public viewOptions: any = {};
     public paramsTable:any={};
-    public paramsSave :any ={};
-    public rulesSave :any={};
-    public paramsSearch :any={};
-    public rulesSearch :any={};
-    public externalSave :any={};
+
+    public externalSave:any={};
+    public rulesSearch:any={};
+    public rulesSave:any={}
+
 
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,  @Inject(TypeProduct) public typesProduct,@Inject(BrandProduct) public brandProduct, @Inject(ModelProduct) public modelProduct) {
-        
-        super(http, toastr);
-        this.setEndpoint("/productos/");
+
+        super("PRO","/productos/",http, toastr,myglobal,translate);
 
         //Search para los objetos en el momento de hacer un Save
         typesProduct.externalRules();
@@ -46,12 +44,7 @@ export class Product extends RestController implements OnInit {
     
     }
 
-    initLang(){
-        var userLang = navigator.language.split('-')[0]; // use navigator lang if available
-        userLang = /(es|en)/gi.test(userLang) ? userLang : 'es';
-        this.translate.setDefaultLang('en');
-        this.translate.use(userLang);
-    }
+
 
     initExternalSave() {
 
@@ -72,11 +65,13 @@ export class Product extends RestController implements OnInit {
     initRules() {
 
 
-        //TODO hacer que los update se realcionen con los permisos
-        //rules de la clase
-        let update =true; /*this.myglobal.existsPermission("1");*/
+        let tempRules = this.rules;
+        this.rules={};
+
+
+
         this.rules["code"] = {
-            "update": update,
+            "update": this.permissions['update'],
             "visible": true,
             'required':true,
             'maxLength':5,
@@ -94,46 +89,27 @@ export class Product extends RestController implements OnInit {
             },
 
         };
-        this.rules["detail"] = {
-            "update": update,
-            "visible": true,
-            'required':true,
-            'icon':'fa fa-list',
-            "type": "text",
-            "key": "detail",
-            "title": "Detalle",
-            "search":true,
-            "placeholder": "ingrese el detalle del producto",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                },
-            }
-        };
 
-        this.rules["tipoProductoTitle"] = this.typesProduct.rules['title'];
-        this.rules["tipoProductoTitle"].object=true;
-        this.rules["tipoProductoTitle"].key="tipoProducto";
-        this.rules["tipoProductoTitle"].permissions=this.typesProduct.permissions['list'];
-        this.rules["tipoProductoTitle"].title="Tipo";
+        this.rules["tipoProductoTitle"] = this.typesProduct.ruleObject;
+        this.rules["tipoProductoTitle"].visible=true;
+
+        this.rules["modeloTitle"] = this.modelProduct.ruleObject;
+        this.rules["modeloTitle"].visible=true;
+
+        this.rules["marcaTitle"] = this.brandProduct.ruleObject;
+        this.rules["marcaTitle"].visible=true;
 
 
+        this.rules['detail'] = tempRules['detail'];
 
-        this.rules["modeloTitle"] = this.modelProduct.rules['title'];
-        this.rules["modeloTitle"].key="modelo";
-        this.rules["modeloTitle"].object=true;
-        this.rules["modeloTitle"].permissions=this.modelProduct.permissions['list'];
-        this.rules["modeloTitle"].title="Modelo";
-
-
-        this.rules["marcaTitle"] = this.brandProduct.rules['title'];
-        this.rules["marcaTitle"].object=true;
-        this.rules["marcaTitle"].key="marca";
-        this.rules["marcaTitle"].permissions=this.brandProduct.permissions['list'];
-        this.rules["marcaTitle"].title="Marca";
-
+        this.rules['enabled'] = tempRules['enabled'];
+        this.rules['enabled'].visible=false;
 
     }
+    
+    
+    
+    
     
     initParamsTable(){
         this.paramsTable.endpoint=this.endpoint;
@@ -195,7 +171,7 @@ export class Product extends RestController implements OnInit {
 
         this.rulesSave["tipoProducto"] = this.typesProduct.ruleObject;
         this.rulesSave["tipoProducto"].required=true;
-        this.rulesSave["tipoProducto"].required=true;
+        this.rulesSave["tipoProducto"].search=true;
 
 
 
@@ -213,11 +189,6 @@ export class Product extends RestController implements OnInit {
 
     initOptions() {
         this.viewOptions["title"] = 'Productos';
-        this.viewOptions["permissions"] = {"list": true};/*TODO PERMISO REAL this.myglobal.existsPermission('10')}*/
-        this.viewOptions["errors"] ={};
-        this.viewOptions["errors"].notFound= "no se encontraron resultados";
-        this.viewOptions["errors"].list="no tiene permisos para ver los productos";
-        this.viewOptions["button"]=[];
         this.viewOptions["button"].push({
             'title':'Agregar',
             'class':'btn btn-primary',
@@ -229,29 +200,14 @@ export class Product extends RestController implements OnInit {
 
     initSearch() {
 
-        this.paramsSearch= {
-
-            //TODO apregar el permiso
-            'permissions':'1',
-            'title': this.viewOptions["title"],
-            'idModal': "searchProductos",
-            'endpoint': "/search/productos",
-            'placeholder': "Ingrese el producto",
-            'label': {'title': "titulo: ", 'detail': "detalle: "},
-            'msg': {
-                'errors': {
-                    'noAuthorized': 'No posee permisos para esta accion',
-                },
-            },
-            'where':'',
-            'imageGuest':'/assets/img/truck-guest.png'
-        };
+        this.paramsSearch['title']="Producto";
+        this.paramsSearch['idModal']="searchProducto";
+        this.paramsSearch['placeholder']="Ingrese el producto";
     }
 
 
     ngOnInit() {
 
-        this.initLang();
         this.initExternalSave();
         this.initExternalRulesSearch();
         this.initRules();
@@ -264,6 +220,18 @@ export class Product extends RestController implements OnInit {
     
 
     }
+
+
+    externalRules()
+    {
+
+    }
+
+    initRuleObject()
+    {
+
+    }
+    
     
     @ViewChild(Tables)
     tables:Tables;

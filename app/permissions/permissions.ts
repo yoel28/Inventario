@@ -152,17 +152,20 @@ export class Permissions extends BasicConfiguration {
     }
 
 
+    externalRules()
+    {
+        
+    }
 
 
 
     initSearch() {
 
-        this.paramsSearch['title']="Permisos";
-        this.paramsSearch['idModal']="searchPermissions";
-        this.paramsSearch['placeholder']="Ingrese el permiso";
+        
 
     }
-    
+
+
     @ViewChild(Tables)
     tables:Tables;
     asignData(data) {

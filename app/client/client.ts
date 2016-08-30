@@ -6,6 +6,7 @@ import {globalService} from "../common/globalService";
 import {Tables} from "../utils/tables/tables";
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {Save} from "../utils/save/save";
+import {BasicConfiguration} from "../common/basic-configuration";
 
 @Component({
     selector: 'client',
@@ -16,39 +17,30 @@ import {Save} from "../utils/save/save";
     providers: [TranslateService]
 })
 @Injectable()
-export class Client extends RestController implements OnInit {
+export class Client extends BasicConfiguration implements OnInit {
 
 
-    public rules: any = {};
     public ruleObject: any = {};
     public paramsTable:any={};
     public paramsSearch:any = {};
     public paramsSave :any ={};
     public rulesSave :any={};
-    public viewOptions:any={};
-    public permissions:any={};
 
 
     constructor(public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
-        super(http, toastr);
-        this.setEndpoint("/clientes/");
+        super("CI","/clientes/",http, toastr,myglobal,translate);
+
     }
 
 
-    initLang() {
-        var userLang = navigator.language.split('-')[0]; // use navigator lang if available
-        userLang = /(es|en)/gi.test(userLang) ? userLang : 'es';
-        this.translate.setDefaultLang('en');
-        this.translate.use(userLang);
-    }
 
     initRules() {
 
-        //TODO hacer que los update se realcionen con los permisos
+        let tempRules={};
 
-        let update =this.myglobal.existsPermission("1");
-        this.rules["code"] = {
-            "update": update,
+
+        tempRules["code"] = {
+            "update": this.permissions['update'],
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
@@ -62,8 +54,8 @@ export class Client extends RestController implements OnInit {
                 },
             }
         };
-        this.rules["direccion"] = {
-            "update": update,
+        tempRules["direccion"] = {
+            "update": this.permissions['update'],
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
@@ -77,8 +69,8 @@ export class Client extends RestController implements OnInit {
                 },
             }
         };
-        this.rules["title"] = {
-            "update": update,
+        tempRules["title"] = {
+            "update": this.permissions['update'],
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
@@ -92,8 +84,8 @@ export class Client extends RestController implements OnInit {
                 },
             }
         };
-        this.rules["ruc"] = {
-            "update": update,
+        tempRules["ruc"] = {
+            "update": this.permissions['update'],
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
@@ -107,36 +99,10 @@ export class Client extends RestController implements OnInit {
                 },
             }
         };
-        this.rules["detail"] = {
-            "update": update,
-            "visible": true,
-            'icon':'fa fa-list',
-            "type": "text",
-            "key": "detail",
-            "title": "Detalle",
-            "placeholder": "ingrese el detalle",
-            'msg':{
-                'errors':{
-                },
-            }
-        };
-        this.rules["onLock"] = {
-            "update": update,
-            "visible": true,
-            'required':true,
-            'icon':'fa fa-list',
-            "type": "boolean",
-            'states':["Habilitado","Deshabilitado"],
-            'permissions':true,
-            "key": "enabled",
-            "title": "Habilitado",
-            "placeholder": "",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                },
-            }
-        };
+        
+
+        Object.assign(this.rules,tempRules,this.rules);
+
     }
 
     initParamsTable(){
@@ -159,53 +125,34 @@ export class Client extends RestController implements OnInit {
             idModal: "saveClient",
             endpoint: this.endpoint,
         }
-        this.rulesSave = this.rules;
+        this.rulesSave = Object.create(this.rules);
         delete this.rulesSave['enabled'];
     }
 
     initOptions() {
+
         this.viewOptions["title"] = 'Clientes';
-        this.viewOptions["permissions"] = {"list": true};/*TODO PERMISO REAL this.myglobal.existsPermission('10')}*/
-        this.viewOptions["errors"] ={};
-        this.viewOptions["errors"].notFound= "no se encontraron resultados";
-        this.viewOptions["errors"].list="no tiene permisos para ver los clientes";
-        this.viewOptions["button"]=[];
+
         this.viewOptions["button"].push({
             'title':'Agregar',
             'class':'btn btn-primary',
             'icon':'fa fa-plus',
             'modal':this.paramsSave.idModal
         });
+        
     }
 
     initSearch() {
 
-        this.paramsSearch= {
-            'permissions':this.permissions['list'],
-            'title': this.viewOptions["title"],
-            'idModal': "searchProductType",
-            'endpoint': "/search/clientes/",
-            'placeholder': "Ingrese el cliente",
-            'label': {'title': "titulo: ",'detail': "detalle: "},
-            'msg': {
-                'errors': {
-                    'noAuthorized': 'No posee permisos para esta accion',
-                },
-            },
-            'field':'cliente',
-            'where':'',
-            'imageGuest':'/assets/img/truck-guest.png'
-        };
+        this.paramsSearch['title']="Clientes";
+        this.paramsSearch['idModal']="searchClientes";
+        this.paramsSearch['placeholder']="Ingrese el cliente";
+        
     }
 
-    initPermissions() {
-        this.permissions['list']= this.myglobal.existsPermission(1);
-        this.permissions['udpate']= this.myglobal.existsPermission(1);
-        this.permissions['delete']= this.myglobal.existsPermission(1);
-    }
 
     ngOnInit() {
-        this.initLang();
+        
         this.initRules();
         this.initParamsTable();
         this.initSaveRules();
@@ -216,11 +163,9 @@ export class Client extends RestController implements OnInit {
 
     externalRules(){
         this.initRules();
-        this.initParamsTable();
-        this.initSaveRules();
         this.initSearch();
-        this.initPermissions();
         this.initRuleObject();
+        this.initSaveRules();
     }
     
     initRuleObject(){
@@ -232,6 +177,7 @@ export class Client extends RestController implements OnInit {
             'object':true,
             "placeholder": "Ingrese el cliente",
             'paramsSearch':this.paramsSearch,
+            'permissions':this.permissions,
             'msg':{
                 'errors':{
                     'object':'El tipo no esta registrado',

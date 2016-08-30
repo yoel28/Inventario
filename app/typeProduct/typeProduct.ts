@@ -6,6 +6,7 @@ import {globalService} from "../common/globalService";
 import {Tables} from "../utils/tables/tables";
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {Save} from "../utils/save/save";
+import {BasicConfiguration} from "../common/basic-configuration";
 
 @Component({
     selector: 'type-product',
@@ -16,39 +17,27 @@ import {Save} from "../utils/save/save";
     providers: [TranslateService]
 })
 @Injectable()
-export class TypeProduct extends RestController implements OnInit {
+export class TypeProduct extends BasicConfiguration implements OnInit {
 
 
-    public rules: any = {};
-    public ruleObject: any = {};
     public paramsTable:any={};
-    public paramsSearch:any = {};
-    public paramsSave :any ={};
-    public rulesSave :any={};
-    public viewOptions:any={};
-    public permissions:any={};
     
     
     constructor(public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
-        super(http, toastr);
-        this.setEndpoint("/tipo/productos/");
+        
+        super("TIP_PRO","/tipo/productos/",http, toastr,myglobal,translate);
+    
     }
 
 
-    initLang() {
-        var userLang = navigator.language.split('-')[0]; // use navigator lang if available
-        userLang = /(es|en)/gi.test(userLang) ? userLang : 'es';
-        this.translate.setDefaultLang('en');
-        this.translate.use(userLang);
-    }
 
     initRules() {
 
-        //TODO hacer que los update se realcionen con los permisos
+        let tempRules = this.rules;
+        this.rules={};
 
-        let update =this.myglobal.existsPermission("1");
         this.rules["title"] = {
-            "update": update,
+            "update": this.permissions['update'],
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
@@ -62,19 +51,10 @@ export class TypeProduct extends RestController implements OnInit {
                 },
             }
         };
-        this.rules["detail"] = {
-            "update": update,
-            "visible": true,
-            'icon':'fa fa-list',
-            "type": "text",
-            "key": "detail",
-            "title": "detalle",
-            "placeholder": "ingrese el detalle",
-            'msg':{
-                'errors':{
-                },
-            }
-        };
+
+        this.rules['detail'] = tempRules['detail'];
+        this.rules['enabled'] = tempRules['enabled'];
+        
     }
 
     initParamsTable(){
@@ -120,11 +100,7 @@ export class TypeProduct extends RestController implements OnInit {
 
     initOptions() {
         this.viewOptions["title"] = 'Tipo de producto';
-        this.viewOptions["permissions"] = {"list": true};/*TODO PERMISO REAL this.myglobal.existsPermission('10')}*/
-        this.viewOptions["errors"] ={};
-        this.viewOptions["errors"].notFound= "no se encontraron resultados";
-        this.viewOptions["errors"].list="no tiene permisos para ver los tipo de productos";
-        this.viewOptions["button"]=[];
+
         this.viewOptions["button"].push({
             'title':'Agregar',
             'class':'btn btn-primary',
@@ -134,49 +110,25 @@ export class TypeProduct extends RestController implements OnInit {
     }
 
     initSearch() {
-
-        this.paramsSearch= {
-            'permissions':this.permissions['list'],
-            'title': this.viewOptions["title"],
-            'idModal': "searchProductType",
-            'endpoint': "/search/tipo/productos/",
-            'placeholder': "Ingrese el tipo de producto",
-            'label': {'title': "titulo: ",'detail': "detalle: "},
-            'msg': {
-                'errors': {
-                    'noAuthorized': 'No posee permisos para esta accion',
-                },
-            },
-            'field':'tipoProducto',
-            'where':'',
-            'imageGuest':'/assets/img/truck-guest.png'
-        };
+        this.paramsSearch['title']="Tipo Producto";
+        this.paramsSearch['idModal']="searchProducto";
+        this.paramsSearch['placeholder']="Ingrese el producto";
     }
 
-    initPermissions() {
-        this.permissions['list']= this.myglobal.existsPermission(1);
-        this.permissions['udpate']= this.myglobal.existsPermission(1);
-        this.permissions['delete']= this.myglobal.existsPermission(1);
-    }
+    
     
     ngOnInit() {
-        this.initLang();
+        
         this.initRules();
         this.initParamsTable();
         this.initSaveRules();
         this.initOptions();
         this.initSearch();
         this.loadData();
+    
     }
 
-    externalRules(){
-        this.initRules();
-        this.initParamsTable();
-        this.initSaveRules();
-        this.initSearch();
-        this.initPermissions();
-        this.initRuleObject();
-    }
+    
     initRuleObject(){
         this.ruleObject={
             'icon':'fa fa-list',
@@ -186,6 +138,7 @@ export class TypeProduct extends RestController implements OnInit {
             'object':true,
             "placeholder": "Ingrese el titulo del tipo",
             'paramsSearch':this.paramsSearch,
+            'permissions':this.permissions,
             'msg':{
                 'errors':{
                     'object':'El tipo no esta registrado',
@@ -194,6 +147,17 @@ export class TypeProduct extends RestController implements OnInit {
             }
         }
     }
+
+    externalRules(){
+        this.initRules();
+        this.initSearch();
+        this.initRuleObject();
+        this.initSaveRules();
+    }
+
+
+
+
 
     @ViewChild(Tables)
     tables:Tables;

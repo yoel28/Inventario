@@ -6,6 +6,7 @@ import {globalService} from "../common/globalService";
 import {Tables} from "../utils/tables/tables";
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {Save} from "../utils/save/save";
+import {BasicConfiguration} from "../common/basic-configuration";
 
 @Component({
     selector: 'model-product',
@@ -16,39 +17,29 @@ import {Save} from "../utils/save/save";
     providers: [TranslateService]
 })
 @Injectable()
-export class ModelProduct extends RestController implements OnInit {
+export class ModelProduct extends BasicConfiguration implements OnInit {
 
 
-    public rules: any = {};
-    public ruleObject: any = {};
     public paramsTable:any={};
-    public paramsSearch:any = {};
-    public paramsSave :any ={};
-    public rulesSave :any={};
-    public viewOptions:any={};
-    public permissions:any={};
-
 
     constructor(public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
-        super(http, toastr);
-        this.setEndpoint("/modelos/");
+
+        super("MO_PRO","/modelos/",http, toastr,myglobal,translate);
+
     }
 
 
-    initLang() {
-        var userLang = navigator.language.split('-')[0]; // use navigator lang if available
-        userLang = /(es|en)/gi.test(userLang) ? userLang : 'es';
-        this.translate.setDefaultLang('en');
-        this.translate.use(userLang);
-    }
 
     initRules() {
 
-        //TODO hacer que los update se realcionen con los permisos
 
-        let update =this.myglobal.existsPermission("1");
+        let tempRules = this.rules;
+        this.rules={};
+        
+        
+        
         this.rules["title"] = {
-            "update": update,
+            "update": this.permissions['update'],
             "visible": true,
             'required':true,
             "search":true,
@@ -63,20 +54,11 @@ export class ModelProduct extends RestController implements OnInit {
                 },
             }
         };
-        this.rules["detail"] = {
-            "update": this.permissions['update'],
-            "visible": true,
-            'icon':'fa fa-list',
-            "search":true,
-            "type": "textarea",
-            "key": "detail",
-            "title": "detalle",
-            "placeholder": "ingrese el detalle",
-            'msg':{
-                'errors':{
-                },
-            }
-        };
+
+
+        this.rules['detail'] = tempRules['detail'];
+        this.rules['enabled'] = tempRules['enabled'];
+
         
     }
 
@@ -120,49 +102,29 @@ export class ModelProduct extends RestController implements OnInit {
     }
 
     initOptions() {
+
         this.viewOptions["title"] = 'Modelo de producto';
-        this.viewOptions["permissions"] = {"list": true};/*TODO PERMISO REAL this.myglobal.existsPermission('10')}*/
-        this.viewOptions["errors"] ={};
-        this.viewOptions["errors"].notFound= "no se encontraron resultados";
-        this.viewOptions["errors"].list="no tiene permisos para ver los tipo de productos";
-        this.viewOptions["button"]=[];
+
         this.viewOptions["button"].push({
             'title':'Agregar',
             'class':'btn btn-primary',
             'icon':'fa fa-plus',
             'modal':this.paramsSave.idModal
         });
+        
     }
+
+
 
     initSearch() {
-
-        this.paramsSearch= {
-            'permissions':this.permissions['list'],
-            'title': this.viewOptions["title"],
-            'idModal': "searchProductModel",
-            'endpoint': "/search/modelos",
-            'placeholder': "Ingrese el modelo de producto",
-            'label': {'title': "titulo: ", 'detail': "detalle: "},
-            'msg': {
-                'errors': {
-                    'noAuthorized': 'No posee permisos para esta accion',
-                },
-            },
-            'field':'modelo',
-            'where':'',
-            'imageGuest':'/assets/img/truck-guest.png'
-        };
-    }
-
-    initPermissions()
-    {
-        this.permissions['list']= this.myglobal.existsPermission(1);
-        this.permissions['udpate']= this.myglobal.existsPermission(1);
-        this.permissions['delete']= this.myglobal.existsPermission(1);
+        this.paramsSearch['title']="Modelo Producto";
+        this.paramsSearch['idModal']="searchModelProducto";
+        this.paramsSearch['placeholder']="Ingrese el modelo de producto";
     }
     
     ngOnInit() {
-        this.initLang();
+
+
         this.initRules();
         this.initParamsTable();
         this.initSaveRules();
@@ -173,14 +135,7 @@ export class ModelProduct extends RestController implements OnInit {
 
     
     
-    externalRules(){
-        this.initRules();
-        this.initParamsTable();
-        this.initSaveRules();
-        this.initSearch();
-        this.initPermissions();
-        this.initRuleObject();
-    }
+    
     initRuleObject(){
         this.ruleObject={
             'icon':'fa fa-list',
@@ -190,6 +145,7 @@ export class ModelProduct extends RestController implements OnInit {
             'object':true,
             "placeholder": "Ingrese el codigo del modelo",
             'paramsSearch':this.paramsSearch,
+            'permissions':this.permissions,
             'msg':{
                 'errors':{
                     'object':'El modelo no esta registrado',
@@ -197,6 +153,14 @@ export class ModelProduct extends RestController implements OnInit {
                 },
             }
         }
+    }
+
+
+    externalRules(){
+        this.initRules();
+        this.initSearch();
+        this.initRuleObject();
+        this.initSaveRules();
     }
     
     @ViewChild(Tables)
