@@ -36,7 +36,7 @@ export abstract class  BasicConfiguration extends RestController{
     abstract initRules();
     abstract initSearch();
     abstract initRuleObject();
-    
+    abstract externalRules();
     
     private initConfiguration() {
         
@@ -91,6 +91,8 @@ export abstract class  BasicConfiguration extends RestController{
         this.permissions['lock']=this.myglobal.existsPermission(this.prefix+'_LOCK');
     }
 
+
+
     private initConfigurationSearch() {
 
         this.paramsSearch= {
@@ -140,6 +142,10 @@ export abstract class  BasicConfiguration extends RestController{
             }
         }
     }
+
+
+
+    
 
     initLang() {
         var userLang = navigator.language.split('-')[0]; // use navigator lang if available
