@@ -25,11 +25,8 @@ export class BrandProduct extends BasicConfiguration implements OnInit {
     
 
     constructor(public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
-        super("PE","/marcas/",http, toastr,myglobal,translate);
+        super("P_B","/marcas/",http, toastr,myglobal,translate);
         
-        
-
-
 
     }
 
