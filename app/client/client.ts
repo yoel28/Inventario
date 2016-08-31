@@ -11,8 +11,8 @@ import {TypeCompany} from "../typeCompany/typeCompany";
 
 @Component({
     selector: 'client',
-    templateUrl: 'app/typeProduct/index.html',
-    styleUrls: ['app/typeProduct/style.css'],
+    templateUrl: 'app/client/index.html',
+    styleUrls: ['app/client/style.css'],
     directives: [Tables,Save],
     pipes: [TranslatePipe],
     providers: [TranslateService,TypeCompany]
@@ -163,18 +163,22 @@ export class Client extends BasicConfiguration implements OnInit {
 
 
     ngOnInit() {
-        
+        this.loadData();
         this.initRules();
         this.initParamsTable();
         this.initSaveRules();
         this.initOptions();
         this.initSearch();
-        this.loadData();
+
 
 
         let that = this;
         let successCallback= response => {
-            Object.assign(that.externalList[that.typeCompany.ruleObject.key], response.json());
+            let key =that.typeCompany.ruleObject.key;
+            that.externalList[key]={};
+            that.externalList[key] = response.json();
+            if(that.tables)
+                that.tables.externalList=that.externalList;
 
         }
         this.httputils.doGet("/search"+this.typeCompany.endpoint,successCallback,this.error);
