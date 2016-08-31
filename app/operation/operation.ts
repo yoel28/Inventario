@@ -50,6 +50,9 @@ export class Operation extends RestController implements OnInit {
     public producto:Control;
     public ubicacion:Control;
 
+    //vecrtor de producto/cantidad
+    public listAccionArray :any={}
+
 
     //cuarto formulario
     public listResult:any={}
@@ -142,13 +145,15 @@ export class Operation extends RestController implements OnInit {
         }
         else{
 
+            
+            
         let successCallback= response => {
 
 
             if(response.status==200){
 
                 if(that.lastLocaltion && that.lastLocaltion.id)
-                    that.listAccion.push({"Producto":{"code":response.json().code,"id":response.json().id},"Ubicacion":that.lastLocaltion,"Accion":that.accionList,"Status":true,"Validate":true,"Mensaje":""});
+                    that.listAccion.push({"Producto":{"code":response.json().code,"id":response.json().id,"name":response.json().detail},"Ubicacion":that.lastLocaltion,"Accion":that.accionList,"Status":true,"Validate":true});
                 else
                     that.toastr.error("por favor ingrese una ubicacion primero");
 
@@ -163,7 +168,7 @@ export class Operation extends RestController implements OnInit {
             }
             else if(response.status==204){
   
-                that.listAccion.push({"Producto":{"code":that.producto.value},"Ubicacion":"","Accion":that.accionList,"Status":false,"Validate":false,"Mensaje":"El codigo ingresado no fue encontrado"});
+                that.listAccion.push({"Producto":{"code":that.producto.value},"Ubicacion":"","Accion":that.accionList,"Status":false,"Validate":false});
                 
             }
 
@@ -245,6 +250,28 @@ export class Operation extends RestController implements OnInit {
             listAccionArray.push(acctions)
         }
         return listAccionArray
+    }
+
+    getValidateListWithCount() {
+
+        this.listAccionArray={};
+        let item =0
+        for(var acctions of this.listAccion)
+        {
+
+            if(acctions.Status && acctions.Validate)
+            {
+
+                if(this.listAccionArray[acctions.Producto.code])
+                    this.listAccionArray[acctions.Producto.code].cantidad++;
+                else
+                {
+                    item++;
+                    this.listAccionArray[acctions.Producto.code]={'item':item,'Producto':acctions.Producto,'cantidad':1}
+                }
+            }
+        }
+        return Object.keys(this.listAccionArray);
     }
 
     //deseleccionar
