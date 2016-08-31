@@ -15,10 +15,10 @@
                                     <div class="navbar-inner">
                                         <ul class="bwizard-steps-o">
                                             <li  [class.active]="positionForm==1" data-toggle="modal" [attr.data-target]="'#IdWarning'" ><a data-toggle="tab"><i class="glyphicon glyphicon-user"></i>
-                                                <p class="anchor">1 .- Usuario y accion</p>
+                                                <p class="anchor">1 .- Usuario y Acci&oacute;on</p>
                                                 <p class="description"></p></a></li>
                                             <li [class.active]="positionForm==2 " (click)="inc(null,2)"><a data-toggle="tab"><i class="glyphicon glyphicon-send mln"></i>
-                                                <p class="anchor">2.- Ubicacion y  Producto</p>
+                                                <p class="anchor">2.- Registro y Validaci&oacute;n</p>
                                                 <p class="description"></p></a></li>
                                             <li [class.active]="positionForm==3" (click)="inc(null,3)"><a data-toggle="tab"><i class="glyphicon glyphicon glyphicon-list"></i>
                                                 <p class="anchor">3.- Registros Validos</p>
@@ -100,19 +100,38 @@
                                             </div>
 
                                             <div class="row col-lg-12" *ngIf="listAccion && listAccion.length > 0">
-                                                <h3>Acciones realizadas</h3>
-                                                <table class="table table-striped table-hover text-center">
-                                                    <thead>
-                                                    <tr>
-                                                        <td>Codigo <Ingresado></Ingresado></td><td>Ubicacion</td><td>Mensaje</td>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody >
-                                                    <tr *ngFor="let carga of listAccion" [class.success]="carga.Status" [class.danger]="!carga.Status">
-                                                        <td>{{carga.Producto.code}}</td><td>{{carga.Ubicacion.name}}</td><td>{{carga.Mensaje}}</td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
+                                                <div class="col-lg-6">
+                                                    <h3>Ubicacion y Produto</h3>
+                                                    <table class="table table-striped table-hover text-center">
+                                                        <thead>
+                                                        <tr>
+                                                            <td>Codigo <Ingresado></Ingresado></td><td>Ubicacion</td><td class="col-lg-1"></td>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody >
+                                                        <tr *ngFor="let carga of listAccion" [class.success]="carga.Status" [class.danger]="!carga.Status">
+                                                            <td>{{carga.Producto.code}}</td><td>{{carga.Ubicacion.name}}</td><td><input type="checkbox" [disabled]="!carga.Status" [checked]="carga.Validate" (click)="unSelect(carga)" ></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <h3>Validaci&oacute;n</h3>
+                                                    <table class="table table-striped table-hover text-center">
+                                                        <thead>
+                                                        <tr>
+                                                            <td>Item</td><td>Producto</td><td>Total</td>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody >
+                                                        <tr *ngFor="let key of getValidateListWithCount()">
+                                                            <td  class="col-lg-1">{{listAccionArray[key].item}}</td><td>{{listAccionArray[key].Producto.name}}</td><td>{{listAccionArray[key].cantidad}}</td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+
                                             </div>
 
                                             </form>
