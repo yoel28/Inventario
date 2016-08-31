@@ -184,6 +184,11 @@ export class User extends BasicConfiguration implements OnInit{
         this.paramsSearch['placeholder'] = "Ingrese el usuario";
     }
 
+    externalRules()
+    {}
+
+    initRuleObject()
+    {}
 
     ngOnInit(){
 
@@ -193,8 +198,8 @@ export class User extends BasicConfiguration implements OnInit{
             let key =that.roles.ruleObject.key;
             that.externalList[key]={};
             that.externalList[key] = response.json();
-            if(that.tables)
-                that.tables.externalList=that.externalList;
+            if(that.lessList)
+                that.lessList.externalList=that.externalList;
 
         }
         this.httputils.doGet("/search"+this.roles.endpoint,successCallback,this.error);
