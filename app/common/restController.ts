@@ -98,6 +98,7 @@ export class RestController implements OnInit {
             this.toastr.error(err.json().message);
         };
         let successCallback= response => {
+          data[field]=value
             if(this.toastr)
                 this.toastr.success('Guardado con éxito','Notificacion')
         }

@@ -49,8 +49,11 @@ export class LessList extends RestController implements OnInit {
             }
         }
         
-        if(! data.detailsSearh['id'])
+        if(! data.detailsSearh['id'] || !data.detailsSearh['flag'])
         {
+            if(!data.detailsSearh['flag'])
+                delete data.detailsSearh['flag']
+
             let that = this;
             let successCallback = response => {
                 Object.assign(data.detailsSearh, response.json());
@@ -121,13 +124,16 @@ export class LessList extends RestController implements OnInit {
 
         //this.dataArraySelect.data.detailsSearh[this.dataArraySelect.key]=arraytemp;
 
-        let that = this;
         
+        let that = this;
 
-        if(that.rulesDetails[this.dataArraySelect.key]!='roles')
-            this.onEditable(this.dataArraySelect.key,this.dataArraySelect.data,arraytemp,this.externalEndPoint);
-        else 
-            this.onEditableRole("roles",arraytemp,this.dataArraySelect.data,this.externalEndPoint+this.dataArraySelect.data.id+"/roles")
+        this.dataArraySelect.data.flag ='true';
+
+        if(this.dataArraySelect.key!='roles')
+            this.onEditable(this.dataArraySelect.key,this.dataArraySelect.data.detailsSearh,arraytemp,this.externalEndPoint);
+        else
+            this.onEditableRole("roles",this.dataArraySelect.data.detailsSearh,arraytemp,this.externalEndPoint+this.dataArraySelect.data.id+"/roles")
+
     }
     
 }

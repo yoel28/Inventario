@@ -247,14 +247,14 @@ export class Tables extends RestController implements OnInit {
 
         //this.dataArraySelect.data[this.dataArraySelect.key]=arraytemp;
 
+        
         let that = this;
         let successCallback= response => {
 
             this.toastr.success("Modifcacion hecha");
 
         }
-
-        this.onEditable(this.dataArraySelect.key,this.dataArraySelect.data,arraytemp,this.endpoint);
+        this.onEditable(this.dataArraySelect.key,this.dataArraySelect.data[this.dataArraySelect.key],arraytemp,this.externalEndPoint);
 
 //        this.httputils.doPut(this.endpoint+this.dataArraySelect.data.id,JSON.stringify(this.dataArraySelect.data),successCallback,this.error);
 
