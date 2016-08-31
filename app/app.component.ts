@@ -82,12 +82,12 @@ export class AppComponent extends RestController implements OnInit{
   constructor(public router: Router,http: Http,public myglobal:globalService,public toastr: ToastsManager) {
     
       super(http)
-        //localStorage.setItem('urlAPI','http://dev.zippyttech.com:8080/api');
-        //localStorage.setItem('url','http://dev.zippyttech.com:8080/');
+        localStorage.setItem('urlAPI','http://dev.zippyttech.com:8080/api');
+        localStorage.setItem('url','http://dev.zippyttech.com:8080/');
         //localStorage.setItem('urlAPI','http://192.168.0.113:8080/api');
         //localStorage.setItem('url','http://192.168.0.113:8080/');
-        localStorage.setItem('urlAPI','http://192.168.0.95:8080/api');
-        localStorage.setItem('url','http://192.168.0.95:8080/');
+        //localStorage.setItem('urlAPI','http://192.168.0.95:8080/api');
+        //localStorage.setItem('url','http://192.168.0.95:8080/');
     let that=this;
     router.subscribe(
         function(data){
