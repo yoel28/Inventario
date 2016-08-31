@@ -245,7 +245,7 @@ export class Tables extends RestController implements OnInit {
 
         });
 
-        this.dataArraySelect.data[this.dataArraySelect.key]=arraytemp;
+        //this.dataArraySelect.data[this.dataArraySelect.key]=arraytemp;
 
         let that = this;
         let successCallback= response => {
@@ -254,7 +254,9 @@ export class Tables extends RestController implements OnInit {
 
         }
 
-        this.httputils.doPut(this.endpoint+this.dataArraySelect.data.id,JSON.stringify(this.dataArraySelect.data),successCallback,this.error);
+        this.onEditable(this.dataArraySelect.key,this.dataArraySelect.data,arraytemp,this.endpoint);
+
+//        this.httputils.doPut(this.endpoint+this.dataArraySelect.data.id,JSON.stringify(this.dataArraySelect.data),successCallback,this.error);
 
     }
     

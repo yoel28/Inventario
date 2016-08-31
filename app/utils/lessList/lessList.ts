@@ -119,17 +119,15 @@ export class LessList extends RestController implements OnInit {
 
         });
 
-        this.dataArraySelect.data.detailsSearh[this.dataArraySelect.key]=arraytemp;
+        //this.dataArraySelect.data.detailsSearh[this.dataArraySelect.key]=arraytemp;
 
         let that = this;
-        let successCallback= response => {
+        
 
-            this.toastr.success("Modifcacion hecha");
-
-        }
-
-        this.httputils.doPut(this.externalEndPoint+this.dataArraySelect.data.id,JSON.stringify(this.dataArraySelect.data),successCallback,this.error);
-
+        if(that.rulesDetails[this.dataArraySelect.key]!='roles')
+            this.onEditable(this.dataArraySelect.key,this.dataArraySelect.data,arraytemp,this.externalEndPoint);
+        else 
+            this.onEditableRole("roles",arraytemp,this.dataArraySelect.data,this.externalEndPoint+this.dataArraySelect.data.id+"/roles")
     }
     
 }
