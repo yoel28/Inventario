@@ -254,7 +254,7 @@ export class Tables extends RestController implements OnInit {
 
         }
 
-        this.httputils.doPut(this.endpoint+this.dataArraySelect.data.id,this.dataArraySelect.data,successCallback,this.error);
+        this.httputils.doPut(this.endpoint+this.dataArraySelect.data.id,JSON.stringify(this.dataArraySelect.data),successCallback,this.error);
 
     }
     
