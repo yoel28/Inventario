@@ -15,10 +15,11 @@
                 </div>
             </div>
             </div>
-            <div *ngIf="viewOptions.permissions.list"  class="box-body">
-                <div >
+            <div *ngIf="permissions.list"  class="box-body">
 
-                    <less-list [paramSearch]="paramsSearch" [externalEndPoint]="endpoint" [rulesDetalis]="rules"></less-list>
+                <div>
+
+                    <less-list [paramSearch]="paramsSearch" [externalEndPoint]="endpoint" [rulesDetails]="rules" [externalList]="externalList"></less-list>
                     <!--card [dataList]="dataList" [rules]="rules" [params]="viewCardOption" ></card!-->
                 </div>
                 <div *ngIf="dataList && dataList.count == 0">
@@ -29,7 +30,7 @@
                 </div>
             </div>
 
-            <div *ngIf="!viewOptions.permissions.list">
+            <div *ngIf="!permissions.list">
                 <div class="btn-red padding-error">
                     <h5><i class="fa fa-warning"></i>&nbsp;<strong>ADVERTENCIA</strong></h5>
                     {{viewOptions.errors.list}}
