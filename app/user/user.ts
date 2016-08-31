@@ -7,46 +7,34 @@ import {TranslateService, TranslatePipe} from "ng2-translate/ng2-translate";
 import {Save} from "../utils/save/save";
 import {Card} from "../utils/card/card";
 import {LessList} from "../utils/lessList/lessList";
+import {BasicConfiguration} from "../common/basic-configuration";
+import {Roles} from "../roles/roles";
 
 @Component({
     selector: 'users',
     templateUrl: 'app/user/index.html',
     styleUrls: ['app/user/style.css'],
     pipes: [TranslatePipe],
-    providers: [TranslateService],
+    providers: [TranslateService,Roles],
     directives:[Save,Card,LessList]
 })
 @Injectable()
-export class User extends RestController implements OnInit{
-    public rules: any = {};
-    public paramsSave: any = {};
-    public paramsSearch: any = {};
-    public rulesSave: any = {};
-    public viewOptions: any = {};
-    public viewCardOption: any = {};
+export class User extends BasicConfiguration implements OnInit{
 
-    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService) {
-        super(http,toastr);
-        this.setEndpoint('/users/');
+
+    public externalList:any={};
+
+    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService, public  roles:Roles) {
+        super("US","/users/",http, toastr,myglobal,translate);
+
+        this.roles.externalRules();
+
     }
 
-    ngOnInit(){
-        this.initLang();
-        this.initRules();
-        this.initSave();
-        this.initSearch();
-        this.initOptions();
-        this.initViewCard();
-
-      //  this.loadData();
-    }
-    initLang(){
-        var userLang = navigator.language.split('-')[0]; // use navigator lang if available
-        userLang = /(es|en)/gi.test(userLang) ? userLang : 'es';
-        this.translate.setDefaultLang('en');
-        this.translate.use(userLang);
-    }
     initRules() {
+        let tempRules = this.rules;
+        this.rules={};
+
         this.rules["image"] = {
             "update":true,
             "visible": true,
@@ -99,28 +87,14 @@ export class User extends RestController implements OnInit{
             },
 
         };
-        this.rules["detail"] = {
-            "visible": true,
-            'required':true,
-            "update":true,
-            'icon':'fa fa-list',
-            "type": "text",
-            "key": "detail",
-            "title": "Descripcion",
-            "placeholder": "ingrese una descripcion",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                },
-            }
-        };
+
         this.rules["email"] = {
             "visible": true,
             'required':true,
             "update":true,
             'maxLength':30,
             'icon':'fa fa-email',
-            "type": "email",
+            "type": "text",
             "key": "email",
             "title": "Email",
             "placeholder": "Ingrese un correo electronico",
@@ -133,23 +107,7 @@ export class User extends RestController implements OnInit{
             },
 
         };
-        this.rules["enabled"] = {
-            "visible": true,
-            'required':true,
-            "update":true,
-            'icon':'fa fa-email',
-            "type": "boolean",
-            "key": "enabled",
-            "title": "Habilitada",
-            "placeholder": "Cuenta habilitada",
 
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                },
-            },
-
-        };
         this.rules["password"] = {
             "visible": true,
             'required':true,
@@ -166,9 +124,10 @@ export class User extends RestController implements OnInit{
             },
 
         };
+
         this.rules["phone"] = {
             "visible": true,
-            'required':false,
+            'required':true,
             "update":true,
             'icon':'fa fa-phone',
             "type": "number",
@@ -182,20 +141,19 @@ export class User extends RestController implements OnInit{
             },
 
         };
-        this.rules["roles"] = {
-            'update':true,
-            'type': 'checklist',
-            "visible": true,
-            'display': null,
-            'title': 'Rol',
-            'mode': 'popup',
-            'showbuttons': true,
-            'placeholder': 'Roles',
-            'search': false,
-            'source': []
-        };
+
+
+        this.rules["roles"] = this.roles.ruleObject;
+        this.rules["roles"].visible =true;
+        this.rules["roles"].type="array";
+        this.rules["roles"].buttonTitle="Mostrar roles";
+
+
+        this.rules['detail'] = tempRules['detail'];
+        this.rules['enabled'] = tempRules['enabled'];
     }
-    initSave() {
+
+    initSaveRules() {
         this.paramsSave = {
             title: "Agregar usuario",
             idModal: "modalUser",
@@ -204,84 +162,63 @@ export class User extends RestController implements OnInit{
         this.rulesSave = this.rules;
         delete this.rulesSave["enabled"];
     }
-    initSearch() {
-        this.paramsSearch= {
-            'permissions':'1',
-            'title': "Usuario",
-            'idModal': "searchUser",
-            'endpoint': "/search/users/",
-            'placeholder': "Ingrese el usuario",
-            'label': {title: "Nombre: ", detail: "Detalle: "},
-            'msg': {
-                'errors': {
-                    'noAuthorized': 'No posee permisos para esta accion',
-                },
-            },
-            'where':'',
-            'imageGuest':'/assets/img/truck-guest.png'
-        };
-    }
+
     initOptions() {
+
         this.viewOptions["title"] = 'Usuarios';
-        this.viewOptions["button"]=[];
+
         this.viewOptions["button"].push({
             'title':'Agregar',
             'class':'btn btn-primary',
             'icon':'fa fa-plus',
             'modal':this.paramsSave.idModal
-        })
-        this.viewOptions["permissions"] = {"list": true};/*TODO PERMISO REAL this.myglobal.existsPermission('10')}*/
-        this.viewOptions["errors"] ={};
-        this.viewOptions["errors"].notFound= "no se encontraron resultados";
-        this.viewOptions["errors"].list="no tiene permisos para ver los productos";
-    }
-    initViewCard(){
-        this.viewCardOption.field=[0,3,6];
-        this.viewCardOption.offset=3;
-        this.viewCardOption.endpoint=this.endpoint;
-        this.viewCardOption.class="col-lg-4 col-md-4 col-xs-12 col-sm-12";
-        this.viewCardOption.actions={};
-        this.viewCardOption.actions.delete = {
-            "icon": "fa fa-trash",
-            'title': 'Eliminar',
-            'permission': this.myglobal.existsPermission('1'),
-            'message': 'Esta seguro de eliminar',
-            'keyAction':'username'
-        };
-        this.viewCardOption.actions.onPatch = {
-            "type":"boolean",
-            "field":"accountLocked",
-            "icon": "fa fa-list",
-            'permission': this.myglobal.existsPermission('1'),
-            "titleTrue":"Verificar",
-            "titleFalse":"No Verificado",
-        };
-        this.viewCardOption.actions.onLock = {
-            "icon": "fa fa-warning",
-            'permission': this.myglobal.existsPermission('1'),
-            "titleTrue":"Bloquear",
-            "titleFalse":"Habilitar",
-        };
+        });
 
     }
 
-    public image:string;
-    changeImage(data){
-        this.image=data;
+    initSearch() {
+
+
+        this.paramsSearch['title'] = "Usuarios";
+        this.paramsSearch['idModal'] = "searchUser";
+        this.paramsSearch['placeholder'] = "Ingrese el usuario";
     }
-    loadImage(){
-        this.onPatch('image',this.myglobal.user,this.image);
+
+
+    ngOnInit(){
+
+
+        let that = this;
+        let successCallback= response => {
+            let key =that.roles.ruleObject.key;
+            that.externalList[key]={};
+            that.externalList[key] = response.json();
+            if(that.tables)
+                that.tables.externalList=that.externalList;
+
+        }
+        this.httputils.doGet("/search"+this.roles.endpoint,successCallback,this.error);
+
+        this.initRules();
+        this.initSaveRules();
+        this.initSearch();
+        this.initOptions();
     }
 
 
 
+
+
+
+
+//momento de agregar con el lesslist
     @ViewChild(LessList)
     lessList:LessList;
     asignData(data) {
 
         if(this.lessList )
         {
-            this.lessList.dataList.list.unshift({"title":data.email,"detail":data.username});
+            this.lessList.dataList.list.unshift({"id":data.id,"title":data.email,"detail":data.username});
 
             if(this.lessList.dataList.page && this.lessList.dataList.page.length>1)
             {
