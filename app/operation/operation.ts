@@ -8,6 +8,8 @@ import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {SMDropdown} from "../common/xeditable";
 
 
+declare var moment:any;
+
 @Component({
     selector: 'operation',
     templateUrl: 'app/operation/index.html',
@@ -57,11 +59,19 @@ export class Operation extends RestController implements OnInit {
     //cuarto formulario
     public listResult:any={}
     
+    //elementos graficos
+    public currentDay=""
+    public totalProduct=0
+    private lastItem=1;
+
 
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService, public formBuilder:FormBuilder) {
 
         super(http, toastr);
         this.setEndpoint('/search/tipo/acciones')
+
+        this.currentDay = moment().format('DD-MM-YYYY');
+
     }
 
 
@@ -95,6 +105,19 @@ export class Operation extends RestController implements OnInit {
                         this.toastr.error("por favor selccione una accion y un cliente valido");
                         flag =false;
                     }
+                else {
+                        this.userName ={};
+                        let that = this;
+                        this.listClient.list.find(o=>{
+
+                            if(o.id==that.user.value)
+                            {
+                                that.user.updateValue(o);
+                                return;
+                            }
+
+                        });
+                    }
 
                 break;
             case 2:
@@ -107,7 +130,7 @@ export class Operation extends RestController implements OnInit {
 
                 break;
 
-            case 4:
+            case 3:
                     if(position != 0 && position != 1)
                     {
                         this.toastr.warning("debe realizar una lista de acciones nueva");
@@ -123,7 +146,7 @@ export class Operation extends RestController implements OnInit {
 
         if(flag)
         {
-            if(data && this.positionForm!=4)
+            if(data && this.positionForm!=3)
                 this.positionForm=data==1?(this.positionForm+1):(this.positionForm-1);
             else if(data)
                 this.onDelete();
@@ -153,7 +176,7 @@ export class Operation extends RestController implements OnInit {
             if(response.status==200){
 
                 if(that.lastLocaltion && that.lastLocaltion.id)
-                    that.listAccion.push({"Producto":{"code":response.json().code,"id":response.json().id,"name":response.json().detail},"Ubicacion":that.lastLocaltion,"Accion":that.accionList,"Status":true,"Validate":true});
+                    that.listAccion.push({"item":this.lastItem++,"Producto":{"code":response.json().code,"id":response.json().id,"name":response.json().detail},"Ubicacion":that.lastLocaltion,"Accion":that.accionList,"Status":true,"Validate":true,"msj":"Codigo del producto: "+response.json().code});
                 else
                     that.toastr.error("por favor ingrese una ubicacion primero");
 
@@ -168,7 +191,7 @@ export class Operation extends RestController implements OnInit {
             }
             else if(response.status==204){
   
-                that.listAccion.push({"Producto":{"code":that.producto.value},"Ubicacion":"","Accion":that.accionList,"Status":false,"Validate":false});
+                that.listAccion.push({"item":this.lastItem++,"Producto":{"code":that.producto.value},"Ubicacion":"","Accion":that.accionList,"Status":false,"Validate":false,"msj":"El codigo no fue encontrado"});
                 
             }
 
@@ -255,12 +278,15 @@ export class Operation extends RestController implements OnInit {
     getValidateListWithCount() {
 
         this.listAccionArray={};
+        this.totalProduct=0;
         let item =0
         for(var acctions of this.listAccion)
         {
 
+
             if(acctions.Status && acctions.Validate)
             {
+                this.totalProduct++;
 
                 if(this.listAccionArray[acctions.Producto.code])
                     this.listAccionArray[acctions.Producto.code].cantidad++;
@@ -271,6 +297,9 @@ export class Operation extends RestController implements OnInit {
                 }
             }
         }
+
+
+
         return Object.keys(this.listAccionArray);
     }
 
@@ -288,7 +317,7 @@ export class Operation extends RestController implements OnInit {
         let arraySaveTemp =[];
 
 
-            let objectPost ={"cliente":that.user.value,"tipoAccion":that.tipoAccion.value,"acciones":[]};
+            let objectPost ={"cliente":that.user.value.id,"tipoAccion":that.tipoAccion.value,"acciones":[]};
 
             for(var a of that.listAccion)
             {
