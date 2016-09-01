@@ -175,8 +175,8 @@
                                                         </tr>
                                                         </thead>
                                                         <tbody >
-                                                        <tr *ngFor="let carga of listResult">
-                                                            <td>{{carga.accion.producto.codigo}}</td><td>{{carga.accion.ubicacion.title}}</td><td>{{carga.status}}</td>
+                                                        <tr *ngFor="let carga of listResult" data-toggle="tooltip" [attr.title]="'Codigo de prodcuto: '+carga.accion.producto.codigo">
+                                                            <td>{{carga.accion.producto.name}}</td><td>{{carga.accion.ubicacion.title}}</td><td>{{carga.status}}</td>
                                                         </tr>
                                                         </tbody>
                                                     </table>

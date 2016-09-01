@@ -330,14 +330,14 @@ export class Operation extends RestController implements OnInit {
             for(var a of that.listAccion)
             {
                 if(a.Validate)
-                    objectPost.acciones.push({"producto":{"id":a.Producto.id,"codigo":a.Producto.code},"ubicacion":{"id":a.Ubicacion.id,"title":a.Ubicacion.name}});
+                    objectPost.acciones.push({"producto":{"id":a.Producto.id,"codigo":a.Producto.code,'name':a.Producto.name},"ubicacion":{"id":a.Ubicacion.id,"title":a.Ubicacion.name}});
             }
 
             let successCallback= response => {
 
                 that.listAccion=[];
                 that.listResult=response.json();
-                that.positionForm=4;
+                that.positionForm=3;
                 that.toastr.success("Las acciones han sido guardadas");
 
             }
