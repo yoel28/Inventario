@@ -189,7 +189,7 @@
 
                                 <div class="action text-right">
                                     <button *ngIf="positionForm!=2"  [disabled]="positionForm==1"        (click)="inc(2)" type="button" name="previous" value="Anterior" class="btn btn-info button-previous"><i class="fa fa-arrow-circle-o-left mrx"></i>{{positionForm!=4?'Anterior':'Nueva carga'}}</button>
-                                    <button *ngIf="positionForm==2"  data-toggle="modal" [attr.data-target]="'#IdWarning'"  [disabled]="positionForm==1"   type="button" name="previous" value="Anterior" class="btn btn-info button-previous"><i class="fa fa-arrow-circle-o-left mrx"></i>{{positionForm!=4?'Previous':'Nueva carga'}}</button>
+                                    <button *ngIf="positionForm==2"  data-toggle="modal" [attr.data-target]="'#IdWarning'"  [disabled]="positionForm==1"   type="button" name="previous" value="Anterior" class="btn btn-info button-previous"><i class="fa fa-arrow-circle-o-left mrx"></i>{{positionForm!=4?'Anterior':'Nueva carga'}}</button>
 
                                     <button [class.hidden]="positionForm >= 2"  (click)="inc(1)" type="button"  name="next" value="Siguiente" class="btn btn-info button-next mlm">Siguiente<i class="fa fa-arrow-circle-o-right mlx"></i></button>
                                     <button [class.hidden]="positionForm != 2"  (click)="saveResult($event)"   type="button" name="next" value="Guardar" class="btn btn-success button-next mlm">Guardar <i class="fa fa-save"></i></button>

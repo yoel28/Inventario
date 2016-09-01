@@ -106,7 +106,7 @@ export class Operation extends RestController implements OnInit {
                         flag =false;
                     }
                 else {
-                        this.userName ={};
+                        
                         let that = this;
                         this.listClient.list.find(o=>{
 
@@ -311,10 +311,18 @@ export class Operation extends RestController implements OnInit {
 
     saveResult(event) {
         event.preventDefault();
-        let that=this
+
+        if(this.getValidateList().length == 0 )
+        {
+            this.toastr.warning("la lista de acciones valida es nula");
+        }
+        else {
 
 
-        let arraySaveTemp =[];
+            let that=this
+
+
+            let arraySaveTemp =[];
 
 
             let objectPost ={"cliente":that.user.value.id,"tipoAccion":that.tipoAccion.value,"acciones":[]};
@@ -334,6 +342,9 @@ export class Operation extends RestController implements OnInit {
 
             }
             this.httputils.doPost('/acciones/',JSON.stringify(objectPost),successCallback, this.error);
+
+        }
+
 
     }
 
