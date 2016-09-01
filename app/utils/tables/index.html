@@ -85,6 +85,11 @@
                                 <span class="{{params.actions[key].icon}}"></span>
                                 &nbsp;{{params.actions[key].title}}
                             </a>
+                            <a *ngIf="key == 'chartTable'"
+                               (click)="onPrint(params.actions[key].element)">
+                                <span class="{{params.actions[key].icon}}"></span>
+                                &nbsp;{{params.actions[key].title}}
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -110,6 +115,11 @@
                            {{data.enabled?params.actions[key].titleTrue:params.actions[key].titleFalse}}
                        </a>
                        <a *ngIf="key == 'print'"
+                          (click)="onPrint(params.actions[key].element)">
+                           <span class="{{params.actions[key].icon}}"></span>
+                           &nbsp;{{params.actions[key].title}}
+                       </a>
+                       <a *ngIf="key == 'chartTable'"
                           (click)="onPrint(params.actions[key].element)">
                            <span class="{{params.actions[key].icon}}"></span>
                            &nbsp;{{params.actions[key].title}}
