@@ -85,11 +85,6 @@
                                 <span class="{{params.actions[key].icon}}"></span>
                                 &nbsp;{{params.actions[key].title}}
                             </a>
-                            <a *ngIf="key == 'chartTable'"
-                               (click)="onPrint(params.actions[key].element)">
-                                <span class="{{params.actions[key].icon}}"></span>
-                                &nbsp;{{params.actions[key].title}}
-                            </a>
                         </li>
                     </ul>
                 </div>
@@ -115,11 +110,6 @@
                            {{data.enabled?params.actions[key].titleTrue:params.actions[key].titleFalse}}
                        </a>
                        <a *ngIf="key == 'print'"
-                          (click)="onPrint(params.actions[key].element)">
-                           <span class="{{params.actions[key].icon}}"></span>
-                           &nbsp;{{params.actions[key].title}}
-                       </a>
-                       <a *ngIf="key == 'chartTable'"
                           (click)="onPrint(params.actions[key].element)">
                            <span class="{{params.actions[key].icon}}"></span>
                            &nbsp;{{params.actions[key].title}}
@@ -177,7 +167,6 @@
         </div>
     </div>
 </div>
-
 
 <div *ngIf="dataArraySelect && dataArraySelect.key" class="modal fade" [attr.id]="'modalArray'" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel">
@@ -242,14 +231,9 @@
     </div>
 </div>
 
-
-
 <div *ngIf="dataSave && dataSave.params && dataSave.params.idModal">
     <save [rules]="dataSave.rules" [params]="dataSave.params" (save)="asignData($event)"> </save>
 </div>
-
-
-
 
 <div *ngIf="searchTable.idModal">
     <search [params]="searchTable" (result)="getDataSearch($event)"></search>
@@ -258,3 +242,5 @@
 <!--div>
     <filter [rules]="rules" [params]="paramsFilter" (whereFilter)="loadWhere($event)"></filter>
 </div-->
+
+

@@ -21,6 +21,10 @@ import {Save} from "../save/save";
 
 export class Tables extends RestController implements OnInit {
 
+    
+    
+    
+    
 
     public params:any={};
     public externalList:any={};
@@ -261,8 +265,16 @@ export class Tables extends RestController implements OnInit {
     }
     
     
+        public doubleRules :any={}
+        public doubleParams :any={}
+        public doubleRulesSearch :any={}
+        doubleTable()
+        {
+            this.doubleRules = Object.create(this.rules);
+            this.doubleParams = Object.create(this.params);
+            this.doubleRulesSearch = Object.create(this.rulesSearch);
 
-
+        }
 
 
 }
