@@ -25,9 +25,12 @@ import {PermissionsAcl} from "./permissions/acl";
 import {TypeProduct} from "./typeProduct/typeProduct";
 import {BrandProduct} from "./brandProduct/brand";
 import {ModelProduct} from "./modelProduct/modelProduct";
-import {ProductAvailable} from "./reports/productAvailable";
+import {ProductAvailable} from "./reports/productAvailable/productAvailable";
 import {UploadFile} from "./uploadFile/upload";
 import {TypeCompany} from "./typeCompany/typeCompany";
+import {ProductAudit} from "./productAudit/productAudit";
+import {OfficeSupplier} from "./reports/officeSupplier/officeSupplier";
+import {ProductAccion} from "./reports/productAccion/productAccion";
 
 
 @Component({
@@ -60,16 +63,23 @@ import {TypeCompany} from "./typeCompany/typeCompany";
   { path: '/modelProduct',   name: 'ModelProduct', component: ModelProduct },
   { path: '/upload',   name: 'UploadFile', component: UploadFile },
 
+
+
+
+
   { path: '/type/company',   name: 'TypeCompany', component: TypeCompany },
 
 
 
 
 
-    
-
 
   { path: '/product/available',   name: 'ProductAvailable', component: ProductAvailable },
+  { path: '/office/supplieer',   name: 'OfficeSupplier', component: OfficeSupplier },
+  { path: '/operacion/accion',   name: 'ProductAccion', component: ProductAccion },
+
+  { path: '/product/audit',   name: 'ProductAudit', component: ProductAudit },
+
   { path: '/**', redirectTo: ['Dashboard'] }
 
 ])
@@ -86,8 +96,8 @@ export class AppComponent extends RestController implements OnInit{
         localStorage.setItem('url','http://dev.zippyttech.com:8080/');
         //localStorage.setItem('urlAPI','http://192.168.0.113:8080/api');
         //localStorage.setItem('url','http://192.168.0.113:8080/');
-        //localStorage.setItem('urlAPI','http://192.168.0.95:8080/api');
-        //localStorage.setItem('url','http://192.168.0.95:8080/');
+        //localStorage.setItem('urlAPI','http://192.168.0.114:9090/api');
+        //localStorage.setItem('url','http://192.168.0.114:9090/');
     let that=this;
     router.subscribe(
         function(data){
@@ -201,7 +211,14 @@ export class AppComponent extends RestController implements OnInit{
                     'icon':'fa fa-list',
                     'title':'Modelo',
                     'routerLink':'ModelProduct'
+                },
+                {
+                    'visible':this.myglobal.existsPermission("1"),
+                    'icon':'fa fa-list',
+                    'title':'Auditoria de produtos',
+                    'routerLink':'ProductAudit'
                 }
+                
 
             ]
 
@@ -217,6 +234,18 @@ export class AppComponent extends RestController implements OnInit{
                     'icon':'fa fa-list',
                     'title':'Producto en existencia',
                     'routerLink':'ProductAvailable'
+                },
+                {
+                    'visible':this.myglobal.existsPermission("1"),
+                    'icon':'fa fa-list',
+                    'title':'Despacho por proveedor',
+                    'routerLink':'OfficeSupplier'
+                },
+                {
+                    'visible':this.myglobal.existsPermission("1"),
+                    'icon':'fa fa-list',
+                    'title':'Movimientos por fecha',
+                    'routerLink':'ProductAccion'
                 },
             ]
 
