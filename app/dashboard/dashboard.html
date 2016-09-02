@@ -12,7 +12,7 @@
                 <div class="row">
                     <div *ngIf="productListLess && productListLess.list" class="col-lg-6 text-center">
                         <div class="panel panel-default">
-                            <label class="panel-heading">Productos con un numero menor de elementos al permitido</label>
+                            <label class="panel-heading text-center col-lg-12">Productos con un numero menor de elementos al permitido</label>
                             <div class="panel-body text-center">
                                 <tables [dataList]="productListLess" [rules]="productRulesLess" [params]="paramsTableLess"></tables>
                             </div>
@@ -22,9 +22,37 @@
                     <div *ngIf="productListMore && productListMore.list" class="col-lg-6 text-center">
 
                         <div class="panel panel-default">
-                            <label class="panel-heading">Productos con un numero mayor de elementos al permitido</label>
+                            <label class="panel-heading text-center col-lg-12">Productos con un numero mayor de elementos al permitido</label>
                             <div class="panel-body text-center">
                                 <tables [dataList]="productListMore" [rules]="productRulesMore" [params]="paramsTableMore"></tables>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <label class="panel-heading text-center col-lg-12">Cantidad de Productos por Ubicaci&oacute;n</label>
+                            <div class="panel-body">
+                                <div class="col-lg-12">
+                                    <label class="pull-right">
+                                        <label class="col-lg-6">{{switchFlag?'Asendente':'Decente'}}</label>
+                                        <div class="col-lg-6">
+                                            <div class="material-switch" >
+                                                <input (change)="changes(event)" id="switchFlag" type="checkbox" [checked]="switchFlag"/>
+                                                <label for="switchFlag" class="label-success"></label>
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                                <div *ngIf="productLocationTables.endpoint">
+                                    <tables [dataList]="productLocationList" [rules]="productLocationRules" [params]="productLocationTables"></tables>
+                                </div>
                             </div>
                         </div>
                     </div>

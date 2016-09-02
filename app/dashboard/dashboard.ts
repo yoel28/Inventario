@@ -27,27 +27,64 @@ export class Dashboard extends RestController implements OnInit {
 
     public productListLess :any ={}
     public productListMore :any ={}
+    public productLocationList :any ={}
 
 
     public productRulesLess :any ={}
     public productRulesMore :any ={}
+    public productLocationRules :any ={}
 
     public paramsTableLess :any={};
     public paramsTableMore :any={};
+    public productLocationTables :any={};
+    
+    
+    public switchFlag =false;
+    
+    
     
     constructor(public router:Router, http:Http, public _formBuilder:FormBuilder, public toastr:ToastsManager, public myglobal:globalService) {
         super(http, toastr);
+
     }
 
 
+    
+    changes($event)
+    {
+        
+        this.switchFlag = !this.switchFlag;
+        let suf = this.switchFlag ? "asc":'desc';
+        delete this.productLocationTables.endpoint;
+        this.productLocationTables['endpoint']="/inventario/diario/producto/ubicacion?sort=cantidadProductosUbicacion&order="+suf;
+        let that =this;
+
+
+        let countlocation = response =>
+        {
+            Object.assign(that.productLocationList, response.json());
+        };
+
+        this.httputils.doGet(this.productLocationTables['endpoint'],countlocation,this.error)
+
+
+    }
+    
     initRules() {
 
-        this.paramsTableLess['endpoint']="/inventario/diario/producto/minimo?sort=cantidad&order=desc";
+        this.paramsTableLess['endpoint']="/inventario/diario/producto/minimo";
         this.paramsTableLess['actions']={}
 
         this.paramsTableMore['endpoint']="/inventario/diario/producto/maximo";
         this.paramsTableMore['actions']={}
-        
+
+
+        this.productLocationTables['endpoint']="/inventario/diario/producto/ubicacion";
+        this.productLocationTables['actions']={}
+
+
+
+
         this.productRulesMore = {
             "idProducto":{
                 "visible": false,
@@ -141,7 +178,45 @@ export class Dashboard extends RestController implements OnInit {
                 "title": "Minimo Permitido",
             }
         };
-        
+
+        this.productLocationRules={
+            'title':{
+                "visible": true,
+                "search":true,
+                'icon':'fa fa-list',
+                "type": "text",
+                "key": "title",
+                "title": "Nombre del casillero",
+                "placeholder": "nombre del casillero"
+            },
+            'fila':{
+                "visible": true,
+                "search":true,
+                'icon':'fa fa-list',
+                "type": "text",
+                "key": "fila",
+                "title": "fila",
+                "placeholder": "fila"
+            },
+            'columna':{
+                "visible": true,
+                "search":true,
+                'icon':'fa fa-list',
+                "type": "text",
+                "key": "columna",
+                "title": "Columna",
+                "placeholder": "columna"
+            },
+            'cantidadProductosUbicacion':{
+                "visible": true,
+                "search":true,
+                'icon':'fa fa-list',
+                "type": "text",
+                "key": "cantidadProductosUbicacion",
+                "title": "Cantidad de productos",
+                "placeholder": "cantidad de prodcuto"
+            }
+        };
     }
 
     saveInstance(chartInstance,index) {
@@ -205,7 +280,7 @@ export class Dashboard extends RestController implements OnInit {
         getDataProduct()
     {
         
-        let that = this; 
+        /*let that = this; 
         let maxProduct = response =>{
 
             Object.assign(that.productListMore, response.json());
@@ -216,9 +291,16 @@ export class Dashboard extends RestController implements OnInit {
         {
             Object.assign(that.productListLess, response.json());
         };
-        
-        this.httputils.doGet("/inventario/diario/producto/maximo",maxProduct,this.error)
-        this.httputils.doGet("/inventario/diario/producto/minimo?sort=cantidad&order=desc",minProduct,this.error)
+
+
+        let countlocation = response =>
+        {
+            Object.assign(that.productLocationList, response.json());
+        };
+        */
+        this.loadData_1("/inventario/diario/producto/maximo",this.productListMore)
+        this.loadData_1("/inventario/diario/producto/minimo",this.productListLess,"&sort=cantidad&order=desc")
+        this.loadData_1("/inventario/diario/producto/ubicacion",this.productLocationList)
     }
 
 
