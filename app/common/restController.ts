@@ -12,6 +12,8 @@ export class RestController implements OnInit {
     endpoint:string;
     offset=0;
     max=5;
+    sort="";
+    order="";
     loadAllData=false;
     page:any=[];
     where:string="";
@@ -46,6 +48,16 @@ export class RestController implements OnInit {
             this.offset = (offset - 1) * this.max;
         this.loadAllData=false;
         this.httputils.onLoadList(this.endpoint+"?max="+this.max+"&offset="+this.offset+this.where,this.dataList,this.max,this.error,false,val,flag);
+
+
+    };
+
+
+
+    loadData_1(endPoint,dataList,ext="") {
+
+        this.endpoint=endPoint;
+        this.httputils.onLoadList(endPoint+"?max="+this.max+"&offset="+this.offset+this.where+ext,dataList,this.max,this.error,false,0,false);
 
 
     };
