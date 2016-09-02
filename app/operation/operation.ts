@@ -176,7 +176,7 @@ export class Operation extends RestController implements OnInit {
             if(response.status==200){
 
                 if(that.lastLocaltion && that.lastLocaltion.id)
-                    that.listAccion.push({"item":this.lastItem++,"Producto":{"code":response.json().code,"id":response.json().id,"name":response.json().detail},"Ubicacion":that.lastLocaltion,"Accion":that.accionList,"Status":true,"Validate":true,"msj":"Codigo del producto: "+response.json().code});
+                    that.listAccion.push({"item":this.lastItem++,"Producto":{"code":response.json().code,"id":response.json().id,"name":response.json().detail},"Ubicacion":{'name':that.lastLocaltion.name,'id':that.lastLocaltion.id},"Accion":that.accionList,"Status":true,"Validate":true,"msj":"Codigo del producto: "+response.json().code});
                 else
                     that.toastr.error("por favor ingrese una ubicacion primero");
 

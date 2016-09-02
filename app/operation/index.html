@@ -162,24 +162,50 @@
                                     </div>
 
                                     <div *ngSwitchWhen="3"  >
-                                        <h3 class="mbxl">Resultados</h3>
                                         <form action="#" class="form-horizontal ng-pristine ng-valid">
                                             <div class="form-group">
 
                                                 <div class="row col-lg-12" *ngIf="listResult.length > 0">
-                                                    <h3>Acciones realizadas</h3>
-                                                    <table class="table table-striped table-hover text-center">
-                                                        <thead>
-                                                        <tr>
-                                                            <td>Codigo</td><td>Ubicacion</td><td>Resultado</td>
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody >
-                                                        <tr *ngFor="let carga of listResult" data-toggle="tooltip" [attr.title]="'Codigo de prodcuto: '+carga.accion.producto.codigo">
-                                                            <td>{{carga.accion.producto.name}}</td><td>{{carga.accion.ubicacion.title}}</td><td>{{carga.status}}</td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
+
+                                                    <div *ngFor="let result of listResult"  class="row">
+
+                                                        <div *ngIf="result.count > 0">
+
+                                                            <label class="col-lg-12" ><strong class="text-bold">Acci&oacute;n: </strong>{{result.status}}</label>
+                                                            <label class="col-lg-12"><strong class="text-bold">Total: </strong>{{result.count}}</label>
+
+                                                            <div *ngFor="let casillero of result.casillero" class="col-lg-5">
+                                                                <div class="box">
+
+
+                                                                    <div class="box-header">
+                                                                        <label ><strong class="text-bold">Ubicaci&oacute;n: </strong>{{casillero.title}}</label>
+                                                                        <label ><strong class="text-bold">Cantidad: </strong>{{casillero.count}}</label>
+                                                                        <br>
+                                                                    </div>
+                                                                    <div  class="box-body"  >
+
+                                                                        <table class="table table-striped table-hover text-center ">
+                                                                            <thead>
+                                                                            <tr>
+                                                                                <td>Producto</td><td>Cantidad</td>
+                                                                            </tr>
+                                                                            </thead>
+                                                                            <tbody >
+                                                                            <tr *ngFor="let accion of casillero.acciones" data-toggle="tooltip" [attr.title]="'Codigo de prodcuto: '+accion.codigo">
+                                                                                <td>{{accion.name}}</td><td>{{accion.count}}</td>
+                                                                            </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+
+                                                                </div>
+
+                                                            </div>
+
+                                                        </div>
+
+                                                    </div>
                                                 </div>
                                             </div>
                                         </form>
