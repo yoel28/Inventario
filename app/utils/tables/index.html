@@ -13,7 +13,7 @@
 <table class="table table-striped table-hover" >
     <thead>
         <tr>
-            <th *ngFor="let key of keyVisible()" >{{rules[key].title}}</th>
+            <th *ngFor="let key of keyVisible()" >{{rules[key].title}} <a ><i (click)="orderByColumn(key)"  [style.color]="sort == key ?'red':'black'" class="fa" [class.fa-angle-down]="sort != key || order != 'asc'  " [class.fa-angle-up]="sort == key && order == 'asc'  " aria-hidden="true"></i></a> </th>
             <th *ngIf="params.actions"></th>
         </tr>
     </thead>
