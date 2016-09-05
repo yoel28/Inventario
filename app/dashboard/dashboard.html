@@ -39,17 +39,6 @@
                         <div class="panel panel-default">
                             <label class="panel-heading text-center col-lg-12">Cantidad de Productos por Ubicaci&oacute;n</label>
                             <div class="panel-body">
-                                <div class="col-lg-12">
-                                    <label class="pull-right">
-                                        <label class="col-lg-6">{{switchFlag?'Asendente':'Decente'}}</label>
-                                        <div class="col-lg-6">
-                                            <div class="material-switch" >
-                                                <input (change)="changes(event)" id="switchFlag" type="checkbox" [checked]="switchFlag"/>
-                                                <label for="switchFlag" class="label-success"></label>
-                                            </div>
-                                        </div>
-                                    </label>
-                                </div>
                                 <div *ngIf="productLocationTables.endpoint">
                                     <tables [dataList]="productLocationList" [rules]="productLocationRules" [params]="productLocationTables"></tables>
                                 </div>
