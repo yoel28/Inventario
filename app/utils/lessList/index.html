@@ -31,7 +31,12 @@
 
                             <div  class="col-lg-4 col-centered">
 
-                                <label *ngFor="let key of getKeysText(data)" class="col-centered col-lg-12"><strong class="text-bold">{{rulesDetails[key].title}}:</strong> <label>{{data.detailsSearh[key]}}</label></label>
+                                <label *ngFor="let key of getKeysText(data)" class="col-centered col-lg-12"><strong class="text-bold">{{rulesDetails[key].title}}:</strong>
+                                    <a  x-editable  [disabled]="!rulesDetails[key].update "  [endpoint]="externalEndPoint" [function]="onEditable" [data]="data.detailsSearh" [rules]="rulesDetails" [field]="key"></a>
+
+
+                                    <!--label>{{data.detailsSearh[key]}}</label-->
+                                </label>
 
                             </div>
                             <div class="col-lg-3">

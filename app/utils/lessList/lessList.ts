@@ -4,13 +4,15 @@ import {RestController} from "../../common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
+import {Xeditable} from "../../common/xeditable";
 
 
 @Component({
     selector: 'less-list',
     templateUrl: 'app/utils/lessList/index.html',
     styleUrls: ['app/utils/lessList/style.css'],
-    inputs: ['paramSearch', 'externalEndPoint', 'rulesDetails','externalList']
+    inputs: ['paramSearch', 'externalEndPoint', 'rulesDetails','externalList'],
+    directives:[Xeditable]
 })
 
 
