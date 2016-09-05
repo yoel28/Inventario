@@ -338,10 +338,14 @@ export class Operation extends RestController implements OnInit {
                 that.listAccion=[];
                 that.listResult=response.json();
                 that.positionForm=3;
-                that.toastr.success("Las acciones han sido guardadas");
+                if(response.status ==200)
+                    that.toastr.success("Las acciones han sido guardadas");
+                else if(response.status ==422)
+                    that.toastr.warning("Algunas acciones han sido guardadas, pero hubo errores");
+
 
             }
-            this.httputils.doPost('/acciones/',JSON.stringify(objectPost),successCallback, this.error);
+            this.httputils.doPost('/acciones/',JSON.stringify(objectPost),successCallback, successCallback);
 
         }
 
