@@ -17,7 +17,8 @@ export class RestController implements OnInit {
     loadAllData=false;
     page:any=[];
     where:string="";
- 
+    ext:string="";
+    
 
     constructor(public http: Http,public toastr?: ToastsManager) {
         this.httputils = new HttpUtils(http,toastr || null);
@@ -47,7 +48,7 @@ export class RestController implements OnInit {
         if (offset != 0)
             this.offset = (offset - 1) * this.max;
         this.loadAllData=false;
-        this.httputils.onLoadList(this.endpoint+"?max="+this.max+"&offset="+this.offset+(this.sort.length >0 ?"&sort="+this.sort+"&order="+this.order:"")+this.where,this.dataList,this.max,this.error,false,val,flag);
+        this.httputils.onLoadList(this.endpoint+"?max="+this.max+"&offset="+this.offset+(this.sort.length >0 ?"&sort="+this.sort+"&order="+this.order:"")+this.where+(this.ext.length>0?"&group="+this.ext:""),this.dataList,this.max,this.error,false,val,flag);
 
 
     };

@@ -46,7 +46,14 @@ export class Reports extends RestController implements OnInit {
     public paramsDate=
     {
         'format':"DD/MM/YYYY"
-    }    
+    }
+
+
+
+    public day   =false;
+    public month =false;
+    public year  =false;
+
 
 
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public _formBuilder: FormBuilder) {
@@ -91,6 +98,7 @@ export class Reports extends RestController implements OnInit {
             dateStart: this.dateStart,
             dateEnd: this.dateEnd,
         });
+
     }
 
 
@@ -235,6 +243,29 @@ export class Reports extends RestController implements OnInit {
 
         }
 
+
+        if(this.day || this.month || this.year) {
+            this.ext = "[";
+            let temp = "";
+            temp = (this.day ? '["field":"day"]' : '');
+
+
+            if (temp.length > 0 && this.month)
+                temp += ',["field":"month"]';
+            else if (this.month)
+                temp = (this.month ? '["field":"month"]  ' : '')
+            if (temp.length > 0 && this.year)
+                temp += ',["field":"year"]';
+            else if (this.year)
+                temp = '["field":"year"]';
+
+            this.ext = this.ext + temp + "]";
+
+        }
+
+        else {
+            this.ext="";
+        }
 
         this.loadData();
 

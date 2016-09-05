@@ -11,6 +11,19 @@
 
             <div class="row">
                 <div class="col-lg-12">
+
+
+
+                    <div class="col-lg-5 pull-right">
+                        <h3 class="text-bold"> Agrupar:</h3>
+                        <div class="col-lg-12">
+                            <label>Dia: <input  type="checkbox" (change)="day=!day" ></label>
+                            <label>Mes: <input type="checkbox"  (change)="month=!month"></label>
+                            <label>Año: <input type="checkbox"  (change)="year=!year"></label>
+                        </div>
+                    </div>
+
+
                     <form role="form" [ngFormModel]="form" (submit)="assignDate($event)">
 
 
@@ -22,9 +35,13 @@
                                     <option data-hidden="true" value="-1">Rango</option>
                                     <option *ngFor="let n of itemsFecha"  [attr.value]="n.id" >{{n.text}}</option>
                                 </select>
-                            </div>
-                        </div>
 
+                            </div>
+
+
+
+
+                        </div>
                         <div [hidden]="disabledRange!=-1" class="col-lg-4" style="margin-top: 20px;">
                             <div daterangepicker [params]="paramsDate" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%" (fecha)="assignDate($event)">
                                 <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
