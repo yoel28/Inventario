@@ -50,25 +50,7 @@ export class Dashboard extends RestController implements OnInit {
 
 
     
-    changes($event)
-    {
-        
-        this.switchFlag = !this.switchFlag;
-        let suf = this.switchFlag ? "asc":'desc';
-        delete this.productLocationTables.endpoint;
-        this.productLocationTables['endpoint']="/inventario/diario/producto/ubicacion?sort=cantidadProductosUbicacion&order="+suf;
-        let that =this;
-
-
-        let countlocation = response =>
-        {
-            Object.assign(that.productLocationList, response.json());
-        };
-
-        this.httputils.doGet(this.productLocationTables['endpoint'],countlocation,this.error)
-
-
-    }
+   
     
     initRules() {
 
@@ -280,26 +262,9 @@ export class Dashboard extends RestController implements OnInit {
         getDataProduct()
     {
         
-        /*let that = this; 
-        let maxProduct = response =>{
-
-            Object.assign(that.productListMore, response.json());
-            
-        };
-        
-        let minProduct = response =>
-        {
-            Object.assign(that.productListLess, response.json());
-        };
-
-
-        let countlocation = response =>
-        {
-            Object.assign(that.productLocationList, response.json());
-        };
-        */
+       
         this.loadData_1("/inventario/diario/producto/maximo",this.productListMore)
-        this.loadData_1("/inventario/diario/producto/minimo",this.productListLess,"&sort=cantidad&order=desc")
+        this.loadData_1("/inventario/diario/producto/minimo",this.productListLess)
         this.loadData_1("/inventario/diario/producto/ubicacion",this.productLocationList)
     }
 
