@@ -1,0 +1,30 @@
+
+
+<div class="col-lg-11">
+
+    <table class="table table-striped table-hover" >
+        <thead>
+        <tr>
+            <th *ngFor="let key of getkeysRules()" >{{rules[key].title}}  </th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of dataList">
+            <td *ngFor="let key of getkeysRules()">
+
+                {{data[key]}}
+
+
+            </td>
+        </tr>
+        </tbody>
+        <tfoot >
+        <tr>
+            <td >
+
+            </td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
