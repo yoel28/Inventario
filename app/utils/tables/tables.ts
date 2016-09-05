@@ -20,10 +20,6 @@ import {Save} from "../save/save";
 
 
 export class Tables extends RestController implements OnInit {
-
-    
-    
-    
     
 
     public params:any={};

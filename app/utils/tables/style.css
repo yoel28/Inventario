@@ -1,0 +1,9 @@
+.orderColumn th{
+    cursor:pointer
+}
+
+
+.orderColumn th.noCursor
+{
+    cursor: auto;
+}
