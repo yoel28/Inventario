@@ -31,6 +31,7 @@ import {TypeCompany} from "./typeCompany/typeCompany";
 import {ProductAudit} from "./productAudit/productAudit";
 import {OfficeSupplier} from "./reports/officeSupplier/officeSupplier";
 import {ProductAccion} from "./reports/productAccion/productAccion";
+import {BuckUpload} from "./BuckUpload/buckUpload";
 
 
 @Component({
@@ -79,6 +80,9 @@ import {ProductAccion} from "./reports/productAccion/productAccion";
   { path: '/operacion/accion',   name: 'ProductAccion', component: ProductAccion },
 
   { path: '/product/audit',   name: 'ProductAudit', component: ProductAudit },
+
+
+  { path: '/buck/upload',   name: 'BuckUpload', component: BuckUpload },
 
   { path: '/**', redirectTo: ['Dashboard'] }
 
@@ -182,6 +186,26 @@ export class AppComponent extends RestController implements OnInit{
     }
     public menuItems=[];
     loadMenu(){
+
+
+        this.menuItems.push({
+            'visible':this.myglobal.existsPermission("1"),
+            'routerLink':'Operation',
+            'icon':'fa fa-list',
+            'title':'Operacion'
+
+        });
+        
+        
+        
+        this.menuItems.push({
+            'visible':this.myglobal.existsPermission("1"),
+            'routerLink':'BuckUpload',
+            'icon':'fa fa-list',
+            'title':'Carga masiva'
+
+        });
+
         this.menuItems.push({
             'visible':this.myglobal.existsPermission("1"),
             'icon':'fa fa-list',
@@ -310,13 +334,7 @@ export class AppComponent extends RestController implements OnInit{
 
         });
 
-        this.menuItems.push({
-            'visible':this.myglobal.existsPermission("1"),
-            'routerLink':'Operation',
-            'icon':'fa fa-list',
-            'title':'Operacion'
-
-        });
+        
 
 
     }
