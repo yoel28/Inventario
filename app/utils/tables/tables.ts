@@ -277,4 +277,21 @@ export class Tables extends RestController implements OnInit {
         }
 
 
+
+
+    //order by column
+    orderByColumn(key)
+    {
+     if(key == this.sort)
+         {
+             this.order = this.order =="asc"?"desc":"asc";
+         }
+     else 
+         {
+            this.sort = key;
+            this.order="desc";
+         }
+        this.loadData();
+    }
+
 }
