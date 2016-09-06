@@ -39,6 +39,8 @@ export class ProductAccion extends BasicConfiguration implements OnInit {
 
     initOptions() {
         this.viewOptions["title"] = 'Movimientos por fecha';
+        this.viewOptions["gruopOptions"] = true;
+
     }
 
     initRules() {
@@ -52,7 +54,7 @@ export class ProductAccion extends BasicConfiguration implements OnInit {
             'icon':'fa fa-list',
             "type": "text",
             "key": "nombreOperacion",
-            "title": "nombre de pperacion",
+            "title": "Nombre de Operacion",
             "placeholder": "Ingrese el ruc cliente",
             'msg':{
                 'errors':{
@@ -67,7 +69,7 @@ export class ProductAccion extends BasicConfiguration implements OnInit {
             'icon':'fa fa-list',
             "type": "text",
             "key": "cantidad",
-            "title": "cantidad",
+            "title": "Cantidad",
             "placeholder": "Ingrese la cantidad",
             'msg':{
                 'errors':{

@@ -39,6 +39,8 @@ export class ProductAvailable extends BasicConfiguration implements OnInit {
     
     initOptions() {
         this.viewOptions["title"] = 'Productos en Existencia';
+        this.viewOptions["gruopOptions"] = false;
+
     }
     
     initRules() {

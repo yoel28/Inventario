@@ -38,7 +38,9 @@ export class OfficeSupplier extends BasicConfiguration implements OnInit {
 
 
     initOptions() {
-        this.viewOptions["title"] = 'Proveedor Despacho';
+        this.viewOptions["title"] = 'Despacho por Proveedor';
+        this.viewOptions["gruopOptions"] = true;
+        
     }
 
     initRules() {
