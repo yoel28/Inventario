@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, OnInit,ViewChild} from "@angular/core";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
@@ -131,18 +131,13 @@ export class Reports extends RestController implements OnInit {
         let day = moment().format('lll');
         let val;
 
-        this.setEndpoint(this.endPointHis);
 
 
 
 
 
 
-        if(id == 1 )
-        {
-            this.setEndpoint(this.endPointAct);
 
-        }
         switch (id)
         {
             case "1" : //hoy
@@ -180,7 +175,6 @@ export class Reports extends RestController implements OnInit {
     {
         if(event)
             event.preventDefault();
-        this.setEndpoint(this.endPointHis);
         this.assignDate();
     }
 
@@ -200,6 +194,7 @@ export class Reports extends RestController implements OnInit {
 
         }
 
+
         if(this.dateStart.value && this.dateStart.value.toString().length >0 )
             this.assignDate();
 
@@ -211,7 +206,21 @@ export class Reports extends RestController implements OnInit {
             event.preventDefault();
         this.assignDate();
     }
-    
+
+
+    @ViewChild(Tables)
+    tables:Tables;
+    checkEndPoint(flag=true)
+    {
+        if(this.tables && this.tables.endpoint && this.tables.endpoint != this.endpoint)
+        {
+            this.tables.endpoint = this.endpoint;
+            if(flag)
+            this.loadData();
+
+        }
+    }
+
     assignDate(event?){
 
 
@@ -219,6 +228,23 @@ export class Reports extends RestController implements OnInit {
 
         this.where ="";
         let dateWhere=[];
+
+
+
+        if(this.disabledRange ==1)
+        {
+
+            this.setEndpoint(this.endPointAct);
+
+
+        }
+        else
+        {
+            this.setEndpoint(this.endPointHis);
+
+        }
+
+        this.checkEndPoint(false);
 
 
         if(this.disabledRange == -1)
