@@ -32,6 +32,7 @@ import {ProductAudit} from "./productAudit/productAudit";
 import {OfficeSupplier} from "./reports/officeSupplier/officeSupplier";
 import {ProductAccion} from "./reports/productAccion/productAccion";
 import {BuckUpload} from "./BuckUpload/buckUpload";
+import {AccionType} from "./accionType/accionType";
 
 
 @Component({
@@ -69,6 +70,7 @@ import {BuckUpload} from "./BuckUpload/buckUpload";
 
 
   { path: '/type/company',   name: 'TypeCompany', component: TypeCompany },
+  { path: '/accion/type',   name: 'AccionType', component: AccionType },
 
 
 
@@ -331,6 +333,14 @@ export class AppComponent extends RestController implements OnInit{
             'routerLink':'PermissionsAcl',
             'icon':'fa fa-list',
             'title':'ACL'
+
+        });
+
+        this.menuItems.push({
+            'visible':this.myglobal.existsPermission("1"),
+            'routerLink':'AccionType',
+            'icon':'fa fa-list',
+            'title':'Tipo de acciones'
 
         });
 
