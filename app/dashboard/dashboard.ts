@@ -28,16 +28,19 @@ export class Dashboard extends RestController implements OnInit {
     public productListLess :any ={}
     public productListMore :any ={}
     public productLocationList :any ={}
+    public productEnterExitList :any ={}
 
 
     public productRulesLess :any ={}
     public productRulesMore :any ={}
     public productLocationRules :any ={}
+    public productEnterExitRules :any ={}
 
     public paramsTableLess :any={};
     public paramsTableMore :any={};
     public productLocationTables :any={};
-    
+    public productEnterExitTables :any={};
+
     
     public switchFlag =false;
     
@@ -63,6 +66,11 @@ export class Dashboard extends RestController implements OnInit {
 
         this.productLocationTables['endpoint']="/inventario/diario/producto/ubicacion";
         this.productLocationTables['actions']={}
+
+
+
+        this.productEnterExitTables['endpoint']="/inventario/diario/producto/dia";
+        this.productEnterExitTables['actions']={}
 
 
 
@@ -199,6 +207,39 @@ export class Dashboard extends RestController implements OnInit {
                 "placeholder": "cantidad de prodcuto"
             }
         };
+
+
+
+
+        this.productEnterExitRules={
+            'detailProducto':{
+                "visible": true,
+                "search":true,
+                'icon':'fa fa-list',
+                "type": "text",
+                "key": "detailProducto",
+                "title": "Producto",
+                "placeholder": "nombre del producto"
+            },
+            'nombreTipoAccion':{
+                "visible": true,
+                "search":true,
+                'icon':'fa fa-list',
+                "type": "text",
+                "key": "nombreTipoAccion",
+                "title": "Accion",
+                "placeholder": "Accion"
+            },
+            'cantidad':{
+                "visible": true,
+                "search":true,
+                'icon':'fa fa-list',
+                "type": "text",
+                "key": "cantidad",
+                "title": "Cantidad",
+                "placeholder": "columna"
+            }
+        };
     }
 
     saveInstance(chartInstance,index) {
@@ -266,6 +307,7 @@ export class Dashboard extends RestController implements OnInit {
         this.loadData_1("/inventario/diario/producto/maximo",this.productListMore)
         this.loadData_1("/inventario/diario/producto/minimo",this.productListLess)
         this.loadData_1("/inventario/diario/producto/ubicacion",this.productLocationList)
+        this.loadData_1("/inventario/diario/producto/dia",this.productEnterExitList)
     }
 
 

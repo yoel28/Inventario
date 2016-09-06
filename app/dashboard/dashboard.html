@@ -45,6 +45,16 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <label class="panel-heading text-center col-lg-12">Entrada y Salidas Productos del dia</label>
+                            <div class="panel-body">
+                                <div *ngIf="productEnterExitTables.endpoint">
+                                    <tables [dataList]="productEnterExitList" [rules]="productEnterExitRules" [params]="productEnterExitTables"></tables>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!--div class="row">
                     <div *ngIf="dataAreaPlot1.series.length>0" id="chartcontainer1" width='100%' class="padding-bottom col-lg-6">
