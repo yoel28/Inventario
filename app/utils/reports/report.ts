@@ -56,11 +56,14 @@ export class Reports extends RestController implements OnInit {
 
 
 
+    public visualDate ="";
+
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public _formBuilder: FormBuilder) {
 
         super(http, toastr);
 
     }
+
 
 
 
@@ -181,6 +184,27 @@ export class Reports extends RestController implements OnInit {
         this.assignDate();
     }
 
+    changeGroupBy(id)
+    {
+        switch (id)
+        {
+            case 1 :
+                this.day =!this.day;
+                break;
+            case 2 :
+                this.month = ! this.month;
+                break;
+            case 3 :
+                this.year= ! this.year;
+                break;
+
+        }
+
+        if(this.dateStart.value && this.dateStart.value.toString().length >0 )
+            this.assignDate();
+
+    }
+
     fromButton(envet?)
     {
         if(event)
@@ -206,19 +230,26 @@ export class Reports extends RestController implements OnInit {
             dateWhere = [{'op':'ge','field':'fecha','type':'long','value':start[2]+start[1]+start[0]}];
             dateWhere.push({'op':'le','field':'fecha','type':'long','value':end[2]+end[1]+end[0]});
 
+            this.visualDate=start[0]+"-"+start[1]+"-"+start[2]+" al: "+end[0]+"-"+end[1]+"-"+end[2];
         }
 
         else 
         {
             let start = moment(this.dateStart.value.toString()).format('DD-MM-YYYY').split("-");
             dateWhere = [{'op':'ge','field':'fecha','type':'long','value':start[2]+start[1]+start[0]}];
-            
+
+
+            this.visualDate=start[0]+"-"+start[1]+"-"+start[2];
+
             if(this.disabledRange == -2 || this.disabledRange == 1)
                 dateWhere[0].op='eq';
             
             if(this.disabledRange>1)
             {
                 let end = moment(this.dateEnd.value.toString()).format('DD-MM-YYYY').split("-");
+
+                this.visualDate+=" al: "+end[0]+"-"+end[1]+"-"+end[2];
+
                 dateWhere.push({'op':'le','field':'fecha','type':'long','value':end[2]+end[1]+end[0]});
             }   
         }
@@ -232,11 +263,15 @@ export class Reports extends RestController implements OnInit {
         if(this.endpoint != this.endPointAct)
         {
             
-            if(this.disabledRange > 1  || this.disabledRange == -2)
+            if(this.disabledRange > 1  || this.disabledRange <= -1)
             {
-                this.rules['day'].visible=true;
-                this.rules['month'].visible=true;
-                this.rules['year'].visible=true;
+
+                if(!(this.day || this.month || this.year))
+                {
+                    this.rules['day'].visible=true;
+                    this.rules['month'].visible=true;
+                    this.rules['year'].visible=true;
+                }
             }
 
             this.where="&where="+encodeURI(JSON.stringify(dateWhere).split('{').join('[').split('}').join(']'));
@@ -245,6 +280,11 @@ export class Reports extends RestController implements OnInit {
 
 
         if(this.day || this.month || this.year) {
+
+            this.rules['day'].visible=this.day;
+            this.rules['month'].visible=this.month;
+            this.rules['year'].visible=this.year;
+
             this.ext = "[";
             let temp = "";
             temp = (this.day ? '["field":"day"]' : '');
@@ -265,7 +305,7 @@ export class Reports extends RestController implements OnInit {
 
         else {
             this.ext="";
-        }
+           }
 
         this.loadData();
 
