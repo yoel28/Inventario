@@ -33,6 +33,7 @@ import {OfficeSupplier} from "./reports/officeSupplier/officeSupplier";
 import {ProductAccion} from "./reports/productAccion/productAccion";
 import {BuckUpload} from "./BuckUpload/buckUpload";
 import {AccionType} from "./accionType/accionType";
+import {Params} from "./configurations/params/params";
 
 
 @Component({
@@ -71,6 +72,9 @@ import {AccionType} from "./accionType/accionType";
 
   { path: '/type/company',   name: 'TypeCompany', component: TypeCompany },
   { path: '/accion/type',   name: 'AccionType', component: AccionType },
+
+
+  { path: '/configuration/params',   name: 'Params', component: Params },
 
 
 
@@ -309,18 +313,41 @@ export class AppComponent extends RestController implements OnInit{
 
         this.menuItems.push({
             'visible':this.myglobal.existsPermission("1"),
-            'routerLink':'Roles',
             'icon':'fa fa-list',
-            'title':'Roles'
+            'title':'Panel de Configuracion',
+            'key':'menu4',
+            'treeview':[
+                {
+                    'visible':this.myglobal.existsPermission("1"),
+                    'icon':'fa fa-list',
+                    'title':'Parametros',
+                    'routerLink':'Params'
+                },
+                {
+                    'visible':this.myglobal.existsPermission("1"),
+                    'icon':'fa fa-list',
+                    'title':'Roles',
+                    'routerLink':'Roles'
+                },
+                {
+                    'visible':this.myglobal.existsPermission("1"),
+                    'icon':'fa fa-list',
+                    'title':'ACL',
+                    'routerLink':'PermissionsAcl'
+                },
+                {
+                    'visible':this.myglobal.existsPermission("1"),
+                    'icon':'fa fa-list',
+                    'title':'Permisos',
+                    'routerLink':'Permissions'
+                }
+
+            ]
 
         });
-        this.menuItems.push({
-            'visible':this.myglobal.existsPermission("1"),
-            'routerLink':'Permissions',
-            'icon':'fa fa-list',
-            'title':'Permisos'
 
-        });
+
+
         this.menuItems.push({
             'visible':this.myglobal.existsPermission("1"),
             'routerLink':'User',
@@ -328,13 +355,7 @@ export class AppComponent extends RestController implements OnInit{
             'title':'Usuarios'
 
         });
-        this.menuItems.push({
-            'visible':this.myglobal.existsPermission("1"),
-            'routerLink':'PermissionsAcl',
-            'icon':'fa fa-list',
-            'title':'ACL'
 
-        });
 
         this.menuItems.push({
             'visible':this.myglobal.existsPermission("1"),
@@ -344,7 +365,8 @@ export class AppComponent extends RestController implements OnInit{
 
         });
 
-        
+
+
 
 
     }
