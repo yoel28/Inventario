@@ -36,6 +36,7 @@
                                         <form action="#" class="form-horizontal ng-pristine ng-valid">
 
 
+
                                             <div class="col-lg-12">
 
                                                 <div class=" form-group col-lg-5">
@@ -128,6 +129,10 @@
                                                             <div class="col-lg-12">
                                                                 <h3 class="text-center text-bold">Validaci&oacute;n</h3>
                                                             </div>
+                                                            <a class="btn" >
+                                                                <span class="fa fa-print"></span>
+                                                                &nbsp;Imprimir
+                                                            </a>
                                                             <div class="col-lg-12">
                                                                 <label class="col-lg-4">{{currentDay}}</label>
                                                                 <label class="col-lg-4">{{myglobal.user.name}}</label>
@@ -164,6 +169,10 @@
                                     <div *ngSwitchWhen="3"  >
                                         <form action="#" class="form-horizontal ng-pristine ng-valid">
                                             <div class="form-group">
+
+
+
+
 
                                                 <div class="row col-lg-12" *ngIf="listResult.length > 0">
 
@@ -207,6 +216,87 @@
 
                                                     </div>
                                                 </div>
+
+                                                <div class=" row box ">
+                                                    <div class="col-lg-12">
+                                                        <div class="row">
+                                                            <div class="col-lg-2">
+                                                                <img src="/img/logo.png">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <h1 class="text-bold text-center" style="font-size: 20px; margin-bottom: 30px;">Acta de Entrega</h1>
+                                                        </div>
+                                                        <div class="row" style="margin-bottom: 30px;">
+                                                            <div class="col-lg-6">
+                                                                <label>Date :12/12/12</label>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <label class="col-lg-12">Invoice No. JYUI879798798</label>
+                                                                <label class="col-lg-12">Orden de Compra</label>
+                                                            </div>
+
+                                                        </div>
+
+
+                                                        <div class="row" style="margin-bottom: 30px">
+                                                            <div class="col-lg-6">
+                                                                <label class="col-lg-12" style="outline: 1px solid;"><strong class="text-bold">Cliente</strong></label>
+                                                                <label class="col-lg-12" >Hotel Cubita</label>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <label class="col-lg-12" style="outline: 1px solid;"><strong class="text-bold">Vendedor</strong></label>
+
+
+
+                                                                <label class="col-lg-12">Grupo: als;dka;</label>
+                                                                <label class="col-lg-12">Ruc:alksdjaskl</label>
+                                                                <label class="col-lg-12">Bella vista</label>
+                                                                <label class="col-lg-12">Conctac: asldkjakldsj</label>
+
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="row" style="margin-bottom: 30px">
+                                                            <table class="col-lg-12"  border="1" style=" border: 1px solid;">
+                                                                <thead >
+                                                                <tr style=" border: 1px solid;">
+                                                                    <th style=" border: 1px solid;" class="col-lg-1">Cantidad</th><th class="text-center" style=" border: 1px solid;">Descripcion</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <tr style=" border: 1px solid;">
+                                                                    <td class="col-lg-1" style=" border: 1px solid;">aadssad</td><td class="col-lg-11" style=" border: 1px solid;">asdadsads</td>
+                                                                </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+
+                                                        <div class="row" style="margin-bottom: 30px">
+                                                            <div class="col-lg-6">
+                                                                <label class="col-lg-12" >RECIVIDO POR:</label>
+                                                                <label class="col-lg-12" >NOMBRE:    _____________________</label>
+                                                                <label class="col-lg-12" >FECHA:     _____________________</label>
+                                                                <label class="col-lg-12" >FIRMA:     _____________________</label>
+                                                                <label class="col-lg-12" >CEDULA:    _____________________</label>
+                                                            </div>
+                                                            <div class="col-lg-6">
+                                                                <label class="col-lg-12" >ENTREGADO POR:</label>
+                                                                <label class="col-lg-12" >NOMBRE:    _____________________</label>
+                                                                <label class="col-lg-12" >FECHA:     _____________________</label>
+                                                                <label class="col-lg-12" >FIRMA:     _____________________</label>
+                                                                <label class="col-lg-12" >CEDULA:    _____________________</label>
+
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+
+                                                </div>
+
+
                                             </div>
                                         </form>
                                     </div>
@@ -214,11 +304,11 @@
                                 </div>
 
                                 <div class="action text-right">
-                                    <button *ngIf="positionForm!=2"  [disabled]="positionForm==1"        (click)="inc(2)" type="button" name="previous" value="Anterior" class="btn btn-info button-previous"><i class="fa fa-arrow-circle-o-left mrx"></i>{{positionForm!=4?'Anterior':'Nueva carga'}}</button>
-                                    <button *ngIf="positionForm==2"  data-toggle="modal" [attr.data-target]="'#IdWarning'"  [disabled]="positionForm==1"   type="button" name="previous" value="Anterior" class="btn btn-info button-previous"><i class="fa fa-arrow-circle-o-left mrx"></i>{{positionForm!=4?'Anterior':'Nueva carga'}}</button>
+                                    <button *ngIf="positionForm!=2"  [disabled]="positionForm==1"        (click)="inc(2)" type="button" name="previous" value="Anterior" class="btn btn-info button-previous"><i class="fa fa-arrow-circle-o-left mrx"></i>{{positionForm !=3?'Anterior':'Nueva Carga'}}</button>
+                                    <button *ngIf="positionForm==2"  data-toggle="modal" [attr.data-target]="'#IdWarning'"  [disabled]="positionForm==1"   type="button" name="previous" value="Anterior" class="btn btn-info button-previous"><i class="fa fa-arrow-circle-o-left mrx"></i>Anterior</button>
 
                                     <button [class.hidden]="positionForm >= 2"  (click)="inc(1)" type="button"  name="next" value="Siguiente" class="btn btn-info button-next mlm">Siguiente<i class="fa fa-arrow-circle-o-right mlx"></i></button>
-                                    <button [class.hidden]="positionForm != 2"  (click)="saveResult($event)"   type="button" name="next" value="Guardar" class="btn btn-success button-next mlm">Guardar <i class="fa fa-save"></i></button>
+                                    <button [class.hidden]="positionForm != 2"   data-toggle="modal" data-target='#modalAcept' type="button" name="next" value="Guardar" class="btn btn-success button-next mlm">Guardar <i class="fa fa-save"></i></button>
                                 </div>
 
                             </div>
@@ -258,4 +348,45 @@
 
 
 
+
+
+<div  class="modal fade" id="modalAcept" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+
+            <div class="modal-header btn-warning text-center">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span>
+
+                </button>
+                <h3>¿Esta seguro de proceder?</h3>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+
+                    <div class="col-lg-10 col-lg-offset-1">
+                        <label>Si acepta estas acciones no podran ser desechas</label>
+                    </div>
+
+                </div>
+
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outlined btn-warning fa fa-close" data-dismiss="modal">&nbsp;Cancelar</button>
+                <button (click)="saveResult($event)" data-dismiss="modal" type="button"
+                        class="btn btn-warning fa fa-check-circle-o ">&nbsp;Aceptart
+                </button>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
 
