@@ -216,7 +216,12 @@ export class Reports extends RestController implements OnInit {
         {
             this.tables.endpoint = this.endpoint;
             if(flag)
-            this.loadData();
+            {
+                this.tables.sort="";
+                this.tables.order="";
+                this.loadData();
+
+            }
 
         }
     }
