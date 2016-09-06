@@ -74,7 +74,7 @@
                             <<
                         </button>
 
-                        <button *ngFor="let val of dataList.page" (click)="loadData(val)" type="button" class="btn btn-default">
+                        <button *ngFor="let val of dataList.page" (click)="loadData(val)" type="button" class="btn btn-default" [class.btn-info]="offset == (val - 1) * max">
                             {{val}}
                         </button>
 
