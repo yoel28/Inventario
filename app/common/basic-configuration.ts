@@ -47,7 +47,7 @@ export abstract class  BasicConfiguration extends RestController{
             "search":true,
             "type": "textarea",
             "key": "detail",
-            "title": "detalle",
+            "title": "Detalle",
             "placeholder": "ingrese el detalle",
             'msg':{
                 'errors':{

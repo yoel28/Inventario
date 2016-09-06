@@ -23,7 +23,7 @@
                     <div  *ngIf="data.detailsSearh && data.detailsSearh['id']" class="panel panel-default">
                         <div class="panel-body">
 
-                            <div *ngIf="rulesDetalis.image" class="col-lg-3 col-centered">
+                            <div *ngIf="rulesDetails.image" class="col-lg-3 col-centered">
                                 <figure>
                                     <img class="img-circle"  src="{{data.detailsSearh[image] || '/img/user.png' }}">
                                 </figure>
@@ -31,7 +31,23 @@
 
                             <div  class="col-lg-4 col-centered">
 
-                                <label *ngFor="let key of getKeys(data)" class="col-centered col-lg-12"><strong class="text-bold">{{rulesDetalis[key].title}}:</strong> <label>{{data.detailsSearh[key]}}</label></label>
+                                <label *ngFor="let key of getKeysText(data)" class="col-centered col-lg-12"><strong class="text-bold">{{rulesDetails[key].title}}:</strong>
+                                    <a  x-editable  [disabled]="!rulesDetails[key].update "  [endpoint]="externalEndPoint" [function]="onEditable" [data]="data.detailsSearh" [rules]="rulesDetails" [field]="key"></a>
+
+
+                                    <!--label>{{data.detailsSearh[key]}}</label-->
+                                </label>
+
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="col-lg-12">
+
+                                    <button *ngFor="let keyArray of getKeysArray(data)" data-toggle="modal"  data-target='#modalArray'
+                                             class="btn " type="button" (click)="DataArraySelect(keyArray,data)">
+                                        {{rulesDetails[keyArray].buttonTitle}}
+                                    </button>
+
+                                </div>
 
                             </div>
 
@@ -75,4 +91,69 @@
             </tr>
         </tbody>
     </table>
+</div>
+
+
+
+<div *ngIf="dataArraySelect && dataArraySelect.key" class="modal fade" [attr.id]="'modalArray'" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+
+            <div class="modal-header btn-info text-center">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="listasTipoModal">
+                    &nbsp;<strong>{{rulesDetails[dataArraySelect.key].title}}</strong></h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+
+                    <div class="col-lg-10 col-lg-offset-1">
+                        <table class="table table-hover">
+                            <tbody>
+
+                            <tr *ngFor="let data of externalList[dataArraySelect.key].list" >
+                                <td >
+                                    <strong >{{data.title}}</strong><br >
+                                    {{data.detail}}
+                                </td>
+                                <td  style="vertical-align: middle;">
+
+                                    <a (click)="data.flag=!data.flag">
+                                        <button *ngIf="data.flag"  class="btn btn-success"  type="button">
+                                            <i class="fa fa-check"></i>
+                                        </button>
+                                        <button *ngIf="!data.flag" class="btn btn-red"  type="button">
+                                            <i class="fa fa-close"></i>
+                                        </button>
+                                    </a>
+
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+
+
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outlined btn-info fa fa-close" data-dismiss="modal">&nbsp;Cancelar</button>
+                <button (click)="changeArray()" data-dismiss="modal" type="button"
+                        class="btn btn-info fa fa-check-circle-o ">&nbsp;Aceptart
+                </button>
+            </div>
+
+
+
+        </div>
+    </div>
 </div>

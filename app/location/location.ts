@@ -170,6 +170,7 @@ export class Location_product extends BasicConfiguration implements OnInit {
             'message': 'Esta seguro de eliminar la ubicacion con el codigo',
             'keyAction':'code'
         };
+        
         this.paramsTable.actions.print = {
             "icon": "fa fa-print",
             "exp": "",
@@ -177,6 +178,7 @@ export class Location_product extends BasicConfiguration implements OnInit {
             'permission': '1',
             'element':''
         };
+
 
     }
 

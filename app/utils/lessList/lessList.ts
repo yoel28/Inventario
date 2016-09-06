@@ -4,13 +4,15 @@ import {RestController} from "../../common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
+import {Xeditable} from "../../common/xeditable";
 
 
 @Component({
     selector: 'less-list',
     templateUrl: 'app/utils/lessList/index.html',
     styleUrls: ['app/utils/lessList/style.css'],
-    inputs: ['paramSearch', 'externalEndPoint', 'rulesDetalis']
+    inputs: ['paramSearch', 'externalEndPoint', 'rulesDetails','externalList'],
+    directives:[Xeditable]
 })
 
 
@@ -21,9 +23,13 @@ export class LessList extends RestController implements OnInit {
     public rules:any = {};
     public paramSearch:any = {};
     public externalEndPoint = "";
-    public rulesDetalis:any = {};
+    public rulesDetails:any = {};
     public dataList:any ={}
 
+
+    public externalList:any={};
+    public dataArraySelect :any={};
+    
 
     constructor(public _formBuilder:FormBuilder, public http:Http, public toastr:ToastsManager, public myglobal:globalService) {
         super(http, toastr);
@@ -45,8 +51,11 @@ export class LessList extends RestController implements OnInit {
             }
         }
         
-        if(! data.detailsSearh['id'])
+        if(! data.detailsSearh['id'] || !data.detailsSearh['flag'])
         {
+            if(!data.detailsSearh['flag'])
+                delete data.detailsSearh['flag']
+
             let that = this;
             let successCallback = response => {
                 Object.assign(data.detailsSearh, response.json());
@@ -57,12 +66,23 @@ export class LessList extends RestController implements OnInit {
         
     }
 
-    getKeys(item) {
+    getKeysText(item) {
         let data = [];
         let that = this;
-        Object.keys(that.rulesDetalis).forEach((key)=> {
-            if(item.detailsSearh[key] && key != 'image')
+        Object.keys(that.rulesDetails).forEach((key)=> {
+            if(item.detailsSearh[key] && key != 'image' && that.rulesDetails[key].type !='array')
             data.push(key)
+        });
+        return data;
+    }
+
+
+    getKeysArray(item) {
+        let data = [];
+        let that = this;
+        Object.keys(that.rulesDetails).forEach((key)=> {
+            if(that.rulesDetails[key].type =='array')
+                data.push(key)
         });
         return data;
     }
@@ -71,6 +91,51 @@ export class LessList extends RestController implements OnInit {
     MaxPager()
     {
         return Math.ceil(this.dataList.count/this.max);
+    }
+
+
+    DataArraySelect(key,data)
+    {
+        this.dataArraySelect.key=key;
+        this.dataArraySelect.data=data;
+
+
+
+        this.externalList[this.dataArraySelect.key].list.forEach(datakey=>{
+
+            if(data.detailsSearh[key].indexOf(datakey.id)!= -1)
+                datakey.flag=true
+            else
+                datakey.flag=false
+
+        });
+
+
+
+    }
+
+    changeArray()
+    {
+        let arraytemp =[];
+        this.externalList[this.dataArraySelect.key].list.forEach(key=>
+        {
+            if(key.flag)
+                arraytemp.push(key.id)
+
+        });
+
+        //this.dataArraySelect.data.detailsSearh[this.dataArraySelect.key]=arraytemp;
+
+        
+        let that = this;
+
+        this.dataArraySelect.data.flag ='true';
+
+        if(this.dataArraySelect.key!='roles')
+            this.onEditable(this.dataArraySelect.key,this.dataArraySelect.data.detailsSearh,arraytemp,this.externalEndPoint);
+        else
+            this.onEditableRole("roles",this.dataArraySelect.data.detailsSearh,arraytemp,this.externalEndPoint+this.dataArraySelect.data.id+"/roles")
+
     }
     
 }

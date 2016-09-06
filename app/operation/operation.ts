@@ -8,6 +8,8 @@ import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {SMDropdown} from "../common/xeditable";
 
 
+declare var moment:any;
+
 @Component({
     selector: 'operation',
     templateUrl: 'app/operation/index.html',
@@ -50,15 +52,26 @@ export class Operation extends RestController implements OnInit {
     public producto:Control;
     public ubicacion:Control;
 
+    //vecrtor de producto/cantidad
+    public listAccionArray :any={}
+
 
     //cuarto formulario
     public listResult:any={}
     
+    //elementos graficos
+    public currentDay=""
+    public totalProduct=0
+    private lastItem=1;
+
 
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService, public formBuilder:FormBuilder) {
 
         super(http, toastr);
         this.setEndpoint('/search/tipo/acciones')
+
+        this.currentDay = moment().format('DD-MM-YYYY');
+
     }
 
 
@@ -92,6 +105,19 @@ export class Operation extends RestController implements OnInit {
                         this.toastr.error("por favor selccione una accion y un cliente valido");
                         flag =false;
                     }
+                else {
+                        
+                        let that = this;
+                        this.listClient.list.find(o=>{
+
+                            if(o.id==that.user.value)
+                            {
+                                that.user.updateValue(o);
+                                return;
+                            }
+
+                        });
+                    }
 
                 break;
             case 2:
@@ -104,7 +130,7 @@ export class Operation extends RestController implements OnInit {
 
                 break;
 
-            case 4:
+            case 3:
                     if(position != 0 && position != 1)
                     {
                         this.toastr.warning("debe realizar una lista de acciones nueva");
@@ -120,7 +146,7 @@ export class Operation extends RestController implements OnInit {
 
         if(flag)
         {
-            if(data && this.positionForm!=4)
+            if(data && this.positionForm!=3)
                 this.positionForm=data==1?(this.positionForm+1):(this.positionForm-1);
             else if(data)
                 this.onDelete();
@@ -142,13 +168,15 @@ export class Operation extends RestController implements OnInit {
         }
         else{
 
+            
+            
         let successCallback= response => {
 
 
             if(response.status==200){
 
                 if(that.lastLocaltion && that.lastLocaltion.id)
-                    that.listAccion.push({"Producto":{"code":response.json().code,"id":response.json().id},"Ubicacion":that.lastLocaltion,"Accion":that.accionList,"Status":true,"Validate":true,"Mensaje":""});
+                    that.listAccion.push({"item":this.lastItem++,"Producto":{"code":response.json().code,"id":response.json().id,"name":response.json().detail},"Ubicacion":{'name':that.lastLocaltion.name,'id':that.lastLocaltion.id},"Accion":that.accionList,"Status":true,"Validate":true,"msj":"Codigo del producto: "+response.json().code});
                 else
                     that.toastr.error("por favor ingrese una ubicacion primero");
 
@@ -163,7 +191,7 @@ export class Operation extends RestController implements OnInit {
             }
             else if(response.status==204){
   
-                that.listAccion.push({"Producto":{"code":that.producto.value},"Ubicacion":"","Accion":that.accionList,"Status":false,"Validate":false,"Mensaje":"El codigo ingresado no fue encontrado"});
+                that.listAccion.push({"item":this.lastItem++,"Producto":{"code":that.producto.value},"Ubicacion":"","Accion":that.accionList,"Status":false,"Validate":false,"msj":"El codigo no fue encontrado"});
                 
             }
 
@@ -247,6 +275,34 @@ export class Operation extends RestController implements OnInit {
         return listAccionArray
     }
 
+    getValidateListWithCount() {
+
+        this.listAccionArray={};
+        this.totalProduct=0;
+        let item =0
+        for(var acctions of this.listAccion)
+        {
+
+
+            if(acctions.Status && acctions.Validate)
+            {
+                this.totalProduct++;
+
+                if(this.listAccionArray[acctions.Producto.code])
+                    this.listAccionArray[acctions.Producto.code].cantidad++;
+                else
+                {
+                    item++;
+                    this.listAccionArray[acctions.Producto.code]={'item':item,'Producto':acctions.Producto,'cantidad':1}
+                }
+            }
+        }
+
+
+
+        return Object.keys(this.listAccionArray);
+    }
+
     //deseleccionar
     unSelect(data) {
         data.Validate =!data.Validate;
@@ -255,29 +311,44 @@ export class Operation extends RestController implements OnInit {
 
     saveResult(event) {
         event.preventDefault();
-        let that=this
+
+        if(this.getValidateList().length == 0 )
+        {
+            this.toastr.warning("la lista de acciones valida es nula");
+        }
+        else {
 
 
-        let arraySaveTemp =[];
+            let that=this
 
 
-            let objectPost ={"cliente":that.user.value,"tipoAccion":that.tipoAccion.value,"acciones":[]};
+            let arraySaveTemp =[];
+
+
+            let objectPost ={"cliente":that.user.value.id,"tipoAccion":that.tipoAccion.value,"acciones":[]};
 
             for(var a of that.listAccion)
             {
                 if(a.Validate)
-                    objectPost.acciones.push({"producto":{"id":a.Producto.id,"codigo":a.Producto.code},"ubicacion":{"id":a.Ubicacion.id,"title":a.Ubicacion.name}});
+                    objectPost.acciones.push({"producto":{"id":a.Producto.id,"codigo":a.Producto.code,'name':a.Producto.name},"ubicacion":{"id":a.Ubicacion.id,"title":a.Ubicacion.name}});
             }
 
             let successCallback= response => {
 
                 that.listAccion=[];
                 that.listResult=response.json();
-                that.positionForm=4;
-                that.toastr.success("Las acciones han sido guardadas");
+                that.positionForm=3;
+                if(response.status ==200)
+                    that.toastr.success("Las acciones han sido guardadas");
+                else if(response.status ==422)
+                    that.toastr.warning("Algunas acciones han sido guardadas, pero hubo errores");
+
 
             }
-            this.httputils.doPost('/acciones/',JSON.stringify(objectPost),successCallback, this.error);
+            this.httputils.doPost('/acciones/',JSON.stringify(objectPost),successCallback, successCallback);
+
+        }
+
 
     }
 

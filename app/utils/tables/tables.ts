@@ -14,15 +14,16 @@ import {Save} from "../save/save";
     selector: 'tables',
     templateUrl: 'app/utils/tables/index.html',
     styleUrls: ['app/utils/tables/style.css'],
-    inputs:['params','rules','rulesSearch','dataList','externalSave','rulesFilter'],
+    inputs:['params','rules','externalList','rulesSearch','dataList','externalSave','rulesFilter'],
     directives:[Xeditable,Search,Filter,Save]
 })
 
 
 export class Tables extends RestController implements OnInit {
-
+    
 
     public params:any={};
+    public externalList:any={};
     public rules:any={};
     public rulesSearch:any={};
     public searchId:any={};
@@ -32,6 +33,10 @@ export class Tables extends RestController implements OnInit {
     public dataDelete:any={};
     public dataSelect:any={};
     public  externalSave:any={};
+
+    public dataArraySelect :any={};
+
+
 
     public dataSave :any={};
 
@@ -209,6 +214,80 @@ export class Tables extends RestController implements OnInit {
     }
 
 
+    DataArraySelect(key,data)
+    {
+        this.dataArraySelect.key=key;
+        this.dataArraySelect.data=data;
 
+
+
+        this.externalList[this.dataArraySelect.key].list.forEach(datakey=>{
+
+            if(data[key].indexOf(datakey.id)!= -1)
+                datakey.flag=true
+            else
+                datakey.flag=false
+
+        });
+
+
+
+    }
+
+
+    changeArray()
+    {
+        let arraytemp =[];
+        this.externalList[this.dataArraySelect.key].list.forEach(key=>
+        {
+            if(key.flag)
+                arraytemp.push(key.id)
+
+        });
+
+        //this.dataArraySelect.data[this.dataArraySelect.key]=arraytemp;
+
+        
+        let that = this;
+        let successCallback= response => {
+
+            this.toastr.success("Modifcacion hecha");
+
+        }
+        this.onEditable(this.dataArraySelect.key,this.dataArraySelect.data[this.dataArraySelect.key],arraytemp,this.endpoint);
+
+//        this.httputils.doPut(this.endpoint+this.dataArraySelect.data.id,JSON.stringify(this.dataArraySelect.data),successCallback,this.error);
+
+    }
+    
+    
+        public doubleRules :any={}
+        public doubleParams :any={}
+        public doubleRulesSearch :any={}
+        doubleTable()
+        {
+            this.doubleRules = Object.create(this.rules);
+            this.doubleParams = Object.create(this.params);
+            this.doubleRulesSearch = Object.create(this.rulesSearch);
+
+        }
+
+
+
+
+    //order by column
+    orderByColumn(key)
+    {
+     if(key == this.sort)
+         {
+             this.order = this.order =="asc"?"desc":"asc";
+         }
+     else 
+         {
+            this.sort = key;
+            this.order="desc";
+         }
+        this.loadData();
+    }
 
 }

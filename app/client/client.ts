@@ -7,29 +7,31 @@ import {Tables} from "../utils/tables/tables";
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {Save} from "../utils/save/save";
 import {BasicConfiguration} from "../common/basic-configuration";
+import {TypeCompany} from "../typeCompany/typeCompany";
 
 @Component({
     selector: 'client',
-    templateUrl: 'app/typeProduct/index.html',
-    styleUrls: ['app/typeProduct/style.css'],
+    templateUrl: 'app/client/index.html',
+    styleUrls: ['app/client/style.css'],
     directives: [Tables,Save],
     pipes: [TranslatePipe],
-    providers: [TranslateService]
+    providers: [TranslateService,TypeCompany]
 })
 @Injectable()
 export class Client extends BasicConfiguration implements OnInit {
 
 
-    public ruleObject: any = {};
     public paramsTable:any={};
-    public paramsSearch:any = {};
-    public paramsSave :any ={};
-    public rulesSave :any={};
+    public externalList:any={};
 
 
-    constructor(public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
+
+
+    constructor(public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService, public typeCompany:TypeCompany) {
         super("CI","/clientes/",http, toastr,myglobal,translate);
 
+
+        this.typeCompany.externalRules();
     }
 
 
@@ -99,6 +101,15 @@ export class Client extends BasicConfiguration implements OnInit {
                 },
             }
         };
+
+
+        
+        tempRules["companyTypes"] = this.typeCompany.ruleObject;
+        tempRules["companyTypes"].visible =true;
+        tempRules["companyTypes"].type="array";
+        tempRules["companyTypes"].buttonTitle="Mostrar tipos";
+
+
         
 
         Object.assign(this.rules,tempRules,this.rules);
@@ -152,13 +163,27 @@ export class Client extends BasicConfiguration implements OnInit {
 
 
     ngOnInit() {
-        
+        this.loadData();
         this.initRules();
         this.initParamsTable();
         this.initSaveRules();
         this.initOptions();
         this.initSearch();
-        this.loadData();
+
+
+
+        let that = this;
+        let successCallback= response => {
+            let key =that.typeCompany.ruleObject.key;
+            that.externalList[key]={};
+            that.externalList[key] = response.json();
+            if(that.tables)
+                that.tables.externalList=that.externalList;
+
+        }
+        this.httputils.doGet("/search"+this.typeCompany.endpoint,successCallback,this.error);
+
+
     }
 
     externalRules(){
