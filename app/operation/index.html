@@ -177,7 +177,7 @@
                                                    <div id="finalPrint" class=" row box " >
                                                         <div [attr.class]="onPrintCss(12)">
                                                             <div class="row">
-                                                                <div [attr.class]="onPrintCss(2)">
+                                                                <div [attr.class]="onPrintCss(5)">
                                                                     <img src="/img/logo.png">
                                                                 </div>
                                                             </div>
@@ -201,21 +201,21 @@
                                                                 <table [attr.class]="onPrintCss(12)">
                                                                     <thead>
                                                                     <tr>
-                                                                        <td [attr.class]="onPrintCss(5)" style="border: 1px solid;">{{this.tipoAccion.value==1?'Cliente':'Proveedor'}}</td><td [attr.class]="onPrintCss(2)"></td><td [attr.class]="onPrintCss(5)" style="border: 1px solid;">Vendedor</td>
+                                                                        <td [attr.class]="onPrintCss(5)" style="border: 1px solid;">{{tipoAccion.value==1?'Cliente':'Proveedor'}}</td><td [attr.class]="onPrintCss(2)"></td><td [attr.class]="onPrintCss(5)" style="border: 1px solid;">Vendedor</td>
                                                                     </tr>
                                                                     </thead>
                                                                     <tbody class="borderclass">
                                                                     <tr>
-                                                                        <td>{{elementPrint[0].name}}</td><td></td><td>{{elementPrint[1].name}}</td>
+                                                                        <td [attr.class]="onPrintCss(5)">{{elementPrint[0].name}}</td><td></td><td [attr.class]="onPrintCss(5)">{{elementPrint[1].name}}</td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td>{{elementPrint[0].ruc}}</td><td></td><td>{{elementPrint[1].ruc}}</td>
+                                                                        <td [attr.class]="onPrintCss(5)">{{elementPrint[0].ruc}}</td><td></td><td [attr.class]="onPrintCss(5)">{{elementPrint[1].ruc}}</td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td>{{elementPrint[0].direc}}</td><td></td><td>{{elementPrint[1].direc}}</td>
+                                                                        <td [attr.class]="onPrintCss(5)">{{elementPrint[0].direc}}</td><td></td><td [attr.class]="onPrintCss(5)">{{elementPrint[1].direc}}</td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td>{{elementPrint[0].contac}}</td><td></td><td>{{elementPrint[1].contac}}</td>
+                                                                        <td [attr.class]="onPrintCss(5)">{{elementPrint[0].contac}}</td><td></td><td [attr.class]="onPrintCss(5)">{{elementPrint[1].contac}}</td>
                                                                     </tr>
 
                                                                     <tr >
