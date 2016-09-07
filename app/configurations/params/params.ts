@@ -44,7 +44,7 @@ export class Params extends BasicConfiguration implements OnInit {
             "type": "text",
             "key": "key",
             "title": "Titulo",
-            "placeholder": "ingrese el key",
+            "placeholder": "ingrese la clave",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio'
@@ -61,7 +61,7 @@ export class Params extends BasicConfiguration implements OnInit {
             "type": "text",
             "key": "value",
             "title": "Valor",
-            "placeholder": "ingrese el key",
+            "placeholder": "ingrese el valor",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio'
@@ -71,6 +71,22 @@ export class Params extends BasicConfiguration implements OnInit {
 
         this.rules['detail'] = tempRules['detail'];
 
+        this.rules["type"] = {
+            "update": this.permissions["update"],
+            "visible": true,
+            'required':true,
+            "search":true,
+            'icon':'fa fa-list',
+            "type": "text",
+            "key": "type",
+            "title": "Tipo",
+            "placeholder": "ingrese el tipo",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio'
+                },
+            }
+        };
 
 
 
@@ -121,6 +137,13 @@ export class Params extends BasicConfiguration implements OnInit {
                 'title': this.rules['detail'].title,
                 'placeholder': this.rules['detail'].placeholder,
                 'msg':this.rules['detail'].msg
+            },
+            'type': {
+                'type': this.rules['type'].type,
+                'required':true,
+                'title': this.rules['type'].title,
+                'placeholder': this.rules['type'].placeholder,
+                'msg':this.rules['type'].msg
             }
         };
 
