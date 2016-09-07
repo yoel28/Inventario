@@ -64,6 +64,15 @@ export class Operation extends RestController implements OnInit {
     public totalProduct=0
     private lastItem=1;
 
+    //para imprimir cliente
+    public elementPrint =[];
+    public lote ="";
+    public RUC ="";
+    public CONTACTO="";
+    public DIRECCION="";
+
+
+
 
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService, public formBuilder:FormBuilder) {
 
@@ -261,6 +270,10 @@ export class Operation extends RestController implements OnInit {
         this.initForm();
         this.initSearchTypeActions();
         this.initSearchClients();
+
+        this.RUC =this.myglobal.getParams('RUC')
+        this.CONTACTO =this.myglobal.getParams('CONTACTO')
+        this.DIRECCION =this.myglobal.getParams('DIRECCION')
     }
 
     //tercer formulario
@@ -309,6 +322,51 @@ export class Operation extends RestController implements OnInit {
     }
 
 
+
+    printReport()
+    {
+
+        let arraySuccess  =[]
+
+        this.listResult.forEach((result)=>
+            {
+                if(result.status !="FAILED")
+                {
+                    result.casillero.forEach((casillero)=>
+                    {
+
+                        casillero.acciones.forEach((accion)=>
+                        {
+
+                            let index =  arraySuccess.length>0? arraySuccess.findIndex((a)=>
+                            {
+                                if(a.title== accion.name)
+                                {
+                                    return true;
+                                }
+                            } ):-1;
+
+
+                            if(index != -1)
+                            {
+                                arraySuccess[index].count +=accion.count;
+
+                            }
+                            else
+                                arraySuccess.push({"title":accion.name,"count":accion.count})
+
+
+                        });
+
+
+
+
+                    });
+                }
+            })
+        return arraySuccess;
+    }
+
     saveResult(event) {
         event.preventDefault();
 
@@ -335,8 +393,33 @@ export class Operation extends RestController implements OnInit {
 
             let successCallback= response => {
 
+
+
+                that.elementPrint =[];
+
+              
+
+                that.elementPrint.push({"name":that.user.value.title,"direc":'','contac':'','ruc':''});
+                that.elementPrint.push({"name":that.myglobal.user.name,"direc":'Direccion: '+that.DIRECCION,'contac':'Contacto: '+that.CONTACTO,'ruc':'Ruc: '+that.RUC});
+                
+          
                 that.listAccion=[];
                 that.listResult=response.json();
+
+                let objLote :any={}
+                    that.listResult.find((result)=>
+                {
+                    if(result.status =='CREATED')
+                    {
+                        objLote= result;
+                        return;
+                    }
+
+
+                });
+                
+                that.lote = objLote.lote;
+                
                 that.positionForm=3;
                 if(response.status ==200)
                     that.toastr.success("Las acciones han sido guardadas");
@@ -355,7 +438,23 @@ export class Operation extends RestController implements OnInit {
 
 
 
-    
+
+    onPrint(id){
+        var printContents = document.getElementById(id).innerHTML;
+        var popupWin = window.open('', '_blank');
+        popupWin.document.open();
+        popupWin.document.write('<body onload="window.print()">' + printContents + '</body>');
+        popupWin.document.head.innerHTML = (document.head.innerHTML);
+        popupWin.document.close();
+
+
+    }
+
+
+    onPrintCss(lg, md=-1, xs=-1, sm=-1){
+
+        return "col-lg-"+lg+" col-md-"+(md!=-1?md:lg)+" col-xs-"+(xs!=-1?xs:lg)+" col-sm-"+(sm!=-1?sm:lg);
+    }
 
 
 }

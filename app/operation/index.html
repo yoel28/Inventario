@@ -36,7 +36,6 @@
                                         <form action="#" class="form-horizontal ng-pristine ng-valid">
 
 
-
                                             <div class="col-lg-12">
 
                                                 <div class=" form-group col-lg-5">
@@ -129,10 +128,7 @@
                                                             <div class="col-lg-12">
                                                                 <h3 class="text-center text-bold">Validaci&oacute;n</h3>
                                                             </div>
-                                                            <a class="btn" >
-                                                                <span class="fa fa-print"></span>
-                                                                &nbsp;Imprimir
-                                                            </a>
+
                                                             <div class="col-lg-12">
                                                                 <label class="col-lg-4">{{currentDay}}</label>
                                                                 <label class="col-lg-4">{{myglobal.user.name}}</label>
@@ -168,9 +164,106 @@
 
                                     <div *ngSwitchWhen="3"  >
                                         <form action="#" class="form-horizontal ng-pristine ng-valid">
+                                            <a class="btn"  style="margin-bottom: 30px;"  (click)="onPrint('finalPrint')">
+                                                <span class="fa fa-print"></span>
+                                                &nbsp;Imprimir resultado
+                                            </a>
                                             <div class="form-group">
 
 
+
+
+                                                <div style="display: none;">
+                                                   <div id="finalPrint" class=" row box " >
+                                                        <div [attr.class]="onPrintCss(12)">
+                                                            <div class="row">
+                                                                <div [attr.class]="onPrintCss(2)">
+                                                                    <img src="/img/logo.png">
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <h1 class="text-bold text-center" style="font-size: 20px; margin-bottom: 30px;">Acta de Entrega</h1>
+                                                            </div>
+                                                            <div class="row" style="margin-bottom: 30px;">
+                                                                <div [attr.class]="onPrintCss(6)">
+                                                                    <label>Date :  {{currentDay}}</label>
+                                                                </div>
+                                                                <div [attr.class]="onPrintCss(6)">
+                                                                    <label [attr.class]="onPrintCss(12)">Invoice No. {{lote}}</label>
+                                                                    <label [attr.class]="onPrintCss(12)">Orden de Compra</label>
+                                                                </div>
+
+                                                            </div>
+
+
+                                                            <div class="row" style="margin-bottom: 30px">
+
+                                                                <table [attr.class]="onPrintCss(12)">
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <td [attr.class]="onPrintCss(5)" style="border: 1px solid;">{{this.tipoAccion.value==1?'Cliente':'Proveedor'}}</td><td [attr.class]="onPrintCss(2)"></td><td [attr.class]="onPrintCss(5)" style="border: 1px solid;">Vendedor</td>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody class="borderclass">
+                                                                    <tr>
+                                                                        <td>{{elementPrint[0].name}}</td><td></td><td>{{elementPrint[1].name}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>{{elementPrint[0].ruc}}</td><td></td><td>{{elementPrint[1].ruc}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>{{elementPrint[0].direc}}</td><td></td><td>{{elementPrint[1].direc}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>{{elementPrint[0].contac}}</td><td></td><td>{{elementPrint[1].contac}}</td>
+                                                                    </tr>
+
+                                                                    <tr >
+                                                                        <td style="border-top: 1px solid;" class="NoBorder"></td><td></td><td style="border-top: 1px solid;" class="NoBorder"></td>
+                                                                    </tr>
+                                                                    </tbody>
+                                                                </table>
+
+                                                            </div>
+
+                                                            <div class="row" style="margin-bottom: 30px">
+                                                                <table [attr.class]="onPrintCss(12)"  border="1" style=" border: 1px solid;">
+                                                                    <thead >
+                                                                    <tr style=" border: 1px solid;">
+                                                                        <th style=" border: 1px solid;" class="col-lg-1">Cantidad</th><th class="text-center" style=" border: 1px solid;">Descripcion</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    <tr *ngFor="let result of printReport()" style=" border: 1px solid;">
+                                                                        <td  [attr.class]="onPrintCss(1)" style=" border: 1px solid;">{{result.count}}</td><td [attr.class]="onPrintCss(11)" style=" border: 1px solid;">{{result.title}}</td>
+                                                                    </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+
+                                                            <div class="row" style="margin-bottom: 30px">
+                                                                <div [attr.class]="onPrintCss(6)">
+                                                                    <label [attr.class]="onPrintCss(12)" >RECIVIDO POR: </label>
+                                                                    <label [attr.class]="onPrintCss(12)" >NOMBRE:    _____________________</label>
+                                                                    <label [attr.class]="onPrintCss(12)" >FECHA:     _____________________</label>
+                                                                    <label [attr.class]="onPrintCss(12)" >FIRMA:     _____________________</label>
+                                                                    <label [attr.class]="onPrintCss(12)" >CEDULA:    _____________________</label>
+                                                                </div>
+                                                                <div [attr.class]="onPrintCss(6)">
+                                                                    <label [attr.class]="onPrintCss(12)" >ENTREGADO POR:</label>
+                                                                    <label [attr.class]="onPrintCss(12)" >NOMBRE:    _____________________</label>
+                                                                    <label [attr.class]="onPrintCss(12)" >FECHA:     _____________________</label>
+                                                                    <label [attr.class]="onPrintCss(12)" >FIRMA:     _____________________</label>
+                                                                    <label [attr.class]="onPrintCss(12)" >CEDULA:    _____________________</label>
+
+                                                                </div>
+                                                            </div>
+
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
 
 
 
@@ -217,84 +310,6 @@
                                                     </div>
                                                 </div>
 
-                                                <div class=" row box ">
-                                                    <div class="col-lg-12">
-                                                        <div class="row">
-                                                            <div class="col-lg-2">
-                                                                <img src="/img/logo.png">
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <h1 class="text-bold text-center" style="font-size: 20px; margin-bottom: 30px;">Acta de Entrega</h1>
-                                                        </div>
-                                                        <div class="row" style="margin-bottom: 30px;">
-                                                            <div class="col-lg-6">
-                                                                <label>Date :12/12/12</label>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <label class="col-lg-12">Invoice No. JYUI879798798</label>
-                                                                <label class="col-lg-12">Orden de Compra</label>
-                                                            </div>
-
-                                                        </div>
-
-
-                                                        <div class="row" style="margin-bottom: 30px">
-                                                            <div class="col-lg-6">
-                                                                <label class="col-lg-12" style="outline: 1px solid;"><strong class="text-bold">Cliente</strong></label>
-                                                                <label class="col-lg-12" >Hotel Cubita</label>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <label class="col-lg-12" style="outline: 1px solid;"><strong class="text-bold">Vendedor</strong></label>
-
-
-
-                                                                <label class="col-lg-12">Grupo: als;dka;</label>
-                                                                <label class="col-lg-12">Ruc:alksdjaskl</label>
-                                                                <label class="col-lg-12">Bella vista</label>
-                                                                <label class="col-lg-12">Conctac: asldkjakldsj</label>
-
-                                                            </div>
-
-                                                        </div>
-
-                                                        <div class="row" style="margin-bottom: 30px">
-                                                            <table class="col-lg-12"  border="1" style=" border: 1px solid;">
-                                                                <thead >
-                                                                <tr style=" border: 1px solid;">
-                                                                    <th style=" border: 1px solid;" class="col-lg-1">Cantidad</th><th class="text-center" style=" border: 1px solid;">Descripcion</th>
-                                                                </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                <tr style=" border: 1px solid;">
-                                                                    <td class="col-lg-1" style=" border: 1px solid;">aadssad</td><td class="col-lg-11" style=" border: 1px solid;">asdadsads</td>
-                                                                </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-
-                                                        <div class="row" style="margin-bottom: 30px">
-                                                            <div class="col-lg-6">
-                                                                <label class="col-lg-12" >RECIVIDO POR:</label>
-                                                                <label class="col-lg-12" >NOMBRE:    _____________________</label>
-                                                                <label class="col-lg-12" >FECHA:     _____________________</label>
-                                                                <label class="col-lg-12" >FIRMA:     _____________________</label>
-                                                                <label class="col-lg-12" >CEDULA:    _____________________</label>
-                                                            </div>
-                                                            <div class="col-lg-6">
-                                                                <label class="col-lg-12" >ENTREGADO POR:</label>
-                                                                <label class="col-lg-12" >NOMBRE:    _____________________</label>
-                                                                <label class="col-lg-12" >FECHA:     _____________________</label>
-                                                                <label class="col-lg-12" >FIRMA:     _____________________</label>
-                                                                <label class="col-lg-12" >CEDULA:    _____________________</label>
-
-                                                            </div>
-                                                        </div>
-
-
-                                                    </div>
-
-                                                </div>
 
 
                                             </div>
