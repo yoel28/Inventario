@@ -36,6 +36,24 @@ export class AccionType extends BasicConfiguration implements OnInit {
         let tempRules = this.rules;
         this.rules={};
 
+        this.rules["cambio"] = {
+            "update": this.permissions["update"],
+            "visible": true,
+            'required':true,
+            "search":true,
+            'icon':'fa fa-list',
+            "type": "text",
+            "key": "cambio",
+            "title": "Cambio",
+            "placeholder": "ingrese el nombre del cambio",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio'
+                },
+            }
+        };
+
+
         this.rules["title"] = {
             "update": this.permissions["update"],
             "visible": true,
@@ -52,6 +70,28 @@ export class AccionType extends BasicConfiguration implements OnInit {
                 },
             }
         };
+
+
+        this.rules['detail'] = tempRules['detail'];
+
+        this.rules["visible"] = {
+            "update": (this.permissions['update'] && this.permissions['lock']),
+            "visible": this.permissions['lock'],
+            'required':true,
+            'icon':'fa fa-list',
+            "type": "boolean",
+            'states':["Visible","Invisible"],
+            "key": "visible",
+            "title": "Visible",
+            "placeholder": "",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio',
+                },
+            }
+        };
+        this.rules['enabled'] = tempRules['enabled'];
+
     }
 
     initParamsTable(){
@@ -113,6 +153,7 @@ export class AccionType extends BasicConfiguration implements OnInit {
         this.initSaveRules();
         this.initOptions();
         this.initSearch();
+        this.ext="&showAll=true";
         this.loadData();
     }
 
