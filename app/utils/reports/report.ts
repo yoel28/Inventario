@@ -19,7 +19,7 @@ declare var moment:any;
     directives:[Tables,Datepicker,DateRangepPicker],
     pipes: [TranslatePipe],
     providers: [TranslateService],
-    inputs:['permissions','paramsTable','endPointHis','endPointAct','viewOptions','rules']
+    inputs:['permissions','paramsTable','endPointHis','endPointAct','viewOptions','rules','listType']
 })
 
 
@@ -33,8 +33,10 @@ export class Reports extends RestController implements OnInit {
     public endPointAct = "";
     public viewOptions:any={};
     public rules:any ={};
+    public listType :any={};
 
 
+    public listTypeSelect ="";
     public date:any={};
 
     public form: ControlGroup;
@@ -114,6 +116,9 @@ export class Reports extends RestController implements OnInit {
         this.initForm();
 
         this.setEndpoint(this.endPointHis);
+
+        if(this.listType && this.listType.count >0)
+            this.listTypeSelect=this.listType.list[0].id;
     }
 
 
@@ -205,6 +210,18 @@ export class Reports extends RestController implements OnInit {
         if(event)
             event.preventDefault();
         this.assignDate();
+    }
+
+
+    setTypeSelect(data)
+    {
+
+        this.listTypeSelect =data;
+
+        if(this.dateStart.value && this.dateStart.value.toString().length >0 )
+            this.assignDate();
+
+
     }
 
 
@@ -305,7 +322,10 @@ export class Reports extends RestController implements OnInit {
                 }
             }
 
-            this.where="&where="+encodeURI(JSON.stringify(dateWhere).split('{').join('[').split('}').join(']'));
+
+            this.where=JSON.stringify(dateWhere).split('{').join('[').split('}').join(']');
+
+
 
         }
 
@@ -316,7 +336,7 @@ export class Reports extends RestController implements OnInit {
             this.rules['month'].visible=this.month;
             this.rules['year'].visible=this.year;
 
-            this.ext = "[";
+            this.ext = "&group=[";
             let temp = "";
             temp = (this.day ? '["field":"day"]' : '');
 
@@ -337,6 +357,21 @@ export class Reports extends RestController implements OnInit {
         else {
             this.ext="";
            }
+
+
+        if(this.listTypeSelect && this.listTypeSelect.length  > 0)
+            if(this.where.length >0)
+            {
+                this.where = this.where.slice(0, -1);
+                this.where+=', ["op":"eq","field":"tipoOperacion.id","value":'+this.listTypeSelect+']]';
+
+            }
+            else
+                this.where+='[["op":"eq","field":"tipoOperacion.id","value":'+this.listTypeSelect+']]';
+
+        if(this.where.length>0)
+        this.where="&where="+encodeURI(this.where);
+
 
         this.loadData();
 
