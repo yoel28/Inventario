@@ -34,6 +34,7 @@ import {ProductAccion} from "./reports/productAccion/productAccion";
 import {BuckUpload} from "./BuckUpload/buckUpload";
 import {AccionType} from "./accionType/accionType";
 import {Params} from "./configurations/params/params";
+import {ProductsAction} from "./reports/ProductsAction/productsAction";
 
 
 @Component({
@@ -84,6 +85,7 @@ import {Params} from "./configurations/params/params";
   { path: '/product/available',   name: 'ProductAvailable', component: ProductAvailable },
   { path: '/office/supplieer',   name: 'OfficeSupplier', component: OfficeSupplier },
   { path: '/operacion/accion',   name: 'ProductAccion', component: ProductAccion },
+  { path: '/product/accion',   name: 'ProductsAction', component: ProductsAction },
 
   { path: '/product/audit',   name: 'ProductAudit', component: ProductAudit },
 
@@ -276,6 +278,12 @@ export class AppComponent extends RestController implements OnInit{
                     'icon':'fa fa-list',
                     'title':'Movimientos por fecha',
                     'routerLink':'ProductAccion'
+                },
+                {
+                    'visible':this.myglobal.existsPermission("1"),
+                    'icon':'fa fa-list',
+                    'title':'Productos por accion',
+                    'routerLink':'ProductsAction'
                 },
             ]
 
