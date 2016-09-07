@@ -69,7 +69,7 @@ export class Dashboard extends RestController implements OnInit {
 
 
 
-        this.productEnterExitTables['endpoint']="/inventario/diario/producto/dia";
+        this.productEnterExitTables['endpoint']="/inventario/diario/producto/dia/dashboard";
         this.productEnterExitTables['actions']={}
 
 
@@ -307,7 +307,7 @@ export class Dashboard extends RestController implements OnInit {
         this.loadData_1("/inventario/diario/producto/maximo",this.productListMore)
         this.loadData_1("/inventario/diario/producto/minimo",this.productListLess)
         this.loadData_1("/inventario/diario/producto/ubicacion",this.productLocationList)
-        this.loadData_1("/inventario/diario/producto/dia",this.productEnterExitList)
+        this.loadData_1("/inventario/diario/producto/dia/dashboard",this.productEnterExitList)
     }
 
 
