@@ -85,7 +85,7 @@
                             </a>
 
                             <a *ngIf="key == 'print'"
-                               (click)="onPrint(data.id)">
+                               (click)="onPrint($event,data.id)">
                                 <span class="{{params.actions[key].icon}}"></span>
                                 &nbsp;{{params.actions[key].title}}
                             </a>
@@ -114,7 +114,7 @@
                            {{data.enabled?params.actions[key].titleTrue:params.actions[key].titleFalse}}
                        </a>
                        <a *ngIf="key == 'print'"
-                          (click)="onPrint(data.id)">
+                          (click)="onPrint($event,data.id)">
                            <span class="{{params.actions[key].icon}}"></span>
                            &nbsp;{{params.actions[key].title}}
 
