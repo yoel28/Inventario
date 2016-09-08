@@ -122,14 +122,6 @@ export class Product extends BasicConfiguration implements OnInit {
             'message': 'Esta seguro de eliminar el producto con el codigo ',
             'keyAction':'code'
         };
-        this.paramsTable.actions.print = {
-            "icon": "fa fa-print",
-            "exp": "",
-            'title': 'Imprimir',
-            'permission': '1',
-            'message': 'wii imprimir',
-            'keyAction':'description'
-        };
 
 
 
