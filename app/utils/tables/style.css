@@ -7,3 +7,8 @@
 {
     cursor: auto;
 }
+
+.button-tables a
+{
+    cursor: pointer;
+}
