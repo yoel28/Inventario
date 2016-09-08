@@ -1,4 +1,4 @@
-<div *ngIf="type ==1" id="finalPrint" class=" row box " id="actaEntrega" >
+<div *ngIf="type ==1 && ExternalInfo && ExternalInfo.count>0 " id="finalPrint" class=" row box " id="actaEntrega" >
     <div [attr.class]="onPrintCss(12)">
         <div class="row">
             <div [attr.class]="onPrintCss(5)">
@@ -10,11 +10,11 @@
         </div>
         <div class="row" style="margin-bottom: 30px;">
             <div [attr.class]="onPrintCss(6)">
-                <label>Date :  </label>
+                <label>Date :  {{formatDate(ExternalInfo.list[0][0].fecha,'DD-MM-YYYY')}}</label>
             </div>
             <div [attr.class]="onPrintCss(6)">
-                <label [attr.class]="onPrintCss(12)">Invoice No. </label>
-                <label [attr.class]="onPrintCss(12)">Orden de Compra</label>
+                <label [attr.class]="onPrintCss(12)">Invoice No. {{ExternalInfo.list[0][0].Referencia}} </label>
+                <label [attr.class]="onPrintCss(12)">Orden de  Compra</label>
             </div>
 
         </div>
@@ -95,5 +95,5 @@
 
 
     </div>
-   {{onPrint('actaEntrega')}}
+    {{onPrint('actaEntrega')}}
 </div>

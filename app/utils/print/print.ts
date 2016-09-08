@@ -5,6 +5,10 @@ import {globalService} from "../../common/globalService";
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {BasicConfiguration} from "../../common/basic-configuration";
 
+declare var moment:any;
+
+
+
 @Component({
     selector: 'print',
     templateUrl: 'app/utils/print/index.html',
@@ -31,6 +35,12 @@ export class Print extends BasicConfiguration implements OnInit {
     }
 
 
+
+    formatDate(date, format) {
+        if (date)
+            return moment(date).format(format);
+        return "-";
+    }
 
     initOptions(){}
     initRules(){}
