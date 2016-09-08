@@ -15,7 +15,8 @@
             </div>
             <div *ngIf="permissions.list"  class="box-body">
                 <div *ngIf=" dataList && dataList.count > 0 ">
-                    <tables [dataList]="dataList" [rules]="rules" [externalList]="externalList" [params]="paramsTable" [rulesSearch]="rulesSearch" [externalSave]="externalSave"  ></tables>
+
+                    <tables [dataList]="dataList" [rules]="rules" [params]="paramsTable" [rulesSearch]="rulesSearch" [externalSave]="externalSave" [externalList]="externalList"   ></tables>
                 </div>
                 <div *ngIf="dataList && dataList.count == 0">
                     <div class="alert alert-warning alert-dismissable">
@@ -35,3 +36,4 @@
         </div>
     </section>
 </div>
+<save [rules]="rulesSave" [params]="paramsSave" (save)="asignData($event)"> </save>

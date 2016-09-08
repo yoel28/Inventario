@@ -69,7 +69,7 @@ export class Client extends BasicConfiguration implements OnInit {
                 'errors':{
                     'required':'El campo es obligatorio'
                 },
-            }
+              }
         };
         tempRules["title"] = {
             "update": this.permissions['update'],
@@ -131,14 +131,58 @@ export class Client extends BasicConfiguration implements OnInit {
 
     initSaveRules(){
 
-        this.paramsSave= {
+       this.paramsSave= {
             title: "Agregar cliente",
             idModal: "saveClient",
             endpoint: this.endpoint,
         }
-        this.rulesSave = Object.create(this.rules);
-        delete this.rulesSave['enabled'];
+
+        this.rulesSave = {
+            'code': {
+                'type': this.rules['code'].type,
+                'required':true,
+                'title': this.rules['code'].title,
+                'placeholder': this.rules['code'].placeholder,
+                'msg':this.rules['code'].msg
+            },
+            'direccion': {
+                'type': this.rules['direccion'].type,
+                'required':true,
+                'title': this.rules['direccion'].title,
+                'placeholder': this.rules['direccion'].placeholder,
+                'msg':this.rules['direccion'].msg
+            },
+            'title': {
+                'type': this.rules['title'].type,
+                'required':true,
+                'title': this.rules['title'].title,
+                'placeholder': this.rules['title'].placeholder,
+                'msg':this.rules['title'].msg
+            },
+            'ruc': {
+                'type': this.rules['ruc'].type,
+                'required':true,
+                'title': this.rules['ruc'].title,
+                'placeholder': this.rules['ruc'].placeholder,
+                'msg':this.rules['ruc'].msg
+            },
+            'detail': {
+                'type': this.rules['detail'].type,
+                'required':true,
+                'title': this.rules['detail'].title,
+                'placeholder': this.rules['detail'].placeholder,
+                'msg':this.rules['detail'].msg
+            }
+        };
+
+
+
+
+
     }
+
+
+
 
     initOptions() {
 
@@ -163,12 +207,12 @@ export class Client extends BasicConfiguration implements OnInit {
 
 
     ngOnInit() {
-        this.loadData();
         this.initRules();
         this.initParamsTable();
         this.initSaveRules();
         this.initOptions();
         this.initSearch();
+        this.loadData();
 
 
 
