@@ -8,14 +8,17 @@ import {Xeditable} from "../../common/xeditable";
 import {Search} from "../search/search";
 import {Filter} from "../filter/filter";
 import {Save} from "../save/save";
+import { Print} from "../print/print";
 
+
+declare var moment:any;
 
 @Component({
     selector: 'tables',
     templateUrl: 'app/utils/tables/index.html',
     styleUrls: ['app/utils/tables/style.css'],
     inputs:['params','rules','externalList','rulesSearch','dataList','externalSave','rulesFilter'],
-    directives:[Xeditable,Search,Filter,Save]
+    directives:[Xeditable,Search,Filter,Save,Print]
 })
 
 
@@ -57,6 +60,12 @@ export class Tables extends RestController implements OnInit {
         this.setEndpoint(this.params.endpoint);
     }
 
+
+    formatDate(date, format) {
+        if (date)
+            return moment(date).format(format);
+        return "-";
+    }
 
     initForm() {
         let that = this;
@@ -254,7 +263,7 @@ export class Tables extends RestController implements OnInit {
             this.toastr.success("Modifcacion hecha");
 
         }
-        this.onEditable(this.dataArraySelect.key,this.dataArraySelect.data[this.dataArraySelect.key],arraytemp,this.endpoint);
+        this.onEditable(this.dataArraySelect.key,this.dataArraySelect.data,arraytemp,this.endpoint);
 
 //        this.httputils.doPut(this.endpoint+this.dataArraySelect.data.id,JSON.stringify(this.dataArraySelect.data),successCallback,this.error);
 
@@ -289,5 +298,25 @@ export class Tables extends RestController implements OnInit {
          }
         this.loadData(0);
     }
+    
+    @ViewChild(Print)
+    printObject:Print;
+    onPrint(id)
+    {
+        this.printObject.type="1";
 
+
+
+        let that = this;
+
+        let successCallback= response => {
+            Object.assign(that.printObject.ExternalInfo, response.json());
+
+        }
+        let where =encodeURI("[['op':'eq','field':'lote.id','value':"+id+"]]");
+        this.httputils.doGet("/lote/recovery/?where="+where+"",successCallback,this.error)
+    }
 }
+
+
+
