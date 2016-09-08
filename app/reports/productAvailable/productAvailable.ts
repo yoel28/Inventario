@@ -126,7 +126,7 @@ export class ProductAvailable extends BasicConfiguration implements OnInit {
 
         this.rules["tipoOperacion"] = {
             "update": false,
-            "visible": true,
+            "visible": false,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
