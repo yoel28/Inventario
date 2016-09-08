@@ -1,0 +1,99 @@
+<div *ngIf="type ==1" id="finalPrint" class=" row box " id="actaEntrega" >
+    <div [attr.class]="onPrintCss(12)">
+        <div class="row">
+            <div [attr.class]="onPrintCss(5)">
+                <img src="/img/logo.png">
+            </div>
+        </div>
+        <div class="row">
+            <h1 class="text-bold text-center" style="font-size: 20px; margin-bottom: 30px;">Acta de Entrega</h1>
+        </div>
+        <div class="row" style="margin-bottom: 30px;">
+            <div [attr.class]="onPrintCss(6)">
+                <label>Date :  </label>
+            </div>
+            <div [attr.class]="onPrintCss(6)">
+                <label [attr.class]="onPrintCss(12)">Invoice No. </label>
+                <label [attr.class]="onPrintCss(12)">Orden de Compra</label>
+            </div>
+
+        </div>
+
+
+        <div class="row" style="margin-bottom: 30px">
+
+            <table [attr.class]="onPrintCss(12)">
+                <thead>
+                <tr>
+                    <td [attr.class]="onPrintCss(5)" style="border: 1px solid;"></td><td [attr.class]="onPrintCss(2)"></td><td [attr.class]="onPrintCss(5)" style="border: 1px solid;">Empresa</td>
+                </tr>
+                </thead>
+                <tbody class="borderclass">
+                <tr>
+                    <td [attr.class]="onPrintCss(5)"></td><td></td><td [attr.class]="onPrintCss(5)"></td>
+                </tr>
+                <tr>
+                    <td [attr.class]="onPrintCss(5)"></td><td></td><td [attr.class]="onPrintCss(5)"></td>
+                </tr>
+                <tr>
+                    <td [attr.class]="onPrintCss(5)"></td><td></td><td [attr.class]="onPrintCss(5)"></td>
+                </tr>
+                <tr>
+                    <td [attr.class]="onPrintCss(5)"></td><td></td><td [attr.class]="onPrintCss(5)"></td>
+                </tr>
+
+                <tr >
+                    <td style="border-top: 1px solid;" class="NoBorder"></td><td></td><td style="border-top: 1px solid;" class="NoBorder"></td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+        <div class="row" style="margin-bottom: 30px">
+            <table [attr.class]="onPrintCss(12)"  border="1" style=" border: 1px solid;">
+                <thead >
+                <tr style=" border: 1px solid;">
+                    <th style=" border: 1px solid;" class="col-lg-1">Cantidad</th><th class="text-center" style=" border: 1px solid;">Descripcion</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr  style=" border: 1px solid;">
+                    <td  [attr.class]="onPrintCss(1)" style=" border: 1px solid;"></td><td [attr.class]="onPrintCss(11)" style=" border: 1px solid;"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row" style="margin-bottom: 30px">
+            <div class=" col-lg-5 col-md-5 col-xs-5 col-sm-5 pull-right" >
+                <table>
+                    <tr>
+                        <td ><div style="margin: 5px">Despachador: </div></td><td > <div style="margin: 5px">{{myglobal.user.name}}</div></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom: 30px">
+            <div [attr.class]="onPrintCss(6)">
+                <label [attr.class]="onPrintCss(12)" >RECIVIDO POR: </label>
+                <label [attr.class]="onPrintCss(12)" >NOMBRE:    _____________________</label>
+                <label [attr.class]="onPrintCss(12)" >FECHA:     _____________________</label>
+                <label [attr.class]="onPrintCss(12)" >FIRMA:     _____________________</label>
+                <label [attr.class]="onPrintCss(12)" >CEDULA:    _____________________</label>
+            </div>
+            <div [attr.class]="onPrintCss(6)">
+                <label [attr.class]="onPrintCss(12)" >ENTREGADO POR:</label>
+                <label [attr.class]="onPrintCss(12)" >NOMBRE:    _____________________</label>
+                <label [attr.class]="onPrintCss(12)" >FECHA:     _____________________</label>
+                <label [attr.class]="onPrintCss(12)" >FIRMA:     _____________________</label>
+                <label [attr.class]="onPrintCss(12)" >CEDULA:    _____________________</label>
+
+            </div>
+        </div>
+
+
+    </div>
+   {{onPrint('actaEntrega')}}
+</div>
