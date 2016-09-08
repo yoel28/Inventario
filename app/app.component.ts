@@ -35,6 +35,7 @@ import {BuckUpload} from "./BuckUpload/buckUpload";
 import {AccionType} from "./accionType/accionType";
 import {Params} from "./configurations/params/params";
 import {ProductsAction} from "./reports/ProductsAction/productsAction";
+import {LotRecovery} from "./lotRecovery/lotRecovery";
 
 
 @Component({
@@ -92,6 +93,10 @@ import {ProductsAction} from "./reports/ProductsAction/productsAction";
 
   { path: '/buck/upload',   name: 'BuckUpload', component: BuckUpload },
 
+
+
+  { path: '/lot/recovery',   name: 'LotRecovery', component: LotRecovery },
+
   { path: '/**', redirectTo: ['Dashboard'] }
 
 ])
@@ -106,9 +111,10 @@ export class AppComponent extends RestController implements OnInit{
       super(http)
         localStorage.setItem('urlAPI','http://dev.zippyttech.com:8080/api');
         localStorage.setItem('url','http://dev.zippyttech.com:8080/');
-        //localStorage.setItem('urlAPI','http://192.168.0.113:8080/api');
-        //localStorage.setItem('url','http://192.168.0.113:8080/');
         //localStorage.setItem('urlAPI','http://192.168.0.114:9090/api');
+        //localStorage.setItem('url','http://192.168.0.114:9090/');
+
+         //localStorage.setItem('urlAPI','http://192.168.0.114:9090/api');
         //localStorage.setItem('url','http://192.168.0.114:9090/');
     let that=this;
     router.subscribe(
@@ -203,16 +209,21 @@ export class AppComponent extends RestController implements OnInit{
             'title':'Operacion'
 
         });
-        
-        
-        
+
+
         this.menuItems.push({
             'visible':this.myglobal.existsPermission("1"),
-            'routerLink':'BuckUpload',
+            'routerLink':'Location_product',
             'icon':'fa fa-list',
-            'title':'Carga masiva'
+            'title':'Ubicacion'
 
         });
+        
+        
+
+
+
+
 
         this.menuItems.push({
             'visible':this.myglobal.existsPermission("1"),
@@ -250,11 +261,20 @@ export class AppComponent extends RestController implements OnInit{
                     'title':'Auditoria de produtos',
                     'routerLink':'ProductAudit'
                 }
-                
+
 
             ]
 
         });
+
+        this.menuItems.push({
+            'visible':this.myglobal.existsPermission("1"),
+            'routerLink':'User',
+            'icon':'fa fa-list',
+            'title':'Usuarios'
+
+        });
+
         this.menuItems.push({
             'visible':this.myglobal.existsPermission("1"),
             'icon':'fa fa-list',
@@ -288,13 +308,16 @@ export class AppComponent extends RestController implements OnInit{
             ]
 
         });
+
         this.menuItems.push({
             'visible':this.myglobal.existsPermission("1"),
-            'routerLink':'Location_product',
+            'routerLink':'LotRecovery',
             'icon':'fa fa-list',
-            'title':'Ubicacion'
+            'title':'administracion de lotes'
 
         });
+
+
         this.menuItems.push({
             'visible':this.myglobal.existsPermission("1"),
             'icon':'fa fa-list',
@@ -319,18 +342,40 @@ export class AppComponent extends RestController implements OnInit{
         });
 
 
+
         this.menuItems.push({
             'visible':this.myglobal.existsPermission("1"),
             'icon':'fa fa-list',
-            'title':'Panel de Configuracion',
+            'title':'Administracion de Sistema',
             'key':'menu4',
             'treeview':[
                 {
                     'visible':this.myglobal.existsPermission("1"),
                     'icon':'fa fa-list',
+                    'title':'Carga masiva',
+                    'routerLink':'BuckUpload'
+                },
+                {
+                    'visible':this.myglobal.existsPermission("1"),
+                    'icon':'fa fa-list',
+                    'title':'Tipo de acciones',
+                    'routerLink':'AccionType'
+                },
+                {
+                    'visible':this.myglobal.existsPermission("1"),
+                    'icon':'fa fa-list',
                     'title':'Parametros',
                     'routerLink':'Params'
-                },
+                }]
+
+        });
+
+        this.menuItems.push({
+            'visible':this.myglobal.existsPermission("1"),
+            'icon':'fa fa-list',
+            'title':'Panel de Configuracion',
+            'key':'menu5',
+            'treeview':[
                 {
                     'visible':this.myglobal.existsPermission("1"),
                     'icon':'fa fa-list',
@@ -356,22 +401,10 @@ export class AppComponent extends RestController implements OnInit{
 
 
 
-        this.menuItems.push({
-            'visible':this.myglobal.existsPermission("1"),
-            'routerLink':'User',
-            'icon':'fa fa-list',
-            'title':'Usuarios'
-
-        });
 
 
-        this.menuItems.push({
-            'visible':this.myglobal.existsPermission("1"),
-            'routerLink':'AccionType',
-            'icon':'fa fa-list',
-            'title':'Tipo de acciones'
 
-        });
+
 
 
 
