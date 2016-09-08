@@ -301,9 +301,11 @@ export class Tables extends RestController implements OnInit {
     
     @ViewChild(Print)
     printObject:Print;
-    onPrint(id)
+    onPrint(event,id)
     {
-        this.printObject.type="1";
+        event.preventDefault();
+        
+        
 
 
 
@@ -311,6 +313,8 @@ export class Tables extends RestController implements OnInit {
 
         let successCallback= response => {
             Object.assign(that.printObject.ExternalInfo, response.json());
+            this.printObject.type="1";
+
 
         }
         let where =encodeURI("[['op':'eq','field':'lote.id','value':"+id+"]]");
