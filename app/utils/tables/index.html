@@ -19,9 +19,11 @@
     </thead>
     <tbody>
         <tr *ngFor="let data of dataList.list">
-            <td *ngFor="let key of keyVisible()">
+            <td *ngFor="let key of keyVisible()" class="button-tables">
 
-             <a *ngIf="!rules[key].object &&  rules[key].type !='boolean'" x-editable  [disabled]="!rules[key].update "  [endpoint]="params.endpoint" [function]="onEditable" [data]="data" [rules]="rules" [field]="key"></a>
+             <a *ngIf="rules[key].type =='date'">{{formatDate(data[key],rules[key].format)}}</a>
+
+              <a *ngIf="!rules[key].object &&  rules[key].type !='boolean' &&  rules[key].type !='date'" x-editable  [disabled]="!rules[key].update "  [endpoint]="params.endpoint" [function]="onEditable" [data]="data" [rules]="rules" [field]="key"></a>
 
               <a *ngIf="rules[key].object &&   rules[key].type =='text'">
                  {{data[key]}}
@@ -55,7 +57,7 @@
 
 
             </td>
-            <td *ngIf="params.actions">
+            <td *ngIf="params.actions" class="button-tables">
 
                 <div class="btn-group dropdown pull-right"  *ngIf="keyActions.length > 1">
                     <button type="button" data-toggle="dropdown"
@@ -81,8 +83,9 @@
                                 <span class="{{params.actions[key].icon}}"></span>
                                 {{data.enabled?params.actions[key].titleTrue:params.actions[key].titleFalse}}
                             </a>
+
                             <a *ngIf="key == 'print'"
-                               (click)="onPrint(params.actions[key].element)">
+                               (click)="onPrint(data.id)">
                                 <span class="{{params.actions[key].icon}}"></span>
                                 &nbsp;{{params.actions[key].title}}
                             </a>
@@ -111,9 +114,10 @@
                            {{data.enabled?params.actions[key].titleTrue:params.actions[key].titleFalse}}
                        </a>
                        <a *ngIf="key == 'print'"
-                          (click)="onPrint(params.actions[key].element)">
+                          (click)="onPrint(data.id)">
                            <span class="{{params.actions[key].icon}}"></span>
                            &nbsp;{{params.actions[key].title}}
+
                        </a>
                     </div>
                 </div>
@@ -240,6 +244,9 @@
     <search [params]="searchTable" (result)="getDataSearch($event)"></search>
 </div>
 
+<div style="display: none;">
+    <print></print>
+</div>
 <!--div>
     <filter [rules]="rules" [params]="paramsFilter" (whereFilter)="loadWhere($event)"></filter>
 </div-->
