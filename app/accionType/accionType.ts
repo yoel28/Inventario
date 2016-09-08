@@ -122,6 +122,20 @@ export class AccionType extends BasicConfiguration implements OnInit {
                 'title': this.rules['title'].title,
                 'placeholder': this.rules['title'].placeholder,
                 'msg':this.rules['title'].msg
+            },
+            'cambio': {
+                'type': this.rules['cambio'].type,
+                'required':true,
+                'title': this.rules['cambio'].title,
+                'placeholder': this.rules['cambio'].placeholder,
+                'msg':this.rules['cambio'].msg
+            },
+            'detail': {
+                'type': this.rules['detail'].type,
+                'required':true,
+                'title': this.rules['detail'].title,
+                'placeholder': this.rules['detail'].placeholder,
+                'msg':this.rules['detail'].msg
             }
         };
 
