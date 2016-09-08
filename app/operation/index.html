@@ -201,7 +201,7 @@
                                                                 <table [attr.class]="onPrintCss(12)">
                                                                     <thead>
                                                                     <tr>
-                                                                        <td [attr.class]="onPrintCss(5)" style="border: 1px solid;">{{tipoAccion.value==1?'Cliente':'Proveedor'}}</td><td [attr.class]="onPrintCss(2)"></td><td [attr.class]="onPrintCss(5)" style="border: 1px solid;">Vendedor</td>
+                                                                        <td [attr.class]="onPrintCss(5)" style="border: 1px solid;">{{tipoAccion.value==1?'Cliente':'Proveedor'}}</td><td [attr.class]="onPrintCss(2)"></td><td [attr.class]="onPrintCss(5)" style="border: 1px solid;">Empresa</td>
                                                                     </tr>
                                                                     </thead>
                                                                     <tbody class="borderclass">
@@ -224,6 +224,16 @@
                                                                     </tbody>
                                                                 </table>
 
+                                                            </div>
+
+                                                            <div class="row" style="margin-bottom: 30px">
+                                                                <div class=" col-lg-5 col-md-5 col-xs-5 col-sm-5 pull-right" >
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td ><div style="margin: 5px">Despachador: </div></td><td > <div style="margin: 5px">{{myglobal.user.name}}</div></td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
                                                             </div>
 
                                                             <div class="row" style="margin-bottom: 30px">

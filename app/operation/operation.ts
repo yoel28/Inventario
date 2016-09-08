@@ -70,6 +70,7 @@ export class Operation extends RestController implements OnInit {
     public RUC ="";
     public CONTACTO="";
     public DIRECCION="";
+    public NOMBRE="";
 
 
 
@@ -104,6 +105,39 @@ export class Operation extends RestController implements OnInit {
     inc(data =null,position=0) {
 
         let flag =true;
+
+
+        if(!this.RUC || !this.CONTACTO || !this.DIRECCION)
+        {
+            let error="";
+            if(!this.RUC)
+                error ="'Ruc'"
+            if(!this.CONTACTO) {
+                if(error.length >0)
+                    error +=", 'Contacto'"
+                else
+                    error = "''Contacto''"
+            }
+            if(!this.DIRECCION) {
+
+                if (error.length > 0)
+                    error += ", 'Direccion'"
+                else
+                    error = "''Direccion''"
+
+            }
+            if(!this.NOMBRE) {
+
+                if (error.length > 0)
+                    error += ", 'Nombre de empresa'"
+                else
+                    error = "''Nombre de empresa''"
+
+            }
+
+            this.toastr.error("Los parametros de: "+error+"  no esta configurados")
+            flag =false;
+        }
 
         switch (this.positionForm)
         {
@@ -271,9 +305,46 @@ export class Operation extends RestController implements OnInit {
         this.initSearchTypeActions();
         this.initSearchClients();
 
-        this.RUC =this.myglobal.getParams('RUC')
-        this.CONTACTO =this.myglobal.getParams('CONTACTO')
-        this.DIRECCION =this.myglobal.getParams('DIRECCION')
+        this.RUC =this.myglobal.getParams('EMP_RUC')
+        this.CONTACTO =this.myglobal.getParams('EMP_CONTACTO')
+        this.DIRECCION =this.myglobal.getParams('EMP_DIRECCION')
+        this.NOMBRE =this.myglobal.getParams('EMP_NOMBRE')
+
+
+        if(!this.RUC || !this.CONTACTO || !this.DIRECCION || !this.NOMBRE)
+        {
+            let error="";
+            if(!this.RUC)
+                error ="'Ruc'"
+            if(!this.CONTACTO) {
+                if(error.length >0)
+                    error +=", 'Contacto'"
+                else
+                    error = "''Contacto''"
+            }
+            if(!this.DIRECCION) {
+
+                if (error.length > 0)
+                    error += ", 'Direccion'"
+                else
+                    error = "''Direccion''"
+
+            }
+            if(!this.NOMBRE) {
+
+                if (error.length > 0)
+                    error += ", 'Nombre de empresa'"
+                else
+                    error = "''Nombre de empresa''"
+
+            }
+
+            this.toastr.error("Los parametros de: "+error+"  no esta configurados")
+
+        }
+
+
+
     }
 
     //tercer formulario
@@ -400,7 +471,7 @@ export class Operation extends RestController implements OnInit {
               
 
                 that.elementPrint.push({"name":that.user.value.title,"direc":'','contac':'','ruc':''});
-                that.elementPrint.push({"name":that.myglobal.user.name,"direc":'Direccion: '+that.DIRECCION,'contac':'Contacto: '+that.CONTACTO,'ruc':'Ruc: '+that.RUC});
+                that.elementPrint.push({"name":that.NOMBRE,"direc":'Direccion: '+that.DIRECCION,'contac':'Contacto: '+that.CONTACTO,'ruc':'Ruc: '+that.RUC});
                 
           
                 that.listAccion=[];
