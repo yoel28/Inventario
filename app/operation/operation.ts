@@ -236,7 +236,7 @@ export class Operation extends RestController implements OnInit {
             else if(response.status==204){
 
 
-                var snd = new Audio("/assets/sound/error.mp3"); // buffers automatically when created
+                var snd = new Audio("/assets/sound/error.wav"); // buffers automatically when created
                 snd.play();
                 that.listAccion.push({"item":this.lastItem++,"Producto":{"code":that.producto.value},"Ubicacion":"","Accion":that.accionList,"Status":false,"Validate":false,"msj":"El codigo no fue encontrado"});
                 
