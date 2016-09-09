@@ -17,7 +17,7 @@ declare var moment:any;
     selector: 'tables',
     templateUrl: 'app/utils/tables/index.html',
     styleUrls: ['app/utils/tables/style.css'],
-    inputs:['params','rules','externalList','rulesSearch','dataList','externalSave','rulesFilter'],
+    inputs:['params','rules','externalList','rulesSearch','dataList','externalSave','rulesFilter','where'],
     directives:[Xeditable,Search,Filter,Save,Print]
 })
 
