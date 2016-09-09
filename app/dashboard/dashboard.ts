@@ -212,13 +212,13 @@ export class Dashboard extends RestController implements OnInit {
 
 
         this.productEnterExitRules={
-            'detailProducto':{
+            'nombreCliente':{
                 "visible": true,
                 "search":true,
                 'icon':'fa fa-list',
                 "type": "text",
-                "key": "detailProducto",
-                "title": "Producto",
+                "key": "nombreCliente",
+                "title": "Empresa",
                 "placeholder": "nombre del producto"
             },
             'nombreTipoAccion':{
