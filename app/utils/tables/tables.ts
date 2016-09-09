@@ -303,6 +303,17 @@ export class Tables extends RestController implements OnInit {
     printObject:Print;
     onPrint(event,id)
     {
+
+
+        if(this.printObject && this.printObject.ExternalInfo)
+        {
+            this.printObject.ExternalInfo ={};
+            this.printObject.type="";
+            this.printObject.elementPrint =[];
+        }
+
+
+        
         event.preventDefault();
         
         
@@ -312,7 +323,12 @@ export class Tables extends RestController implements OnInit {
         let that = this;
 
         let successCallback= response => {
+
             Object.assign(that.printObject.ExternalInfo, response.json());
+
+            that.printObject.elementPrint.push({"name":that.printObject.ExternalInfo.list[0][0].Cliente,"direc":'','contac':'','ruc':''});
+            that.printObject.elementPrint.push({"name":that.myglobal.getParams('EMP_NOMBRE'),"direc":'Direccion: '+that.myglobal.getParams('EMP_DIRECCION'),'contac':'Contacto: '+that.myglobal.getParams('EMP_CONTACTO'),'ruc':'Ruc: '+that.myglobal.getParams('EMP_RUC')});
+
             this.printObject.type="1";
 
 
