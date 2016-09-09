@@ -50,7 +50,10 @@
                             <label class="panel-heading text-center col-lg-12">Entrada y Salidas Productos del dia</label>
                             <div class="panel-body">
                                 <div *ngIf="productEnterExitTables.endpoint">
-                                    <tables [dataList]="productEnterExitList" [rules]="productEnterExitRules" [params]="productEnterExitTables"></tables>
+
+
+                                    <less-tables [externalEndPoint]="externalEndPointEnterExitTables" [rulesDetails]="productEnterExitRules" [rules]="productEnterExitRules" [paramSearch]="productEnterExitTables"></less-tables>
+
                                 </div>
                             </div>
                         </div>

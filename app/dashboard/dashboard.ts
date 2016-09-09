@@ -7,12 +7,13 @@ import {globalService} from "../common/globalService";
 import {FormBuilder} from "@angular/common";
 import {CHART_DIRECTIVES} from "angular2-highcharts/index";
 import {Tables} from "../utils/tables/tables";
+import {LessTables} from "../utils/lessTables/lessTables";
 
 @Component({
     selector: 'home',
     templateUrl: 'app/dashboard/dashboard.html',
     styleUrls: ['app/dashboard/dashboard.css'],
-    directives: [Tables, CHART_DIRECTIVES],
+    directives: [Tables, CHART_DIRECTIVES,LessTables],
 })
 export class Dashboard extends RestController implements OnInit {
 
@@ -41,8 +42,11 @@ export class Dashboard extends RestController implements OnInit {
     public productLocationTables :any={};
     public productEnterExitTables :any={};
 
-    
-    public switchFlag =false;
+
+
+    public externalEndPointEnterExitTables ="";
+
+
     
     
     
