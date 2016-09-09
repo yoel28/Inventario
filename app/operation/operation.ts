@@ -466,37 +466,48 @@ export class Operation extends RestController implements OnInit {
 
 
 
-                that.elementPrint =[];
 
-              
-
-                that.elementPrint.push({"name":that.user.value.title,"direc":'','contac':'','ruc':''});
-                that.elementPrint.push({"name":that.NOMBRE,"direc":'Direccion: '+that.DIRECCION,'contac':'Contacto: '+that.CONTACTO,'ruc':'Ruc: '+that.RUC});
-                
-          
-                that.listAccion=[];
-                that.listResult=response.json();
-
-                let objLote :any={}
-                    that.listResult.find((result)=>
+                if(response.status == 500)
                 {
-                    if(result.status =='CREATED')
+                    this.toastr.error(response.json().message);
+                }
+                else
+                {
+
+
+                    that.elementPrint =[];
+
+
+
+                    that.elementPrint.push({"name":that.user.value.title,"direc":'','contac':'','ruc':''});
+                    that.elementPrint.push({"name":that.NOMBRE,"direc":'Direccion: '+that.DIRECCION,'contac':'Contacto: '+that.CONTACTO,'ruc':'Ruc: '+that.RUC});
+
+                    that.listAccion=[];
+                    that.listResult=response.json();
+
+                    let objLote :any={}
+                    that.listResult.find((result)=>
                     {
-                        objLote= result;
-                        return;
-                    }
+                        if(result.status =='CREATED')
+                        {
+                            objLote= result;
+                            return;
+                        }
 
 
-                });
-                
-                that.lote = objLote.lote;
-                
-                that.positionForm=3;
-                if(response.status ==200)
-                    that.toastr.success("Las acciones han sido guardadas");
-                else if(response.status ==422)
-                    that.toastr.warning("Algunas acciones han sido guardadas, pero hubo errores");
+                    });
 
+                    that.lote = objLote.lote;
+
+
+                    that.positionForm=3;
+
+                    if(response.status ==200)
+                        that.toastr.success("Las acciones han sido guardadas");
+                    else if(response.status ==422)
+                        that.toastr.warning("Algunas acciones han sido guardadas, pero hubo errores");
+
+                }
 
             }
             this.httputils.doPost('/acciones/',JSON.stringify(objectPost),successCallback, successCallback);
