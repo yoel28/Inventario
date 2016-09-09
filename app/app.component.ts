@@ -114,8 +114,8 @@ export class AppComponent extends RestController implements OnInit{
         //localStorage.setItem('urlAPI','http://192.168.0.114:9090/api');
         //localStorage.setItem('url','http://192.168.0.114:9090/');
 
-         //localStorage.setItem('urlAPI','http://192.168.0.114:9090/api');
-        //localStorage.setItem('url','http://192.168.0.114:9090/');
+        //localStorage.setItem('urlAPI','http://192.168.0.113:8080/api');
+        //localStorage.setItem('url','http://192.168.0.113:8080/');
     let that=this;
     router.subscribe(
         function(data){
@@ -313,7 +313,7 @@ export class AppComponent extends RestController implements OnInit{
             'visible':this.myglobal.existsPermission("1"),
             'routerLink':'LotRecovery',
             'icon':'fa fa-list',
-            'title':'administracion de lotes'
+            'title':'Administracion de lotes'
 
         });
 
