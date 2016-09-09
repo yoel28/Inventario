@@ -71,6 +71,7 @@ export class Operation extends RestController implements OnInit {
     public CONTACTO="";
     public DIRECCION="";
     public NOMBRE="";
+    public CLIENT :any ={}
 
 
 
@@ -448,7 +449,22 @@ export class Operation extends RestController implements OnInit {
         else {
 
 
+
+
             let that=this
+
+            let searchdata = response =>
+            {
+              Object.assign(that.CLIENT,response.json());
+            }
+
+
+            this.httputils.doGet('/clientes/'+this.user.value.id,searchdata, this.error);
+
+
+
+
+
 
 
             let arraySaveTemp =[];
@@ -479,8 +495,8 @@ export class Operation extends RestController implements OnInit {
 
 
 
-                    that.elementPrint.push({"name":that.user.value.title,"direc":'','contac':'','ruc':''});
-                    that.elementPrint.push({"name":that.NOMBRE,"direc":'Direccion: '+that.DIRECCION,'contac':'Contacto: '+that.CONTACTO,'ruc':'Ruc: '+that.RUC});
+                    that.elementPrint.push({"name":that.user.value.title,"direc":that.CLIENT.direccion,'contac':that.CLIENT.telefono,'ruc':that.CLIENT.ruc});
+                    that.elementPrint.push({"name":that.NOMBRE,"direc":that.DIRECCION,'contac':that.CONTACTO,'ruc':that.RUC});
 
                     that.listAccion=[];
                     that.listResult=response.json();
@@ -496,6 +512,9 @@ export class Operation extends RestController implements OnInit {
 
 
                     });
+
+
+
 
                     that.lote = objLote.lote;
 
