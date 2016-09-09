@@ -81,7 +81,7 @@ export class LessTables extends RestController implements OnInit {
             let successCallback = response => {
                 Object.assign(data.detailsSearh, response.json());
             }
-            this.httputils.doGet(this.externalEndPoint  + data.id, successCallback, this.error)
+            this.httputils.doGet(this.externalEndPoint+"?where="+encodeURI('[["op":"eq","field":"cliente.id","value":'+data.idCliente+'],["op":"eq","field":"tipoOperacion.id","value":'+data.idTipoOperacion+']]'), successCallback, this.error)
         }
 
 
