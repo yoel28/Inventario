@@ -330,7 +330,7 @@ export class Tables extends RestController implements OnInit {
             {
 
                 that.printObject.elementPrint.push({"name":that.printObject.ExternalInfo.list[0][0].Cliente,"direc":that.printObject.ExternalInfo.list[0][0].direccionCliente,'contac':that.printObject.ExternalInfo.list[0][0].telefonoCliente,'ruc':that.printObject.ExternalInfo.list[0][0].rucCliente});
-                that.printObject.elementPrint.push({"name":that.myglobal.getParams('EMP_NOMBRE'),"direc":that.myglobal.getParams('EMP_DIRECCION'),'contac':that.myglobal.getParams('EMP_CONTACTO'),'ruc':that.myglobal.getParams('EMP_RUC')});
+                that.printObject.elementPrint.push({"name":that.printObject.ExternalInfo.list[0][0].nombreVendedor,"direc":that.printObject.ExternalInfo.list[0][0].direccionVendedor,'contac':that.printObject.ExternalInfo.list[0][0].telefonoVendedor,'ruc':that.printObject.ExternalInfo.list[0][0].rucVendedor});
 
                 this.printObject.type="1";
 
