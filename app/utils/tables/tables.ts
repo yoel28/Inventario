@@ -301,9 +301,10 @@ export class Tables extends RestController implements OnInit {
     
     @ViewChild(Print)
     printObject:Print;
-    onPrint(event,id)
+    onPrint(event,id,type,endPoint)
     {
 
+        event.preventDefault();
 
         if(this.printObject && this.printObject.ExternalInfo)
         {
@@ -314,8 +315,7 @@ export class Tables extends RestController implements OnInit {
 
 
         
-        event.preventDefault();
-        
+
         
 
 
@@ -326,15 +326,20 @@ export class Tables extends RestController implements OnInit {
 
             Object.assign(that.printObject.ExternalInfo, response.json());
 
-            that.printObject.elementPrint.push({"name":that.printObject.ExternalInfo.list[0][0].Cliente,"direc":that.printObject.ExternalInfo.list[0][0].direccionCliente,'contac':that.printObject.ExternalInfo.list[0][0].telefonoCliente,'ruc':that.printObject.ExternalInfo.list[0][0].rucCliente});
-            that.printObject.elementPrint.push({"name":that.myglobal.getParams('EMP_NOMBRE'),"direc":that.myglobal.getParams('EMP_DIRECCION'),'contac':that.myglobal.getParams('EMP_CONTACTO'),'ruc':that.myglobal.getParams('EMP_RUC')});
+            if(type=='lotReco')
+            {
 
-            this.printObject.type="1";
+                that.printObject.elementPrint.push({"name":that.printObject.ExternalInfo.list[0][0].Cliente,"direc":that.printObject.ExternalInfo.list[0][0].direccionCliente,'contac':that.printObject.ExternalInfo.list[0][0].telefonoCliente,'ruc':that.printObject.ExternalInfo.list[0][0].rucCliente});
+                that.printObject.elementPrint.push({"name":that.myglobal.getParams('EMP_NOMBRE'),"direc":that.myglobal.getParams('EMP_DIRECCION'),'contac':that.myglobal.getParams('EMP_CONTACTO'),'ruc':that.myglobal.getParams('EMP_RUC')});
+
+                this.printObject.type="1";
+
+            }
 
 
         }
         let where =encodeURI("[['op':'eq','field':'lote.id','value':"+id+"]]");
-        this.httputils.doGet("/lote/recovery/?where="+where+"",successCallback,this.error)
+        this.httputils.doGet(endPoint+"?where="+where+"",successCallback,this.error)
     }
 }
 

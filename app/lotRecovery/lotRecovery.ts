@@ -169,7 +169,8 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
             "exp": "",
             'title': 'Imprimir Acta',
             'permission': '1',
-            'message': 'wii imprimir',
+            'type': 'lotReco',
+            'endPoint':'/lote/recovery/',
             'keyAction': 'description'
         };
 
