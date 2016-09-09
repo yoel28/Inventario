@@ -38,10 +38,10 @@ export class Client extends BasicConfiguration implements OnInit {
 
     initRules() {
 
-        let tempRules={};
+        let tempRules = this.rules;
+        this.rules={};
 
-
-        tempRules["code"] = {
+        this.rules["code"] = {
             "update": this.permissions['update'],
             "visible": true,
             'required':true,
@@ -56,7 +56,7 @@ export class Client extends BasicConfiguration implements OnInit {
                 },
             }
         };
-        tempRules["direccion"] = {
+        this.rules["direccion"] = {
             "update": this.permissions['update'],
             "visible": true,
             'required':true,
@@ -71,7 +71,7 @@ export class Client extends BasicConfiguration implements OnInit {
                 },
               }
         };
-        tempRules["title"] = {
+        this.rules["title"] = {
             "update": this.permissions['update'],
             "visible": true,
             'required':true,
@@ -86,7 +86,7 @@ export class Client extends BasicConfiguration implements OnInit {
                 },
             }
         };
-        tempRules["ruc"] = {
+        this.rules["ruc"] = {
             "update": this.permissions['update'],
             "visible": true,
             'required':true,
@@ -102,17 +102,51 @@ export class Client extends BasicConfiguration implements OnInit {
             }
         };
 
+        this.rules["webPage"] = {
+            "update": this.permissions['update'],
+            "visible": true,
+            'required':false,
+            'icon':'fa fa-list',
+            "type": "text",
+            "key": "webPage",
+            "title": "Webpage",
+            "placeholder": "ingrese la direccion web",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio'
+                },
+            }
+        };
+
+
+        this.rules["email"] = {
+            "update": this.permissions['update'],
+            "visible": true,
+            'required':false,
+            'icon':'fa fa-list',
+            "type": "text",
+            "key": "email",
+            "title": "Email",
+            "placeholder": "ingrese el email",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio'
+                },
+            }
+        };
+
+
+
+        this.rules["companyTypes"] = this.typeCompany.ruleObject;
+        this.rules["companyTypes"].visible =true;
+        this.rules["companyTypes"].type="array";
+        this.rules["companyTypes"].buttonTitle="Mostrar tipos";
+
+
+        this.rules['enabled'] = tempRules['enabled'];
 
         
-        tempRules["companyTypes"] = this.typeCompany.ruleObject;
-        tempRules["companyTypes"].visible =true;
-        tempRules["companyTypes"].type="array";
-        tempRules["companyTypes"].buttonTitle="Mostrar tipos";
 
-
-        
-
-        Object.assign(this.rules,tempRules,this.rules);
 
     }
 
@@ -166,12 +200,19 @@ export class Client extends BasicConfiguration implements OnInit {
                 'placeholder': this.rules['ruc'].placeholder,
                 'msg':this.rules['ruc'].msg
             },
-            'detail': {
-                'type': this.rules['detail'].type,
+            'webPage': {
+                'type': this.rules['webPage'].type,
                 'required':true,
-                'title': this.rules['detail'].title,
-                'placeholder': this.rules['detail'].placeholder,
-                'msg':this.rules['detail'].msg
+                'title': this.rules['webPage'].title,
+                'placeholder': this.rules['webPage'].placeholder,
+                'msg':this.rules['webPage'].msg
+            },
+            'email': {
+                'type': this.rules['email'].type,
+                'required':true,
+                'title': this.rules['email'].title,
+                'placeholder': this.rules['email'].placeholder,
+                'msg':this.rules['email'].msg
             }
         };
 
