@@ -101,7 +101,7 @@ export class RestController implements OnInit {
         let error = err => {
             this.toastr.error(err.json().message);
         };
-        return (this.httputils.onUpdate(endpoint + data.id, body, data, error));
+        return (this.httputils.onUpdate(endpoint + data.id, body, data, error,false,field,value));
     }
     onEditableRole(field,data,value,endpoint){
         let json = {};

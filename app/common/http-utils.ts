@@ -126,10 +126,12 @@ export class HttpUtils {
         }
         this.doDelete(endpoint,successCallback,errorCallback,isEndpointAbsolute);
     }
-    onUpdate(endpoint:string,body,data, errorCallback = null,isEndpointAbsolute = false){
+    onUpdate(endpoint:string,body,data, errorCallback = null,isEndpointAbsolute = false,field=null,value=null){
         let that = this;
         let successCallback= response => {
             Object.assign(data, response.json());
+            if(!response.json().field && field && value)
+                data[field]=value;
             if(that.toastr)
                 that.toastr.success('Actualizado con éxito','Notificación')
         }
