@@ -36,6 +36,7 @@ export class Dashboard extends RestController implements OnInit {
     public productRulesMore :any ={}
     public productLocationRules :any ={}
     public productEnterExitRules :any ={}
+    public productEnterExitDetailRules :any ={}
 
     public paramsTableLess :any={};
     public paramsTableMore :any={};
@@ -44,7 +45,7 @@ export class Dashboard extends RestController implements OnInit {
 
 
 
-    public externalEndPointEnterExitTables ="";
+    public externalEndPointEnterExitTables ="/inventario/diario/producto/dia/dashboard/comp/";
 
 
     
@@ -242,6 +243,56 @@ export class Dashboard extends RestController implements OnInit {
                 "key": "cantidad",
                 "title": "Cantidad",
                 "placeholder": "columna"
+            },
+            'idCliente':{
+            "visible": false,
+                "search":true,
+                'icon':'fa fa-list',
+                "type": "text",
+                "key": "idCliente",
+                "title": "Accion",
+                "placeholder": "Accion"
+        },
+        'idTipoOperacion':{
+            "visible": false,
+                "search":true,
+                'icon':'fa fa-list',
+                "type": "text",
+                "key": "idTipoOperacion",
+                "title": "Cantidad",
+                "placeholder": "columna"
+        }
+        };
+
+
+
+        this.productEnterExitDetailRules = {
+            "detalleProducto":{
+                "visible": true,
+                "search":true,
+                'icon':'fa fa-list',
+                "type": "text",
+                "key": "detalleProducto",
+                "title": "Producto",
+                "placeholder": "idProducto"
+            },
+            "nombreTipoAccion":{
+                "visible": false,
+                "search":true,
+                'icon':'fa fa-list',
+                "type": "text",
+                "key": "nombreTipoAccion",
+                "title": "Tipo Accion",
+                "placeholder": "Codigo de producto"
+            },
+            "cantidad":{
+                "visible": true,
+                "search":true,
+                'icon':'fa fa-list',
+                "type": "number",
+                "key": "cantidad",
+                "title": "Cantidad",
+                "placeholder": "Ingrese la cantidad"
             }
         };
     }
