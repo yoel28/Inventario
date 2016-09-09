@@ -370,7 +370,11 @@ export class Reports extends RestController implements OnInit {
                 this.where+='[["op":"eq","field":"tipoOperacion.id","value":'+this.listTypeSelect+']]';
 
         if(this.where.length>0)
-        this.where="&where="+encodeURI(this.where);
+            this.where="&where="+encodeURI(this.where);
+
+
+        
+
 
 
         this.loadData();
