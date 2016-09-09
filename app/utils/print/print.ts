@@ -25,6 +25,7 @@ export class Print extends BasicConfiguration implements OnInit {
 
     public type="";
     public ExternalInfo:any={};
+    public elementPrint =[];
     
 
 
@@ -51,6 +52,9 @@ export class Print extends BasicConfiguration implements OnInit {
     ngOnInit() {
 
 
+        
+
+
     }
 
 
@@ -66,6 +70,9 @@ export class Print extends BasicConfiguration implements OnInit {
         popupWin.document.write('<body onload="window.print()">' + printContents + '</body>');
         popupWin.document.head.innerHTML = (document.head.innerHTML);
         popupWin.document.close();
+
+        this.ExternalInfo ={};
+        this.type='';
 
 
     }

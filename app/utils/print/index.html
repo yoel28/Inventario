@@ -25,21 +25,21 @@
             <table [attr.class]="onPrintCss(12)">
                 <thead>
                 <tr>
-                    <td [attr.class]="onPrintCss(5)" style="border: 1px solid;"></td><td [attr.class]="onPrintCss(2)"></td><td [attr.class]="onPrintCss(5)" style="border: 1px solid;">Empresa</td>
+                    <td [attr.class]="onPrintCss(5)" style="border: 1px solid;">{{ExternalInfo.list[0][0].nombreTipoAccion=='Salida'?'Cliente':'Proveedor'}}</td><td [attr.class]="onPrintCss(2)"></td><td [attr.class]="onPrintCss(5)" style="border: 1px solid;">Empresa</td>
                 </tr>
                 </thead>
                 <tbody class="borderclass">
                 <tr>
-                    <td [attr.class]="onPrintCss(5)"></td><td></td><td [attr.class]="onPrintCss(5)"></td>
+                    <td [attr.class]="onPrintCss(5)">{{elementPrint[0].name}}</td><td></td><td [attr.class]="onPrintCss(5)">{{elementPrint[1].name}}</td>
                 </tr>
                 <tr>
-                    <td [attr.class]="onPrintCss(5)"></td><td></td><td [attr.class]="onPrintCss(5)"></td>
+                    <td [attr.class]="onPrintCss(5)">{{elementPrint[0].ruc}}</td><td></td><td [attr.class]="onPrintCss(5)">{{elementPrint[1].ruc}}</td>
                 </tr>
                 <tr>
-                    <td [attr.class]="onPrintCss(5)"></td><td></td><td [attr.class]="onPrintCss(5)"></td>
+                    <td [attr.class]="onPrintCss(5)">{{elementPrint[0].direc}}</td><td></td><td [attr.class]="onPrintCss(5)">{{elementPrint[1].direc}}</td>
                 </tr>
                 <tr>
-                    <td [attr.class]="onPrintCss(5)"></td><td></td><td [attr.class]="onPrintCss(5)"></td>
+                    <td [attr.class]="onPrintCss(5)">{{elementPrint[0].contac}}</td><td></td><td [attr.class]="onPrintCss(5)">{{elementPrint[1].contac}}</td>
                 </tr>
 
                 <tr >
@@ -58,8 +58,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr  style=" border: 1px solid;">
-                    <td  [attr.class]="onPrintCss(1)" style=" border: 1px solid;"></td><td [attr.class]="onPrintCss(11)" style=" border: 1px solid;"></td>
+                <tr  style=" border: 1px solid;" *ngFor="let product of ExternalInfo.list[1]">
+                    <td  [attr.class]="onPrintCss(1)" style=" border: 1px solid;">{{product.CantidadProducto}}</td><td [attr.class]="onPrintCss(11)" style=" border: 1px solid;">{{product.detalleProducto}}</td>
                 </tr>
                 </tbody>
             </table>
