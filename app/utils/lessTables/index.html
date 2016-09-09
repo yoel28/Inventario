@@ -1,0 +1,87 @@
+
+<div class="row" style="margin-top: 30px;">
+    <div class="col-lg-12 ">
+        <div class="panel-group" id="accordion" >
+
+
+
+            <div  *ngFor="let data of dataList.list" class="panel-default " style="margin-bottom: 5px">
+                <div class="panel-heading" >
+
+                    <a data-toggle="collapse" data-parent="#accordion" [attr.href]="'#'+data['id']" (click)="searchDetalles(data)">
+                        <div class="panel-title row">
+                            <div *ngFor="let key of keyRules(rules)" >
+
+                                <div class="col-lg-4">
+                                    <label class="text-bold" style="font-size: 12px">{{rules[key].title}}: </label>
+                                    <label style="font-size: 12px" >{{data[key]}}</label>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+
+                    </a>
+                </div>
+                <div  [attr.id]="data['id']" class="panel-collapse collapse">
+                    <div  *ngIf="data.detailsSearh && data.detailsSearh.count > 0" class="panel panel-default">
+                        <div class="panel-body">
+
+
+                            <table class="col-lg-12">
+                                <thead>
+                                    <tr>
+                                        <td *ngFor="let key of keyRules(rulesDetails)">{{rulesDetails[key].title}}</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let datadetail of data.detailsSearh.list">
+                                        <td *ngFor="let key of keyRules(rulesDetails)">{{datadetail[key]}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div *ngIf="dataList && dataList.page && dataList.page.length > 1 " class="row text-right">
+    <table class="col-lg-11">
+        <tbody>
+        <tr>
+            <td>
+                <div class="btn-group pull-right">
+
+
+                    <button *ngIf="MaxPager()>5" (click)="loadData(1)" type="button" class="btn btn-default">
+                        <<
+                    </button>
+
+                    <button *ngFor="let val of dataList.page" (click)="loadData(val)" type="button" class="btn btn-default" [class.btn-info]="offset == (val - 1) * max">
+                        {{val}}
+                    </button>
+
+
+                    <button (click)="loadAll($event)" type="button" class="btn btn-default">
+                        <i class="fa fa-list"></i>
+                    </button>
+
+                    <button *ngIf="MaxPager()>5" (click)="loadData(MaxPager())" type="button" class="btn btn-default">
+                        >>
+                    </button>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
