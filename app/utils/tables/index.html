@@ -10,7 +10,7 @@
         data-toggle="modal" [attr.data-target]="'#'+paramsFilter.idModal">
     <i class="fa fa-filter"></i>&nbsp;Filtrar
 </button>
-<table class="table table-striped table-hover orderColumn" >
+<table class="table table-striped table-hover orderColumn" *ngIf="dataList && dataList.count>0">
     <thead>
         <tr>
             <th  *ngFor="let key of keyVisible() " (click)="orderByColumn(key)"  >{{rules[key].title}}  <a ><i [style.color]="sort == key ?'red':'black'" class="fa" [class.fa-angle-down]="sort != key || order != 'asc'  " [class.fa-angle-up]="sort == key && order == 'asc'  " aria-hidden="true"></i></a> </th>
@@ -23,7 +23,8 @@
 
              <a *ngIf="rules[key].type =='date'">{{formatDate(data[key],rules[key].format)}}</a>
 
-              <a *ngIf="!rules[key].object &&  rules[key].type !='boolean' &&  rules[key].type !='date'" x-editable  [disabled]="!rules[key].update "  [endpoint]="params.endpoint" [function]="onEditable" [data]="data" [rules]="rules" [field]="key"></a>
+              <a *ngIf="!rules[key].object &&  rules[key].type !='boolean' &&  rules[key].type !='date' &&  rules[key].update " x-editable  [disabled]="!rules[key].update "  [endpoint]="params.endpoint" [function]="onEditable" [data]="data" [rules]="rules" [field]="key"></a>
+              <a *ngIf="!rules[key].object &&  rules[key].type !='boolean' &&  rules[key].type !='date' &&  !rules[key].update " >{{data[key]}}</a>
 
               <a *ngIf="rules[key].object &&   rules[key].type =='text'">
                  {{data[key]}}
