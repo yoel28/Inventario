@@ -5,9 +5,10 @@ import {globalService} from "../../common/globalService";
 import {Tables} from "../../utils/tables/tables";
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {BasicConfiguration} from "../../common/basic-configuration";
-import {Datepicker} from "../../common/xeditable";
+import {Datepicker, Xeditable} from "../../common/xeditable";
 import {Control,ControlGroup,FormBuilder,Validators} from "@angular/common";
 import {Reports} from "../../utils/reports/report";
+import {Select2} from "../../common/multiSelect";
 
 
 declare var moment:any;
@@ -16,7 +17,7 @@ declare var moment:any;
     selector: 'products-available',
     templateUrl: 'app/reports/ProductsAction/index.html',
     styleUrls: ['app/reports/ProductsAction/style.css'],
-    directives:[Reports],
+    directives:[Reports,Xeditable,Select2],
     pipes: [TranslatePipe],
     providers: [TranslateService]
 })
@@ -29,7 +30,17 @@ export class ProductsAction extends BasicConfiguration implements OnInit {
     public endPointHis = "/inventario/historico/producto/dia";
     public endPointAct = "/inventario/diario/producto/dia";
     public listType :any={}
+    
+   
+   
 
+
+
+    public source = [
+        {id: '11', text: 'Great Britain'},
+        {id: '12', text: 'United States'},
+        {id: '13', text: 'Russia'}
+        ];
 
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public _formBuilder: FormBuilder) {
         super("PRO_AC_RE","/inventario/historico/producto/dia",http, toastr,myglobal,translate);
@@ -38,10 +49,18 @@ export class ProductsAction extends BasicConfiguration implements OnInit {
 
 
 
+
+
     initOptions() {
         this.viewOptions["title"] = 'Productos por accion';
         this.viewOptions["gruopOptions"] = false;
         this.viewOptions["listTypeTitle"] = "Tipo de accion";
+        this.viewOptions["multiselect"] = 
+        {
+            'source':[],
+            'placeholder':'Seleccione...',
+            'message':'debe seleccionar al menos un tipo de accion'
+        };
 
     }
 
