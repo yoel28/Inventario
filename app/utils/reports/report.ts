@@ -9,6 +9,7 @@ import {BasicConfiguration} from "../../common/basic-configuration";
 import {Tables} from "../tables/tables";
 import {RestController} from "../../common/restController";
 import {DateRangepPicker} from "../../common/xeditable";
+import {Select2} from "../../common/multiSelect";
 
 declare var moment:any;
 
@@ -16,7 +17,7 @@ declare var moment:any;
     selector: 'reports',
     templateUrl: 'app/utils/reports/index.html',
     styleUrls: ['app/utils/reports/style.css'],
-    directives:[Tables,Datepicker,DateRangepPicker],
+    directives:[Tables,Datepicker,DateRangepPicker,Select2],
     pipes: [TranslatePipe],
     providers: [TranslateService],
     inputs:['permissions','paramsTable','endPointHis','endPointAct','viewOptions','rules','listType']
@@ -57,7 +58,13 @@ export class Reports extends RestController implements OnInit {
     public year  =false;
 
 
+    public  listSelect =[];
+    
 
+    public  tempScope:any;
+    
+    
+    
     public visualDate ="";
 
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public _formBuilder: FormBuilder) {
@@ -112,13 +119,45 @@ export class Reports extends RestController implements OnInit {
 
     ngOnInit(){
 
+        
+        let that = this;
         this.initDates();
         this.initForm();
 
         this.setEndpoint(this.endPointHis);
 
-        if(this.listType && this.listType.count >0)
+        
+        
+        if(this.listType && this.listType.count >0 && !this.viewOptions.multiselect)
             this.listTypeSelect=this.listType.list[0].id;
+        
+        if( this.viewOptions.multiselect)
+        {
+            this.viewOptions.multiselect.source =[];
+            this.listType.list.forEach((key)=>
+            {
+                that.viewOptions.multiselect.source.push({'id':key.id,'text':key.title})
+            });
+        }
+        this.tempScope = this;
+
+
+
+        
+    }
+
+
+
+    multiSelectFunction (that) {
+
+
+
+        if(that.dateStart.value && that.dateStart.value.toString().length >0 && that.listSelect.length >0 )
+            that.assignDate();
+
+
+
+
     }
 
 
@@ -224,6 +263,8 @@ export class Reports extends RestController implements OnInit {
 
     }
 
+    
+
 
     @ViewChild(Tables)
     tables:Tables;
@@ -303,24 +344,12 @@ export class Reports extends RestController implements OnInit {
         }
 
 
-        this.rules['day'].visible=false;
-        this.rules['month'].visible=false;
-        this.rules['year'].visible=false;
 
 
         if(this.endpoint != this.endPointAct)
         {
-            
-            if(this.disabledRange > 1  || this.disabledRange <= -1)
-            {
 
-                if(!(this.day || this.month || this.year))
-                {
-                    this.rules['day'].visible=true;
-                    this.rules['month'].visible=true;
-                    this.rules['year'].visible=true;
-                }
-            }
+
 
 
             this.where=JSON.stringify(dateWhere).split('{').join('[').split('}').join(']');
@@ -332,9 +361,6 @@ export class Reports extends RestController implements OnInit {
 
         if(this.day || this.month || this.year) {
 
-            this.rules['day'].visible=this.day;
-            this.rules['month'].visible=this.month;
-            this.rules['year'].visible=this.year;
 
             this.ext = "&group=[";
             let temp = "";
@@ -369,15 +395,41 @@ export class Reports extends RestController implements OnInit {
             else
                 this.where+='[["op":"eq","field":"tipoOperacion.id","value":'+this.listTypeSelect+']]';
 
+
+
+
+        let flag =true;
+
+        if(this.viewOptions.multiselect)
+        {
+
+            if(this.listSelect.length ==0)
+            {
+                this.toastr.warning(this.viewOptions.multiselect.message)
+                flag= false;
+            }
+            else
+            {
+                if(this.where.length >0)
+                {
+                    this.where = this.where.slice(0, -1);
+                    this.where+=', ["op":"in","field":"tipoOperacion.id","value":['+this.listSelect+']]';
+
+                }
+                else
+                    this.where+='[["op":"in","field":"tipoOperacion.id","value":['+this.listSelect+']]';
+
+            }
+
+        }
+
+
         if(this.where.length>0)
             this.where="&where="+encodeURI(this.where);
 
-
-        
-
-
-
+        if(flag)
         this.loadData();
+
 
     }
 

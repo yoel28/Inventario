@@ -64,9 +64,9 @@
                                 <option *ngFor="let n of rechargeTypes.list"  [attr.value]="n.id" >{{n.title}}</option>
                             </select>
                         </div>
-                        <div [hidden]="disabledRange!=-2" class="col-lg-2 center-margin padding-top" style="margin-top: 18px;">
+                        <div [hidden]="disabledRange!=-2  && !viewOptions.multiselect" class="col-lg-2 center-margin padding-top" style="margin-top: 18px;">
                             <button (click)="fromButton($event)" type="button" class="btn btn-success pull-right"
-                                    id="cntrlsubmit" [disabled]="!form.valid">
+                                    id="cntrlsubmit" >
                                 <i class="fa fa-bank"></i>
                                 Consultar
                             </button>
@@ -79,10 +79,16 @@
                 <div class="col-lg-4 ">
 
                     <div class=" col-lg-offset-1 input-icon pull-left" style="margin-bottom: 30px">
-                        <label >{{viewOptions.listTypeTitle}}</label>
-                        <select [(ngModel)]="tipoAccion_2" (ngModelChange)="setTypeSelect($event)"  sm-dropdown class="ui fluid search selection dropdown">
+                        <label >{{viewOptions.listTypeTitle}}: </label>
+                        <select  *ngIf="!viewOptions.multiselect" [(ngModel)]="tipoAccion_2" (ngModelChange)="setTypeSelect($event)"  sm-dropdown class="ui fluid search selection dropdown">
                             <option *ngFor="let data of listType.list" [attr.value]="data.id">{{data.title}}</option>
                         </select>
+
+
+                            <select *ngIf="viewOptions.multiselect" select-2 class="js-example-basic-multiple js-states form-control"  multiple="multiple" [data]="viewOptions.multiselect.source" [placeholder]="viewOptions.multiselect.placeholder"
+                                    [elements]="listSelect" ></select>
+
+
                     </div>
 
                 </div>
