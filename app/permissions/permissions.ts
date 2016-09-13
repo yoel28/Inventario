@@ -34,6 +34,7 @@ export class Permissions extends BasicConfiguration {
 
 
         this.initParamsTable();
+        this.initSaveRules();
     }
 
 
@@ -71,6 +72,7 @@ export class Permissions extends BasicConfiguration {
     }
 
     initRules() {
+
         this.rules["code"] = {
             "update": this.permissions['update'],
             "visible": true,
@@ -162,6 +164,59 @@ export class Permissions extends BasicConfiguration {
     initSearch() {
 
         
+
+    }
+
+
+    initSaveRules(){
+
+        this.paramsSave= {
+            title: "Agregar Permisos",
+            idModal: "savePermissions",
+            endpoint: this.endpoint,
+        }
+
+        this.rulesSave = {
+            'code': {
+                'type': this.rules['code'].type,
+                'required':true,
+                'title': this.rules['code'].title,
+                'placeholder': this.rules['code'].placeholder,
+                'msg':this.rules['code'].msg
+            },
+            'module': {
+                'type': this.rules['module'].type,
+                'required':true,
+                'title': this.rules['module'].title,
+                'placeholder': this.rules['module'].placeholder,
+                'msg':this.rules['module'].msg
+            },
+            'controlador': {
+                'type': this.rules['controlador'].type,
+                'required':true,
+                'title': this.rules['controlador'].title,
+                'placeholder': this.rules['controlador'].placeholder,
+                'msg':this.rules['controlador'].msg
+            },
+            'title': {
+                'type': this.rules['title'].type,
+                'required':true,
+                'title': this.rules['title'].title,
+                'placeholder': this.rules['title'].placeholder,
+                'msg':this.rules['title'].msg
+            },
+            'accion': {
+                'type': this.rules['accion'].type,
+                'required':true,
+                'title': this.rules['accion'].title,
+                'placeholder': this.rules['accion'].placeholder,
+                'msg':this.rules['accion'].msg
+            }
+        };
+
+
+
+
 
     }
 
