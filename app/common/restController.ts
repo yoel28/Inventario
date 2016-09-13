@@ -55,10 +55,10 @@ export class RestController implements OnInit {
 
 
 
-    loadData_1(endPoint,dataList) {
+    loadData_1(endPoint,dataList,ext?,order?) {
 
         this.endpoint=endPoint;
-        this.httputils.onLoadList(endPoint+"?max="+this.max+"&offset="+this.offset+this.where,dataList,this.max,this.error,false,0,false);
+        this.httputils.onLoadList(endPoint+"?max="+this.max+"&offset="+this.offset+this.where+(ext && ext.length>0?ext:""),dataList,this.max,this.error,false,0,false);
 
 
     };
