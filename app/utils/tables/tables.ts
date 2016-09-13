@@ -17,7 +17,7 @@ declare var moment:any;
     selector: 'tables',
     templateUrl: 'app/utils/tables/index.html',
     styleUrls: ['app/utils/tables/style.css'],
-    inputs:['params','rules','externalList','rulesSearch','dataList','externalSave','rulesFilter','where'],
+    inputs:['params','rules','externalList','rulesSearch','dataList','externalSave','rulesFilter','where','ext'],
     directives:[Xeditable,Search,Filter,Save,Print]
 })
 
@@ -111,7 +111,7 @@ export class Tables extends RestController implements OnInit {
         let data=[];
         let that=this;
         Object.keys(this.rules).forEach((key)=>{
-            if(that.rules[key].visible  && that.dataList.list[0][key])
+            if(that.rules[key].visible  && that.dataList.list[0][key] != null)
                 data.push(key)
         });
         return data;
