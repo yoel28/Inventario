@@ -1,0 +1,97 @@
+before_script:
+  - pwd
+  - echo $CI_BUILD_REF_NAME
+after_script:
+    - echo 'after'
+stages:
+    - pre_install
+    - build
+    - deploy
+    - reset
+    - clean
+
+pre_install_job_1:
+  stage: pre_install
+  script:
+    - mkdir /tmp/build
+    - sudo cp -rf ./* /tmp/build
+    - cd /tmp/build
+    - sudo npm run prestart
+    - sudo npm install grunt grunt-contrib-coffee grunt-contrib-cssmin grunt-contrib-htmlmin  grunt-contrib-jshint  grunt-contrib-nodeunit grunt-contrib-uglify  grunt-ts
+    - sudo npm install -g grunt grunt-contrib-coffee grunt-contrib-cssmin grunt-contrib-htmlmin  grunt-contrib-jshint  grunt-contrib-nodeunit grunt-contrib-uglify  grunt-ts
+    - sudo npm install -g typings tsc concurrently  lite-server typescript
+    - sudo typings install
+  when: on_success
+  tags:
+    - inventariodev
+  only :
+    - dev
+    - beta
+    
+build_job_2:
+  stage: build
+  script:
+    - cd /tmp/build
+    - sudo npm run tsc -w
+    - sudo npm run build
+  when: on_success
+  tags:
+    - inventariodev
+  only :
+    - dev
+    - beta
+    
+deploy_job_3:
+  stage: deploy
+  script:
+    - cd /tmp/build
+    - sudo cp -rf build/* ./
+    - sudo find ./ -type f -name '*.ts' -delete
+    - cd /var/www/html/
+    - sudo tar -cf $CI_BUILD_REF_NAME.tar $CI_BUILD_REF_NAME/
+    - sudo rm -rf /var/www/html/$CI_BUILD_REF_NAME/*
+    - sudo cp -rf /tmp/build/* /var/www/html/$CI_BUILD_REF_NAME/
+    - sh /home/ubuntu/Vertedero/conn.sh
+  when: on_success 
+  tags:
+    - inventariodev
+  only :
+    - dev
+    - beta
+
+reset_job_4:
+  stage: reset
+  script:
+    - sudo rm -rf /tmp/build
+    - sudo rm -rf /var/www/html/$CI_BUILD_REF_NAME/build
+    - sudo rm -rf /var/www/html/$CI_BUILD_REF_NAME/typings
+    - sudo rm -rf /var/www/html/$CI_BUILD_REF_NAME/consultas
+    - sudo rm -rf /var/www/html/$CI_BUILD_REF_NAME/.git
+    - sudo rm -f /var/www/html/$CI_BUILD_REF_NAME/.gitignore
+    - sudo rm -f /var/www/html/$CI_BUILD_REF_NAME/.gitlab-ci.yml
+    - sudo rm -f /var/www/html/$CI_BUILD_REF_NAME/bs-config.json
+    - sudo rm -f /var/www/html/$CI_BUILD_REF_NAME/Gruntfile.js
+    - sudo rm -f /var/www/html/$CI_BUILD_REF_NAME/package.json
+    - sudo rm -f /var/www/html/$CI_BUILD_REF_NAME/tsconfig.json
+    - sudo rm -f /var/www/html/$CI_BUILD_REF_NAME/typings.json
+    - sudo chown ubuntu.ubuntu -R /var/www/html/$CI_BUILD_REF_NAME/
+  when: on_success
+  tags:
+    - inventariodev
+  only :
+    - dev
+    - beta
+
+    
+clean_job_:
+  stage: clean
+  script:
+    - sudo rm -rf /tmp/build
+    - sudo rm -rf /var/www/html/$CI_BUILD_REF_NAME/*
+    - sudo tar -xf /var/www/html/$CI_BUILD_REF_NAME.tar -C /var/www/html/
+  when: on_failure
+  tags:
+    - inventariodev
+  only :
+    - dev
+    - beta
