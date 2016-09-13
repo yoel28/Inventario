@@ -40,7 +40,7 @@
                             <label class="panel-heading text-center col-lg-12">Cantidad de Productos por Ubicaci&oacute;n</label>
                             <div class="panel-body">
                                 <div *ngIf="productLocationTables.endpoint">
-                                    <tables [dataList]="productLocationList" [rules]="productLocationRules" [params]="productLocationTables"></tables>
+                                    <tables [dataList]="productLocationList" [rules]="productLocationRules" [params]="productLocationTables" [ext]="extLocationProducto"></tables>
                                 </div>
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                                 <div *ngIf="productEnterExitTables.endpoint">
 
 
-                                    <less-tables [externalEndPoint]="externalEndPointEnterExitTables" [rulesDetails]="productEnterExitDetailRules" [rules]="productEnterExitRules" [paramSearch]="productEnterExitTables"></less-tables>
+                                    <less-tables [externalEndPoint]="externalEndPointEnterExitTables" [rulesDetails]="productEnterExitDetailRules" [rules]="productEnterExitRules" [paramSearch]="productEnterExitTables" [ext]="extExitEnterProducto"></less-tables>
 
                                 </div>
                             </div>
