@@ -28,6 +28,8 @@ export class ProductAvailable extends BasicConfiguration implements OnInit {
     public paramsTable:any={}
     public endPointHis = "/inventario/historico/cantidad/";
     public endPointAct = "/inventario/diario/cantidad/";
+    public defaultGroup={}
+
 
 
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public _formBuilder: FormBuilder) {
@@ -39,7 +41,7 @@ export class ProductAvailable extends BasicConfiguration implements OnInit {
     
     initOptions() {
         this.viewOptions["title"] = 'Productos en Existencia';
-        this.viewOptions["gruopOptions"] = false;
+        this.viewOptions["groupOptions"] = false;
 
     }
     
@@ -69,7 +71,7 @@ export class ProductAvailable extends BasicConfiguration implements OnInit {
             'icon':'fa fa-list',
             "type": "text",
             "key": "productoDetail",
-            "title": "Detalle",
+            "title": "Producto",
             "placeholder": "Ingrese la cantidad",
             'msg':{
                 'errors':{

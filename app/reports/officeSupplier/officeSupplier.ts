@@ -28,6 +28,8 @@ export class OfficeSupplier extends BasicConfiguration implements OnInit {
     public paramsTable:any={}
     public endPointHis = "/inventario/historico/proveedor/despacho";
     public endPointAct = "/inventario/diario/proveedor/despacho";
+    public defaultGroup={'/inventario/historico/proveedor/despacho':'["field":"cliente"],["field":"producto"]','/inventario/diario/proveedor/despacho':'["field":"cliente"],["field":"producto"]'}
+
 
 
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public _formBuilder: FormBuilder) {
@@ -39,7 +41,7 @@ export class OfficeSupplier extends BasicConfiguration implements OnInit {
 
     initOptions() {
         this.viewOptions["title"] = 'Despacho por Proveedor';
-        this.viewOptions["gruopOptions"] = true;
+        this.viewOptions["groupOptions"] = [{'title':'Dia','value':false,'key':'day'},{'title':'Mes','value':false,'key':'month'},{'title':'Año','value':false,'key':'year'},];
         
     }
 

@@ -28,6 +28,7 @@ export class ProductAccion extends BasicConfiguration implements OnInit {
     public paramsTable:any={}
     public endPointHis = "/inventario/historico/operacion/fecha";
     public endPointAct = "/inventario/diario/operacion/fecha";
+    public defaultGroup={'/inventario/historico/operacion/fecha':'["field":"tipoOperacion"]','/inventario/diario/operacion/fecha':'["field":"tipoOperacion"]'}
 
 
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public _formBuilder: FormBuilder) {
@@ -39,7 +40,7 @@ export class ProductAccion extends BasicConfiguration implements OnInit {
 
     initOptions() {
         this.viewOptions["title"] = 'Movimientos por fecha';
-        this.viewOptions["gruopOptions"] = true;
+        this.viewOptions["groupOptions"] = [{'title':'Dia','value':false,'key':'day'},{'title':'Mes','value':false,'key':'month'},{'title':'Año','value':false,'key':'year'}];
 
     }
 

@@ -30,9 +30,11 @@ export class ProductsAction extends BasicConfiguration implements OnInit {
     public endPointHis = "/inventario/historico/producto/dia";
     public endPointAct = "/inventario/diario/producto/dia";
     public listType :any={}
-    
-   
-   
+    public defaultGroup={'/inventario/historico/producto/dia':'["field":"tipoOperacion"],["field":"producto"]','/inventario/diario/producto/dia':'["field":"tipoOperacion"],["field":"producto"]'}
+
+
+
+
 
 
 
@@ -53,7 +55,7 @@ export class ProductsAction extends BasicConfiguration implements OnInit {
 
     initOptions() {
         this.viewOptions["title"] = 'Productos por accion';
-        this.viewOptions["gruopOptions"] = false;
+        this.viewOptions["groupOptions"] = false;
         this.viewOptions["listTypeTitle"] = "Tipo de accion";
         this.viewOptions["multiselect"] = 
         {
@@ -100,6 +102,22 @@ export class ProductsAction extends BasicConfiguration implements OnInit {
             }
         };
 
+
+        this.rules["titleTipoAccion"] = {
+            "update": false,
+            "visible": true,
+            'required':true,
+            'icon':'fa fa-list',
+            "type": "text",
+            "key": "titleTipoAccion",
+            "title": "Tipo Accion",
+            "placeholder": "Ingrese la tipo de accion",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio'
+                },
+            }
+        };
 
         this.rules["day"] = {
             "update": false,
