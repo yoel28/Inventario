@@ -191,26 +191,12 @@ export class Permissions extends BasicConfiguration {
                 'placeholder': this.rules['module'].placeholder,
                 'msg':this.rules['module'].msg
             },
-            'controlador': {
-                'type': this.rules['controlador'].type,
-                'required':true,
-                'title': this.rules['controlador'].title,
-                'placeholder': this.rules['controlador'].placeholder,
-                'msg':this.rules['controlador'].msg
-            },
             'title': {
                 'type': this.rules['title'].type,
                 'required':true,
                 'title': this.rules['title'].title,
                 'placeholder': this.rules['title'].placeholder,
                 'msg':this.rules['title'].msg
-            },
-            'accion': {
-                'type': this.rules['accion'].type,
-                'required':true,
-                'title': this.rules['accion'].title,
-                'placeholder': this.rules['accion'].placeholder,
-                'msg':this.rules['accion'].msg
             }
         };
 
