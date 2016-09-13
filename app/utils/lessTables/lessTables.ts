@@ -11,7 +11,7 @@ import {Xeditable} from "../../common/xeditable";
     selector: 'less-tables',
     styleUrls: ['app/utils/lessTables/style.css'],
     templateUrl: 'app/utils/lessTables/index.html',
-    inputs: ['paramSearch', 'externalEndPoint', 'rulesDetails','externalList','rulesParams','rules'],
+    inputs: ['paramSearch', 'externalEndPoint', 'rulesDetails','externalList','rulesParams','rules','ext'],
     directives:[Xeditable]
 })
 
