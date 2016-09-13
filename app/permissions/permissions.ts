@@ -172,7 +172,7 @@ export class Permissions extends BasicConfiguration {
 
         this.paramsSave= {
             title: "Agregar Permisos",
-            idModal: "savePermissions",
+            idModal: "saveDefault",
             endpoint: this.endpoint,
         }
 

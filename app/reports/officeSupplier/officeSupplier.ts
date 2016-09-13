@@ -41,7 +41,7 @@ export class OfficeSupplier extends BasicConfiguration implements OnInit {
 
     initOptions() {
         this.viewOptions["title"] = 'Despacho por Proveedor';
-        this.viewOptions["groupOptions"] = [{'title':'Dia','value':false,'key':'day'},{'title':'Mes','value':false,'key':'month'},{'title':'Año','value':false,'key':'year'},];
+        this.viewOptions["groupOptions"] = [{'title':'Dia','value':false,'key':'day'},{'title':'Mes','value':false,'key':'month'},{'title':'Año','value':false,'key':'year'}];
         
     }
 
