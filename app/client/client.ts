@@ -171,6 +171,7 @@ export class Client extends BasicConfiguration implements OnInit {
             endpoint: this.endpoint,
         }
 
+        this.rulesSave ={};
         this.rulesSave = {
             'code': {
                 'type': this.rules['code'].type,
