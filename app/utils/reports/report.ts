@@ -20,7 +20,7 @@ declare var moment:any;
     directives:[Tables,Datepicker,DateRangepPicker,Select2],
     pipes: [TranslatePipe],
     providers: [TranslateService],
-    inputs:['permissions','paramsTable','endPointHis','endPointAct','viewOptions','rules','listType']
+    inputs:['permissions','paramsTable','endPointHis','endPointAct','viewOptions','rules','listType','defaultGroup']
 })
 
 
@@ -35,6 +35,8 @@ export class Reports extends RestController implements OnInit {
     public viewOptions:any={};
     public rules:any ={};
     public listType :any={};
+    public defaultGroup :any={};
+
 
 
     public listTypeSelect ="";
@@ -52,10 +54,6 @@ export class Reports extends RestController implements OnInit {
     }
 
 
-
-    public day   =false;
-    public month =false;
-    public year  =false;
 
 
     public  listSelect =[];
@@ -224,20 +222,8 @@ export class Reports extends RestController implements OnInit {
 
     changeGroupBy(id)
     {
-        switch (id)
-        {
-            case 1 :
-                this.day =!this.day;
-                break;
-            case 2 :
-                this.month = ! this.month;
-                break;
-            case 3 :
-                this.year= ! this.year;
-                break;
 
-        }
-
+        this.viewOptions.groupOptions[id].value = !this.viewOptions.groupOptions[id].value;
 
         if(this.dateStart.value && this.dateStart.value.toString().length >0 )
             this.assignDate();
@@ -286,28 +272,9 @@ export class Reports extends RestController implements OnInit {
 
     assignDate(event?){
 
-
         
-
         this.where ="";
-        let dateWhere=[];
-
-
-
-        if(this.disabledRange ==1)
-        {
-
-            this.setEndpoint(this.endPointAct);
-
-
-        }
-        else
-        {
-            this.setEndpoint(this.endPointHis);
-
-        }
-
-        this.checkEndPoint(false);
+        let tempWhere=[];
 
 
         if(this.disabledRange == -1)
@@ -316,8 +283,8 @@ export class Reports extends RestController implements OnInit {
             let end = event.end.split("/");
             
 
-            dateWhere = [{'op':'ge','field':'fecha','type':'long','value':start[2]+start[1]+start[0]}];
-            dateWhere.push({'op':'le','field':'fecha','type':'long','value':end[2]+end[1]+end[0]});
+            tempWhere = [{'op':'ge','field':'fecha','type':'long','value':start[2]+start[1]+start[0]}];
+            tempWhere.push({'op':'le','field':'fecha','type':'long','value':end[2]+end[1]+end[0]});
 
             this.visualDate=start[0]+"-"+start[1]+"-"+start[2]+" al: "+end[0]+"-"+end[1]+"-"+end[2];
         }
@@ -325,13 +292,13 @@ export class Reports extends RestController implements OnInit {
         else 
         {
             let start = moment(this.dateStart.value.toString()).format('DD-MM-YYYY').split("-");
-            dateWhere = [{'op':'ge','field':'fecha','type':'long','value':start[2]+start[1]+start[0]}];
+            tempWhere = [{'op':'ge','field':'fecha','type':'long','value':start[2]+start[1]+start[0]}];
 
 
             this.visualDate=start[0]+"-"+start[1]+"-"+start[2];
 
             if(this.disabledRange == -2 || this.disabledRange == 1)
-                dateWhere[0].op='eq';
+                tempWhere[0].op='eq';
             
             if(this.disabledRange>1)
             {
@@ -339,70 +306,51 @@ export class Reports extends RestController implements OnInit {
 
                 this.visualDate+=" al: "+end[0]+"-"+end[1]+"-"+end[2];
 
-                dateWhere.push({'op':'le','field':'fecha','type':'long','value':end[2]+end[1]+end[0]});
+                tempWhere.push({'op':'le','field':'fecha','type':'long','value':end[2]+end[1]+end[0]});
             }   
         }
 
 
 
-
-        if(this.endpoint != this.endPointAct)
+        if(this.disabledRange ==1)
         {
+            this.setEndpoint(this.endPointAct);
+            tempWhere=[];
+        }
+        else
+            this.setEndpoint(this.endPointHis);
+        
 
+        this.checkEndPoint(false);
 
-
-
-            this.where=JSON.stringify(dateWhere).split('{').join('[').split('}').join(']');
-
-
+       let tempGroup = "";
+        if(this.viewOptions.groupOptions)
+        {
+            this.viewOptions.groupOptions.forEach((key)=>{
+                if(key.value)
+                {
+                    tempGroup +='["field":"'+key.key+'"],';
+                }
+            });
 
         }
 
-
-        if(this.day || this.month || this.year) {
-
-
-            this.ext = "&group=[";
-            let temp = "";
-            temp = (this.day ? '["field":"day"]' : '');
-
-
-            if (temp.length > 0 && this.month)
-                temp += ',["field":"month"]';
-            else if (this.month)
-                temp = (this.month ? '["field":"month"]  ' : '')
-            if (temp.length > 0 && this.year)
-                temp += ',["field":"year"]';
-            else if (this.year)
-                temp = '["field":"year"]';
-
-            this.ext = this.ext + temp + "]";
-
+        if(tempGroup.length>0)
+        {
+            tempGroup = tempGroup.slice(0, -1);
+            this.ext = "&group=[" +(this.defaultGroup[this.endpoint]?this.defaultGroup[this.endpoint]+',':"")+ tempGroup + "]";
         }
-
-        else {
-            this.ext="";
-           }
-
-
-        if(this.listTypeSelect && this.listTypeSelect.length  > 0)
-            if(this.where.length >0)
-            {
-                this.where = this.where.slice(0, -1);
-                this.where+=', ["op":"eq","field":"tipoOperacion.id","value":'+this.listTypeSelect+']]';
-
-            }
-            else
-                this.where+='[["op":"eq","field":"tipoOperacion.id","value":'+this.listTypeSelect+']]';
-
-
+        else
+            this.ext = this.defaultGroup[this.endpoint]? "&group=[" +this.defaultGroup[this.endpoint]+ "]":"";
 
 
         let flag =true;
 
-        if(this.viewOptions.multiselect)
-        {
+        if(this.listTypeSelect && this.listTypeSelect.length  > 0)
+            tempWhere.push({"op":"eq","field":"tipoOperacion.id","value":this.listTypeSelect});
 
+        else if(this.viewOptions.multiselect)
+        {
             if(this.listSelect.length ==0)
             {
                 this.toastr.warning(this.viewOptions.multiselect.message)
@@ -410,22 +358,21 @@ export class Reports extends RestController implements OnInit {
             }
             else
             {
-                if(this.where.length >0)
-                {
-                    this.where = this.where.slice(0, -1);
-                    this.where+=', ["op":"in","field":"tipoOperacion.id","value":['+this.listSelect+']]';
+                let valuesTempSelect =[]
+                this.listSelect.forEach((key)=>{
+                    valuesTempSelect.push({'values':key})
+                });
 
-                }
-                else
-                    this.where+='[["op":"in","field":"tipoOperacion.id","value":['+this.listSelect+']]';
-
+                this.ext+="&in="+JSON.stringify(valuesTempSelect).split('{').join('[').split('}').join(']');
             }
-
         }
 
-
-        if(this.where.length>0)
-            this.where="&where="+encodeURI(this.where);
+        if(tempWhere.length>0)
+        {
+            let uriwhen ="";
+            uriwhen=JSON.stringify(tempWhere).split('{').join('[').split('}').join(']');
+            this.where="&where="+encodeURI(uriwhen);
+        }
 
         if(flag)
         this.loadData();
