@@ -8,6 +8,8 @@ import {FormBuilder} from "@angular/common";
 import {CHART_DIRECTIVES} from "angular2-highcharts/index";
 import {Tables} from "../utils/tables/tables";
 import {LessTables} from "../utils/lessTables/lessTables";
+import {BasicConfiguration} from "../common/basic-configuration";
+import {TranslateService} from "ng2-translate/ng2-translate";
 
 @Component({
     selector: 'home',
@@ -15,7 +17,7 @@ import {LessTables} from "../utils/lessTables/lessTables";
     styleUrls: ['app/dashboard/dashboard.css'],
     directives: [Tables, CHART_DIRECTIVES,LessTables],
 })
-export class Dashboard extends RestController implements OnInit {
+export class Dashboard extends BasicConfiguration implements OnInit {
 
 
     public chart:any=[];
@@ -45,21 +47,27 @@ export class Dashboard extends RestController implements OnInit {
 
 
 
+    public  extLocationProducto="&group=[['field':'ubicacion']]";  
+    public  extExitEnterProducto='&group=[["field":"cliente"],["field":"tipoOperacion"]]';
+
     public externalEndPointEnterExitTables ="/inventario/diario/producto/dia/dashboard/comp/";
 
 
     
     
     
-    constructor(public router:Router, http:Http, public _formBuilder:FormBuilder, public toastr:ToastsManager, public myglobal:globalService) {
-        super(http, toastr);
+    constructor(public router:Router, http:Http, public _formBuilder:FormBuilder, public toastr:ToastsManager, public myglobal:globalService,public translate: TranslateService) {
+        super("DASH","",http, toastr,myglobal,translate);
 
     }
 
 
-    
-   
-    
+
+
+    initSearch(){}
+    initRuleObject(){}
+    externalRules(){}
+
     initRules() {
 
         this.paramsTableLess['endpoint']="/inventario/diario/producto/minimo";
@@ -226,12 +234,12 @@ export class Dashboard extends RestController implements OnInit {
                 "title": "Empresa",
                 "placeholder": "nombre del producto"
             },
-            'nombreTipoAccion':{
+            'nombreOperacion':{
                 "visible": true,
                 "search":true,
                 'icon':'fa fa-list',
                 "type": "text",
-                "key": "nombreTipoAccion",
+                "key": "nombreOperacion",
                 "title": "Accion",
                 "placeholder": "Accion"
             },
@@ -267,12 +275,12 @@ export class Dashboard extends RestController implements OnInit {
 
 
         this.productEnterExitDetailRules = {
-            "detalleProducto":{
+            "detailProducto":{
                 "visible": true,
                 "search":true,
                 'icon':'fa fa-list',
                 "type": "text",
-                "key": "detalleProducto",
+                "key": "detailProducto",
                 "title": "Producto",
                 "placeholder": "idProducto"
             },
@@ -355,17 +363,15 @@ export class Dashboard extends RestController implements OnInit {
         this.viewOptions["title"] = 'Principal';
     }
 
-        getDataProduct()
-    {
+    getDataProduct() {
         
        
         this.loadData_1("/inventario/diario/producto/maximo",this.productListMore)
         this.loadData_1("/inventario/diario/producto/minimo",this.productListLess)
-        this.loadData_1("/inventario/diario/producto/ubicacion",this.productLocationList)
-        this.loadData_1("/inventario/diario/producto/dia/dashboard",this.productEnterExitList)
+        this.loadData_1("/inventario/diario/producto/ubicacion",this.productLocationList,this.extLocationProducto)
+        this.loadData_1("/inventario/diario/producto/dia/dashboard",this.productEnterExitList,this.extExitEnterProducto)
     }
-
-
+    
     ngOnInit() {
 
         this.initOptions();
