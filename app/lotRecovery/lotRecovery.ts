@@ -22,6 +22,11 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
 
 
     public paramsTable:any={};
+    public paramsFilter:any = {
+        title: "Filtrar Lotes",
+        idModal: "modalFilter",
+        endpoint: "",
+    };
 
 
     constructor(public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
@@ -116,7 +121,7 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
             "type": "text",
             "key": "clienteTelefono",
             "title": "Telefono del cliente",
-            "placeholder": "ingrese el nombre del titulo",
+            "placeholder": "ingrese el telefono del cliente",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio'
@@ -132,7 +137,7 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
             "type": "text",
             "key": "clienteEmail",
             "title": "correo del cliente",
-            "placeholder": "ingrese el nombre del titulo",
+            "placeholder": "ingrese el email del cliente",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio'
@@ -150,7 +155,7 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
             "format":"ll",
             "key": "dateCreated",
             "title": "Fecha",
-            "placeholder": "ingrese el nombre del titulo",
+            "placeholder": "ingrese la fecha",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio'
