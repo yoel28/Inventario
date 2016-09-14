@@ -8,6 +8,7 @@ import {RestController} from "../../common/restController";
 import {globalService} from "../../common/globalService";
 import {User} from "../../user/user";
 import {TranslatePipe, TranslateService} from "ng2-translate/ng2-translate";
+import {Roles} from "../../roles/roles";
 
 
 @Component({
@@ -16,7 +17,7 @@ import {TranslatePipe, TranslateService} from "ng2-translate/ng2-translate";
     styleUrls: ['app/account/profile/style.css'],
     directives: [Xeditable,Xcropit,Search,Xfile],
     pipes: [TranslatePipe],
-    providers: [TranslateService,User]
+    providers: [TranslateService,User,Roles]
 })
 export class Profile extends RestController implements OnInit{
 
