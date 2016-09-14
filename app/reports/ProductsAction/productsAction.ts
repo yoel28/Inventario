@@ -45,7 +45,7 @@ export class ProductsAction extends BasicConfiguration implements OnInit {
         ];
 
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public _formBuilder: FormBuilder) {
-        super("PRO_AC_RE","/inventario/historico/producto/dia",http, toastr,myglobal,translate);
+        super("RE_PRO_AC","/inventario/historico/producto/dia",http, toastr,myglobal,translate);
 
     }
 
