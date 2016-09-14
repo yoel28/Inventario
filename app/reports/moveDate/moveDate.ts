@@ -28,7 +28,7 @@ export class MovesByDate extends BasicConfiguration implements OnInit {
     public paramsTable:any={}
     public endPointHis = "/inventario/historico/operacion/fecha";
     public endPointAct = "/inventario/diario/operacion/fecha";
-    public defaultGroup={'/inventario/historico/operacion/fecha':'["field":"tipoOperacion"]','/inventario/diario/operacion/fecha':'["field":"tipoOperacion"]'}
+    public defaultGroup={'/inventario/historico/operacion/fecha':'["field":"tipoOperacion","show":["title"]]','/inventario/diario/operacion/fecha':'["field":"tipoOperacion","show":["title"]]'}
 
 
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public _formBuilder: FormBuilder) {
@@ -40,7 +40,7 @@ export class MovesByDate extends BasicConfiguration implements OnInit {
 
     initOptions() {
         this.viewOptions["title"] = 'Movimientos por fecha';
-        this.viewOptions["groupOptions"] = [{'title':'Dia','value':false,'key':'day'},{'title':'Mes','value':false,'key':'month'},{'title':'Año','value':false,'key':'year'}];
+        this.viewOptions["groupOptions"] = [{'title':'Dia','value':false,'key':'dia'},{'title':'Mes','value':false,'key':'mes'},{'title':'Año','value':false,'key':'year'}];
 
     }
 
@@ -48,7 +48,7 @@ export class MovesByDate extends BasicConfiguration implements OnInit {
 
         this.rules ={};
 
-        this.rules["nombreOperacion"] = {
+        this.rules["tipoOperacionTitle"] = {
             "update": false,
             "visible": true,
             'required':true,
@@ -80,13 +80,13 @@ export class MovesByDate extends BasicConfiguration implements OnInit {
         };
 
 
-        this.rules["day"] = {
+        this.rules["dia"] = {
             "update": false,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
-            "key": "day",
+            "key": "dia",
             "title": "Dia",
             "placeholder": "Ingrese el dia",
             'msg':{
@@ -97,13 +97,13 @@ export class MovesByDate extends BasicConfiguration implements OnInit {
         };
 
 
-        this.rules["month"] = {
+        this.rules["mes"] = {
             "update": false,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
-            "key": "month",
+            "key": "mes",
             "title": "Meses",
             "placeholder": "Ingrese el mes",
             'msg':{

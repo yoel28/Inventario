@@ -28,7 +28,7 @@ export class OfficeSupplier extends BasicConfiguration implements OnInit {
     public paramsTable:any={}
     public endPointHis = "/inventario/historico/proveedor/despacho";
     public endPointAct = "/inventario/diario/proveedor/despacho";
-    public defaultGroup={'/inventario/historico/proveedor/despacho':'["field":"cliente"],["field":"producto"]','/inventario/diario/proveedor/despacho':'["field":"cliente"],["field":"producto"]'}
+    public defaultGroup={'/inventario/historico/proveedor/despacho':'["field":"cliente","show":["title","ruc"]],["field":"producto","show":["detail"]]','/inventario/diario/proveedor/despacho':'["field":"cliente","show":["title","ruc"]],["field":"producto","show":["detail"]]'}
 
 
 
@@ -41,7 +41,7 @@ export class OfficeSupplier extends BasicConfiguration implements OnInit {
 
     initOptions() {
         this.viewOptions["title"] = 'Despacho por Proveedor';
-        this.viewOptions["groupOptions"] = [{'title':'Dia','value':false,'key':'day'},{'title':'Mes','value':false,'key':'month'},{'title':'Año','value':false,'key':'year'}];
+        this.viewOptions["groupOptions"] = [{'title':'Dia','value':false,'key':'dia'},{'title':'Mes','value':false,'key':'mes'},{'title':'Año','value':false,'key':'year'}];
         
     }
 
@@ -49,13 +49,13 @@ export class OfficeSupplier extends BasicConfiguration implements OnInit {
 
         this.rules ={};
 
-        this.rules["rucCliente"] = {
+        this.rules["clienteRuc"] = {
             "update": false,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
-            "key": "rucCliente",
+            "key": "clienteRuc",
             "title": "Ruc de Cliente",
             "placeholder": "Ingrese el ruc cliente",
             'msg':{
@@ -64,13 +64,13 @@ export class OfficeSupplier extends BasicConfiguration implements OnInit {
                 },
             }
         };
-        this.rules["nombreCliente"] = {
+        this.rules["clienteTitle"] = {
             "update": false,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
-            "key": "nombreCliente",
+            "key": "clienteTitle",
             "title": "nombre de cliente",
             "placeholder": "Ingrese la cantidad",
             'msg':{
@@ -80,13 +80,13 @@ export class OfficeSupplier extends BasicConfiguration implements OnInit {
             }
         };
 
-        this.rules["detailProducto"] = {
+        this.rules["productoDetail"] = {
             "update": false,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
-            "key": "detailProducto",
+            "key": "productoDetail",
             "title": "Producto",
             "placeholder": "Ingrese la cantidad",
             'msg':{
@@ -111,13 +111,13 @@ export class OfficeSupplier extends BasicConfiguration implements OnInit {
             }
         };
         
-        this.rules["day"] = {
+        this.rules["dia"] = {
             "update": false,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
-            "key": "day",
+            "key": "dia",
             "title": "Dia",
             "placeholder": "Ingrese el dia",
             'msg':{
@@ -128,13 +128,13 @@ export class OfficeSupplier extends BasicConfiguration implements OnInit {
         };
 
 
-        this.rules["month"] = {
+        this.rules["mes"] = {
             "update": false,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
-            "key": "month",
+            "key": "mes",
             "title": "Meses",
             "placeholder": "Ingrese el mes",
             'msg':{
