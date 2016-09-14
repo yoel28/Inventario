@@ -147,7 +147,7 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
             "search":true,
             'icon':'fa fa-list',
             "type": "date",
-            "format":"DD-MM-YYYY",
+            "format":"ll",
             "key": "dateCreated",
             "title": "Fecha",
             "placeholder": "ingrese el nombre del titulo",
