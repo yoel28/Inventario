@@ -81,6 +81,7 @@ export class Permissions extends BasicConfiguration {
             "type": "text",
             "key": "code",
             "title": "Código",
+            "search":true,
             "placeholder": "Ingrese el código",
             'msg':{
                 'errors':{
@@ -96,6 +97,7 @@ export class Permissions extends BasicConfiguration {
             "type": "text",
             "key": "module",
             "title": "Modulo",
+            "search":true,
             "placeholder": "Ingrese el modulo",
             'msg':{
                 'errors':{
@@ -110,6 +112,7 @@ export class Permissions extends BasicConfiguration {
             'icon':'fa fa-list',
             "type": "text",
             "key": "title",
+            "search":true,
             "title": "Titulo",
             "placeholder": "Ingrese el titulo",
             'msg':{
@@ -140,6 +143,7 @@ export class Permissions extends BasicConfiguration {
             "type": "text",
             "key": "accion",
             "title": "Accion",
+            "search":true,
             "placeholder": "ingrese la accion",
             'msg':{
                 'errors':{
