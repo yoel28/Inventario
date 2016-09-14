@@ -47,7 +47,7 @@ export class Dashboard extends BasicConfiguration implements OnInit {
 
 
 
-    public  extLocationProducto="&group=[['field':'ubicacion']]";  
+    public  extLocationProducto="&group=[['field':'ubicacion','show':['title','fila','columna']]]";
     public  extExitEnterProducto='&group=[["field":"cliente"],["field":"tipoOperacion"]]';
 
     public externalEndPointEnterExitTables ="/inventario/diario/producto/dia/dashboard/comp/";
@@ -183,30 +183,30 @@ export class Dashboard extends BasicConfiguration implements OnInit {
         };
 
         this.productLocationRules={
-            'title':{
+            'ubicacionTitle':{
                 "visible": true,
                 "search":true,
                 'icon':'fa fa-list',
                 "type": "text",
-                "key": "title",
+                "key": "ubicacionTitle",
                 "title": "Nombre del casillero",
                 "placeholder": "nombre del casillero"
             },
-            'fila':{
+            'ubicacionFila':{
                 "visible": true,
                 "search":true,
                 'icon':'fa fa-list',
                 "type": "text",
-                "key": "fila",
+                "key": "ubicacionFila",
                 "title": "fila",
                 "placeholder": "fila"
             },
-            'columna':{
+            'ubicacionColumna':{
                 "visible": true,
                 "search":true,
                 'icon':'fa fa-list',
                 "type": "text",
-                "key": "columna",
+                "key": "ubicacionColumna",
                 "title": "Columna",
                 "placeholder": "columna"
             },
