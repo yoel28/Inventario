@@ -127,6 +127,7 @@ export class RestController implements OnInit {
     loadAll(event) {
         event.preventDefault();
         this.max = this.dataList.count;
+        this.offset=0;
         this.loadData();
         this.loadAllData=true;
     }
