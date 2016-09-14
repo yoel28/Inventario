@@ -30,19 +30,13 @@ export class ProductsAction extends BasicConfiguration implements OnInit {
     public endPointHis = "/inventario/historico/producto/dia";
     public endPointAct = "/inventario/diario/producto/dia";
     public listType :any={}
-    public defaultGroup={'/inventario/historico/producto/dia':'["field":"tipoOperacion"],["field":"producto"]','/inventario/diario/producto/dia':'["field":"tipoOperacion"],["field":"producto"]'}
+    public defaultGroup={'/inventario/historico/producto/dia':'["field":"tipoOperacion","show":["title"]],["field":"producto","show":["detail","code"]]','/inventario/diario/producto/dia':'["field":"tipoOperacion","show":["title"]],["field":"producto","show":["detail","code"]]'}
 
 
 
 
 
 
-
-    public source = [
-        {id: '11', text: 'Great Britain'},
-        {id: '12', text: 'United States'},
-        {id: '13', text: 'Russia'}
-        ];
 
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public _formBuilder: FormBuilder) {
         super("RE_PRO_AC","/inventario/historico/producto/dia",http, toastr,myglobal,translate);
@@ -55,7 +49,7 @@ export class ProductsAction extends BasicConfiguration implements OnInit {
 
     initOptions() {
         this.viewOptions["title"] = 'Productos por accion';
-        this.viewOptions["groupOptions"] = false;
+        this.viewOptions["groupOptions"] = [{'title':'Dia','value':false,'key':'dia'},{'title':'Mes','value':false,'key':'mes'},{'title':'Año','value':false,'key':'year'}];
         this.viewOptions["listTypeTitle"] = "Tipo de accion";
         this.viewOptions["multiselect"] = 
         {
@@ -70,13 +64,29 @@ export class ProductsAction extends BasicConfiguration implements OnInit {
 
         this.rules ={};
 
-        this.rules["detailProducto"] = {
+        this.rules["productoCode"] = {
             "update": false,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
-            "key": "detailProducto",
+            "key": "productoCode",
+            "title": "Codigo",
+            "placeholder": "Ingrese el producto",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio'
+                },
+            }
+        };
+
+        this.rules["productoDetail"] = {
+            "update": false,
+            "visible": true,
+            'required':true,
+            'icon':'fa fa-list',
+            "type": "text",
+            "key": "productoDetail",
             "title": "Producto",
             "placeholder": "Ingrese el producto",
             'msg':{
@@ -103,13 +113,13 @@ export class ProductsAction extends BasicConfiguration implements OnInit {
         };
 
 
-        this.rules["titleTipoAccion"] = {
+        this.rules["tipoOperacionTitle"] = {
             "update": false,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
-            "key": "titleTipoAccion",
+            "key": "tipoOperacionTitle",
             "title": "Tipo Accion",
             "placeholder": "Ingrese la tipo de accion",
             'msg':{
@@ -119,13 +129,13 @@ export class ProductsAction extends BasicConfiguration implements OnInit {
             }
         };
 
-        this.rules["day"] = {
+        this.rules["dia"] = {
             "update": false,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
-            "key": "day",
+            "key": "dia",
             "title": "Dia",
             "placeholder": "Ingrese el dia",
             'msg':{
@@ -136,13 +146,13 @@ export class ProductsAction extends BasicConfiguration implements OnInit {
         };
 
 
-        this.rules["month"] = {
+        this.rules["mes"] = {
             "update": false,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
-            "key": "month",
+            "key": "mes",
             "title": "Meses",
             "placeholder": "Ingrese el mes",
             'msg':{
@@ -196,7 +206,7 @@ export class ProductsAction extends BasicConfiguration implements OnInit {
         this.initParamsTable();
         this.initRules();
 
-        this.loadData_1("/search/tipo/acciones",this.listType)
+        this.loadData_1("/search/tipo/acciones?showAll=true",this.listType)
 
     }
 
