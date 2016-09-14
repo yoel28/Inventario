@@ -212,15 +212,20 @@ export class Operation extends RestController implements OnInit {
         }
         else{
 
-            
-            
-        let successCallback= response => {
+        let codeBar = this.producto.value;
+        this.producto.updateValue(null);
+
+            let successCallback= response => {
 
 
             if(response.status==200){
 
                 if(that.lastLocaltion && that.lastLocaltion.id)
+                {
+                    var snd = new Audio("/assets/sound/click.mp3");
+                    snd.play();
                     that.listAccion.push({"item":this.lastItem++,"Producto":{"code":response.json().code,"id":response.json().id,"name":response.json().detail},"Ubicacion":{'name':that.lastLocaltion.name,'id':that.lastLocaltion.id},"Accion":that.accionList,"Status":true,"Validate":true,"msj":"Codigo del producto: "+response.json().code});
+                }
                 else
                     that.toastr.error("por favor ingrese una ubicacion primero");
 
@@ -228,6 +233,7 @@ export class Operation extends RestController implements OnInit {
             }
             else if(response.status==202)
             {
+
                 that.toastr.success("Ubicacion cargada");
                 that.ubicacion.updateValue(response.json().id)
                 that.lastLocaltion.name=response.json().title;
@@ -236,16 +242,15 @@ export class Operation extends RestController implements OnInit {
             else if(response.status==204){
 
 
-                var snd = new Audio("/assets/sound/error.wav"); // buffers automatically when created
+                var snd = new Audio("/assets/sound/error.wav"); 
                 snd.play();
-                that.listAccion.push({"item":this.lastItem++,"Producto":{"code":that.producto.value},"Ubicacion":"","Accion":that.accionList,"Status":false,"Validate":false,"msj":"El codigo no fue encontrado"});
+                that.listAccion.push({"item":this.lastItem++,"Producto":{"code":codeBar},"Ubicacion":"","Accion":that.accionList,"Status":false,"Validate":false,"msj":"El codigo no fue encontrado"});
                 
             }
 
-            this.producto.updateValue(null);
 
         }
-        this.httputils.doGet('/acciones/check/type/element/'+this.producto.value,successCallback, this.error);
+        this.httputils.doGet('/acciones/check/type/element/'+codeBar,successCallback, this.error);
         }
     }
     
