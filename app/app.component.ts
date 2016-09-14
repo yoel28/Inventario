@@ -17,7 +17,6 @@ import {Save} from "./utils/save/save";
 import {Location_product} from "./location/location";
 import {Client} from "./client/client";
 import {User} from "./user/user";
-import {Profile} from "./account/profile/profile";
 import {Roles} from "./roles/roles";
 import {Permissions} from "./permissions/permissions";
 import {Operation} from "./operation/operation";
@@ -36,6 +35,7 @@ import {Params} from "./configurations/params/params";
 import {ProductsAction} from "./reports/ProductsAction/productsAction";
 import {LotRecovery} from "./lotRecovery/lotRecovery";
 import {MovesByDate} from "./reports/moveDate/moveDate";
+import {Profile} from "./account/profile/profile";
 
 
 @Component({
@@ -58,7 +58,6 @@ import {MovesByDate} from "./reports/moveDate/moveDate";
   { path: '/location',   name: 'Location_product', component: Location_product },
   { path: '/client',   name: 'Client', component: Client },
   { path: '/user',   name: 'User', component: User },
-  { path: '/user/profile',   name: 'Profile', component: Profile },
   { path: '/roles',   name: 'Roles', component: Roles },
   { path: '/permissions',   name: 'Permissions', component: Permissions },
   { path: '/permissions/acl',   name: 'PermissionsAcl', component: PermissionsAcl },
@@ -67,36 +66,17 @@ import {MovesByDate} from "./reports/moveDate/moveDate";
   { path: '/brandProduct',   name: 'BrandProduct', component: BrandProduct },
   { path: '/modelProduct',   name: 'ModelProduct', component: ModelProduct },
   { path: '/upload',   name: 'UploadFile', component: UploadFile },
-
-
-
-
-
   { path: '/type/company',   name: 'TypeCompany', component: TypeCompany },
   { path: '/accion/type',   name: 'AccionType', component: AccionType },
-
-
   { path: '/configuration/params',   name: 'Params', component: Params },
-
-
-
-
-
-
   { path: '/product/available',   name: 'ProductAvailable', component: ProductAvailable },
   { path: '/office/supplieer',   name: 'OfficeSupplier', component: OfficeSupplier },
   { path: '/operacion/accion',   name: 'ProductsAction', component: ProductsAction },
   { path: '/move/date',   name: 'MovesByDate', component: MovesByDate },
-
   { path: '/product/audit',   name: 'ProductAudit', component: ProductAudit },
-
-
   { path: '/buck/upload',   name: 'BuckUpload', component: BuckUpload },
-
-
-
   { path: '/lot/recovery',   name: 'LotRecovery', component: LotRecovery },
-
+  { path: '/user/profile',   name: 'Profile', component: Profile },
   { path: '/**', redirectTo: ['Dashboard'] }
 
 ])
@@ -201,6 +181,14 @@ export class AppComponent extends RestController implements OnInit{
     public menuItems=[];
     loadMenu(){
 
+
+        this.menuItems.push({
+            'visible':this.myglobal.existsPermission("1"),
+            'routerLink':'Dashboard',
+            'icon':'fa fa-list',
+            'title':'Dashboard'
+
+        });
 
         this.menuItems.push({
             'visible':this.myglobal.existsPermission("1"),
