@@ -13,7 +13,7 @@ import {Reports} from "../../utils/reports/report";
 declare var moment:any;
 
 @Component({
-    selector: 'products-available',
+    selector: 'office-supplier',
     templateUrl: 'app/reports/productAvailable/productAvailable.html',
     styleUrls: ['app/reports/productAvailable/style.css'],
     directives:[Reports],
@@ -33,7 +33,7 @@ export class OfficeSupplier extends BasicConfiguration implements OnInit {
 
 
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public _formBuilder: FormBuilder) {
-        super("RE_PO_DE","/inventario/historico/proveedor/despacho",http, toastr,myglobal,translate);
+        super("RE_OF_SU","/inventario/historico/proveedor/despacho",http, toastr,myglobal,translate);
 
     }
 
