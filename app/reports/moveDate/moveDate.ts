@@ -13,9 +13,9 @@ import {Reports} from "../../utils/reports/report";
 declare var moment:any;
 
 @Component({
-    selector: 'products-accion',
-    templateUrl: 'app/reports/productAccion/index.html',
-    styleUrls: ['app/reports/productAccion/style.css'],
+    selector: 'moves-date',
+    templateUrl: 'app/reports/moveDate/index.html',
+    styleUrls: ['app/reports/moveDate/style.css'],
     directives:[Reports],
     pipes: [TranslatePipe],
     providers: [TranslateService]
@@ -23,7 +23,7 @@ declare var moment:any;
 
 
 
-export class ProductAccion extends BasicConfiguration implements OnInit {
+export class MovesByDate extends BasicConfiguration implements OnInit {
 
     public paramsTable:any={}
     public endPointHis = "/inventario/historico/operacion/fecha";
