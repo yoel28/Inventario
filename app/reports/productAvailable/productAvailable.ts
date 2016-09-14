@@ -80,21 +80,7 @@ export class ProductAvailable extends BasicConfiguration implements OnInit {
             }
         };
 
-        this.rules["cantidad"] = {
-            "update": false,
-            "visible": true,
-            'required':true,
-            'icon':'fa fa-list',
-            "type": "text",
-            "key": "cantidad",
-            "title": "cantidad",
-            "placeholder": "Ingrese la cantidad",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio'
-                },
-            }
-        };
+        
         this.rules["modelo"] = {
             "update": false,
             "visible": true,
@@ -143,15 +129,15 @@ export class ProductAvailable extends BasicConfiguration implements OnInit {
         };
 
 
-        this.rules["day"] = {
+        this.rules["cantidad"] = {
             "update": false,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
-            "key": "day",
-            "title": "Dia",
-            "placeholder": "Ingrese el dia",
+            "key": "cantidad",
+            "title": "cantidad",
+            "placeholder": "Ingrese la cantidad",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio'
@@ -159,40 +145,7 @@ export class ProductAvailable extends BasicConfiguration implements OnInit {
             }
         };
 
-
-        this.rules["month"] = {
-            "update": false,
-            "visible": true,
-            'required':true,
-            'icon':'fa fa-list',
-            "type": "text",
-            "key": "month",
-            "title": "Meses",
-            "placeholder": "Ingrese el mes",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio'
-                },
-            }
-        };
-
-
-        this.rules["year"] = {
-            "update": false,
-            "visible": true,
-            'required':true,
-            'icon':'fa fa-list',
-            "type": "text",
-            "key": "year",
-            "title": "Año",
-            "placeholder": "Ingrese la el año",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio'
-                },
-            }
-        };
-
+        
     }
 
     initSearch() {
