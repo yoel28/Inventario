@@ -30,12 +30,12 @@ import {UploadFile} from "./uploadFile/upload";
 import {TypeCompany} from "./typeCompany/typeCompany";
 import {ProductAudit} from "./productAudit/productAudit";
 import {OfficeSupplier} from "./reports/officeSupplier/officeSupplier";
-import {ProductAccion} from "./reports/productAccion/productAccion";
 import {BuckUpload} from "./BuckUpload/buckUpload";
 import {AccionType} from "./accionType/accionType";
 import {Params} from "./configurations/params/params";
 import {ProductsAction} from "./reports/ProductsAction/productsAction";
 import {LotRecovery} from "./lotRecovery/lotRecovery";
+import {MovesByDate} from "./reports/moveDate/moveDate";
 
 
 @Component({
@@ -85,8 +85,8 @@ import {LotRecovery} from "./lotRecovery/lotRecovery";
 
   { path: '/product/available',   name: 'ProductAvailable', component: ProductAvailable },
   { path: '/office/supplieer',   name: 'OfficeSupplier', component: OfficeSupplier },
-  { path: '/operacion/accion',   name: 'ProductAccion', component: ProductAccion },
-  { path: '/product/accion',   name: 'ProductsAction', component: ProductsAction },
+  { path: '/operacion/accion',   name: 'ProductsAction', component: ProductsAction },
+  { path: '/move/date',   name: 'MovesByDate', component: MovesByDate },
 
   { path: '/product/audit',   name: 'ProductAudit', component: ProductAudit },
 
@@ -297,7 +297,7 @@ export class AppComponent extends RestController implements OnInit{
                     'visible':this.myglobal.existsPermission("1"),
                     'icon':'fa fa-list',
                     'title':'Movimientos por fecha',
-                    'routerLink':'ProductAccion'
+                    'routerLink':'MovesByDate'
                 },
                 {
                     'visible':this.myglobal.existsPermission("1"),
