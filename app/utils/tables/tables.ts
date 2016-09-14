@@ -194,7 +194,7 @@ export class Tables extends RestController implements OnInit {
 
     //Cargar Where del filter
     public paramsFilter:any = {
-        title: "Filtrar roles",
+        title: "Filtrar",
         idModal: "modalFilter",
         endpoint: "",
     };
