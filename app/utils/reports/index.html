@@ -64,7 +64,7 @@
                         </div>
                         <div [hidden]="disabledRange!=-2  && !viewOptions.multiselect" class="col-lg-2 center-margin padding-top" style="margin-top: 18px;">
                             <button (click)="fromButton($event)" type="button" class="btn btn-success pull-right"
-                                    id="cntrlsubmit" >
+                                    id="cntrlsubmit" [disabled]="!dateStart.value" >
                                 <i class="fa fa-bank"></i>
                                 Consultar
                             </button>
@@ -94,6 +94,10 @@
 
 
 
+            <div *ngIf=" dataList && dataList.count <= 0 " class="alert alert-warning">
+                No hay datos para mostrar.
+            </div>
+
             <div *ngIf=" dataList && dataList.count > 0 " (click)="checkEndPoint()">
 
 
@@ -103,6 +107,7 @@
                     <h3 ><strong class="text-bold">Fecha del reporte </strong> :{{visualDate}}</h3>
 
                 </div>
+
                 <tables [dataList]="dataList" [rules]="rules"  [params]="paramsTable" [rulesSearch]="rulesSearch" [where]="where" [ext]="ext"></tables>
 
             </div>

@@ -53,6 +53,8 @@ export class Reports extends RestController implements OnInit {
         'format':"DD/MM/YYYY"
     }
 
+    
+    public firstSearch =false;
 
 
 
@@ -174,14 +176,12 @@ export class Reports extends RestController implements OnInit {
         let val;
 
 
-
-
-
-
+        this.dateStart.updateValue(null);
 
 
         switch (id)
         {
+
             case "1" : //hoy
                 this.dateStart.updateValue(day);
                 break;
@@ -272,7 +272,7 @@ export class Reports extends RestController implements OnInit {
 
     assignDate(event?){
 
-        
+        this.firstSearch =true;
         this.where ="";
         let tempWhere=[];
 
