@@ -29,6 +29,8 @@ export class MovesByDate extends BasicConfiguration implements OnInit {
     public endPointHis = "/inventario/historico/operacion/fecha";
     public endPointAct = "/inventario/diario/operacion/fecha";
     public defaultGroup={'/inventario/historico/operacion/fecha':'["field":"tipoOperacion","show":["title"]]','/inventario/diario/operacion/fecha':'["field":"tipoOperacion","show":["title"]]'}
+    public totalEndPoint:any={};
+    public totalTitle='Total';
 
 
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public _formBuilder: FormBuilder) {
