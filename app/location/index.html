@@ -16,7 +16,7 @@
             <div *ngIf="permissions.list"  class="box-body">
                 <div *ngIf=" dataList && dataList.count > 0 ">
 
-                    <tables [dataList]="dataList" [rules]="rules" [params]="paramsTable" [rulesSearch]="rulesSearch"></tables>
+                    <tables [dataList]="dataList" [rules]="rules" [params]="paramsTable" [rulesSearch]="rulesSearch" [rulesFilter]="rules"></tables>
 
                 </div>
                 <div *ngIf="dataList && dataList.count == 0">
@@ -38,3 +38,20 @@
     </section>
 </div>
 <save [rules]="rulesSave" [params]="paramsSave" (save)="asignData($event)"> </save>
+
+[
+    [
+        'join':'cliente',
+        'where':[
+            ['op':'eq','field':'ruc','value':'askldj']
+        ]
+    ]
+],
+[
+[
+'join':'cliente',
+'where':[
+['op':'eq','field':'title','value':'askldj']
+]
+]
+]
