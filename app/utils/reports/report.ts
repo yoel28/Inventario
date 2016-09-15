@@ -273,9 +273,12 @@ export class Reports extends RestController implements OnInit {
     tables:Tables;
     checkEndPoint(flag=true)
     {
+
         if(this.tables && this.tables.endpoint && this.tables.endpoint != this.endpoint)
         {
             this.tables.endpoint = this.endpoint;
+            this.tables.newSearch = true;
+            this.tables.max=5;
             if(flag)
             {
                 this.tables.sort="";
@@ -295,19 +298,27 @@ export class Reports extends RestController implements OnInit {
         let tempWhere=[];
         let uriwhen ="";
         let inTemp="";
-        this.loadAllData = false;
+        this.newSearch = true;
+        this.max=5;
+
 
 
         if(this.disabledRange == -1)
         {
+
+            if(event)
+                this.dateStart.updateValue(event);
+
+            if(!event)
+            {
+                event = this.dateStart.value;
+            }
             let start = event.start.split("/");
             let end = event.end.split("/");
             
-
             tempWhere = [{'op':'ge','field':'fecha','type':'long','value':start[2]+start[1]+start[0]}];
             tempWhere.push({'op':'le','field':'fecha','type':'long','value':end[2]+end[1]+end[0]});
 
-            this.visualDate=start[0]+"-"+start[1]+"-"+start[2]+" al: "+end[0]+"-"+end[1]+"-"+end[2];
         }
 
         else 
@@ -316,7 +327,6 @@ export class Reports extends RestController implements OnInit {
             tempWhere = [{'op':'ge','field':'fecha','type':'long','value':start[2]+start[1]+start[0]}];
 
 
-            this.visualDate=start[0]+"-"+start[1]+"-"+start[2];
 
             if(this.disabledRange == -2 || this.disabledRange == 1)
                 tempWhere[0].op='eq';
@@ -325,7 +335,6 @@ export class Reports extends RestController implements OnInit {
             {
                 let end = moment(this.dateEnd.value.toString()).format('DD-MM-YYYY').split("-");
 
-                this.visualDate+=" al: "+end[0]+"-"+end[1]+"-"+end[2];
 
                 tempWhere.push({'op':'le','field':'fecha','type':'long','value':end[2]+end[1]+end[0]});
             }   
@@ -381,6 +390,11 @@ export class Reports extends RestController implements OnInit {
             {
                 let valuesTempSelect =[]
                 this.listSelect.forEach((key)=>{
+                    if(key==0 && this.disabledRange !=-2 && this.disabledRange!=1 )
+                    {
+                        this.toastr.warning('esta opcion no esta permitida con rangos de fecha')
+                        flag=false;
+                    }
                     valuesTempSelect.push({'values':key})
                 });
                 inTemp = "&in="+JSON.stringify(valuesTempSelect).split('{').join('[').split('}').join(']');
@@ -397,22 +411,32 @@ export class Reports extends RestController implements OnInit {
 
 
 
-        if(this.totalTitle )
+        if(flag)
         {
+            this.visualDate=start[0]+"-"+start[1]+"-"+start[2];
 
-            this.totalObject.title = this.totalTitle;
+            if(this.disabledRange !=-2 && this.disabledRange!=1)
+                this.visualDate+=" al: "+end[0]+"-"+end[1]+"-"+end[2];
 
-            let that = this;
-            let  sucTotal = response =>
+
+            if(this.totalTitle )
             {
-                that.totalObject.result = response.json().count.cantidad;
+
+                this.totalObject.title = this.totalTitle;
+
+                let that = this;
+                let  sucTotal = response =>
+                {
+                    that.totalObject.result = response.json().count.cantidad;
+                }
+
+                this.httputils.doGet(this.endpoint+"/total?max=5"+(uriwhen?"&where="+encodeURI(uriwhen):"")+(inTemp||""),sucTotal,this.error)
             }
 
-            this.httputils.doGet(this.endpoint+"/total?max=5"+(uriwhen?"&where="+encodeURI(uriwhen):"")+(inTemp||""),sucTotal,this.error)
-        }
 
-        if(flag)
-        this.loadData();
+            this.loadData();
+
+        }
 
 
     }
