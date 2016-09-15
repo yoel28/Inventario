@@ -39,11 +39,12 @@ export class Location_product extends BasicConfiguration implements OnInit {
             "visible": true,
             'required':true,
             'maxLength':5,
+            'search':true,
             'icon':'fa fa-barcode',
             "type": "text",
             "key": "code",
             "title": "Código",
-            "placeholder": "ingrese la ubicacion",
+            "placeholder": "ingrese el codigo",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
@@ -58,6 +59,7 @@ export class Location_product extends BasicConfiguration implements OnInit {
             "visible": true,
             'required':true,
             'icon':'fa fa-barcode',
+            'search':true,
             "type": "text",
             "key": "title",
             "title": "Titulo",
@@ -76,6 +78,7 @@ export class Location_product extends BasicConfiguration implements OnInit {
             'required':true,
             'maxLength':5,
             'icon':'fa fa-barcode',
+            'search':true,
             "type": "text",
             "key": "columna",
             "title": "Columna",
@@ -96,6 +99,7 @@ export class Location_product extends BasicConfiguration implements OnInit {
             'maxLength':5,
             'icon':'fa fa-barcode',
             "type": "text",
+            'search':true,
             "key": "fila",
             "title": "Fila",
             "placeholder": "ingrese la fila",
@@ -112,10 +116,11 @@ export class Location_product extends BasicConfiguration implements OnInit {
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
+            'search':true,
             "type": "number",
             "key": "maximo",
             "title": "Maximo",
-            "placeholder": "Maximo",
+            "placeholder": "Ingrese el Maximo",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
@@ -130,7 +135,7 @@ export class Location_product extends BasicConfiguration implements OnInit {
             "type": "number",
             "key": "minimo",
             "title": "Minimo",
-            "placeholder": "Minimo",
+            "placeholder": "ingrese el Minimo",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
@@ -144,6 +149,7 @@ export class Location_product extends BasicConfiguration implements OnInit {
             "visible": false,
             'required': true,
             'icon': 'fa fa-barcode',
+
             "type": "text",
             "key": "id",
             "title": "Id",
