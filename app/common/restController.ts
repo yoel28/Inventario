@@ -18,6 +18,8 @@ export class RestController implements OnInit {
     page:any=[];
     where:string="";
     ext:string="";
+    newSearch=false;
+    lastMax=5;
     
 
     constructor(public http: Http,public toastr?: ToastsManager) {
@@ -39,11 +41,20 @@ export class RestController implements OnInit {
     loadData(offset=0) {
         let val = offset;
         let flag=false;
-        if (this.loadAllData)
+
+        if(this.newSearch && !this.loadAllData && this.max !=this.lastMax )
+        {
+
+            this.max =this.lastMax;
+        }
+        if (this.loadAllData && !this.newSearch)
         {
             this.max=this.dataList.list.length;
             flag=true;
         }
+
+
+
             
         if (offset != 0)
             this.offset = (offset - 1) * this.max;
@@ -125,11 +136,14 @@ export class RestController implements OnInit {
     }
 
     loadAll(event) {
+        this.newSearch=false;
+        this.lastMax =this.max;
         event.preventDefault();
         this.max = this.dataList.count;
         this.offset=0;
         this.loadData();
         this.loadAllData=true;
+
     }
 
 

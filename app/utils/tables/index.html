@@ -137,9 +137,6 @@
                     <button *ngFor="let val of dataList.page" (click)="loadData(val)" type="button" class="btn btn-default" [class.btn-info]="offset == (val - 1) * max">
                         {{val}}
                     </button>
-                    <button (click)="loadAll($event)" type="button" class="btn btn-default">
-                        <i class="fa fa-list"></i>
-                    </button>
                     <button *ngIf="MaxPager()>5" (click)="loadData(MaxPager())" type="button" class="btn btn-default">
                         &#62;&#62;
                     </button>
