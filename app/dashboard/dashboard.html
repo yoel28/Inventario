@@ -10,8 +10,11 @@
 
             <div class="box-body">
                 <div class="row">
-                    <div *ngIf="dataAreaPlot1.series.length>0" id="chartcontainer1" width='100%' class="padding-bottom col-lg-6 col-lg-offset-2">
+                    <div *ngIf="dataAreaPlot1.series.length>0" id="chartcontainer1" width='100%' class="padding-bottom col-lg-5">
                         <chart [options]="dataAreaPlot1" (load)="saveInstance($event.context,'plot1')"></chart>
+                    </div>
+                    <div *ngIf="dataAreaPlot2.series.length>0" id="chartcontainer2" width='100%' class="padding-bottom col-lg-5">
+                        <chart [options]="dataAreaPlot2" (load)="saveInstance($event.context,'plot2')"></chart>
                     </div>
                 </div>
                 <div class="row">

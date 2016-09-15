@@ -11,6 +11,9 @@ import {LessTables} from "../utils/lessTables/lessTables";
 import {BasicConfiguration} from "../common/basic-configuration";
 import {TranslateService} from "ng2-translate/ng2-translate";
 
+
+declare var moment:any;
+
 @Component({
     selector: 'home',
     templateUrl: 'app/dashboard/dashboard.html',
@@ -23,6 +26,9 @@ export class Dashboard extends BasicConfiguration implements OnInit {
     public chart:any=[];
 
     public dataAreaPlot1 :any ={};
+
+
+    public dataAreaPlot2 :any ={};
 
 
 
@@ -332,28 +338,56 @@ export class Dashboard extends BasicConfiguration implements OnInit {
                 enabled: false
             },
             series: [],
-            title: {text: 'Entrada y Salida de productos'},
+            title: {text: 'Entrada y Salida de productos en el año actual'},
         };
 
-        this.dataAreaPlot1.series.push({"name":"Entradas","data":[0,0,0,0,0,0,0,0,615.2,91.0,14.88,11.997,2.55,0,0,0,107.659,0,0,0,0,14.957,0,0,0,0,0.0,0,0,0,0]},{"name":"Salida","data":[0,0,0,0,0,0,0,0,21889.86,0,498.37,0,95.62,0,0,0,5382.95,0,13.370000000000001,0,0,112.5,0,0,0,0,0,0,0,0,0]});
 
-        this.dataAreaPlot1.xAxis.categories =[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31];
+        this.dataAreaPlot2 = {
+            chart: {
+                renderTo: 'chartcontainer2',
+                type: 'area',
+            },
+            xAxis: {
+                categories: [],
+            },
+            yAxis: {
+                title: {
+                    text:"Cantidad",
+                },
+            },
+            tooltip: {
+                pointFormat: '{series.name} descargadas <b>{point.y:,.0f}</b>'
+            },
+            credits: {
+                enabled: false
+            },
+            series: [],
+            title: {text: 'Entrada y Salida de productos Mes'},
+        };
 
 
 
-        /*
+        let  currentDay=moment().format('DD-MM-YYYY').split('-');
 
-         {"series":[{"name":"Toneladas","data":[0,0,0,0,0,0,0,0,615.2,91.0,14.88,11.997,2.55,0,0,0,107.659,0,0,0,0,14.957,0,0,0,0,0.0,0,0,0,0]},{"name":"Balance","data":[0,0,0,0,0,0,0,0,21889.86,0,498.37,0,95.62,0,0,0,5382.95,0,13.370000000000001,0,0,112.5,0,0,0,0,0,0,0,0,0]},{"name":"Vehículos","data":[0,0,0,0,0,0,0,0,8,2,2,1,1,0,0,0,1,0,0,0,0,3,0,0,0,0,1,0,0,0,0]}],"categories":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]}
-
-        if(this.chart['plot1']) {
-            this.chart['plot1'].series[0].setData(response.json().series[0].data)
-            this.chart['plot1'].xAxis[0].setCategories(response.json().categories)
+        let that =this;
+        let successGra = response=>{
+            that.dataAreaPlot1.xAxis.categories = response.json().categories;
+            that.dataAreaPlot1.series.push(response.json().series[0]);
+            that.dataAreaPlot1.series.push(response.json().series[1]);
         }
-        else {
-            if (response.json().categories)
-                this.dataAreaPlot1.xAxis.categories = response.json().categories;
-            this.dataAreaPlot1.series.push(response.json().series[0]);
-        }*/
+
+        this.httputils.doGet("/inventario/historico/grafica/operaciones/?where=[['field':'year','value':"+currentDay[2]+"]]",successGra,this.error);
+
+
+        let successGra2 = response=>{
+            that.dataAreaPlot2.xAxis.categories = response.json().categories;
+            that.dataAreaPlot2.series.push(response.json().series[0]);
+            that.dataAreaPlot2.series.push(response.json().series[1]);
+
+        }
+
+
+        this.httputils.doGet("/inventario/historico/grafica/operaciones/?where=[['field':'month','value':"+parseInt(currentDay[1])+"],['field':'year','value':"+currentDay[2]+"]]",successGra2,this.error);
 
 
     }
