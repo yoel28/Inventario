@@ -31,6 +31,7 @@ export class ProductsAction extends BasicConfiguration implements OnInit {
     public endPointAct = "/inventario/diario/producto/dia";
     public listType :any={}
     public defaultGroup={'/inventario/historico/producto/dia':'["field":"tipoOperacion","show":["title"]],["field":"producto","show":["detail","code"]]','/inventario/diario/producto/dia':'["field":"tipoOperacion","show":["title"]],["field":"producto","show":["detail","code"]]'}
+    public totalTitle='Total';
 
 
 

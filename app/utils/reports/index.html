@@ -14,10 +14,10 @@
 
 
 
-                    <div class="col-lg-5 pull-right" *ngIf="viewOptions.groupOptions && !(disabledRange ==-2 || disabledRange== 1)">
+                    <div class="col-lg-5 pull-right" *ngIf="viewOptions.groupOptions && !(disabledRange ==-2 || disabledRange== 1) ">
                         <h3 class="text-bold"> Agrupar:</h3>
                         <div class="col-lg-12">
-                            <label *ngFor="let objG of viewOptions.groupOptions ; let i = index">  {{objG.title}}: <input  type="checkbox" (change)="changeGroupBy(i)" style="margin-right: 10px;" ></label>
+                            <label *ngFor="let objG of viewOptions.groupOptions ; let i = index">  {{objG.title}}: <input  type="checkbox" (change)="changeGroupBy(i)"  style="margin-right: 10px;" ></label>
                         </div>
                     </div>
 
@@ -94,23 +94,33 @@
 
 
 
-            <div *ngIf=" dataList && dataList.count <= 0 " class="alert alert-warning">
-                No hay datos para mostrar.
-            </div>
 
-            <div *ngIf=" dataList && dataList.count > 0 " (click)="checkEndPoint()">
+            <div class="row" >
 
+                <div *ngIf="dataList && dataList.count != null" class="col-lg-12" style="margin-left: 10px; padding-right: 30px;">
 
 
-                <div class="col-lg-12">
-                    <h3 class="text-bold">Resultados</h3>
-                    <h3 ><strong class="text-bold">Fecha del reporte </strong> :{{visualDate}}</h3>
+                    <h3 class="text-bold col-lg-12">Resultados</h3><br>
+                    <h3 ><strong class="text-bold " style="margin-left: 20px;">Fecha del reporte </strong> :{{visualDate}}</h3>
+                    <div  *ngIf="totalObject && totalObject.result != null" class="col-lg-12">
+                        <label class="col-lg-12" style="margin-left: -10px;"><strong class="text-bold">{{totalObject.title}}: </strong> {{totalObject.result}} </label>
+                    </div>
+
+
+                    <div *ngIf=" dataList && dataList.count > 0 " (click)="checkEndPoint()" class="col-lg-12">
+                        <tables [dataList]="dataList" [rules]="rules"  [params]="paramsTable" [rulesSearch]="rulesSearch" [where]="where" [ext]="ext"></tables>
+                    </div>
+
+                    <div *ngIf=" dataList && dataList.count <= 0 " class="alert alert-warning row col-lg-11"  style="margin-left: 5px;margin-right: 5px;">
+                        No hay datos para mostrar para esta fecha.
+                    </div>
+
 
                 </div>
 
-                <tables [dataList]="dataList" [rules]="rules"  [params]="paramsTable" [rulesSearch]="rulesSearch" [where]="where" [ext]="ext"></tables>
 
             </div>
+
 
 
             <div *ngIf="!permissions.list">

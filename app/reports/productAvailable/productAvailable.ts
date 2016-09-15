@@ -26,9 +26,11 @@ declare var moment:any;
 export class ProductAvailable extends BasicConfiguration implements OnInit {
 
     public paramsTable:any={}
-    public endPointHis = "/inventario/historico/cantidad/";
-    public endPointAct = "/inventario/diario/cantidad/";
+    public endPointHis = "/inventario/historico/cantidad";
+    public endPointAct = "/inventario/diario/cantidad";
     public defaultGroup={}
+    public totalTitle='Total';
+
 
 
 

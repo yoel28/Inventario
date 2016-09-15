@@ -29,6 +29,8 @@ export class OfficeSupplier extends BasicConfiguration implements OnInit {
     public endPointHis = "/inventario/historico/proveedor/despacho";
     public endPointAct = "/inventario/diario/proveedor/despacho";
     public defaultGroup={'/inventario/historico/proveedor/despacho':'["field":"cliente","show":["title","ruc"]],["field":"producto","show":["detail"]]','/inventario/diario/proveedor/despacho':'["field":"cliente","show":["title","ruc"]],["field":"producto","show":["detail"]]'}
+    public totalEndPoint:any={};
+    public totalTitle='Total';
 
 
 

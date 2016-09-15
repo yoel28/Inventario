@@ -20,7 +20,7 @@ declare var moment:any;
     directives:[Tables,Datepicker,DateRangepPicker,Select2],
     pipes: [TranslatePipe],
     providers: [TranslateService],
-    inputs:['permissions','paramsTable','endPointHis','endPointAct','viewOptions','rules','listType','defaultGroup']
+    inputs:['permissions','paramsTable','endPointHis','endPointAct','viewOptions','rules','listType','defaultGroup','totalTitle']
 })
 
 
@@ -38,7 +38,8 @@ export class Reports extends RestController implements OnInit {
     public defaultGroup :any={};
 
 
-
+    public totalTitle="";
+    public totalObject:any={};
     public listTypeSelect ="";
     public date:any={};
 
@@ -62,7 +63,7 @@ export class Reports extends RestController implements OnInit {
     
 
     public  tempScope:any;
-    
+    public refreshGroup=false;
     
     
     public visualDate ="";
@@ -143,6 +144,8 @@ export class Reports extends RestController implements OnInit {
 
 
 
+
+
         
     }
 
@@ -172,11 +175,21 @@ export class Reports extends RestController implements OnInit {
 
         this.disabledRange=id;
 
+        this.refreshGroup=false;
+
         let day = moment().format('lll');
         let val;
 
 
         this.dateStart.updateValue(null);
+
+
+        if(this.viewOptions.groupOptions && id ==1 || id==-2)
+        {
+            this.viewOptions.groupOptions.forEach((key)=>{key.value=false;});
+
+            this.ext="";
+        }
 
 
         switch (id)
@@ -206,8 +219,12 @@ export class Reports extends RestController implements OnInit {
                 this.dateEnd.updateValue(day);
                 break;
         }
+
+        this.refreshGroup=true;
+
         if(id>0)
             this.assignDate();
+
 
 
     }
@@ -274,7 +291,11 @@ export class Reports extends RestController implements OnInit {
 
         this.firstSearch =true;
         this.where ="";
+        this.totalObject.result="";
         let tempWhere=[];
+        let uriwhen ="";
+        let inTemp="";
+
 
 
         if(this.disabledRange == -1)
@@ -362,16 +383,32 @@ export class Reports extends RestController implements OnInit {
                 this.listSelect.forEach((key)=>{
                     valuesTempSelect.push({'values':key})
                 });
-
-                this.ext+="&in="+JSON.stringify(valuesTempSelect).split('{').join('[').split('}').join(']');
+                inTemp = "&in="+JSON.stringify(valuesTempSelect).split('{').join('[').split('}').join(']');
+                this.ext+= inTemp;
             }
         }
 
         if(tempWhere.length>0)
         {
-            let uriwhen ="";
             uriwhen=JSON.stringify(tempWhere).split('{').join('[').split('}').join(']');
             this.where="&where="+encodeURI(uriwhen);
+
+        }
+
+
+
+        if(this.totalTitle )
+        {
+
+            this.totalObject.title = this.totalTitle;
+
+            let that = this;
+            let  sucTotal = response =>
+            {
+                that.totalObject.result = response.json().count.cantidad;
+            }
+
+            this.httputils.doGet(this.endpoint+"/total?max=5"+(uriwhen?"&where="+encodeURI(uriwhen):"")+(inTemp||""),sucTotal,this.error)
         }
 
         if(flag)
