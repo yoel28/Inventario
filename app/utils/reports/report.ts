@@ -295,7 +295,7 @@ export class Reports extends RestController implements OnInit {
         let tempWhere=[];
         let uriwhen ="";
         let inTemp="";
-
+        this.loadAllData = false;
 
 
         if(this.disabledRange == -1)
