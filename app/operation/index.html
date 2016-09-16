@@ -333,7 +333,7 @@
                                     <button *ngIf="positionForm==2"  data-toggle="modal" [attr.data-target]="'#IdWarning'"  [disabled]="positionForm==1"   type="button" name="previous" value="Anterior" class="btn btn-info button-previous"><i class="fa fa-arrow-circle-o-left mrx"></i>Anterior</button>
 
                                     <button [class.hidden]="positionForm >= 2"  (click)="inc(1)" type="button"  name="next" value="Siguiente" class="btn btn-info button-next mlm">Siguiente<i class="fa fa-arrow-circle-o-right mlx"></i></button>
-                                    <button [class.hidden]="positionForm != 2"   data-toggle="modal" data-target='#modalAcept' type="button" name="next" value="Guardar" class="btn btn-success button-next mlm">Guardar <i class="fa fa-save"></i></button>
+                                    <button [class.hidden]="positionForm != 2"  [disabled]="flagSave"  data-toggle="modal" data-target='#modalAcept' type="button" name="next" value="Guardar" class="btn btn-success button-next mlm">Guardar <i class="fa fa-save"></i></button>
                                 </div>
 
                             </div>
@@ -404,7 +404,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outlined btn-warning fa fa-close" data-dismiss="modal">&nbsp;Cancelar</button>
-                <button (click)="saveResult($event)" data-dismiss="modal" type="button"
+                <button (click)="saveResult($event)"  data-dismiss="modal" type="button"
                         class="btn btn-warning fa fa-check-circle-o ">&nbsp;Aceptart
                 </button>
             </div>
