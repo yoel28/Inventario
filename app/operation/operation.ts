@@ -72,6 +72,10 @@ export class Operation extends RestController implements OnInit {
     public DIRECCION="";
     public NOMBRE="";
     public CLIENT :any ={}
+    
+    
+    //se realizo la carga
+    public flagSave=false;
 
 
 
@@ -97,6 +101,7 @@ export class Operation extends RestController implements OnInit {
         this.producto.updateValue(null);
         this.ubicacion.updateValue(null);
         this.listResult={};
+        this.flagSave=false;
 
         this.initSearchTypeActions();
 
@@ -314,6 +319,7 @@ export class Operation extends RestController implements OnInit {
         this.initSearchTypeActions();
         this.initSearchClients();
 
+
         this.RUC =this.myglobal.getParams('EMP_RUC')
         this.CONTACTO =this.myglobal.getParams('EMP_CONTACTO')
         this.DIRECCION =this.myglobal.getParams('EMP_DIRECCION')
@@ -362,7 +368,7 @@ export class Operation extends RestController implements OnInit {
         let listAccionArray=[];
         for(var acctions of this.listAccion)
         {
-            if(acctions.Status)
+            if(acctions.Status && acctions.Validate)
             listAccionArray.push(acctions)
         }
         return listAccionArray
@@ -458,6 +464,7 @@ export class Operation extends RestController implements OnInit {
 
 
 
+            this.flagSave=true;
 
             let that=this
 
