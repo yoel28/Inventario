@@ -300,6 +300,8 @@ export class Reports extends RestController implements OnInit {
         let inTemp="";
         this.newSearch = true;
         this.max=5;
+        let start =[];
+        let end=[];
 
 
 
@@ -313,8 +315,8 @@ export class Reports extends RestController implements OnInit {
             {
                 event = this.dateStart.value;
             }
-            let start = event.start.split("/");
-            let end = event.end.split("/");
+             start = event.start.split("/");
+             end = event.end.split("/");
             
             tempWhere = [{'op':'ge','field':'fecha','type':'long','value':start[2]+start[1]+start[0]}];
             tempWhere.push({'op':'le','field':'fecha','type':'long','value':end[2]+end[1]+end[0]});
@@ -323,7 +325,7 @@ export class Reports extends RestController implements OnInit {
 
         else 
         {
-            let start = moment(this.dateStart.value.toString()).format('DD-MM-YYYY').split("-");
+             start = moment(this.dateStart.value.toString()).format('DD-MM-YYYY').split("-");
             tempWhere = [{'op':'ge','field':'fecha','type':'long','value':start[2]+start[1]+start[0]}];
 
 
@@ -333,7 +335,7 @@ export class Reports extends RestController implements OnInit {
             
             if(this.disabledRange>1)
             {
-                let end = moment(this.dateEnd.value.toString()).format('DD-MM-YYYY').split("-");
+                 end = moment(this.dateEnd.value.toString()).format('DD-MM-YYYY').split("-");
 
 
                 tempWhere.push({'op':'le','field':'fecha','type':'long','value':end[2]+end[1]+end[0]});
@@ -392,7 +394,7 @@ export class Reports extends RestController implements OnInit {
                 this.listSelect.forEach((key)=>{
                     if(key==0 && this.disabledRange !=-2 && this.disabledRange!=1 )
                     {
-                        this.toastr.warning('esta opcion no esta permitida con rangos de fecha')
+                        this.toastr.warning('la opcion de Total inventario no esta permitida para rangos de fecha')
                         flag=false;
                     }
                     valuesTempSelect.push({'values':key})
