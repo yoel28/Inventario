@@ -73,6 +73,11 @@ export class Permissions extends BasicConfiguration {
 
     initRules() {
 
+        let tempRules = this.rules;
+        this.rules={};
+
+
+
         this.rules["code"] = {
             "update": this.permissions['update'],
             "visible": true,
@@ -127,6 +132,7 @@ export class Permissions extends BasicConfiguration {
             "visible": true,
             'icon':'fa fa-list',
             "type": "text",
+            "obligatoryVisible":true,
             "key": "controlador",
             "title": "Controlador",
             "placeholder": "ingrese el controlador",
@@ -141,6 +147,7 @@ export class Permissions extends BasicConfiguration {
             "visible": true,
             'icon':'fa fa-barcode',
             "type": "text",
+            "obligatoryVisible":true,
             "key": "accion",
             "title": "Accion",
             "search":true,
@@ -151,6 +158,12 @@ export class Permissions extends BasicConfiguration {
                 },
             },
         };
+
+
+        this.rules['detail'] = tempRules['detail'];
+
+        this.rules['enabled'] = tempRules['enabled'];
+
 
 
 
@@ -201,6 +214,24 @@ export class Permissions extends BasicConfiguration {
                 'title': this.rules['title'].title,
                 'placeholder': this.rules['title'].placeholder,
                 'msg':this.rules['title'].msg
+            },
+            'controlador': {
+                'type': this.rules['controlador'].type,
+                'title': this.rules['controlador'].title,
+                'placeholder': this.rules['controlador'].placeholder,
+                'msg':this.rules['controlador'].msg
+            },
+            'accion': {
+                'type': this.rules['accion'].type,
+                'title': this.rules['accion'].title,
+                'placeholder': this.rules['accion'].placeholder,
+                'msg':this.rules['accion'].msg9
+            },
+            'detail': {
+                'type': this.rules['detail'].type,
+                'title': this.rules['detail'].title,
+                'placeholder': this.rules['detail'].placeholder,
+                'msg':this.rules['detail'].msg
             }
         };
 
