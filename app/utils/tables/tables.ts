@@ -111,7 +111,7 @@ export class Tables extends RestController implements OnInit {
         let data=[];
         let that=this;
         Object.keys(this.rules).forEach((key)=>{
-            if(that.rules[key].visible  && that.dataList.list[0][key] != null)
+            if(that.rules[key].visible  && (that.dataList.list[0][key] != null || that.rules[key].obligatoryVisible))
                 data.push(key)
         });
         return data;
