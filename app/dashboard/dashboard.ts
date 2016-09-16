@@ -332,7 +332,7 @@ export class Dashboard extends BasicConfiguration implements OnInit {
                 },
             },
             tooltip: {
-                pointFormat: '{series.name} descargadas <b>{point.y:,.0f}</b>'
+                pointFormat: '{series.name} <b>{point.y:,.0f}</b>'
             },
             credits: {
                 enabled: false
@@ -356,7 +356,7 @@ export class Dashboard extends BasicConfiguration implements OnInit {
                 },
             },
             tooltip: {
-                pointFormat: '{series.name} descargadas <b>{point.y:,.0f}</b>'
+                pointFormat: '{series.name}  <b>{point.y:,.0f}</b>'
             },
             credits: {
                 enabled: false
