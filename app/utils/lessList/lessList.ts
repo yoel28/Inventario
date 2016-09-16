@@ -36,6 +36,7 @@ export class LessList extends RestController implements OnInit {
     }
 
     ngOnInit() {
+        this.ext="&noImage=true";
         this.setEndpoint(this.paramSearch.endpoint);
         this.loadData();
 
