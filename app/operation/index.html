@@ -164,10 +164,6 @@
 
                                     <div *ngSwitchWhen="3"  >
                                         <form action="#" class="form-horizontal ng-pristine ng-valid">
-                                            <a class="btn"  style="margin-bottom: 30px;"  (click)="onPrint('finalPrint')">
-                                                <span class="fa fa-print"></span>
-                                                &nbsp;Imprimir resultado
-                                            </a>
                                             <div class="form-group">
 
 
@@ -329,6 +325,12 @@
                                 </div>
 
                                 <div class="action text-right">
+                                    <button *ngIf="positionForm==3" class="btn btn-blue" (click)="onPrint('finalPrint')">
+                                        <span class="fa fa-print"></span>
+                                        &nbsp;Imprimir resultado
+                                    </button>
+
+
                                     <button *ngIf="positionForm!=2"  [disabled]="positionForm==1"        (click)="inc(2)" type="button" name="previous" value="Anterior" class="btn btn-info button-previous"><i class="fa fa-arrow-circle-o-left mrx"></i>{{positionForm !=3?'Anterior':'Nueva Carga'}}</button>
                                     <button *ngIf="positionForm==2"  data-toggle="modal" [attr.data-target]="'#IdWarning'"  [disabled]="positionForm==1"   type="button" name="previous" value="Anterior" class="btn btn-info button-previous"><i class="fa fa-arrow-circle-o-left mrx"></i>Anterior</button>
 
