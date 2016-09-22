@@ -89,13 +89,12 @@ export class AppComponent extends RestController implements OnInit{
   constructor(public router: Router,http: Http,public myglobal:globalService,public toastr: ToastsManager) {
     
       super(http)
-        localStorage.setItem('urlAPI','http://dev.zippyttech.com:8080/api');
-        localStorage.setItem('url','http://dev.zippyttech.com:8080/');
-        //localStorage.setItem('urlAPI','http://192.168.0.114:9090/api');
-        //localStorage.setItem('url','http://192.168.0.114:9090/');
+      let url = "http://dev.zippyttech.com:8080";
+      //let url = "http://54.173.217.103:8080";
 
-        //localStorage.setItem('urlAPI','http://192.168.0.113:8080/api');
-        //localStorage.setItem('url','http://192.168.0.113:8080/');
+      localStorage.setItem('urlAPI',url+'/api');
+      localStorage.setItem('url',url);
+
     let that=this;
     router.subscribe(
         function(data){
@@ -120,12 +119,11 @@ export class AppComponent extends RestController implements OnInit{
               that.router.navigate(link);
 
           }
-
-           if(that.myglobal.getParams('VERSION_CACHE')!=localStorage.getItem('VERSION_CACHE') && that.myglobal.getParams('VERSION_CACHE')!="")
-           {
-               localStorage.setItem('VERSION_CACHE',that.myglobal.getParams('VERSION_CACHE'))
-               location.reload(true);
-           }
+            if(that.myglobal.getParams('VERSION_CACHE')!=localStorage.getItem('VERSION_CACHE') && (that.myglobal.init && localStorage.getItem('bearer')))
+            {
+                localStorage.setItem('VERSION_CACHE',that.myglobal.getParams('VERSION_CACHE'))
+                location.reload(true);
+            }
 
         },function(error){
           console.log("entro2");
@@ -133,7 +131,7 @@ export class AppComponent extends RestController implements OnInit{
     );//this.onSocket();
   }
     ngOnInit(){
-        this.loadMenu();
+
     }
 
   public urlPublic=['AccountLogin','AccountActivate','AccountRecover','AccountRecoverPassword'];
@@ -167,7 +165,7 @@ export class AppComponent extends RestController implements OnInit{
   }
     loadPermisos(event){
         event.preventDefault();
-        this.myglobal.myPermissions();
+        this.myglobal.loadMyPermissions();
     }
     activeMenuId:string;
     activeMenu(event,id){
@@ -180,224 +178,203 @@ export class AppComponent extends RestController implements OnInit{
     }
     public menuItems=[];
     loadMenu(){
+        if(this.menuItems.length == 0){
+            this.menuItems.push({
+                'visible':this.myglobal.existsPermission("MEN_DASHBOARD"),
+                'routerLink':'Dashboard',
+                'icon':'fa fa-list',
+                'title':'Dashboard'
+
+            });
+            this.menuItems.push({
+                'visible':this.myglobal.existsPermission("MEN_OPERACION"),
+                'routerLink':'Operation',
+                'icon':'fa fa-list',
+                'title':'Operacion'
+
+            });
+            this.menuItems.push({
+                'visible':this.myglobal.existsPermission("MEN_LOCATION"),
+                'routerLink':'Location_product',
+                'icon':'fa fa-list',
+                'title':'Ubicacion'
+
+            });
+            this.menuItems.push({
+                'visible':this.myglobal.existsPermission("MEN_PROD") || this.myglobal.existsPermission("MEN_TIPOPROD") || this.myglobal.existsPermission("MEN_MARCA")
+                || this.myglobal.existsPermission("MEN_MODEL") || this.myglobal.existsPermission("MEN_AUDPROD")
+                ,
+                'icon':'fa fa-list',
+                'title':'Panel de Productos',
+                'key':'Panel de Productos',
+                'treeview':[
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_PROD"),
+                        'icon':'fa fa-list',
+                        'title':'Producto',
+                        'routerLink':'Product'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_TIPOPROD"),
+                        'icon':'fa fa-list',
+                        'title':'Tipo',
+                        'routerLink':'TypeProduct'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_MARCA"),
+                        'icon':'fa fa-list',
+                        'title':'Marca',
+                        'routerLink':'BrandProduct'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_MODEL"),
+                        'icon':'fa fa-list',
+                        'title':'Modelo',
+                        'routerLink':'ModelProduct'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_AUDPROD"),
+                        'icon':'fa fa-list',
+                        'title':'Auditoria de produtos',
+                        'routerLink':'ProductAudit'
+                    }
 
 
-        this.menuItems.push({
-            'visible':this.myglobal.existsPermission("1"),
-            'routerLink':'Dashboard',
-            'icon':'fa fa-list',
-            'title':'Dashboard'
+                ]
 
-        });
+            });
+            this.menuItems.push({
+                'visible':this.myglobal.existsPermission("MEN_USER"),
+                'routerLink':'User',
+                'icon':'fa fa-list',
+                'title':'Usuarios'
 
-        this.menuItems.push({
-            'visible':this.myglobal.existsPermission("1"),
-            'routerLink':'Operation',
-            'icon':'fa fa-list',
-            'title':'Operacion'
+            });
+            this.menuItems.push({
+                'visible':  this.myglobal.existsPermission("MEN_PROD_EXIST") ||
+                this.myglobal.existsPermission("MEN_DESP_PROV") ||
+                this.myglobal.existsPermission("MEN_MOV_FECH") ||
+                this.myglobal.existsPermission("MEN_PROD_ACC")
+                ,
+                'icon':'fa fa-list',
+                'title':'Reportes',
+                'key':'reportes',
+                'treeview':[
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_PROD_EXIST"),
+                        'icon':'fa fa-list',
+                        'title':'Producto en existencia',
+                        'routerLink':'ProductAvailable'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_DESP_PROV"),
+                        'icon':'fa fa-list',
+                        'title':'Despacho por proveedor',
+                        'routerLink':'OfficeSupplier'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_MOV_FECH"),
+                        'icon':'fa fa-list',
+                        'title':'Movimientos por fecha',
+                        'routerLink':'MovesByDate'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_PROD_ACC"),
+                        'icon':'fa fa-list',
+                        'title':'Productos por accion',
+                        'routerLink':'ProductsAction'
+                    },
+                ]
 
-        });
+            });
+            this.menuItems.push({
+                'visible':this.myglobal.existsPermission("MEN_ADM_LOT"),
+                'routerLink':'LotRecovery',
+                'icon':'fa fa-list',
+                'title':'Administracion de lotes'
 
+            });
+            this.menuItems.push({
+                'visible':this.myglobal.existsPermission("MEN_CLIENT") || this.myglobal.existsPermission("MEN_TYPECLIENT"),
+                'icon':'fa fa-list',
+                'title':'Panel de Clientes',
+                'key':'Panel de Clientes',
+                'treeview':[
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_CLIENT"),
+                        'icon':'fa fa-list',
+                        'title':'Clientes',
+                        'routerLink':'Client'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_TYPECLIENT"),
+                        'icon':'fa fa-list',
+                        'title':'Tipo de clientes',
+                        'routerLink':'TypeCompany'
+                    }
 
-        this.menuItems.push({
-            'visible':this.myglobal.existsPermission("1"),
-            'routerLink':'Location_product',
-            'icon':'fa fa-list',
-            'title':'Ubicacion'
+                ]
 
-        });
-        
-        
+            });
+            this.menuItems.push({
+                'visible':  this.myglobal.existsPermission("MEN_CARG_MASIVA") ||
+                this.myglobal.existsPermission("MEN_TYPE_ACC") ||
+                this.myglobal.existsPermission("MEN_PARAMS"),
+                'icon':'fa fa-list',
+                'title':'Administracion de Sistema',
+                'key':'Administracion de Sistema',
+                'treeview':[
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_CARG_MASIVA"),
+                        'icon':'fa fa-list',
+                        'title':'Carga masiva',
+                        'routerLink':'BuckUpload'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_TYPE_ACC"),
+                        'icon':'fa fa-list',
+                        'title':'Tipo de acciones',
+                        'routerLink':'AccionType'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_PARAMS"),
+                        'icon':'fa fa-list',
+                        'title':'Parametros',
+                        'routerLink':'Params'
+                    }]
 
+            });
+            this.menuItems.push({
+                'visible':  this.myglobal.existsPermission("MEN_ROLE") ||
+                this.myglobal.existsPermission("MEN_ACL") ||
+                this.myglobal.existsPermission("MEN_PERMISSION"),
+                'icon':'fa fa-list',
+                'title':'Panel de Configuracion',
+                'key':'Panel de Configuracion',
+                'treeview':[
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_ROLE"),
+                        'icon':'fa fa-list',
+                        'title':'Roles',
+                        'routerLink':'Roles'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_ACL"),
+                        'icon':'fa fa-list',
+                        'title':'ACL',
+                        'routerLink':'PermissionsAcl'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_PERMISSION"),
+                        'icon':'fa fa-list',
+                        'title':'Permisos',
+                        'routerLink':'Permissions'
+                    }
 
+                ]
 
-
-
-        this.menuItems.push({
-            'visible':this.myglobal.existsPermission("1"),
-            'icon':'fa fa-list',
-            'title':'Panel de Productos',
-            'key':'menu2',
-            'treeview':[
-                {
-                    'visible':this.myglobal.existsPermission("1"),
-                    'icon':'fa fa-list',
-                    'title':'Producto',
-                    'routerLink':'Product'
-                },
-                {
-                    'visible':this.myglobal.existsPermission("1"),
-                    'icon':'fa fa-list',
-                    'title':'Tipo',
-                    'routerLink':'TypeProduct'
-                },
-                {
-                    'visible':this.myglobal.existsPermission("1"),
-                    'icon':'fa fa-list',
-                    'title':'Marca',
-                    'routerLink':'BrandProduct'
-                },
-                {
-                    'visible':this.myglobal.existsPermission("1"),
-                    'icon':'fa fa-list',
-                    'title':'Modelo',
-                    'routerLink':'ModelProduct'
-                },
-                {
-                    'visible':this.myglobal.existsPermission("1"),
-                    'icon':'fa fa-list',
-                    'title':'Auditoria de produtos',
-                    'routerLink':'ProductAudit'
-                }
-
-
-            ]
-
-        });
-
-        this.menuItems.push({
-            'visible':this.myglobal.existsPermission("1"),
-            'routerLink':'User',
-            'icon':'fa fa-list',
-            'title':'Usuarios'
-
-        });
-
-        this.menuItems.push({
-            'visible':this.myglobal.existsPermission("1"),
-            'icon':'fa fa-list',
-            'title':'Reportes',
-            'key':'reportes',
-            'treeview':[
-                {
-                    'visible':this.myglobal.existsPermission("1"),
-                    'icon':'fa fa-list',
-                    'title':'Producto en existencia',
-                    'routerLink':'ProductAvailable'
-                },
-                {
-                    'visible':this.myglobal.existsPermission("1"),
-                    'icon':'fa fa-list',
-                    'title':'Despacho por proveedor',
-                    'routerLink':'OfficeSupplier'
-                },
-                {
-                    'visible':this.myglobal.existsPermission("1"),
-                    'icon':'fa fa-list',
-                    'title':'Movimientos por fecha',
-                    'routerLink':'MovesByDate'
-                },
-                {
-                    'visible':this.myglobal.existsPermission("1"),
-                    'icon':'fa fa-list',
-                    'title':'Productos por accion',
-                    'routerLink':'ProductsAction'
-                },
-            ]
-
-        });
-
-        this.menuItems.push({
-            'visible':this.myglobal.existsPermission("1"),
-            'routerLink':'LotRecovery',
-            'icon':'fa fa-list',
-            'title':'Administracion de lotes'
-
-        });
-
-
-        this.menuItems.push({
-            'visible':this.myglobal.existsPermission("1"),
-            'icon':'fa fa-list',
-            'title':'Panel de Clientes',
-            'key':'menu3',
-            'treeview':[
-                {
-                    'visible':this.myglobal.existsPermission("1"),
-                    'icon':'fa fa-list',
-                    'title':'Clientes',
-                    'routerLink':'Client'
-                },
-                {
-                    'visible':this.myglobal.existsPermission("1"),
-                    'icon':'fa fa-list',
-                    'title':'Tipo de clientes',
-                    'routerLink':'TypeCompany'
-                }
-
-            ]
-
-        });
-
-
-
-        this.menuItems.push({
-            'visible':this.myglobal.existsPermission("1"),
-            'icon':'fa fa-list',
-            'title':'Administracion de Sistema',
-            'key':'menu4',
-            'treeview':[
-                {
-                    'visible':this.myglobal.existsPermission("1"),
-                    'icon':'fa fa-list',
-                    'title':'Carga masiva',
-                    'routerLink':'BuckUpload'
-                },
-                {
-                    'visible':this.myglobal.existsPermission("1"),
-                    'icon':'fa fa-list',
-                    'title':'Tipo de acciones',
-                    'routerLink':'AccionType'
-                },
-                {
-                    'visible':this.myglobal.existsPermission("1"),
-                    'icon':'fa fa-list',
-                    'title':'Parametros',
-                    'routerLink':'Params'
-                }]
-
-        });
-
-        this.menuItems.push({
-            'visible':this.myglobal.existsPermission("1"),
-            'icon':'fa fa-list',
-            'title':'Panel de Configuracion',
-            'key':'menu5',
-            'treeview':[
-                {
-                    'visible':this.myglobal.existsPermission("1"),
-                    'icon':'fa fa-list',
-                    'title':'Roles',
-                    'routerLink':'Roles'
-                },
-                {
-                    'visible':this.myglobal.existsPermission("1"),
-                    'icon':'fa fa-list',
-                    'title':'ACL',
-                    'routerLink':'PermissionsAcl'
-                },
-                {
-                    'visible':this.myglobal.existsPermission("1"),
-                    'icon':'fa fa-list',
-                    'title':'Permisos',
-                    'routerLink':'Permissions'
-                }
-
-            ]
-
-        });
-
-
-
-
-
-
-
-
-
-
-
-
+            });
+        }
     }
     menuItemsVisible(menu){
         let data=[];
