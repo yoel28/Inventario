@@ -91,7 +91,7 @@
                 <ul class="sidebar-menu" >
 
                     <li class="header" ><i class="fa fa-circle text-success"></i> {{myglobal.user.email}}</li>
-
+                    {{loadMenu()}}
                     <li  *ngFor="let item of menuItemsVisible(menuItems)"
                          [class.treeview]="item.treeview"
                          [class.active]="item.key && activeMenuId==item.key"
@@ -121,14 +121,19 @@
         </aside>
     </div>
     <router-outlet></router-outlet>
-
-
 </div>
-<div class="main-footer-container" *ngIf="validToken()">
+<div class="main-footer-container" *ngIf="validToken() && myglobal.init">
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
             Inventario, C.A
         </div>
-        <strong>Copyright &copy; 2015 <a href="#">Inventario</a>.</strong> Todos los derechos reservados.
+        <strong>Copyright &copy; 2016 <a href="#">Inventario</a>.</strong> Todos los derechos reservados.
     </footer>
+</div>
+<div *ngIf="validToken() && !myglobal.init" class="col-lg-12 cargar">
+    <h1 *ngFor="let status of myglobal.getKeys(myglobal.status)">
+        <i class="fa fa-lg fa-check" *ngIf="myglobal.status[status].status"></i>
+        <i class="fa fa-spinner fa-spin" *ngIf="!myglobal.status[status].status"></i>
+        &nbsp;{{myglobal.status[status].title}}
+    </h1>
 </div>
