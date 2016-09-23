@@ -119,9 +119,6 @@ export abstract class  BasicConfiguration extends RestController{
             idModal: "saveDefault",
             endpoint: this.endpoint,
         }
-        this.rulesSave = this.rules;
-
-
     }
 
 
