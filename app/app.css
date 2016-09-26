@@ -15,14 +15,6 @@
     margin-top: -2px !important;
 }
 
-@media print {
-    .noprint{
-        display:none;
-    }
-    .content-wrapper{
-        margin-left: 0 !important;
-    }
-}
 .tab-content {
     background: black;
 }
