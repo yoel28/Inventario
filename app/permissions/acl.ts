@@ -49,14 +49,14 @@ export class PermissionsAcl extends RestController implements OnInit {
     }
     public permissions:any={};
     initPermissions(){
-        this.permissions['listPermissions']=this.myglobal.existsPermission('1'); 
-        this.permissions['listRoles']=this.myglobal.existsPermission('1');
+        this.permissions['listPermissions']=this.myglobal.existsPermission('PE_LIST');
+        this.permissions['listRoles']=this.myglobal.existsPermission('RO_LIST');
         
         
-        this.permissions['list']=this.myglobal.existsPermission('1');
-        this.permissions['update']=this.myglobal.existsPermission('1');
-        this.permissions['delete']=this.myglobal.existsPermission('1');
-        this.permissions['create']=this.myglobal.existsPermission('1');
+        this.permissions['list']=this.myglobal.existsPermission('ACL_LIST');
+        this.permissions['update']=this.myglobal.existsPermission('ACL_UPDATE');
+        this.permissions['delete']=this.myglobal.existsPermission('ACL_DELETE');
+        this.permissions['create']=this.myglobal.existsPermission('ACL_ADD');
         
     }
     
