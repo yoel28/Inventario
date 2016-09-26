@@ -126,7 +126,7 @@
             </td>
         </tr>
     </tbody>
-    <tfoot *ngIf="dataList && dataList.page && dataList.page.length > 1 ">
+    <tfoot *ngIf="dataList && dataList.page && dataList.page.length > 1 " class="noprint">
         <tr>
             <td [attr.colspan]="keyVisible().length + 1">
                 <div class="btn-group pull-right">
@@ -224,7 +224,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-outlined btn-info fa fa-close" data-dismiss="modal">&nbsp;Cancelar</button>
                 <button (click)="changeArray()" data-dismiss="modal" type="button"
-                        class="btn btn-info fa fa-check-circle-o ">&nbsp;Aceptart
+                        class="btn btn-info fa fa-check-circle-o ">&nbsp;Aceptar
                 </button>
             </div>
 
