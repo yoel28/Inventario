@@ -9,7 +9,7 @@
 
 
 
-            <div class="row">
+            <div class="row noprint">
                 <div class="col-lg-12">
 
 
@@ -73,7 +73,7 @@
                     </form>
                 </div>
             </div>
-            <div *ngIf="listType && listType.count >0 && viewOptions.listTypeTitle " class="row">
+            <div *ngIf="listType && listType.count >0 && viewOptions.listTypeTitle " class="row noprint">
                 <div class="col-lg-4 ">
 
                     <div class=" col-lg-offset-1 input-icon pull-left" style="margin-bottom: 30px">
@@ -102,10 +102,15 @@
 
                     <h3 class="text-bold col-lg-12">Resultados</h3><br>
                     <h3 ><strong class="text-bold " style="margin-left: 20px;">Fecha del reporte </strong> :{{visualDate}}</h3>
-                    <div  *ngIf="totalObject && totalObject.result != null" class="col-lg-12">
+                    <div  *ngIf="totalObject && totalObject.result != null" class="col-lg-8">
                         <label class="col-lg-12" style="margin-left: -10px;"><strong class="text-bold">{{totalObject.title}}: </strong> {{totalObject.result}} </label>
                     </div>
-
+                    <div  *ngIf="totalObject && totalObject.result != null" class="col-lg-4 noprint">
+                        <button (click)="print($event)" type="button" class="btn btn-success pull-right">
+                            <i class="fa fa-print"></i>
+                            Imprimir
+                        </button>
+                    </div>
 
                     <div *ngIf=" dataList && dataList.count > 0 " (click)="checkEndPoint()" class="col-lg-12">
                         <tables [dataList]="dataList" [rules]="rules"  [params]="paramsTable" [rulesSearch]="rulesSearch" [where]="where" [ext]="ext" [newSearch]="newSearch" [max]="max"></tables>

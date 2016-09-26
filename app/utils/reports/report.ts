@@ -442,7 +442,10 @@ export class Reports extends RestController implements OnInit {
 
 
     }
-
+    print(event){
+        event.preventDefault();
+        window.print();
+    }
 
 
 
