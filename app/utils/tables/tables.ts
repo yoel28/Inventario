@@ -178,7 +178,7 @@ export class Tables extends RestController implements OnInit {
 
         Object.keys(this.params.actions).forEach((key)=>
         {
-            if( that.myglobal.existsPermission(that.params.actions[key].permission) )
+            if(that.params.actions[key].permission )
                 data.push(key);
         });
 
