@@ -1,15 +1,14 @@
 
 
-<div *ngIf="myglobal.existsPermission('1') && rulesFilter">
+<div *ngIf="rulesFilter">
     <filter [rules]="rulesFilter" [params]="paramsFilter" (whereFilter)="loadWhere($event)"></filter>
 </div>
-
-
-<button  *ngIf="myglobal.existsPermission('1') && existFilter()"
+<button  *ngIf="existFilter()"
         type="button" class="btn btn-blue pull-right"
         data-toggle="modal" [attr.data-target]="'#'+paramsFilter.idModal">
     <i class="fa fa-filter"></i>&nbsp;Filtrar
 </button>
+
 <table class="table table-striped table-hover orderColumn" *ngIf="dataList && dataList.count>0">
     <thead>
         <tr>
