@@ -145,7 +145,7 @@
     </tfoot>
 </table>
 
-<div *ngIf="params && params.actions && params.actions.delete && myglobal.existsPermission(params.actions.delete.permission)">
+<div *ngIf="params && params.actions && params.actions.delete && params.actions.delete.permission">
     <div class="modal fade" [attr.id]="'modalDelete'" tabindex="-1" role="dialog"
          aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">

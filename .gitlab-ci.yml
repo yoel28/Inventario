@@ -93,7 +93,7 @@ deploy_prod_job_3:
     - cd /tmp/build
     - sudo cp -rf build/* ./
     - sudo find ./ -type f -name '*.ts' -delete
-    - cd /var/www/html/
+    - cd /var/www
     - sudo tar -cf html.tar html/
     - sudo rm -rf /var/www/html/*
     - sudo cp -rf /tmp/build/* /var/www/html/
