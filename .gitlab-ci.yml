@@ -27,6 +27,23 @@ pre_install_job_1:
   only :
     - dev
     - beta
+
+pre_install_prod_job_1:
+  stage: pre_install
+  script:
+    - mkdir -p /tmp/build
+    - sudo cp -rf ./* /tmp/build
+    - cd /tmp/build
+    - sudo npm run prestart
+    - sudo npm install grunt grunt-contrib-coffee grunt-contrib-cssmin grunt-contrib-htmlmin  grunt-contrib-jshint  grunt-contrib-nodeunit grunt-contrib-uglify  grunt-ts
+    - sudo npm install -g grunt grunt-contrib-coffee grunt-contrib-cssmin grunt-contrib-htmlmin  grunt-contrib-jshint  grunt-contrib-nodeunit grunt-contrib-uglify  grunt-ts    
+    - sudo npm install -g typings tsc concurrently  lite-server typescript
+    - sudo typings install
+  when: on_success
+  tags:
+    - inventarioprod
+  only :
+    - tags
     
 build_job_2:
   stage: build
@@ -40,7 +57,19 @@ build_job_2:
   only :
     - dev
     - beta
-    
+
+build_prod_job_2:
+  stage: build
+  script:
+    - cd /tmp/build
+    - sudo npm run tsc -w
+    - sudo npm run build
+  when: on_success
+  tags:
+    - inventarioprod
+  only :
+    - tags
+        
 deploy_job_3:
   stage: deploy
   script:
@@ -59,6 +88,22 @@ deploy_job_3:
     - dev
     - beta
 
+deploy_prod_job_3:
+  stage: deploy
+  script:
+    - cd /tmp/build
+    - sudo cp -rf build/* ./
+    - sudo find ./ -type f -name '*.ts' -delete
+    - cd /var/www/html/
+    - sudo tar -cf html.tar html/
+    - sudo rm -rf /var/www/html/*
+    - sudo cp -rf /tmp/build/* /var/www/html/
+  when: on_success 
+  tags:
+    - inventarioprod
+  only :
+    - tags
+    
 reset_job_4:
   stage: reset
   script:
@@ -82,8 +127,31 @@ reset_job_4:
     - dev
     - beta
 
+
+reset_prod_job_4:
+  stage: reset
+  script:
+    - sudo rm -rf /tmp/build
+    - sudo rm -rf /var/www/html/build
+    - sudo rm -rf /var/www/html/typings
+    - sudo rm -rf /var/www/html/consultas
+    - sudo rm -rf /var/www/html/.git
+    - sudo rm -f /var/www/html/.gitignore
+    - sudo rm -f /var/www/html/.gitlab-ci.yml
+    - sudo rm -f /var/www/html/bs-config.json
+    - sudo rm -f /var/www/html/Gruntfile.js
+    - sudo rm -f /var/www/html/package.json
+    - sudo rm -f /var/www/html/tsconfig.json
+    - sudo rm -f /var/www/html/typings.json
+    - sudo chown ubuntu.ubuntu -R /var/www/html/
+  when: on_success
+  tags:
+    - inventarioprod
+  only :
+    - tags
+
     
-clean_job_:
+clean_job_5:
   stage: clean
   script:
     - sudo rm -rf /tmp/build
@@ -95,3 +163,15 @@ clean_job_:
   only :
     - dev
     - beta
+    
+clean_prod_job_5:
+  stage: clean
+  script:
+    - sudo rm -rf /tmp/build
+    - sudo rm -rf /var/www/html
+    - sudo tar -xf /var/www/html.tar -C /var/www/
+  when: on_failure
+  tags:
+    - inventarioprod
+  only :
+    - tags
