@@ -217,9 +217,8 @@ export class Tables extends RestController implements OnInit {
     
     loadWhere(where) {
         this.where = where;
-        if (this.myglobal.existsPermission('1')) {
-            this.loadData();
-        }
+        
+        this.loadData();
     }
 
 
