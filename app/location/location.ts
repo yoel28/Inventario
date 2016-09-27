@@ -39,7 +39,7 @@ export class Location_product extends BasicConfiguration implements OnInit {
             "visible": true,
             'required':true,
             'maxLength':5,
-            'search':true,
+            'search':this.permissions.filter,
             'icon':'fa fa-barcode',
             "type": "text",
             "key": "code",
@@ -59,7 +59,7 @@ export class Location_product extends BasicConfiguration implements OnInit {
             "visible": true,
             'required':true,
             'icon':'fa fa-barcode',
-            'search':true,
+            'search':this.permissions.filter,
             "type": "text",
             "key": "title",
             "title": "Titulo",
@@ -78,7 +78,7 @@ export class Location_product extends BasicConfiguration implements OnInit {
             'required':true,
             'maxLength':5,
             'icon':'fa fa-barcode',
-            'search':true,
+            'search':this.permissions.filter,
             "type": "text",
             "key": "columna",
             "title": "Columna",
@@ -99,7 +99,7 @@ export class Location_product extends BasicConfiguration implements OnInit {
             'maxLength':5,
             'icon':'fa fa-barcode',
             "type": "text",
-            'search':true,
+            'search':this.permissions.filter,
             "key": "fila",
             "title": "Fila",
             "placeholder": "ingrese la fila",
@@ -111,12 +111,13 @@ export class Location_product extends BasicConfiguration implements OnInit {
             },
 
         };
+
         this.rules["maximo"] = {
             "update": this.permissions['update'],
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
-            'search':true,
+            'search':this.permissions.filter,
             "type": "number",
             "key": "maximo",
             "title": "Maximo",
@@ -127,10 +128,12 @@ export class Location_product extends BasicConfiguration implements OnInit {
                 },
             },
         };
+
         this.rules["minimo"] = {
             "update": this.permissions['update'],
             "visible": true,
             'required':true,
+            "search":this.permissions.filter,
             'icon':'fa fa-list',
             "type": "number",
             "key": "minimo",
@@ -143,13 +146,11 @@ export class Location_product extends BasicConfiguration implements OnInit {
             },
         };
 
-
         this.rules["id"] = {
             "update": this.permissions['update'],
             "visible": false,
             'required': true,
             'icon': 'fa fa-barcode',
-
             "type": "text",
             "key": "id",
             "title": "Id",
@@ -172,7 +173,7 @@ export class Location_product extends BasicConfiguration implements OnInit {
             "icon": "fa fa-trash",
             "exp": "",
             'title': 'Eliminar',
-            'permission': '1',
+            'permission': this.permissions.delete,
             'message': 'Esta seguro de eliminar la ubicacion con el codigo',
             'keyAction':'code'
         };
@@ -181,7 +182,7 @@ export class Location_product extends BasicConfiguration implements OnInit {
             "icon": "fa fa-print",
             "exp": "",
             'title': 'Imprimir',
-            'permission': '1',
+            'permission': this.permissions.print,
             'element':''
         };
 
@@ -215,9 +216,6 @@ export class Location_product extends BasicConfiguration implements OnInit {
             idModal: "searchLocation",
             endpoint: this.endpoint,
         }
-
-
-
         this.rulesSave = this.rules;
         delete this.rulesSave['id'];
     }
