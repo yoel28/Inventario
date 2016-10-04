@@ -159,8 +159,9 @@ export class User extends BasicConfiguration implements OnInit{
             idModal: "modalUser",
             endpoint: this.endpoint,
         }
-        this.rulesSave = this.rules;
-        delete this.rulesSave["enabled"];
+        delete this.rules['enabled'];
+        this.rulesSave = Object.assign({},this.rules);
+        delete this.rulesSave['roles']
     }
 
     initOptions() {
