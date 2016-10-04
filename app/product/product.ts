@@ -103,6 +103,9 @@ export class Product extends BasicConfiguration implements OnInit {
         this.rules['detail'] = tempRules['detail'];
 
         this.rules['enabled'] = tempRules['enabled'];
+
+        this.rules['id'] = tempRules['id'];
+
         this.rules['enabled'].visible=false;
 
     }
