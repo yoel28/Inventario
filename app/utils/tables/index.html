@@ -3,22 +3,48 @@
 <div *ngIf="rulesFilter">
     <filter [rules]="rulesFilter" [params]="paramsFilter" (whereFilter)="loadWhere($event)"></filter>
 </div>
-<button  *ngIf="existFilter()"
-        type="button" class="btn btn-blue pull-right"
-        data-toggle="modal" [attr.data-target]="'#'+paramsFilter.idModal">
-    <i class="fa fa-filter"></i>&nbsp;Filtrar
-</button>
 
-<table class="table table-striped table-hover orderColumn" *ngIf="dataList && dataList.count>0">
+<div class=" pull-right">
+    <button  *ngIf="existFilter()"
+             type="button" class="btn btn-blue pull-right"
+             data-toggle="modal" [attr.data-target]="'#'+paramsFilter.idModal">
+        <i class="fa fa-filter"></i>&nbsp;Filtrar&nbsp;
+    </button>
+    &nbsp;
+    <div [attr.id]="'config'+configId" class="btn-group dropdown btn-border" >
+        <span data-toggle="dropdown" class="dropdown-toggle btn">
+            <i class="fa fa-gears"></i>&nbsp;
+            <i class="fa fa-angle-down"></i>&nbsp;
+        </span>
+        <ul role="menu" class="dropdown-menu text-right pull-right submenu-config">
+            <li *ngFor="let key of getKeys(rules)" class="text-blue flex">
+                    <button class="btn btn-box-tool fa"
+                            [class.fa-eye-slash]="!rules[key].visible"
+                            [class.text-red]="!rules[key].visible"
+                            [class.fa-eye]="rules[key].visible"
+                            [class.text-green]="rules[key].visible"
+                            (click)="setVisible($event,rules[key])"
+                            title="{{rules[key].visible?'Ocultar':'Ver'}}"
+                    ></button>
+                    <button (click)="changePosition($event,key,'up')" class="btn btn-box-tool fa fa-angle-up" title="Subir"></button>&nbsp;
+                    <button (click)="changePosition($event,key,'down')" class="btn btn-box-tool fa fa-angle-down" title="Bajar"></button>&nbsp;
+                    <span class="btn" (click)="setCheckField($event,key)">{{rules[key].title}}&nbsp;<i *ngIf="rules[key].check" class="fa fa-check"></i></span>
+            </li>
+        </ul>
+    </div>
+    &nbsp;
+</div>
+
+<table class="table table-striped table-hover orderColumn text-left" *ngIf="dataList && dataList.count>0">
     <thead>
         <tr>
-            <th  *ngFor="let key of keyVisible() " (click)="orderByColumn(key)"  >{{rules[key].title}}  <a ><i [style.color]="sort == key ?'red':'black'" class="fa" [class.fa-angle-down]="sort != key || order != 'asc'  " [class.fa-angle-up]="sort == key && order == 'asc'  " aria-hidden="true"></i></a> </th>
+            <th [class.checkField]="rules[key].check"  *ngFor="let key of keyVisible() " (click)="orderByColumn(key)"  >{{rules[key].title}}  <a ><i [style.color]="sort == key ?'red':'black'" class="fa" [class.fa-angle-down]="sort != key || order != 'asc'  " [class.fa-angle-up]="sort == key && order == 'asc'  " aria-hidden="true"></i></a> </th>
             <th *ngIf="params.actions" class="noCursor"></th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let data of dataList.list">
-            <td *ngFor="let key of keyVisible()" class="button-tables">
+            <td *ngFor="let key of keyVisible()" class="button-tables" [class.checkField]="rules[key].check">
 
              <a *ngIf="rules[key].type =='date'">{{formatDate(data[key],rules[key].format)}}</a>
 
