@@ -12,6 +12,7 @@ import { Print} from "../print/print";
 
 
 declare var moment:any;
+declare var jQuery:any;
 
 @Component({
     selector: 'tables',
@@ -39,14 +40,14 @@ export class Tables extends RestController implements OnInit {
 
     public dataArraySelect :any={};
 
-
-
     public dataSave :any={};
 
     public keyActions =[];
     
     
     public rulesFilter :any ={};
+    public configId=moment().valueOf();
+
 
 
     constructor(public _formBuilder: FormBuilder,public http:Http,public toastr: ToastsManager, public myglobal:globalService) {
@@ -163,6 +164,32 @@ export class Tables extends RestController implements OnInit {
 //        this.searchTableData=data;
 
     }
+    changePosition(event,key,action){
+        if(event){
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        let keys = this.getKeys(this.rules);
+        let index = keys.findIndex(obj=>obj==key);
+        if( (index > 0 && action=='up') ||  (index < this.getKeys(this.rules).length - 1) && action=='down' ){
+            let temp={};
+            let that=this;
+            if(action == 'up'){
+                keys[index]=keys[index-1];
+                keys[index-1]= key;
+            }
+            else if(action == 'down'){
+                keys[index]=keys[index+1];
+                keys[index+1]= key;
+            }
+            keys.forEach(obj=>{
+                temp[obj]=[];
+                temp[obj] = that.rules[obj];
+            })
+            that.rules={};
+            Object.assign(that.rules,temp);
+        }
+    }
     
     asignData(data){
         this.onPatch(this.dataSave.column,this.dataSave.data,data.id);
@@ -189,7 +216,23 @@ export class Tables extends RestController implements OnInit {
     getKeys(data){
         return Object.keys(data);
     }
-
+    setVisible(event,data)
+    {
+        if(event){
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        data.visible = ! data.visible;
+    }
+    setCheckField(event,key){
+        if(event){
+            event.preventDefault();
+            event.stopPropagation();
+        }
+        if(!this.rules[key].check)
+            this.rules[key].check=false;
+        this.rules[key].check=!this.rules[key].check;
+    }
 
 
     //Cargar Where del filter
