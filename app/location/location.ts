@@ -62,8 +62,8 @@ export class Location_product extends BasicConfiguration implements OnInit {
             'search':this.permissions.filter,
             "type": "text",
             "key": "title",
-            "title": "Titulo",
-            "placeholder": "ingrese el titulo de ubicacion",
+            "title": "Area",
+            "placeholder": "Ingrese el area",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio'
@@ -81,8 +81,8 @@ export class Location_product extends BasicConfiguration implements OnInit {
             'search':this.permissions.filter,
             "type": "text",
             "key": "columna",
-            "title": "Columna",
-            "placeholder": "ingrese columna",
+            "title": "Estante",
+            "placeholder": "Ingrese el estante",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
@@ -101,8 +101,8 @@ export class Location_product extends BasicConfiguration implements OnInit {
             "type": "text",
             'search':this.permissions.filter,
             "key": "fila",
-            "title": "Fila",
-            "placeholder": "ingrese la fila",
+            "title": "Espacio",
+            "placeholder": "Ingrese el espacio",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
