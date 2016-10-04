@@ -70,6 +70,16 @@ export abstract class  BasicConfiguration extends RestController{
                 },
             }
         };
+        this.rules["id"] = {
+            "update": false,
+            "visible": this.permissions['audit'],
+            'icon':'fa fa-list',
+            "search":false,
+            "type": "text",
+            "key": "id",
+            "title": "ID",
+            "placeholder": "ID",
+        };
         
     }
 
@@ -89,6 +99,7 @@ export abstract class  BasicConfiguration extends RestController{
         this.permissions['delete']=this.myglobal.existsPermission(this.prefix+'_DELETE');
         this.permissions['filter']=this.myglobal.existsPermission(this.prefix+'_FILTER');
         this.permissions['lock']=this.myglobal.existsPermission(this.prefix+'_LOCK');
+        this.permissions['audit']=this.myglobal.existsPermission(this.prefix+'_AUD');
     }
 
 
