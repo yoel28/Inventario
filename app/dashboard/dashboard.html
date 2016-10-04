@@ -20,7 +20,7 @@
                 <div class="row">
                     <div *ngIf="productListLess && productListLess.list" class="col-lg-6 text-center">
                         <div class="panel panel-default">
-                            <label class="panel-heading text-center col-lg-12">Productos con un numero menor de elementos al permitido</label>
+                            <label class="panel-heading text-center margin-bottom-5 col-lg-12">Productos con un numero menor de elementos al permitido</label>
                             <div class="panel-body text-center">
                                 <tables [dataList]="productListLess" [rules]="productRulesLess" [params]="paramsTableLess"></tables>
                             </div>
@@ -30,7 +30,7 @@
                     <div *ngIf="productListMore && productListMore.list" class="col-lg-6 text-center">
 
                         <div class="panel panel-default">
-                            <label class="panel-heading text-center col-lg-12">Productos con un numero mayor de elementos al permitido</label>
+                            <label class="panel-heading text-center margin-bottom-5 col-lg-12">Productos con un numero mayor de elementos al permitido</label>
                             <div class="panel-body text-center">
                                 <tables [dataList]="productListMore" [rules]="productRulesMore" [params]="paramsTableMore"></tables>
                             </div>
@@ -45,7 +45,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="panel panel-default">
-                            <label class="panel-heading text-center col-lg-12">Cantidad de Productos por Ubicaci&oacute;n</label>
+                            <label class="panel-heading text-center margin-bottom-5 col-lg-12">Cantidad de Productos por Ubicaci&oacute;n</label>
                             <div class="panel-body">
                                 <div *ngIf="productLocationTables.endpoint">
                                     <tables [dataList]="productLocationList" [rules]="productLocationRules" [params]="productLocationTables" [ext]="extLocationProducto"></tables>
