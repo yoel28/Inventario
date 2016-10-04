@@ -95,22 +95,13 @@ export class Dashboard extends BasicConfiguration implements OnInit {
 
 
         this.productRulesMore = {
-            "idProducto":{
-                "visible": false,
-                "search":true,
-                'icon':'fa fa-list',
-                "type": "text",
-                "key": "idProducto",
-                "title": "idProducto",
-                "placeholder": "idProducto"
-            },
             "codeProducto":{
-            "visible": true,
+                "visible": true,
                 "search":true,
                 'icon':'fa fa-list',
                 "type": "text",
                 "key": "codeProducto",
-                "title": "Codigo de producto",
+                "title": "Codigo",
                 "placeholder": "Codigo de producto"
             },
             "detailProducto":{
@@ -142,22 +133,13 @@ export class Dashboard extends BasicConfiguration implements OnInit {
         };
         
         this.productRulesLess = {
-            "idProducto":{
-                "visible": false,
-                "search":true,
-                'icon':'fa fa-list',
-                "type": "text",
-                "key": "idProducto",
-                "title": "idProducto",
-                "placeholder": "idProducto"
-            },
             "codeProducto":{
                 "visible": true,
                 "search":true,
                 'icon':'fa fa-list',
                 "type": "text",
                 "key": "codeProducto",
-                "title": "Codigo de producto",
+                "title": "Codigo",
                 "placeholder": "Codigo de producto"
             },
             "detailProducto":{
@@ -267,15 +249,6 @@ export class Dashboard extends BasicConfiguration implements OnInit {
                 "title": "Accion",
                 "placeholder": "Accion"
         },
-        'idTipoOperacion':{
-            "visible": false,
-                "search":true,
-                'icon':'fa fa-list',
-                "type": "text",
-                "key": "idTipoOperacion",
-                "title": "Cantidad",
-                "placeholder": "columna"
-        }
         };
 
 
