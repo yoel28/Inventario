@@ -23,3 +23,6 @@
     display: flex;
     display: inline-flex;
 }
+.padding-bottom-4{
+    padding-bottom: 4px;
+}
