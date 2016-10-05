@@ -37,7 +37,7 @@ import {LotRecovery} from "./lotRecovery/lotRecovery";
 import {MovesByDate} from "./reports/moveDate/moveDate";
 import {Profile} from "./account/profile/profile";
 
-
+declare var jQuery:any;
 @Component({
   selector: 'my-app',
   templateUrl: 'app/app.html',
@@ -82,8 +82,9 @@ import {Profile} from "./account/profile/profile";
 ])
 export class AppComponent extends RestController implements OnInit{
 
-  public saveUrl:string;
-
+    public saveUrl:string;
+    public menu_modal:string="";
+    public menu_list:string="";
 
 
   constructor(public router: Router,http: Http,public myglobal:globalService,public toastr: ToastsManager) {
@@ -173,6 +174,14 @@ export class AppComponent extends RestController implements OnInit{
         else
             this.activeMenuId=id;
 
+    }
+    loadMenuMain(){
+        this.loadMenu();
+        this.menu_modal=this.myglobal.getParams('MENU_MODAL');
+        this.menu_list=this.myglobal.getParams('MENU_LIST');
+        if(this.menu_list!='' && this.menu_list!='1'){
+            jQuery('body').addClass('no-menu');
+        }
     }
     public menuItems=[];
     loadMenu(){
@@ -380,6 +389,20 @@ export class AppComponent extends RestController implements OnInit{
             if(obj.visible)
                 data.push(obj)
         })
+        return data;
+    }
+    menuItemsTreeview(menu){
+        let data=[];
+        let datatemp=[];
+        menu.forEach(obj=>{
+            if(obj.treeview)
+                data.push(obj)
+            else
+                datatemp.push(obj)
+        })
+        data.unshift({'icon':'fa fa-gears', 'title':'General',
+            'key':'General',
+            'treeview':datatemp})
         return data;
     }
     

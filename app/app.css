@@ -26,3 +26,19 @@
     font-size: 16pt;
     margin: 10pt;
 }
+.modal .modal-dialog .modal-content {
+    background: transparent;
+}
+.modal.in .modal-dialog {
+    width: 80%;
+}
+.a-menu-modal{
+    color: #fff;
+}
+.menu-modal .col-lg-2.col-md-2 {
+    height: 108px;
+    text-align: center;
+}
+.menu-modal i{
+    font-size: 50pt;
+}

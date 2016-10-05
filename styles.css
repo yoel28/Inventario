@@ -64,3 +64,6 @@ main{
     margin-left: 0px !important;
   }
 }
+body.no-menu .content-wrapper, body.no-menu .main-footer {
+  margin-left: 0px !important;
+}
