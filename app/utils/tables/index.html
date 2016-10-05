@@ -4,9 +4,9 @@
     <filter [rules]="rulesFilter" [params]="paramsFilter" (whereFilter)="loadWhere($event)"></filter>
 </div>
 
-<div class=" pull-right">
+<div class="padding-bottom-4 text-left">
     <button  *ngIf="existFilter()"
-             type="button" class="btn btn-blue pull-right"
+             type="button" class="btn btn-blue"
              data-toggle="modal" [attr.data-target]="'#'+paramsFilter.idModal">
         <i class="fa fa-filter"></i>&nbsp;Filtrar&nbsp;
     </button>
@@ -16,7 +16,7 @@
             <i class="fa fa-gears"></i>&nbsp;
             <i class="fa fa-angle-down"></i>&nbsp;
         </span>
-        <ul role="menu" class="dropdown-menu text-right pull-right submenu-config">
+        <ul role="menu" class="dropdown-menu submenu-config">
             <li *ngFor="let key of getKeys(rules)" class="text-blue flex">
                     <button class="btn btn-box-tool fa"
                             [class.fa-eye-slash]="!rules[key].visible"
