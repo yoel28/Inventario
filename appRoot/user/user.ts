@@ -157,7 +157,6 @@ export class User extends BasicConfiguration implements OnInit{
         this.rules["roles"].buttonTitle="Mostrar roles";
 
         this.rules['detail'] = tempRules['detail'];
-        this.rules['enabled'] = tempRules['enabled'];
     }
 
     initSaveRules() {
