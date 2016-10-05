@@ -37,11 +37,11 @@ import {LotRecovery} from "./lotRecovery/lotRecovery";
 import {MovesByDate} from "./reports/moveDate/moveDate";
 import {Profile} from "./account/profile/profile";
 
-
+declare var SystemJS:any;
 @Component({
   selector: 'my-app',
-  templateUrl: 'app/app.html',
-  styleUrls:['app/app.css'],
+  templateUrl: SystemJS.map.app+'/app.html',
+  styleUrls:[SystemJS.map.app+'/app.css'],
   directives: [ROUTER_DIRECTIVES,Save],
   providers: [
     ROUTER_PROVIDERS,

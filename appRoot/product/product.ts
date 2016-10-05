@@ -10,11 +10,11 @@ import {TypeProduct} from "../typeProduct/typeProduct";
 import {BrandProduct} from "../brandProduct/brand";
 import {ModelProduct} from "../modelProduct/modelProduct";
 import {BasicConfiguration} from "../common/basic-configuration";
-
+declare var SystemJS:any;
 @Component({
     selector: 'products',
-    templateUrl: 'app/product/index.html',
-    styleUrls: ['app/product/style.css'],
+    templateUrl: SystemJS.map.app+'/product/index.html',
+    styleUrls: [SystemJS.map.app+'/product/style.css'],
     directives: [Tables,Save],
     pipes: [TranslatePipe],
     providers: [TranslateService,TypeProduct,BrandProduct,ModelProduct]

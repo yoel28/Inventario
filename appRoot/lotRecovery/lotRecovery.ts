@@ -8,10 +8,11 @@ import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {Save} from "../utils/save/save";
 import {BasicConfiguration} from "../common/basic-configuration";
 
+declare var SystemJS:any;
 @Component({
     selector: 'lot-recovery',
-    templateUrl: 'app/lotRecovery/index.html',
-    styleUrls: ['app/lotRecovery/style.css'],
+    templateUrl: SystemJS.map.app+'/lotRecovery/index.html',
+    styleUrls: [SystemJS.map.app+'/lotRecovery/style.css'],
     directives: [Tables,Save],
     pipes: [TranslatePipe],
     providers: [TranslateService]

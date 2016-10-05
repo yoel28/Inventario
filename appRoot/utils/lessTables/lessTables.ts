@@ -5,12 +5,12 @@ import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
 import {Xeditable} from "../../common/xeditable";
-
+declare var SystemJS:any;
 
 @Component({
     selector: 'less-tables',
-    styleUrls: ['app/utils/lessTables/style.css'],
-    templateUrl: 'app/utils/lessTables/index.html',
+    styleUrls: [SystemJS.map.app+'/utils/lessTables/style.css'],
+    templateUrl: SystemJS.map.app+'/utils/lessTables/index.html',
     inputs: ['paramSearch', 'externalEndPoint', 'rulesDetails','externalList','rulesParams','rules','ext'],
     directives:[Xeditable]
 })

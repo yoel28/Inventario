@@ -10,10 +10,12 @@ import {LessList} from "../utils/lessList/lessList";
 import {BasicConfiguration} from "../common/basic-configuration";
 import {Roles} from "../roles/roles";
 
+declare var SystemJS:any;
+
 @Component({
     selector: 'users',
-    templateUrl: 'app/user/index.html',
-    styleUrls: ['app/user/style.css'],
+    templateUrl: SystemJS.map.app+'/user/index.html',
+    styleUrls: [SystemJS.map.app+'/user/style.css'],
     pipes: [TranslatePipe],
     providers: [TranslateService,Roles],
     directives:[Save,Card,LessList]

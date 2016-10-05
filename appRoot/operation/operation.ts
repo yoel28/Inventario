@@ -9,11 +9,12 @@ import {SMDropdown} from "../common/xeditable";
 
 
 declare var moment:any;
+declare var SystemJS:any;
 
 @Component({
     selector: 'operation',
-    templateUrl: 'app/operation/index.html',
-    styleUrls: ['app/operation/style.css'],
+    templateUrl: SystemJS.map.app+'/operation/index.html',
+    styleUrls: [SystemJS.map.app+'/operation/style.css'],
     pipes: [TranslatePipe],
     providers: [TranslateService],
     directives:[SMDropdown,NgSwitch]

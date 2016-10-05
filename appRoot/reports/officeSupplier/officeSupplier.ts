@@ -9,13 +9,13 @@ import {Datepicker} from "../../common/xeditable";
 import {Control,ControlGroup,FormBuilder,Validators} from "@angular/common";
 import {Reports} from "../../utils/reports/report";
 
-
+declare var SystemJS:any;
 declare var moment:any;
 
 @Component({
     selector: 'office-supplier',
-    templateUrl: 'app/reports/productAvailable/productAvailable.html',
-    styleUrls: ['app/reports/productAvailable/style.css'],
+    templateUrl: SystemJS.map.app+'/reports/productAvailable/productAvailable.html',
+    styleUrls: [SystemJS.map.app+'/reports/productAvailable/style.css'],
     directives:[Reports],
     pipes: [TranslatePipe],
     providers: [TranslateService]

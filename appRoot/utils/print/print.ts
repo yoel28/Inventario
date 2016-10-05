@@ -6,13 +6,12 @@ import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {BasicConfiguration} from "../../common/basic-configuration";
 
 declare var moment:any;
-
-
+declare var SystemJS:any;
 
 @Component({
     selector: 'print',
-    templateUrl: 'app/utils/print/index.html',
-    styleUrls: ['app/utils/print/style.css'],
+    templateUrl: SystemJS.map.app+'/utils/print/index.html',
+    styleUrls: [SystemJS.map.app+'/utils/print/style.css'],
     pipes: [TranslatePipe],
     providers: [TranslateService],
     inputs:['type'],

@@ -66,22 +66,29 @@
       </h1>
     </my-app>
 </main>
-<script>
-  webshims.polyfill();
-</script>
+
 <script>
   $(document).ajaxStart(function () {
     Pace.restart();
   });
 </script>
 <script src="systemjs.config.js"></script>
-
+<script src="myapp.js"></script>
 <script>
-  System.import('app').catch(function(err){ console.error(err); });
+  System.import('main').catch(function(err){ console.error(err); });
 </script>
 <script>
   $.fn.editable.defaults.mode = 'popup';
+  (function() {
+    var original = $.fn.editableutils.setCursorPosition;
+    $.fn.editableutils.setCursorPosition = function() {
+      try {
+        original.apply(this, Array.prototype.slice.call(arguments));
+      } catch (e) { /* noop */ }
+    };
+  })();
 </script>
+
 </body>
 <script type="text/javascript" src="node_modules/moment/moment.js"></script>
 <script type="text/javascript" src="node_modules/daterangepicker/daterangepicker.min.js"></script>

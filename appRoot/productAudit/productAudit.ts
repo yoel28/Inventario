@@ -10,15 +10,13 @@ import {TranslateService} from "ng2-translate/ng2-translate";
 
 
 declare var jQuery:any;
-
+declare var SystemJS:any;
 declare var Blob:any;
-
-
 
 @Component({
     selector: 'product-audit',
-    templateUrl: 'app/BuckUpload/index.html',
-    styleUrls: ['app/BuckUpload/style.css'],
+    templateUrl: SystemJS.map.app+'/BuckUpload/index.html',
+    styleUrls: [SystemJS.map.app+'/BuckUpload/style.css'],
     directives: [FILE_UPLOAD_DIRECTIVES, NgClass, NgStyle, CORE_DIRECTIVES, FORM_DIRECTIVES,UploadFile]
 })
 

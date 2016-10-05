@@ -7,11 +7,11 @@ import {Search} from "../search/search";
 import {Filter} from "../filter/filter";
 import {Save} from "../save/save";
 
-
+declare var SystemJS:any;
 @Component({
     selector: 'tables-offline',
-    templateUrl: 'app/utils/tableOffline/index.html',
-    styleUrls: ['app/utils/tableOffline/style.css'],
+    templateUrl: SystemJS.map.app+'/utils/tableOffline/index.html',
+    styleUrls: [SystemJS.map.app+'/utils/tableOffline/style.css'],
     inputs:['rules','dataList'],
     directives:[Xeditable,Search,Filter,Save]
 })

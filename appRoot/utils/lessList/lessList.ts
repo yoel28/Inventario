@@ -5,12 +5,11 @@ import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
 import {Xeditable} from "../../common/xeditable";
-
-
+declare var SystemJS:any;
 @Component({
     selector: 'less-list',
-    templateUrl: 'app/utils/lessList/index.html',
-    styleUrls: ['app/utils/lessList/style.css'],
+    templateUrl: SystemJS.map.app+'/utils/lessList/index.html',
+    styleUrls: [SystemJS.map.app+'/utils/lessList/style.css'],
     inputs: ['paramSearch', 'externalEndPoint', 'rulesDetails','externalList'],
     directives:[Xeditable]
 })

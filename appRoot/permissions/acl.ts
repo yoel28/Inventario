@@ -6,10 +6,11 @@ import {globalService} from "../common/globalService";
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {SMDropdown} from "../common/xeditable";
 
+declare var SystemJS:any;
 @Component({
     selector: 'permissions-acl',
-    templateUrl: 'app/permissions/acl.html',
-    styleUrls: ['app/permissions/style.css'],
+    templateUrl: SystemJS.map.app+'/permissions/acl.html',
+    styleUrls: [SystemJS.map.app+'/permissions/style.css'],
     pipes: [TranslatePipe],
     directives:[SMDropdown],
     providers: [TranslateService]

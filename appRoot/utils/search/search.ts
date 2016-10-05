@@ -2,11 +2,11 @@ import { Component,EventEmitter } from '@angular/core';
 import {Control,ControlGroup,FormBuilder} from "@angular/common";
 import { Http} from '@angular/http';
 import {RestController} from "../../common/restController";
-
+declare var SystemJS:any;
 @Component({
     selector: 'search',
-    templateUrl: 'app/utils/search/index.html',
-    styleUrls: ['app/utils/search/style.css'],
+    templateUrl: SystemJS.map.app+'/utils/search/index.html',
+    styleUrls: [SystemJS.map.app+'/utils/search/style.css'],
     inputs:['params'],
     outputs:['result'],
 })

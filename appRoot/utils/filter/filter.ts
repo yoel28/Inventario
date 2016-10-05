@@ -1,16 +1,16 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
 import {FormBuilder, ControlGroup, Control, Validators} from "@angular/common";
-import forEach = require("core-js/fn/array/for-each");
 import {SMDropdown} from "../../common/xeditable";
 import {RestController} from "../../common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
 
+declare var SystemJS:any;
 @Component({
     selector: 'filter',
-    templateUrl: 'app/utils/filter/index.html',
-    styleUrls: ['app/utils/filter/style.css'],
+    templateUrl: SystemJS.map.app+'/utils/filter/index.html',
+    styleUrls: [SystemJS.map.app+'/utils/filter/style.css'],
     directives:[SMDropdown],
     inputs: ['rules', 'params'],
     outputs: ['whereFilter'],

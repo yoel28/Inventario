@@ -13,11 +13,11 @@ import {TranslateService} from "ng2-translate/ng2-translate";
 
 
 declare var moment:any;
-
+declare var SystemJS:any;
 @Component({
     selector: 'home',
-    templateUrl: 'app/dashboard/dashboard.html',
-    styleUrls: ['app/dashboard/dashboard.css'],
+    templateUrl: SystemJS.map.app+'/dashboard/dashboard.html',
+    styleUrls: [SystemJS.map.app+'/dashboard/dashboard.css'],
     directives: [Tables, CHART_DIRECTIVES,LessTables],
 })
 export class Dashboard extends BasicConfiguration implements OnInit {

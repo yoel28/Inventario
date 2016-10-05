@@ -10,11 +10,11 @@ import {User} from "../../user/user";
 import {TranslatePipe, TranslateService} from "ng2-translate/ng2-translate";
 import {Roles} from "../../roles/roles";
 
-
+declare var SystemJS:any;
 @Component({
     selector: 'profile',
-    templateUrl: 'app/account/profile/index.html',
-    styleUrls: ['app/account/profile/style.css'],
+    templateUrl: SystemJS.map.app+'/account/profile/index.html',
+    styleUrls: [SystemJS.map.app+'/account/profile/style.css'],
     directives: [Xeditable,Xcropit,Search,Xfile],
     pipes: [TranslatePipe],
     providers: [TranslateService,User,Roles]

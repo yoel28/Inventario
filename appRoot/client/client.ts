@@ -8,11 +8,11 @@ import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {Save} from "../utils/save/save";
 import {BasicConfiguration} from "../common/basic-configuration";
 import {TypeCompany} from "../typeCompany/typeCompany";
-
+declare var SystemJS:any;
 @Component({
     selector: 'client',
-    templateUrl: 'app/client/index.html',
-    styleUrls: ['app/client/style.css'],
+    templateUrl: SystemJS.map.app+'/client/index.html',
+    styleUrls: [SystemJS.map.app+'/client/style.css'],
     directives: [Tables,Save],
     pipes: [TranslatePipe],
     providers: [TranslateService,TypeCompany]

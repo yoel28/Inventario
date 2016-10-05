@@ -8,7 +8,7 @@ import {Http} from "@angular/http";
 
 
 declare var jQuery:any;
-
+declare var SystemJS:any;
 declare var Blob:any;
 
 
@@ -16,8 +16,8 @@ declare var saveAs:any;
 
 @Component({
     selector: 'uploadFile',
-    templateUrl: 'app/uploadFile/index.html',
-    styleUrls: ['app/uploadFile/style.css'],
+    templateUrl: SystemJS.map.app+'/uploadFile/index.html',
+    styleUrls: [SystemJS.map.app+'/uploadFile/style.css'],
     directives: [FILE_UPLOAD_DIRECTIVES, NgClass, NgStyle, CORE_DIRECTIVES, FORM_DIRECTIVES]
 })
 

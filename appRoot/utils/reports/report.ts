@@ -12,11 +12,12 @@ import {DateRangepPicker} from "../../common/xeditable";
 import {Select2} from "../../common/multiSelect";
 
 declare var moment:any;
+declare var SystemJS:any;
 
 @Component({
     selector: 'reports',
-    templateUrl: 'app/utils/reports/index.html',
-    styleUrls: ['app/utils/reports/style.css'],
+    templateUrl: SystemJS.map.app+'/utils/reports/index.html',
+    styleUrls: [SystemJS.map.app+'/utils/reports/style.css'],
     directives:[Tables,Datepicker,DateRangepPicker,Select2],
     pipes: [TranslatePipe],
     providers: [TranslateService],

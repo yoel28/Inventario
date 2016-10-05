@@ -7,10 +7,11 @@ import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {Save} from "../utils/save/save";
 import {BasicConfiguration} from "../common/basic-configuration";
 
+declare var SystemJS:any;
 @Component({
     selector: 'permissions',
-    templateUrl: 'app/permissions/index.html',
-    styleUrls: ['app/permissions/style.css'],
+    templateUrl: SystemJS.map.app+'/permissions/index.html',
+    styleUrls: [SystemJS.map.app+'/permissions/style.css'],
     directives: [Tables,Save],
     pipes: [TranslatePipe],
     providers: [TranslateService]

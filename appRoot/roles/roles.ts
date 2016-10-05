@@ -7,11 +7,11 @@ import {Tables} from "../utils/tables/tables";
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {Save} from "../utils/save/save";
 import {BasicConfiguration} from "../common/basic-configuration";
-
+declare var SystemJS:any;
 @Component({
     selector: 'roles',
-    templateUrl: 'app/roles/index.html',
-    styleUrls: ['app/roles/style.css'],
+    templateUrl: SystemJS.map.app+'/roles/index.html',
+    styleUrls: [SystemJS.map.app+'/roles/style.css'],
     directives: [Tables,Save],
     pipes: [TranslatePipe],
     providers: [TranslateService]

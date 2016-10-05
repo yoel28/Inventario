@@ -7,11 +7,11 @@ import {Tables} from "../utils/tables/tables";
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {Save} from "../utils/save/save";
 import {BasicConfiguration} from "../common/basic-configuration";
-
+declare var SystemJS:any;
 @Component({
     selector: 'brand-product',
-    templateUrl: 'app/brandProduct/index.html',
-    styleUrls: ['app/brandProduct/style.css'],
+    templateUrl: SystemJS.map.app+'/brandProduct/index.html',
+    styleUrls: [SystemJS.map.app+'/brandProduct/style.css'],
     directives: [Tables,Save],
     pipes: [TranslatePipe],
     providers: [TranslateService]

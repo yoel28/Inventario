@@ -9,13 +9,13 @@ import {TablesOffline} from "../tableOffline/tableOffline";
 
 
 declare var jQuery:any;
-
+declare var SystemJS:any;
 declare var Blob:any;
 
 @Component({
     selector: 'upload-file',
-    templateUrl: 'app/utils/uploadFile/index.html',
-    styleUrls: ['app/utils/uploadFile/style.css'],
+    templateUrl: SystemJS.map.app+'/utils/uploadFile/index.html',
+    styleUrls: [SystemJS.map.app+'/utils/uploadFile/style.css'],
     inputs:['endpoint','rules'],
     directives: [FILE_UPLOAD_DIRECTIVES, NgClass, NgStyle, CORE_DIRECTIVES, FORM_DIRECTIVES,TablesOffline]
 })

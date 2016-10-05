@@ -12,11 +12,12 @@ import {Select2} from "../../common/multiSelect";
 
 
 declare var moment:any;
+declare var SystemJS:any;
 
 @Component({
     selector: 'products-available',
-    templateUrl: 'app/reports/ProductsAction/index.html',
-    styleUrls: ['app/reports/ProductsAction/style.css'],
+    templateUrl: SystemJS.map.app+'/reports/ProductsAction/index.html',
+    styleUrls: [SystemJS.map.app+'/reports/ProductsAction/style.css'],
     directives:[Reports,Xeditable,Select2],
     pipes: [TranslatePipe],
     providers: [TranslateService]

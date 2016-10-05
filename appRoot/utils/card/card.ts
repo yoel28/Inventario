@@ -8,10 +8,11 @@ import {Search} from "../search/search";
 import {Filter} from "../filter/filter";
 import {Save} from "../save/save";
 
+declare var SystemJS:any;
 @Component({
     selector: 'card',
-    templateUrl: 'app/utils/card/index.html',
-    styleUrls: ['app/utils/card/style.css'],
+    templateUrl: SystemJS.map.app+'/utils/card/index.html',
+    styleUrls: [SystemJS.map.app+'/utils/card/style.css'],
     inputs: ['params', 'rules', 'rulesSearch', 'dataList', 'externalSave'],
     directives: [Xeditable, Search, Filter, Save,Xcropit,Xfile]
 })

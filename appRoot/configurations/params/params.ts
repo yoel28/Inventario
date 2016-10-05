@@ -6,11 +6,11 @@ import {Tables} from "../../utils/tables/tables";
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {Save} from "../../utils/save/save";
 import {BasicConfiguration} from "../../common/basic-configuration";
-
+declare var SystemJS:any;
 @Component({
     selector: 'params',
-    templateUrl: 'app/configurations/params/index.html',
-    styleUrls: ['app/configurations/params/style.css'],
+    templateUrl: SystemJS.map.app+'/configurations/params/index.html',
+    styleUrls: [SystemJS.map.app+'/configurations/params/style.css'],
     directives: [Tables,Save],
     pipes: [TranslatePipe],
     providers: [TranslateService]

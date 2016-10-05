@@ -13,11 +13,12 @@ import { Print} from "../print/print";
 
 declare var moment:any;
 declare var jQuery:any;
+declare var SystemJS:any;
 
 @Component({
     selector: 'tables',
-    templateUrl: 'app/utils/tables/index.html',
-    styleUrls: ['app/utils/tables/style.css'],
+    templateUrl: SystemJS.map.app+'/utils/tables/index.html',
+    styleUrls: [SystemJS.map.app+'/utils/tables/style.css'],
     inputs:['params','rules','externalList','rulesSearch','dataList','externalSave','rulesFilter','where','ext','newSearch','max'],
     directives:[Xeditable,Search,Filter,Save,Print]
 })

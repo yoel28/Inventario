@@ -9,13 +9,13 @@ import {Datepicker} from "../../common/xeditable";
 import {Control,ControlGroup,FormBuilder,Validators} from "@angular/common";
 import {Reports} from "../../utils/reports/report";
 
-
 declare var moment:any;
+declare var SystemJS:any;
 
 @Component({
     selector: 'moves-date',
-    templateUrl: 'app/reports/moveDate/index.html',
-    styleUrls: ['app/reports/moveDate/style.css'],
+    templateUrl: SystemJS.map.app+'/reports/moveDate/index.html',
+    styleUrls: [SystemJS.map.app+'/reports/moveDate/style.css'],
     directives:[Reports],
     pipes: [TranslatePipe],
     providers: [TranslateService]
