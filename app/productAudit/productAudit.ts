@@ -37,16 +37,12 @@ export class ProductAudit extends BasicConfiguration implements OnInit
     }
 
     initRules() {
-
-
-
+        
         let tempRules = this.rules;
         this.rules={};
-
-
-
         this.rules["code"] = {
             "visible": true,
+            "search": this.permissions.filter,
             'required':true,
             'maxLength':5,
             'icon':'fa fa-barcode',
@@ -61,14 +57,11 @@ export class ProductAudit extends BasicConfiguration implements OnInit
             },
 
         };
-
-
         this.rules['detail']=tempRules.detail;
-
         this.rules["cantidad"] = {
             "visible": true,
             'icon':'fa fa-list',
-            "search":true,
+            "search":this.permissions.list,
             "type": "text",
             "key": "cantidad",
             "title": "Cantidad",
@@ -78,11 +71,10 @@ export class ProductAudit extends BasicConfiguration implements OnInit
                 },
             }
         };
-
         this.rules["fisico"] = {
             "visible": true,
             'icon':'fa fa-list',
-            "search":true,
+            "search":this.permissions.filter,
             "type": "text",
             "key": "fisico",
             "title": "Fisico",
@@ -92,13 +84,10 @@ export class ProductAudit extends BasicConfiguration implements OnInit
                 },
             }
         };
-
-        
-
         this.rules["diferencia"] = {
             "visible": true,
             'icon':'fa fa-list',
-            "search":true,
+            "search":this.permissions.filter,
             "type": "number",
             "key": "diferencia",
             "title": "Diferencia",
@@ -108,9 +97,6 @@ export class ProductAudit extends BasicConfiguration implements OnInit
                 },
             }
         };
-
-
-
 
     }
 

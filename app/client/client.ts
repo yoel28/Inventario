@@ -45,6 +45,7 @@ export class Client extends BasicConfiguration implements OnInit {
             "update": this.permissions['update'],
             "visible": true,
             'required':true,
+            'search':this.permissions.filter,
             'icon':'fa fa-list',
             "type": "text",
             "key": "code",
@@ -60,6 +61,7 @@ export class Client extends BasicConfiguration implements OnInit {
             "update": this.permissions['update'],
             "visible": true,
             'required':true,
+            'search':this.permissions.filter,
             'icon':'fa fa-list',
             "type": "text",
             "key": "direccion",
@@ -75,6 +77,7 @@ export class Client extends BasicConfiguration implements OnInit {
             "update": this.permissions['update'],
             "visible": true,
             'required':true,
+            'search':this.permissions.filter,
             'icon':'fa fa-list',
             "type": "text",
             "key": "title",
@@ -90,6 +93,7 @@ export class Client extends BasicConfiguration implements OnInit {
             "update": this.permissions['update'],
             "visible": true,
             'required':true,
+            'search':this.permissions.filter,
             'icon':'fa fa-list',
             "type": "text",
             "key": "ruc",
@@ -101,11 +105,11 @@ export class Client extends BasicConfiguration implements OnInit {
                 },
             }
         };
-
         this.rules["webPage"] = {
             "update": this.permissions['update'],
             "visible": true,
             'required':false,
+            'search':this.permissions.filter,
             'icon':'fa fa-list',
             "type": "text",
             "key": "webPage",
@@ -117,13 +121,12 @@ export class Client extends BasicConfiguration implements OnInit {
                 },
             }
         };
-
-
         this.rules["email"] = {
             "update": this.permissions['update'],
             "visible": true,
             'required':false,
             'icon':'fa fa-list',
+            'search':this.permissions.filter,
             "type": "text",
             "key": "email",
             "title": "Email",
@@ -170,57 +173,10 @@ export class Client extends BasicConfiguration implements OnInit {
             idModal: "saveClient",
             endpoint: this.endpoint,
         }
-
-        this.rulesSave ={};
-        this.rulesSave = {
-            'code': {
-                'type': this.rules['code'].type,
-                'required':true,
-                'title': this.rules['code'].title,
-                'placeholder': this.rules['code'].placeholder,
-                'msg':this.rules['code'].msg
-            },
-            'direccion': {
-                'type': this.rules['direccion'].type,
-                'required':true,
-                'title': this.rules['direccion'].title,
-                'placeholder': this.rules['direccion'].placeholder,
-                'msg':this.rules['direccion'].msg
-            },
-            'title': {
-                'type': this.rules['title'].type,
-                'required':true,
-                'title': this.rules['title'].title,
-                'placeholder': this.rules['title'].placeholder,
-                'msg':this.rules['title'].msg
-            },
-            'ruc': {
-                'type': this.rules['ruc'].type,
-                'required':true,
-                'title': this.rules['ruc'].title,
-                'placeholder': this.rules['ruc'].placeholder,
-                'msg':this.rules['ruc'].msg
-            },
-            'webPage': {
-                'type': this.rules['webPage'].type,
-                'required':true,
-                'title': this.rules['webPage'].title,
-                'placeholder': this.rules['webPage'].placeholder,
-                'msg':this.rules['webPage'].msg
-            },
-            'email': {
-                'type': this.rules['email'].type,
-                'required':true,
-                'title': this.rules['email'].title,
-                'placeholder': this.rules['email'].placeholder,
-                'msg':this.rules['email'].msg
-            }
-        };
-
-
-
-
-
+        this.rulesSave = Object.assign({},this.rules);
+        delete this.rulesSave['enabled'];
+        delete this.rulesSave['id'];
+        delete this.rulesSave['companyTypes'];
     }
 
 
@@ -289,6 +245,7 @@ export class Client extends BasicConfiguration implements OnInit {
             "placeholder": "Ingrese el cliente",
             'paramsSearch':this.paramsSearch,
             'permissions':this.permissions,
+            'search':this.permissions.filter,
             'msg':{
                 'errors':{
                     'object':'El tipo no esta registrado',

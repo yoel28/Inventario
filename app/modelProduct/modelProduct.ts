@@ -32,17 +32,14 @@ export class ModelProduct extends BasicConfiguration implements OnInit {
 
     initRules() {
 
-
         let tempRules = this.rules;
         this.rules={};
-        
-        
-        
+
         this.rules["title"] = {
             "update": this.permissions['update'],
             "visible": true,
             'required':true,
-            "search":true,
+            "search":this.permissions.filter,
             'icon':'fa fa-list',
             "type": "text",
             "key": "title",
@@ -54,11 +51,8 @@ export class ModelProduct extends BasicConfiguration implements OnInit {
                 },
             }
         };
-
-
         this.rules['detail'] = tempRules['detail'];
         this.rules['enabled'] = tempRules['enabled'];
-
         
     }
 
@@ -82,22 +76,10 @@ export class ModelProduct extends BasicConfiguration implements OnInit {
             idModal: "saveProductType",
             endpoint: this.endpoint,
         }
-
-        this.rulesSave = {
-            'title': {
-                'type': this.rules['title'].type,
-                'required':true,
-                'title': this.rules['title'].title,
-                'placeholder': this.rules['title'].placeholder,
-                'msg':this.rules['title'].msg
-            },
-            'detail': {
-                'type': this.rules['detail'].type,
-                'title': this.rules['detail'].title,
-                'placeholder': this.rules['detail'].placeholder,
-                'msg':this.rules['detail'].msg
-            }
-        };
+        
+        this.rulesSave = Object.assign({},this.rules);
+        delete this.rulesSave['enabled'];
+        delete this.rulesSave['id'];
 
     }
 
@@ -146,6 +128,7 @@ export class ModelProduct extends BasicConfiguration implements OnInit {
             "placeholder": "Ingrese el codigo del modelo",
             'paramsSearch':this.paramsSearch,
             'permissions':this.permissions,
+            'search':this.permissions.filter,
             'msg':{
                 'errors':{
                     'object':'El modelo no esta registrado',

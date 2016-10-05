@@ -40,7 +40,7 @@ export class BrandProduct extends BasicConfiguration implements OnInit {
             "update": this.permissions["update"],
             "visible": true,
             'required':true,
-            "search":true,
+            "search":this.permissions.filter,
             'icon':'fa fa-list',
             "type": "text",
             "key": "title",
@@ -76,16 +76,9 @@ export class BrandProduct extends BasicConfiguration implements OnInit {
             idModal: "saveProductBrand",
             endpoint: this.endpoint,
         }
-
-        this.rulesSave = {
-            'title': {
-                'type': this.rules['title'].type,
-                'required':true,
-                'title': this.rules['title'].title,
-                'placeholder': this.rules['title'].placeholder,
-                'msg':this.rules['title'].msg
-            }
-        };
+        this.rulesSave = Object.assign({},this.rules);
+        delete this.rulesSave['enabled'];
+        delete this.rulesSave['id'];
 
     }
 
@@ -137,6 +130,7 @@ export class BrandProduct extends BasicConfiguration implements OnInit {
             "placeholder": "Ingrese el titulo de la marca",
             'paramsSearch':this.paramsSearch,
             'permissions':this.permissions,
+            'search':this.permissions.filter,
             'msg':{
                 'errors':{
                     'object':'La marca no esta registrado',

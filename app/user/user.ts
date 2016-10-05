@@ -36,7 +36,8 @@ export class User extends BasicConfiguration implements OnInit{
         this.rules={};
 
         this.rules["image"] = {
-            "update":true,
+            "update":this.permissions.update,
+            'search':this.permissions.filter,
             "visible": true,
             'required':false,
             'icon':'fa fa-email',
@@ -53,7 +54,8 @@ export class User extends BasicConfiguration implements OnInit{
         };
         this.rules["username"] = {
             "visible": true,
-            "update":true,
+            "update":this.permissions.update,
+            'search':this.permissions.filter,
             'required':true,
             'maxLength':30,
             'icon':'fa fa-user',
@@ -70,7 +72,8 @@ export class User extends BasicConfiguration implements OnInit{
 
         };
         this.rules["name"] = {
-            "update":true,
+            "update":this.permissions.update,
+            'search':this.permissions.filter,
             "visible": true,
             'required':true,
             'maxLength':30,
@@ -91,7 +94,8 @@ export class User extends BasicConfiguration implements OnInit{
         this.rules["email"] = {
             "visible": true,
             'required':true,
-            "update":true,
+            "update":this.permissions.update,
+            'search':this.permissions.filter,
             'maxLength':30,
             'icon':'fa fa-email',
             "type": "text",
@@ -111,7 +115,8 @@ export class User extends BasicConfiguration implements OnInit{
         this.rules["password"] = {
             "visible": true,
             'required':true,
-            "update":true,
+            "update":this.permissions.update,
+            'search':this.permissions.filter,
             'icon':'fa fa-key',
             "type": "password",
             "key": "password",
@@ -128,7 +133,8 @@ export class User extends BasicConfiguration implements OnInit{
         this.rules["phone"] = {
             "visible": true,
             'required':true,
-            "update":true,
+            "update":this.permissions.update,
+            'search':this.permissions.filter,
             'icon':'fa fa-phone',
             "type": "number",
             "key": "phone",
@@ -148,7 +154,6 @@ export class User extends BasicConfiguration implements OnInit{
         this.rules["roles"].type="array";
         this.rules["roles"].buttonTitle="Mostrar roles";
 
-
         this.rules['detail'] = tempRules['detail'];
         this.rules['enabled'] = tempRules['enabled'];
     }
@@ -159,9 +164,11 @@ export class User extends BasicConfiguration implements OnInit{
             idModal: "modalUser",
             endpoint: this.endpoint,
         }
-        delete this.rules['enabled'];
         this.rulesSave = Object.assign({},this.rules);
-        delete this.rulesSave['roles']
+        delete this.rulesSave['roles'];
+        delete this.rulesSave['enabled'];
+        delete this.rulesSave['id'];
+
     }
 
     initOptions() {

@@ -73,6 +73,7 @@ export class Product extends BasicConfiguration implements OnInit {
         this.rules["code"] = {
             "update": this.permissions['update'],
             "visible": true,
+            "search":this.permissions.filter,
             'required':true,
             'maxLength':5,
             'icon':'fa fa-barcode',
@@ -80,7 +81,6 @@ export class Product extends BasicConfiguration implements OnInit {
             "key": "code",
             "title": "Codigo",
             "placeholder": "ingrese el codigo",
-            "search":true,
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
@@ -131,7 +131,6 @@ export class Product extends BasicConfiguration implements OnInit {
     }
 
     initSaveRules() {
-        //TODO agregar los permisos
         this.paramsSave= {
                         title: "Agregar Productos",
                         idModal: "searchProductos",
@@ -139,45 +138,18 @@ export class Product extends BasicConfiguration implements OnInit {
                          }
 
 
-        this.rulesSave["code"] = {
-            'required':true,
-            'maxLength':this.rules["code"].maxLength,
-            'icon':this.rules["code"].icon,
-            "type": this.rules["code"].type,
-            "key": this.rules["code"].key,
-            "title": this.rules["code"].title,
-            'msg':this.rules["code"].msg,
-            "placeholder": this.rules["code"].placeholder,
-            "search": this.rules["code"].search
-        };
-        
-        
-        this.rulesSave["detail"] = {
-            'required':true,
-            'icon':  this.rules["detail"].icon,
-            "type":  this.rules["detail"].type,
-            "key":   this.rules["detail"].detail,
-            "title": this.rules["detail"].title,
-            'msg':   this.rules["detail"].msg ,
-            "placeholder": this.rules["detail"].placeholder,
-            "search": this.rules["detail"].search
-
-        };
+        this.rulesSave["code"] = this.rules['code'];
+        this.rulesSave["detail"] = this.rules['detail'];
 
         this.rulesSave["tipoProducto"] = this.typesProduct.ruleObject;
         this.rulesSave["tipoProducto"].required=true;
-        this.rulesSave["tipoProducto"].search=true;
-
-
 
         this.rulesSave["marca"] = this.brandProduct.ruleObject;
         this.rulesSave["marca"].required=true;
-        this.rulesSave["marca"].search=true;
 
 
         this.rulesSave["modelo"] = this.modelProduct.ruleObject;
         this.rulesSave["modelo"].required=true;
-        this.rulesSave["modelo"].search=true;
 
 
     }

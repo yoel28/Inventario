@@ -43,6 +43,7 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
         this.rules["clienteTitle"] = {
             "update": false,
             "visible": true,
+            "search": this.permissions.filter,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
@@ -55,11 +56,10 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
                 },
             }
         };
-
-
         this.rules["tipoAccionTitle"] = {
             "update": false,
             "visible": true,
+            "search": this.permissions.filter,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
@@ -72,11 +72,10 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
                 },
             }
         };
-
-
         this.rules["clienteRUC"] = {
             "update": false,
             "visible": true,
+            'search':this.permissions.filter,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
@@ -89,11 +88,10 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
                 },
             }
         };
-
-
         this.rules["clienteDireccion"] = {
             "update": false,
             "visible": true,
+            "search": this.permissions.filter,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
@@ -106,11 +104,10 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
                 },
             }
         };
-
-
         this.rules["clienteTelefono"] = {
             "update": false,
             "visible": true,
+            "search": this.permissions.filter,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
@@ -126,6 +123,7 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
         this.rules["clienteEmail"] = {
             "update": false,
             "visible": true,
+            "search": this.permissions.filter,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
@@ -138,10 +136,10 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
                 },
             }
         };
-
         this.rules["dateCreated"] = {
             "update": false,
             "visible": true,
+            "search": this.permissions.filter,
             'required':true,
             'icon':'fa fa-list',
             "type": "date",
@@ -155,7 +153,6 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
                 },
             }
         };
-
 
     }
 
@@ -174,10 +171,8 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
 
     }
 
-        initOptions() {
+    initOptions() {
         this.viewOptions["title"] = 'Administracion de lotes';
-
-
     }
 
     initSearch() {
@@ -215,6 +210,7 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
             "placeholder": "Ingrese el titulo de la marca",
             'paramsSearch':this.paramsSearch,
             'permissions':this.permissions,
+            'search':this.permissions.filter,
             'msg':{
                 'errors':{
                     'object':'La marca no esta registrado',

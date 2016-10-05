@@ -39,6 +39,7 @@ export class TypeCompany extends BasicConfiguration implements OnInit {
         this.rules["code"] = {
             "update": this.permissions['update'],
             "visible": true,
+            "search": this.permissions.filter,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
@@ -55,6 +56,7 @@ export class TypeCompany extends BasicConfiguration implements OnInit {
         this.rules["title"] = {
             "update": this.permissions['update'],
             "visible": true,
+            "search": this.permissions.filter,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
@@ -67,7 +69,6 @@ export class TypeCompany extends BasicConfiguration implements OnInit {
                 },
             }
         };
-
 
         this.rules['detail'] = tempRules['detail'];
         this.rules['enabled'] = tempRules['enabled'];
@@ -83,6 +84,8 @@ export class TypeCompany extends BasicConfiguration implements OnInit {
             'object':true,
             "placeholder": "Ingrese el tipo de cliente",
             'paramsSearch':this.paramsSearch,
+            'permissions':this.permissions,
+            'search':this.permissions.filter,
             'msg':{
                 'errors':{
                     'object':'El tipo no esta registrado',
@@ -141,31 +144,9 @@ export class TypeCompany extends BasicConfiguration implements OnInit {
             endpoint: this.endpoint,
         }
 
-        this.rulesSave = {
-            'code': {
-                'type': this.rules['code'].type,
-                'required':true,
-                "search":true,
-                'title': this.rules['code'].title,
-                'placeholder': this.rules['code'].placeholder,
-                'msg':this.rules['code'].msg
-            },
-            'title': {
-                'type': this.rules['title'].type,
-                'required':true,
-                "search":true,
-                'title': this.rules['title'].title,
-                'placeholder': this.rules['title'].placeholder,
-                'msg':this.rules['title'].msg
-            },
-            'detail': {
-                'type': this.rules['detail'].type,
-                'title': this.rules['detail'].title,
-                "search":true,
-                'placeholder': this.rules['detail'].placeholder,
-                'msg':this.rules['detail'].msg
-            }
-        };
+        this.rulesSave = Object.assign({},this.rules);
+        delete this.rulesSave['enabled'];
+        delete this.rulesSave['id'];
 
     }
 

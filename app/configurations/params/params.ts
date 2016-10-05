@@ -39,7 +39,7 @@ export class Params extends BasicConfiguration implements OnInit {
             "update": this.permissions["update"],
             "visible": true,
             'required':true,
-            "search":true,
+            "search":this.permissions.filter,
             'icon':'fa fa-list',
             "type": "text",
             "key": "key",
@@ -56,7 +56,7 @@ export class Params extends BasicConfiguration implements OnInit {
             "update": this.permissions["update"],
             "visible": true,
             'required':true,
-            "search":true,
+            "search":this.permissions.filter,
             'icon':'fa fa-list',
             "type": "text",
             "key": "value",
@@ -75,7 +75,7 @@ export class Params extends BasicConfiguration implements OnInit {
             "update": this.permissions["update"],
             "visible": true,
             'required':true,
-            "search":true,
+            "search":this.permissions.filter,
             'icon':'fa fa-list',
             "type": "text",
             "key": "type",
@@ -87,8 +87,6 @@ export class Params extends BasicConfiguration implements OnInit {
                 },
             }
         };
-
-
 
         this.rules['enabled'] = tempRules['enabled'];
 
@@ -115,37 +113,9 @@ export class Params extends BasicConfiguration implements OnInit {
             idModal: "saveProductBrand",
             endpoint: this.endpoint,
         }
-
-        this.rulesSave = {
-            'key': {
-                'type': this.rules['key'].type,
-                'required':true,
-                'title': this.rules['key'].title,
-                'placeholder': this.rules['key'].placeholder,
-                'msg':this.rules['key'].msg
-            },
-            'value': {
-                'type': this.rules['value'].type,
-                'required':true,
-                'title': this.rules['value'].title,
-                'placeholder': this.rules['value'].placeholder,
-                'msg':this.rules['value'].msg
-            },
-            'detail': {
-                'type': this.rules['detail'].type,
-                'required':true,
-                'title': this.rules['detail'].title,
-                'placeholder': this.rules['detail'].placeholder,
-                'msg':this.rules['detail'].msg
-            },
-            'type': {
-                'type': this.rules['type'].type,
-                'required':true,
-                'title': this.rules['type'].title,
-                'placeholder': this.rules['type'].placeholder,
-                'msg':this.rules['type'].msg
-            }
-        };
+        this.rulesSave = Object.assign({},this.rules);
+        delete this.rulesSave['enabled']
+        delete this.rulesSave['id']
 
     }
 
@@ -197,6 +167,7 @@ export class Params extends BasicConfiguration implements OnInit {
             "placeholder": "Ingrese el parametros",
             'paramsSearch':this.paramsSearch,
             'permissions':this.permissions,
+            'search':this.permissions.filter,
             'msg':{
                 'errors':{
                     'object':'La marca no esta registrado',

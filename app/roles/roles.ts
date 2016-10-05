@@ -38,6 +38,7 @@ export class Roles extends BasicConfiguration implements OnInit {
             "update": this.permissions['update'],
             "visible": true,
             'required':true,
+            'search':this.permissions.filter,
             'icon':'fa fa-list-ul',
             "type": "text",
             "key": "authority",
@@ -50,7 +51,6 @@ export class Roles extends BasicConfiguration implements OnInit {
             },
 
         };
-
 
         this.rules['detail'] = tempRules['detail'];
         this.rules['enabled'] = tempRules['enabled'];
@@ -77,8 +77,9 @@ export class Roles extends BasicConfiguration implements OnInit {
             idModal: "saveRol",
             endpoint: this.endpoint,
         }
-        this.rulesSave["authority"] = this.rules["authority"]
-        this.rulesSave["detail"] = this.rules["detail"]
+        this.rulesSave = Object.assign({},this.rules);
+        delete this.rulesSave['enabled'];
+        delete this.rulesSave['id'];
     }
 
     initOptions() {
@@ -131,6 +132,7 @@ export class Roles extends BasicConfiguration implements OnInit {
             "placeholder": "Ingrese el titulo del rol",
             'paramsSearch':this.paramsSearch,
             'permissions':this.permissions,
+            'search':this.permissions.filter,
             'msg':{
                 'errors':{
                     'object':'La marca no esta registrado',

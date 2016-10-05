@@ -81,12 +81,12 @@ export class Permissions extends BasicConfiguration {
         this.rules["code"] = {
             "update": this.permissions['update'],
             "visible": true,
+            "search": this.permissions.filter,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
             "key": "code",
             "title": "Código",
-            "search":true,
             "placeholder": "Ingrese el código",
             'msg':{
                 'errors':{
@@ -97,12 +97,12 @@ export class Permissions extends BasicConfiguration {
         this.rules["module"] = {
             "update": this.permissions['update'],
             "visible": true,
+            "search": this.permissions.filter,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
             "key": "module",
             "title": "Modulo",
-            "search":true,
             "placeholder": "Ingrese el modulo",
             'msg':{
                 'errors':{
@@ -113,11 +113,11 @@ export class Permissions extends BasicConfiguration {
         this.rules["title"] = {
             "update": this.permissions['update'],
             "visible": true,
+            "search": this.permissions.filter,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
             "key": "title",
-            "search":true,
             "title": "Titulo",
             "placeholder": "Ingrese el titulo",
             'msg':{
@@ -126,10 +126,10 @@ export class Permissions extends BasicConfiguration {
                 },
             }
         };
-        
         this.rules["controlador"] = {
             "update": this.permissions['update'],
             "visible": true,
+            "search": this.permissions.filter,
             'icon':'fa fa-list',
             "type": "text",
             "obligatoryVisible":true,
@@ -145,12 +145,12 @@ export class Permissions extends BasicConfiguration {
         this.rules["accion"] = {
             "update": this.permissions['update'],
             "visible": true,
+            "search": this.permissions.filter,
             'icon':'fa fa-barcode',
             "type": "text",
             "obligatoryVisible":true,
             "key": "accion",
             "title": "Accion",
-            "search":true,
             "placeholder": "ingrese la accion",
             'msg':{
                 'errors':{
@@ -159,31 +159,15 @@ export class Permissions extends BasicConfiguration {
             },
         };
 
-
         this.rules['detail'] = tempRules['detail'];
-
         this.rules['enabled'] = tempRules['enabled'];
 
-
-
-
-
     }
 
 
-    externalRules()
-    {
-        
-    }
+    externalRules() {}
 
-
-
-    initSearch() {
-
-        
-
-    }
-
+    initSearch() {}
 
     initSaveRules(){
 
@@ -192,52 +176,9 @@ export class Permissions extends BasicConfiguration {
             idModal: "saveDefault",
             endpoint: this.endpoint,
         }
-
-        this.rulesSave = {
-            'code': {
-                'type': this.rules['code'].type,
-                'required':true,
-                'title': this.rules['code'].title,
-                'placeholder': this.rules['code'].placeholder,
-                'msg':this.rules['code'].msg
-            },
-            'module': {
-                'type': this.rules['module'].type,
-                'required':true,
-                'title': this.rules['module'].title,
-                'placeholder': this.rules['module'].placeholder,
-                'msg':this.rules['module'].msg
-            },
-            'title': {
-                'type': this.rules['title'].type,
-                'required':true,
-                'title': this.rules['title'].title,
-                'placeholder': this.rules['title'].placeholder,
-                'msg':this.rules['title'].msg
-            },
-            'controlador': {
-                'type': this.rules['controlador'].type,
-                'title': this.rules['controlador'].title,
-                'placeholder': this.rules['controlador'].placeholder,
-                'msg':this.rules['controlador'].msg
-            },
-            'accion': {
-                'type': this.rules['accion'].type,
-                'title': this.rules['accion'].title,
-                'placeholder': this.rules['accion'].placeholder,
-                'msg':this.rules['accion'].msg9
-            },
-            'detail': {
-                'type': this.rules['detail'].type,
-                'title': this.rules['detail'].title,
-                'placeholder': this.rules['detail'].placeholder,
-                'msg':this.rules['detail'].msg
-            }
-        };
-
-
-
-
+        this.rulesSave = Object.assign({},this.rules);
+        delete this.rulesSave['enabled'];
+        delete this.rulesSave['id'];
 
     }
 

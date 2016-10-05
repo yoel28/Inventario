@@ -145,24 +145,6 @@ export class Location_product extends BasicConfiguration implements OnInit {
                 },
             },
         };
-
-        this.rules["id"] = {
-            "update": this.permissions['update'],
-            "visible": false,
-            'required': true,
-            'icon': 'fa fa-barcode',
-            "type": "text",
-            "key": "id",
-            "title": "Id",
-            'msg': {
-                'errors': {
-                    'required': 'El campo es obligatorio'
-                },
-            },
-
-        };
-
-
         
     }
 
@@ -198,6 +180,8 @@ export class Location_product extends BasicConfiguration implements OnInit {
             'object':true,
             "placeholder": "Ingrese la Ubicacion",
             'paramsSearch':this.paramsSearch,
+            'permissions':this.permissions,
+            'search':this.permissions.filter,
             'msg':{
                 'errors':{
                     'object':'El tipo no esta registrado',
@@ -216,8 +200,9 @@ export class Location_product extends BasicConfiguration implements OnInit {
             idModal: "searchLocation",
             endpoint: this.endpoint,
         }
-        this.rulesSave = this.rules;
-        delete this.rulesSave['id'];
+        this.rulesSave = Object.assign({},this.rules);
+        delete this.rulesSave['enabled']
+        delete this.rulesSave['id']
     }
 
     initOptions() {

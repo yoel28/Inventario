@@ -36,11 +36,27 @@ export class AccionType extends BasicConfiguration implements OnInit {
         let tempRules = this.rules;
         this.rules={};
 
+        this.rules["title"] = {
+            "update": this.permissions["update"],
+            "visible": true,
+            'required':true,
+            "search":this.permissions.filter,
+            'icon':'fa fa-list',
+            "type": "text",
+            "key": "title",
+            "title": "Titulo",
+            "placeholder": "ingrese el nombre del titulo",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio'
+                },
+            }
+        };
         this.rules["cambio"] = {
             "update": this.permissions["update"],
             "visible": true,
             'required':true,
-            "search":true,
+            "search":this.permissions.filter,
             'icon':'fa fa-list',
             "type": "text",
             "key": "cambio",
@@ -53,27 +69,7 @@ export class AccionType extends BasicConfiguration implements OnInit {
             }
         };
 
-
-        this.rules["title"] = {
-            "update": this.permissions["update"],
-            "visible": true,
-            'required':true,
-            "search":true,
-            'icon':'fa fa-list',
-            "type": "text",
-            "key": "title",
-            "title": "Titulo",
-            "placeholder": "ingrese el nombre del titulo",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio'
-                },
-            }
-        };
-
-
         this.rules['detail'] = tempRules['detail'];
-
         this.rules["visible"] = {
             "update": (this.permissions['update'] && this.permissions['lock']),
             "visible": this.permissions['lock'],
@@ -114,30 +110,10 @@ export class AccionType extends BasicConfiguration implements OnInit {
             idModal: "saveProductBrand",
             endpoint: this.endpoint,
         }
-
-        this.rulesSave = {
-            'title': {
-                'type': this.rules['title'].type,
-                'required':true,
-                'title': this.rules['title'].title,
-                'placeholder': this.rules['title'].placeholder,
-                'msg':this.rules['title'].msg
-            },
-            'cambio': {
-                'type': this.rules['cambio'].type,
-                'required':true,
-                'title': this.rules['cambio'].title,
-                'placeholder': this.rules['cambio'].placeholder,
-                'msg':this.rules['cambio'].msg
-            },
-            'detail': {
-                'type': this.rules['detail'].type,
-                'required':true,
-                'title': this.rules['detail'].title,
-                'placeholder': this.rules['detail'].placeholder,
-                'msg':this.rules['detail'].msg
-            }
-        };
+        this.rulesSave = Object.assign({},this.rules);
+        delete this.rulesSave['enabled'];
+        delete this.rulesSave['visible'];
+        delete this.rulesSave['id'];
 
     }
 
@@ -190,6 +166,7 @@ export class AccionType extends BasicConfiguration implements OnInit {
             "placeholder": "Ingrese el tipo de accion",
             'paramsSearch':this.paramsSearch,
             'permissions':this.permissions,
+            'search':this.permissions.filter,
             'msg':{
                 'errors':{
                     'object':'La marca no esta registrado',

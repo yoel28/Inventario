@@ -46,6 +46,7 @@ export abstract class  BasicConfiguration extends RestController{
             'icon':'fa fa-list',
             "search":true,
             "type": "textarea",
+            'showbuttons':true,
             "key": "detail",
             "title": "Detalle",
             "placeholder": "ingrese el detalle",
@@ -142,6 +143,8 @@ export abstract class  BasicConfiguration extends RestController{
             'object':true,
             "placeholder": "PlaceHolder default",
             'paramsSearch':this.paramsSearch,
+            'permissions':this.permissions,
+            'search':this.permissions.filter,
             'msg':{
                 'errors':{
                     'object':'la referencia no esta registrada',
