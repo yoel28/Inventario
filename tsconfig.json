@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
-    //"outDir": "build/",
+    "outFile": "myapp.js",
     "allowSyntheticDefaultImports": true,
     "target": "es5",
     "module": "system",
     "moduleResolution": "node",
-    "sourceMap": true,
+    "sourceMap": false,
     "declaration": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,

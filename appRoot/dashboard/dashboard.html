@@ -1,0 +1,75 @@
+<div class="content-wrapper">
+    <section class="content">
+        <div class="box">
+
+            <div class="box-header">
+
+                <h3 *ngIf="viewOptions && viewOptions.title" class="box-title">{{viewOptions.title }}</h3>
+
+            </div>
+
+            <div class="box-body">
+                <div class="row">
+                    <div *ngIf="dataAreaPlot1.series.length>0" id="chartcontainer1" width='100%' class="padding-bottom col-lg-6">
+                        <chart [options]="dataAreaPlot1" (load)="saveInstance($event.context,'plot1')"></chart>
+                    </div>
+                    <div *ngIf="dataAreaPlot2.series.length>0" id="chartcontainer2" width='100%' class="padding-bottom col-lg-6">
+                        <chart [options]="dataAreaPlot2" (load)="saveInstance($event.context,'plot2')"></chart>
+                    </div>
+                </div>
+                <div class="row">
+                    <div *ngIf="productListLess && productListLess.list" class="col-lg-6 text-center">
+                        <div class="panel panel-default">
+                            <label class="panel-heading text-center margin-bottom-5 col-lg-12">Productos con un numero menor de elementos al permitido</label>
+                            <div class="panel-body text-center">
+                                <tables [dataList]="productListLess" [rules]="productRulesLess" [params]="paramsTableLess"></tables>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="productListMore && productListMore.list" class="col-lg-6 text-center">
+
+                        <div class="panel panel-default">
+                            <label class="panel-heading text-center margin-bottom-5 col-lg-12">Productos con un numero mayor de elementos al permitido</label>
+                            <div class="panel-body text-center">
+                                <tables [dataList]="productListMore" [rules]="productRulesMore" [params]="paramsTableMore"></tables>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <label class="panel-heading text-center margin-bottom-5 col-lg-12">Cantidad de Productos por Ubicaci&oacute;n</label>
+                            <div class="panel-body">
+                                <div *ngIf="productLocationTables.endpoint">
+                                    <tables [dataList]="productLocationList" [rules]="productLocationRules" [params]="productLocationTables" [ext]="extLocationProducto"></tables>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="panel panel-default">
+                            <label class="panel-heading text-center col-lg-12">Entrada y Salidas Productos del dia</label>
+                            <div class="panel-body">
+                                <div *ngIf="productEnterExitTables.endpoint">
+
+
+                                    <less-tables [externalEndPoint]="externalEndPointEnterExitTables" [rulesDetails]="productEnterExitDetailRules" [rules]="productEnterExitRules" [paramSearch]="productEnterExitTables" [ext]="extExitEnterProducto"></less-tables>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+</div>

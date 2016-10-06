@@ -1,0 +1,28 @@
+.orderColumn th{
+    cursor:pointer
+}
+
+
+.orderColumn th.noCursor
+{
+    cursor: auto;
+}
+
+.button-tables a
+{
+    cursor: pointer;
+}
+.btn-border{
+    border: 1px solid rgba(183,177,177,0.5);
+}
+.checkField , .checkField a {
+    background: #3c8dbc;
+    color: white;
+}
+.flex{
+    display: flex;
+    display: inline-flex;
+}
+.padding-bottom-4{
+    padding-bottom: 4px;
+}

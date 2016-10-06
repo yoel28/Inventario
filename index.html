@@ -40,7 +40,7 @@
   <link rel="stylesheet" href="assets/css/skins/skin-blue.css">
   <link rel="stylesheet" href="assets/css/pink-blue.css">
 
-  <link rel="stylesheet" href="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css">
+  <link rel="stylesheet" href="node_modules/daterangepicker/daterangepicker-bs2.min.css">
   <link rel="stylesheet" href="assets/plugins/pace/pace.min.css">
   <script src="assets/plugins/pace/pace.min.js"></script>
 
@@ -60,27 +60,39 @@
 <body class="hold-transition skin-blue sidebar-mini">
 
 <main>
-    <my-app>Loading...</my-app>
+    <my-app>
+      <h1 class="col-lg-12 cargar">
+        <i class="fa fa-spinner fa-spin"></i>
+        &nbsp;Cargando...
+      </h1>
+    </my-app>
 </main>
-<!--<script>-->
-<!--//  webshims.polyfill();-->
-<!--</script>-->
+
 <script>
   $(document).ajaxStart(function () {
     Pace.restart();
   });
 </script>
 <script src="systemjs.config.js"></script>
-
+<script src="myapp.js"></script>
 <script>
-  System.import('app').catch(function(err){ console.error(err); });
+  System.import('main').catch(function(err){ console.error(err); });
 </script>
 <script>
   $.fn.editable.defaults.mode = 'popup';
+  (function() {
+    var original = $.fn.editableutils.setCursorPosition;
+    $.fn.editableutils.setCursorPosition = function() {
+      try {
+        original.apply(this, Array.prototype.slice.call(arguments));
+      } catch (e) { /* noop */ }
+    };
+  })();
 </script>
+
 </body>
 <script type="text/javascript" src="node_modules/moment/moment.js"></script>
-<script type="text/javascript" src="http://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+<script type="text/javascript" src="node_modules/daterangepicker/daterangepicker.min.js"></script>
 
 
 <script src="node_modules/select2/dist/js/select2.min.js"></script>
