@@ -89,7 +89,7 @@ export abstract class  BasicConfiguration extends RestController{
         this.viewOptions["errors"] ={};
         this.viewOptions["button"] =[];
         this.viewOptions["errors"].notFound= "no se encontraron resultados";
-        this.viewOptions["errors"].list="no tiene permisos para ver los productos";
+        this.viewOptions["errors"].list="no tiene permisos para ver esta página";
     }
 
     private initPermissions(prefix){
@@ -101,6 +101,7 @@ export abstract class  BasicConfiguration extends RestController{
         this.permissions['filter']=this.myglobal.existsPermission(this.prefix+'_FILTER');
         this.permissions['lock']=this.myglobal.existsPermission(this.prefix+'_LOCK');
         this.permissions['audit']=this.myglobal.existsPermission(this.prefix+'_AUD');
+        this.permissions['visible']=true;//this.myglobal.existsPermission(this.prefix+'_VISIBLE');
     }
 
 

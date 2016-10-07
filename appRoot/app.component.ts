@@ -36,6 +36,8 @@ import {ProductsAction} from "./reports/ProductsAction/productsAction";
 import {LotRecovery} from "./lotRecovery/lotRecovery";
 import {MovesByDate} from "./reports/moveDate/moveDate";
 import {Profile} from "./account/profile/profile";
+import {Tooltip} from "./tooltip/tooltip";
+
 
 declare var SystemJS:any;
 declare var jQuery:any;
@@ -77,8 +79,10 @@ declare var jQuery:any;
   { path: '/product/audit',   name: 'ProductAudit', component: ProductAudit },
   { path: '/buck/upload',   name: 'BuckUpload', component: BuckUpload },
   { path: '/lot/recovery',   name: 'LotRecovery', component: LotRecovery },
-  { path: '/user/profile',   name: 'Profile', component: Profile },
-  { path: '/**', redirectTo: ['Dashboard'] }
+  { path: '/user/profile',   name: 'Profile', component: Profile }, 
+    { path: '/tooltip',   name: 'Tooltip', component: Tooltip },
+
+    { path: '/**', redirectTo: ['Dashboard'] }
 
 ])
 export class AppComponent extends RestController implements OnInit{
