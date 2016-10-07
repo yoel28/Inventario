@@ -359,7 +359,7 @@ export class AppComponent extends RestController implements OnInit{
             this.menuItems.push({
                 'visible':  this.myglobal.existsPermission("MEN_ROLE") ||
                 this.myglobal.existsPermission("MEN_ACL") ||
-                this.myglobal.existsPermission("MEN_PERMISSION"),
+                this.myglobal.existsPermission("MEN_PERMISSION") || this.myglobal.existsPermission("MEN_INFO"),
                 'icon':'fa fa-list',
                 'title':'Panel de Configuracion',
                 'key':'Panel de Configuracion',
@@ -381,6 +381,12 @@ export class AppComponent extends RestController implements OnInit{
                         'icon':'fa fa-list',
                         'title':'Permisos',
                         'routerLink':'Permissions'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_INFO"),
+                        'icon':'fa fa-list',
+                        'title':'Tooltips',
+                        'routerLink':'Tooltip'
                     }
 
                 ]
