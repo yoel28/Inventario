@@ -50,7 +50,7 @@ export class BuckUpload extends BasicConfiguration implements OnInit
         this.rules["code"] = {
             "visible": true,
             'required':true,
-            'maxLength':5,
+            'maxLength':50,
             'icon':'fa fa-barcode',
             "type": "text",
             "key": "code",
@@ -58,7 +58,7 @@ export class BuckUpload extends BasicConfiguration implements OnInit
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
-                    'maxlength':'Maximo numero de caracteres 5'
+                    'maxlength':'Maximo numero de caracteres 50'
                 },
             },
 
