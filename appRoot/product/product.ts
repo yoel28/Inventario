@@ -75,7 +75,7 @@ export class Product extends BasicConfiguration implements OnInit {
             "visible": true,
             "search":this.permissions.filter,
             'required':true,
-            'maxLength':5,
+            'maxLength':50,
             'icon':'fa fa-barcode',
             "type": "text",
             "key": "code",
