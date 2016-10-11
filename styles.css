@@ -55,15 +55,6 @@ main{
 .skin-blue .wrapper{
   background-color: #e1e7da !important;
 }
-
-@media print {
-  .noprint{
-    display:none;
-  }
-  .content-wrapper{
-    margin-left: 0px !important;
-  }
-}
 .cargar{
   color: white;
   font-size: 16pt;
