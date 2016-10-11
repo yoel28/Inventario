@@ -164,6 +164,9 @@ export abstract class  BasicConfiguration extends RestController{
         this.translate.setDefaultLang('en');
         this.translate.use(userLang);
     }
+    getObjectKeys(data){
+        return Object.keys(data);
+    }
 
 
     
