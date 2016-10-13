@@ -35,7 +35,7 @@ export class Kardex extends BasicConfiguration implements OnInit {
     
     public formatDateFact:any={};
     public itemsFecha:any=[];
-    public disabledRange = -2;
+    public disabledRange = '-2';
     public form: ControlGroup;
     public dateStart:Control;
     public dateEnd:Control;
@@ -199,11 +199,8 @@ export class Kardex extends BasicConfiguration implements OnInit {
         let day = moment().format('lll');
         let val;
         this.dateStart.updateValue(null);
-        if(this.viewOptions.groupOptions && id ==1 || id==-2)
-        {
-            this.viewOptions.groupOptions.forEach((key)=>{key.value=false;});
-            this.ext="";
-        }
+
+
         switch (id)
         {
             case "1" : //hoy
@@ -262,11 +259,13 @@ export class Kardex extends BasicConfiguration implements OnInit {
 
 
 
-        if(this.disabledRange == -1)
+        if(this.disabledRange == '-1')
         {
 
-            if(event)
+            if(event){
                 this.dateStart.updateValue(event);
+                this.date = event;
+            }
 
             if(!event)
             {
@@ -287,10 +286,10 @@ export class Kardex extends BasicConfiguration implements OnInit {
 
 
 
-            if(this.disabledRange == -2 || this.disabledRange == 1)
+            if(this.disabledRange == '-2' || this.disabledRange == '-1')
                 tempWhere[0].op='eq';
 
-            if(this.disabledRange>1)
+            if(parseFloat(this.disabledRange)>1)
             {
                 end = moment(this.dateEnd.value.toString()).format('DD-MM-YYYY').split("-");
 
@@ -317,7 +316,7 @@ export class Kardex extends BasicConfiguration implements OnInit {
     }
     public orderData(){
         let that=this;
-        if(!that.dataList.data){
+
             that.dataList.data={};
             that.dataList.list.forEach(obj=>{
                 let index = obj.dia+'/'+obj.mes+'/'+obj.year;
@@ -329,7 +328,7 @@ export class Kardex extends BasicConfiguration implements OnInit {
                 }
                 that.dataList.data[index][obj.tipoOperacionTitle] = obj.cantidad;
             })
-        }
+
     }
     existenciaMinMax(){
         let min=0;
