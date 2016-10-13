@@ -57,7 +57,10 @@ export class Kardex extends BasicConfiguration implements OnInit {
 
     initOptions() {
         this.viewOptions["title"] = 'Kardex';
-        this.viewOptions["groupOptions"] = [{'title':'Dia','value':false,'key':'dia'},{'title':'Mes','value':false,'key':'mes'},{'title':'Año','value':false,'key':'year'}];
+        this.order="asc";
+        this.sort="fecha";
+        this.max=1000;
+        this.lastMax=1000;
     }
 
     initRules() {
@@ -189,11 +192,6 @@ export class Kardex extends BasicConfiguration implements OnInit {
         });
 
     }
-    public changeGroupBy(id) {
-        this.viewOptions.groupOptions[id].value = !this.viewOptions.groupOptions[id].value;
-        if(this.dateStart.value && this.dateStart.value.toString().length >0 )
-            this.assignDate();
-    }
     public setFecha(id){
 
         this.disabledRange=id;
@@ -259,7 +257,6 @@ export class Kardex extends BasicConfiguration implements OnInit {
         let tempGroup="";
         let uriwhen ="";
         this.newSearch = true;
-        this.max=5;
         let start =[];
         let end=[];
 
@@ -303,8 +300,8 @@ export class Kardex extends BasicConfiguration implements OnInit {
         }
 
 
-        tempGroup='["field":"dia"],["field":"mes"],["field":"year"]';
-        this.ext = "&group=[" +(this.defaultGroup[this.endpoint]?this.defaultGroup[this.endpoint]+',':"")+ tempGroup + "]";
+        tempGroup='["field":"fecha"],["field":"dia"],["field":"mes"],["field":"year"]';
+        this.ext = "&group="+encodeURI("[" +(this.defaultGroup[this.endpoint]?this.defaultGroup[this.endpoint]+',':"")+ tempGroup + "]");
 
 
         let flag =true;
