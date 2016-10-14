@@ -40,7 +40,7 @@ pre_install_prod_job_1:
     - cd /tmp/build
     - sudo npm run prestart
     - sudo npm install grunt grunt-contrib-coffee grunt-contrib-cssmin grunt-contrib-htmlmin  grunt-contrib-jshint  grunt-contrib-nodeunit grunt-contrib-uglify  grunt-ts
-    - sudo npm install -g grunt grunt-contrib-coffee grunt-contrib-cssmin grunt-contrib-htmlmin  grunt-contrib-jshint  grunt-contrib-nodeunit grunt-contrib-uglify  grunt-ts    
+    - sudo npm install -g grunt grunt-contrib-coffee grunt-contrib-cssmin grunt-contrib-htmlmin  grunt-contrib-jshint  grunt-contrib-nodeunit grunt-contrib-uglify  grunt-ts
     - sudo npm install -g typings tsc concurrently  lite-server typescript
     - sudo typings install
   when: on_success
@@ -48,11 +48,15 @@ pre_install_prod_job_1:
     - inventarioprod
   only :
     - tags
-    
+
 build_job_2:
   stage: build
   script:
     - cd /tmp/build
+    - export epoch=$(date +%s)
+    - sudo sed -i -e 's;\=\"\(http\)s\?://[a-zA-Z0-9.]\+\([:][0-9]\+\)\?\"\;;\=\"https://dev.zippyttech.com:8080\"\;;g' appRoot/app.component.ts
+    - sudo sed -i -e "s;appRoot;${epoch};g" ./systemjs.config.js
+    - sudo mv appRoot ${epoch}
     - sudo npm run tsc -w
     - sudo npm run build
   when: on_success
@@ -66,6 +70,10 @@ build_prod_job_2:
   stage: build
   script:
     - cd /tmp/build
+    - export epoch=$(date +%s)
+    - sudo sed -i -e 's;\=\"\(http\)s\?://[a-zA-Z0-9.]\+\([:][0-9]\+\)\?\"\;;\=\"http://52.23.236.184:8080\"\;;g' appRoot/app.component.ts
+    - sudo sed -i -e "s;appRoot;${epoch};g" ./systemjs.config.js
+    - sudo mv appRoot ${epoch}
     - sudo npm run tsc -w
     - sudo npm run build
   when: on_success
@@ -73,7 +81,7 @@ build_prod_job_2:
     - inventarioprod
   only :
     - tags
-        
+
 deploy_job_3:
   stage: deploy
   script:
@@ -85,7 +93,8 @@ deploy_job_3:
     - sudo tar -cf $CI_BUILD_REF_NAME.tar $CI_BUILD_REF_NAME/
     - sudo rm -rf /var/www/html/$CI_BUILD_REF_NAME/*
     - sudo cp -rf /tmp/build/* /var/www/html/$CI_BUILD_REF_NAME/
-  when: on_success 
+    - sh /home/ubuntu/script/conn.sh
+  when: on_success
   tags:
     - inventariodev
   only :
@@ -103,12 +112,13 @@ deploy_prod_job_3:
     - sudo tar -cf html.tar html/
     - sudo rm -rf /var/www/html/*
     - sudo cp -rf /tmp/build/* /var/www/html/
-  when: on_success 
+    - sh /home/ubuntu/scripts/conn.sh
+  when: on_success
   tags:
     - inventarioprod
   only :
     - tags
-    
+
 reset_job_4:
   stage: reset
   script:
@@ -155,7 +165,7 @@ reset_prod_job_4:
   only :
     - tags
 
-    
+
 clean_job_5:
   stage: clean
   script:
@@ -168,7 +178,7 @@ clean_job_5:
   only :
     - dev
     - beta
-    
+
 clean_prod_job_5:
   stage: clean
   script:
