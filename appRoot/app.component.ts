@@ -150,6 +150,7 @@ export class AppComponent extends RestController implements OnInit{
       let that = this;
       let successCallback= response => {
           this.myglobal.init=false;
+          this.menuItems = [];
           localStorage.removeItem('bearer');
           contentHeaders.delete('Authorization');
 
