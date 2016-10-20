@@ -91,10 +91,16 @@
 
                                         <form class="row" role="form" [ngFormModel]="form_operation[1]" (submit)="getResult($event)">
                                             <button class="hidden" (submit)="getResult($event)"></button>
-                                            <div class="col-lg-5">
+                                            <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label for="usr" class="text-bold">Codigo de Barras:</label>
                                                     <input ngControl="producto" class="form-control" type="text" id="usr">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-1">
+                                                <div class="form-group">
+                                                    <label for="cant" class="text-bold">Cantidad:</label>
+                                                    <input ngControl="cantidad" class="form-control" type="number" step="0" [(attr.value)]="cantidad.value" min="1" id="cant">
                                                 </div>
                                             </div>
 
@@ -109,12 +115,16 @@
                                                             <table class="table table-striped table-hover text-center">
                                                                 <thead>
                                                                 <tr>
-                                                                    <td>Item</td><td>Producto</td><td>Ubicacion</td><td class="col-lg-1"></td>
+                                                                    <td>Item</td><td>Producto</td><td>Ubicacion</td><td>Cantidad</td><td class="col-lg-1"></td>
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody >
                                                                 <tr *ngFor="let carga of listAccion" data-toggle="tooltip" [attr.title]="carga.msj" [class.success]="carga.Status" [class.danger]="!carga.Status">
-                                                                    <td>{{carga.item}}</td><td>{{carga.Producto.name?carga.Producto.name:carga.Producto.code}}</td><td>{{carga.Ubicacion.name}}</td><td><input type="checkbox" [disabled]="!carga.Status" [checked]="carga.Validate" (click)="unSelect(carga)" ></td>
+                                                                    <td>{{carga.item}}</td>
+                                                                    <td>{{carga.Producto.name?carga.Producto.name:carga.Producto.code}}</td>
+                                                                    <td>{{carga.Ubicacion.name}}</td>
+                                                                    <td>{{carga.cantidad}}</td>
+                                                                    <td><input type="checkbox" [disabled]="!carga.Status" [checked]="carga.Validate" (click)="unSelect(carga)" ></td>
                                                                 </tr>
                                                                 </tbody>
                                                             </table>
