@@ -98,7 +98,7 @@ export class AppComponent extends RestController implements OnInit{
   constructor(public router: Router,http: Http,public myglobal:globalService,public toastr: ToastsManager,public info:Info) {
     
       super(http)
-      let url = "https://dev.zippyttech.com";
+      let url = "https://dev.zippyttech.com:8080";
       localStorage.setItem('urlAPI',url+'/api');
       localStorage.setItem('url',url);
 
