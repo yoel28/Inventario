@@ -37,6 +37,8 @@ import {LotRecovery} from "./lotRecovery/lotRecovery";
 import {MovesByDate} from "./reports/moveDate/moveDate";
 import {Profile} from "./account/profile/profile";
 import {Kardex} from "./reports/kardex/kardex";
+import {Rules} from "./rules/rules";
+import {Info} from "./info/infos";
 
 declare var SystemJS:any;
 declare var jQuery:any;
@@ -47,7 +49,8 @@ declare var jQuery:any;
   directives: [ROUTER_DIRECTIVES,Save],
   providers: [
     ROUTER_PROVIDERS,
-    provide(LocationStrategy, {useClass: HashLocationStrategy})
+    provide(LocationStrategy, {useClass: HashLocationStrategy}),
+      Info
   ]
 })
 @RouteConfig([
@@ -71,6 +74,7 @@ declare var jQuery:any;
   { path: '/type/company',   name: 'TypeCompany', component: TypeCompany },
   { path: '/accion/type',   name: 'AccionType', component: AccionType },
   { path: '/configuration/params',   name: 'Params', component: Params },
+  { path: '/configuration/rules',   name: 'Rules', component: Rules },
   { path: '/product/available',   name: 'ProductAvailable', component: ProductAvailable },
   { path: '/office/supplieer',   name: 'OfficeSupplier', component: OfficeSupplier },
   { path: '/operacion/accion',   name: 'ProductsAction', component: ProductsAction },
@@ -80,6 +84,7 @@ declare var jQuery:any;
   { path: '/lot/recovery',   name: 'LotRecovery', component: LotRecovery },
   { path: '/user/profile',   name: 'Profile', component: Profile },
   { path: '/kardex',   name: 'Kardex', component: Kardex },
+  { path: '/infos',   name: 'Info', component: Info },
   { path: '/**', redirectTo: ['Dashboard'] }
 
 ])
@@ -90,7 +95,7 @@ export class AppComponent extends RestController implements OnInit{
     public menu_list:string="";
 
 
-  constructor(public router: Router,http: Http,public myglobal:globalService,public toastr: ToastsManager) {
+  constructor(public router: Router,http: Http,public myglobal:globalService,public toastr: ToastsManager,public info:Info) {
     
       super(http)
       let url = "http://52.23.208.232:8080";
@@ -133,7 +138,7 @@ export class AppComponent extends RestController implements OnInit{
     );//this.onSocket();
   }
     ngOnInit(){
-
+        this.info.externalRules();
     }
 
   public urlPublic=['AccountLogin','AccountActivate','AccountRecover','AccountRecoverPassword'];
@@ -336,8 +341,8 @@ export class AppComponent extends RestController implements OnInit{
             });
             this.menuItems.push({
                 'visible':  this.myglobal.existsPermission("MEN_CARG_MASIVA") ||
-                this.myglobal.existsPermission("MEN_TYPE_ACC") ||
-                this.myglobal.existsPermission("MEN_PARAMS"),
+                this.myglobal.existsPermission("MEN_TYPE_ACC") || this.myglobal.existsPermission("MEN_INFO") ||
+                this.myglobal.existsPermission("MEN_PARAMS") || this.myglobal.existsPermission('MEN_RULES'),
                 'icon':'fa fa-list',
                 'title':'Administracion de Sistema',
                 'key':'Administracion de Sistema',
@@ -359,7 +364,20 @@ export class AppComponent extends RestController implements OnInit{
                         'icon':'fa fa-list',
                         'title':'Parametros',
                         'routerLink':'Params'
-                    }]
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_RULES"),
+                        'icon':'fa fa-list',
+                        'title':'Reglas',
+                        'routerLink':'Rules'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_INFO"),
+                        'icon':'fa fa-list',
+                        'title':'Informacion',
+                        'routerLink':'Info'
+                    }
+                ]
 
             });
             this.menuItems.push({
@@ -415,6 +433,11 @@ export class AppComponent extends RestController implements OnInit{
             'key':'General',
             'treeview':datatemp})
         return data;
+    }
+    setInstance(instance,prefix){
+        if(!this.myglobal.objectInstance[prefix])
+            this.myglobal.objectInstance[prefix]={};
+        this.myglobal.objectInstance[prefix]=instance;
     }
     
 }
