@@ -9,6 +9,7 @@ import {Search} from "../search/search";
 import {Filter} from "../filter/filter";
 import {Save} from "../save/save";
 import { Print} from "../print/print";
+import {ColorPicker} from "../../common/colorPicker";
 
 
 declare var moment:any;
@@ -20,7 +21,7 @@ declare var SystemJS:any;
     templateUrl: SystemJS.map.app+'/utils/tables/index.html',
     styleUrls: [SystemJS.map.app+'/utils/tables/style.css'],
     inputs:['params','rules','externalList','rulesSearch','dataList','externalSave','rulesFilter','where','ext','newSearch','max'],
-    directives:[Xeditable,Search,Filter,Save,Print]
+    directives:[Xeditable,Search,Filter,Save,Print,ColorPicker]
 })
 
 
