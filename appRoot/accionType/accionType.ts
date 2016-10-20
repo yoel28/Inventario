@@ -97,7 +97,7 @@ export class AccionType extends BasicConfiguration implements OnInit {
             "icon": "fa fa-trash",
             "exp": "",
             'title': 'Eliminar',
-            'permission': '1',
+            'permission': this.permissions.delete,
             'message': '¿ Esta seguro de eliminar la accion : ',
             'keyAction':'title'
         };

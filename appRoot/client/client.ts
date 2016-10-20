@@ -160,7 +160,7 @@ export class Client extends BasicConfiguration implements OnInit {
             "icon": "fa fa-trash",
             "exp": "",
             'title': 'Eliminar',
-            'permission': '1',
+            'permission': this.permissions.delete,
             'message': '¿ Esta seguro de eliminar el cliente con el codigo: ',
             'keyAction':'code'
         };

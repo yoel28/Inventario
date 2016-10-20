@@ -164,7 +164,7 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
             "icon": "fa fa-print",
             "exp": "",
             'title': 'Imprimir Acta',
-            'permission': '1',
+            'permission': this.permissions.print,
             'type': 'lotReco',
             'endPoint':'/lote/recovery/',
             'keyAction': 'description'

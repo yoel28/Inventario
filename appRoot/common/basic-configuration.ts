@@ -44,7 +44,7 @@ export abstract class  BasicConfiguration extends RestController{
             "update": this.permissions['update'],
             "visible": true,
             'icon':'fa fa-list',
-            "search":true,
+            "search":this.permissions.filter,
             "type": "textarea",
             'showbuttons':true,
             "key": "detail",
@@ -100,6 +100,7 @@ export abstract class  BasicConfiguration extends RestController{
         this.permissions['delete']=this.myglobal.existsPermission(this.prefix+'_DELETE');
         this.permissions['filter']=this.myglobal.existsPermission(this.prefix+'_FILTER');
         this.permissions['lock']=this.myglobal.existsPermission(this.prefix+'_LOCK');
+        this.permissions['visible']=true; //this.myglobal.existsPermission(this.prefix+'_VISIBLE');
         this.permissions['audit']=this.myglobal.existsPermission(this.prefix+'_AUD');
     }
 
@@ -127,9 +128,10 @@ export abstract class  BasicConfiguration extends RestController{
     private initConfigurationSave() {
 
         this.paramsSave= {
-            title: "Agregar Default",
-            idModal: "saveDefault",
-            endpoint: this.endpoint,
+            'title': 'Agregar Default',
+            'idModal': 'saveDefault',
+            'endpoint': this.endpoint,
+            'updateField':false,
         }
     }
 

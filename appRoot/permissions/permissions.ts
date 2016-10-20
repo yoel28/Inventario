@@ -47,7 +47,7 @@ export class Permissions extends BasicConfiguration {
             "icon": "fa fa-trash",
             "exp": "",
             'title': 'Eliminar',
-            'permission': this.permissions['delete'],
+            'permission': this.permissions.delete,
             'message': 'Esta seguro de eliminar',
             'keyAction': 'title'
         };
