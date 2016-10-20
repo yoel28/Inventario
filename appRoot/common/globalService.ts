@@ -13,6 +13,7 @@ export class globalService extends RestController{
     permissions:any=[];
     allPermissions:any={};
     init=false;
+    objectInstance:any={};
 
     status={
         'token':{'status':false,'title':'Validando usuario'},
@@ -133,6 +134,17 @@ export class globalService extends RestController{
         Object.keys(this.params).forEach(index=>{
             if(that.params[index].key==key){
                 valor=that.params[index].value;
+                return;
+            }
+        })
+        return valor;
+    }
+    getTooltip(code){
+        let that = this;
+        let valor={};
+        Object.keys(this.help).forEach(index=>{
+            if(that.help[index].code==code){
+                valor=that.help[index];
                 return;
             }
         })
