@@ -52,6 +52,7 @@ export class Operation extends RestController implements OnInit {
     //segundo formulario
     public producto:Control;
     public ubicacion:Control;
+    public cantidad:Control;
 
     //vecrtor de producto/cantidad
     public listAccionArray :any={}
@@ -219,7 +220,13 @@ export class Operation extends RestController implements OnInit {
         else{
 
         let codeBar = this.producto.value;
+        let cant = parseFloat(this.cantidad.value || '1');
+            if(cant < 1)
+                cant=1;
+
+
         this.producto.updateValue(null);
+        this.cantidad.updateValue('1');
 
             let successCallback= response => {
 
@@ -230,7 +237,23 @@ export class Operation extends RestController implements OnInit {
                 {
                     var snd = new Audio("/assets/sound/click.mp3");
                     snd.play();
-                    that.listAccion.push({"item":this.lastItem++,"Producto":{"code":response.json().code,"id":response.json().id,"name":response.json().detail},"Ubicacion":{'name':that.lastLocaltion.name,'id':that.lastLocaltion.id},"Accion":that.accionList,"Status":true,"Validate":true,"msj":"Codigo del producto: "+response.json().code});
+                    that.listAccion.push({
+                        "item":this.lastItem++,
+                        "Producto":{
+                            "code":response.json().code,
+                            "id":response.json().id,
+                            "name":response.json().detail
+                        },
+                        "Ubicacion":{
+                            'name':that.lastLocaltion.name,
+                            'id':that.lastLocaltion.id
+                        },
+                        "Accion":that.accionList,
+                        "Status":true,
+                        "Validate":true,
+                        "cantidad":cant,
+                        "msj":"Codigo del producto: "+response.json().code
+                    });
                 }
                 else
                     that.toastr.error("por favor ingrese una ubicacion primero");
@@ -307,8 +330,9 @@ export class Operation extends RestController implements OnInit {
 
         //segundo formulario
         this.producto = new Control("",Validators.required);
+        this.cantidad = new Control("1");
         this.ubicacion = new Control("");
-        this.form_operation.push(this.formBuilder.group({producto:this.producto}));
+        this.form_operation.push(this.formBuilder.group({'producto':this.producto,'cantidad':this.cantidad}));
 
 //        this.form_operation.push(this.formBuilder.group({producto:this.producto}));
 
@@ -389,11 +413,11 @@ export class Operation extends RestController implements OnInit {
                 this.totalProduct++;
 
                 if(this.listAccionArray[acctions.Producto.code])
-                    this.listAccionArray[acctions.Producto.code].cantidad++;
+                    this.listAccionArray[acctions.Producto.code].cantidad+=acctions.cantidad;
                 else
                 {
                     item++;
-                    this.listAccionArray[acctions.Producto.code]={'item':item,'Producto':acctions.Producto,'cantidad':1}
+                    this.listAccionArray[acctions.Producto.code]={'item':item,'Producto':acctions.Producto,'cantidad':acctions.cantidad}
                 }
             }
         }
@@ -491,7 +515,7 @@ export class Operation extends RestController implements OnInit {
             for(var a of that.listAccion)
             {
                 if(a.Validate)
-                    objectPost.acciones.push({"producto":{"id":a.Producto.id,"codigo":a.Producto.code,'name':a.Producto.name},"ubicacion":{"id":a.Ubicacion.id,"title":a.Ubicacion.name}});
+                    objectPost.acciones.push({"cantidad":a.cantidad,"producto":{"id":a.Producto.id,"codigo":a.Producto.code,'name':a.Producto.name},"ubicacion":{"id":a.Ubicacion.id,"title":a.Ubicacion.name}});
             }
 
             let successCallback= response => {
