@@ -5,6 +5,7 @@ import {RestController} from "../../common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
+import {isNumeric} from "rxjs/util/isNumeric";
 
 declare var SystemJS:any;
 @Component({
@@ -16,7 +17,6 @@ declare var SystemJS:any;
     outputs: ['whereFilter'],
 })
 export class Filter extends RestController implements OnInit{
-
     //objeto con las reglas de modelo
     public rules:any = {};
     //parametro de salida
@@ -34,6 +34,7 @@ export class Filter extends RestController implements OnInit{
     public  cond = {
         'text': [
             {'id':'eq','text':'Igual que'},
+            {'id':'isNull','text':'Nulo'},
             {'id':'ne','text':'Diferente que'},
             {'id':'%like%','text': 'Contiene'},
             {'id':'like%','text': 'Comienza con'},
@@ -41,19 +42,11 @@ export class Filter extends RestController implements OnInit{
             {'id':'%ilike%','text': 'Contiene(i)'},
             {'id':'ilike%','text': 'Comienza con(i)'},
             {'id':'%ilike','text': 'Termina en(i)'}
-        ],
-        'textarea': [
-            {'id':'eq','text':'Igual que'},
-            {'id':'ne','text':'Diferente que'},
-            {'id':'%like%','text': 'Contiene'},
-            {'id':'like%','text': 'Comienza con'},
-            {'id':'%like','text': 'Termina en'},
-            {'id':'%ilike%','text': 'Contiene(i)'},
-            {'id':'ilike%','text': 'Comienza con(i)'},
-            {'id':'%ilike','text': 'Termina en(i)'}
+
         ],
         'number':[
             {'id':'eq','text':'Igual que'},
+            {'id':'isNull','text':'Nulo'},
             {'id':'ne','text':'Diferente que'},
             {'id':'ge','text':'Mayor Igual'},
             {'id':'gt','text':'Mayor que'},
@@ -62,18 +55,17 @@ export class Filter extends RestController implements OnInit{
         ],
         'object':[
             {'id':'eq','text':'Igual que'},
+            {'id':'isNull','text':'Nulo'},
             {'id':'ne','text':'Diferente que'},
         ],
         'date':[
-            {'id':'eq','text':'Igual que'},
-            {'id':'ne','text':'Diferente que'},
-            {'id':'ge','text':'Mayor Igual'},
-            {'id':'gt','text':'Mayor que'},
-            {'id':'le','text':'Menor Igual'},
-            {'id':'lt','text':'Menor que'},
+            {'id':'eq','text':'En rango'},
+            {'id':'ne','text':'Fuera de rango'},
+            {'id':'isNull','text':'Nulo'},
         ],
         'email': [
             {'id':'eq','text':'Igual que'},
+            {'id':'isNull','text':'Nulo'},
             {'id':'ne','text':'Diferente que'},
             {'id':'%like%','text': 'Contiene'},
             {'id':'like%','text': 'Comienza con'},
@@ -82,11 +74,26 @@ export class Filter extends RestController implements OnInit{
             {'id':'ilike%','text': 'Comienza con(i)'},
             {'id':'%ilike','text': 'Termina en(i)'}
         ],
-        'select': [//TODO: hacer un select para este parametro
+        'select': [
             {'id':'eq','text':'Igual que'},
             {'id':'ne','text':'Diferente que'},
+            {'id':'isNull','text':'Nulo'},
+        ],
+        'textarea': [
+            {'id':'eq','text':'Igual que'},
+            {'id':'isNull','text':'Nulo'},
+            {'id':'ne','text':'Diferente que'},
+            {'id':'%like%','text': 'Contiene'},
+            {'id':'like%','text': 'Comienza con'},
+            {'id':'%like','text': 'Termina en'},
+            {'id':'%ilike%','text': 'Contiene(i)'},
+            {'id':'ilike%','text': 'Comienza con(i)'},
+            {'id':'%ilike','text': 'Termina en(i)'}
         ],
     }
+    //foormato de fecha
+    public paramsDate={'format':"DD-MM-YYYY","minDate":"01-01-2016"}
+    public date={};
     //Lista de id search
     public searchId:any={};
     public findControl:string="";//variable en el value del search
@@ -167,7 +174,11 @@ export class Filter extends RestController implements OnInit{
         (<Control>this.form.controls[this.search.key]).updateValue(data.detail);
         this.dataList=[];
     }
-    
+    //Cargar data
+    assignDate(data,key){
+        this.data[key].updateValue(data);
+    }
+
     // public search=
     //
     //     {
@@ -178,62 +189,117 @@ export class Filter extends RestController implements OnInit{
     //         label:{'name':"Placa: ",'detail':"Empresa: "},
     //         where:"&where="+encodeURI("[['op':'isNull','field':'tag.id']]")
     //     }
-    
-    
+
+
     submitForm(event) {
         event.preventDefault();
-        let dataWhere="";
-        let that=this
+        let dataWhere=[];
+        let that=this;
         Object.keys(this.rules).forEach( key=>{
-            if(this.form.value[key] && this.form.value[key]!="")
+            if ((this.form.value[key] && this.form.value[key] != "") || that.form.value[key + 'Cond'] == 'isNull')
             {
-                let value="";
-                let op="";
+                let whereTemp:any = {};//Fila de where para un solo elemento
+                let whereTemp2:any;//Fila para codificiones multiples
 
-                value= that.form.value[key];
-                op=that.form.value[key+'Cond']
-                
-                if(op.substr(0,1)=="%")
+                whereTemp.op = that.form.value[key + 'Cond'];//condicion
+                whereTemp.field = that.rules[key].key || key;//columna
+
+                if (that.rules[key].subType)//si existe un subtype lo agregamos
                 {
-                    op=op.substr(1);
-                    value = "%"+value;
-                }
-                if(op.substr(-1)=="%")
-                {
-                    op=op.slice(0,-1);
-                    value = value+"%";
-                }
-                
-                if(that.rules[key].type !='number')
-                    value = "'"+value+"'";
-                
-                if(that.rules[key].double)
-                    value=value+"d";
-                
-                if(that.rules[key].object)
-                {
-                    value = this.searchId[key].id || null;
-                    key = that.rules[key].paramsSearch.field;
+                    whereTemp.type = that.rules[key].subType;
                 }
 
-                dataWhere+="['op':'"+op+"','field':'"+key+"','value':"+value+"],";
+                if (whereTemp.op != 'isNull')// si es diferente de nulo, carge el value
+                {
+                    whereTemp.value = that.form.value[key];//valor
+
+                    if (whereTemp.op.substr(0, 1) == "%")//inicia con
+                    {
+                        whereTemp.op = whereTemp.op.substr(1);
+                        whereTemp.value = "%" + whereTemp.value;
+                    }
+
+                    if (whereTemp.op.substr(-1) == "%")//termina en
+                    {
+                        whereTemp.op = whereTemp.op.slice(0, -1);
+                        whereTemp.value = whereTemp.value + "%";
+                    }
+
+                    if (that.rules[key].type == 'number' && isNumeric(whereTemp.value))// tipo numerico...
+                    {
+                        whereTemp.value = parseFloat(whereTemp.value);
+                        if (that.rules[key].double)
+                        {
+                            whereTemp.type = 'double';
+                        }
+                    }
+
+                    if (that.rules[key].type == 'date')//si es tipo date..
+                    {
+                        whereTemp.type='date';
+
+                        whereTemp2={};
+                        if (this.data[key + 'Cond'].value == 'eq') // Si esta en rango..
+                        {
+                            whereTemp.value = that.form.value[key].start;
+                            whereTemp.op = 'ge';
+
+                            whereTemp2.value = that.form.value[key].end;
+                            whereTemp2.op='le';
+
+                            whereTemp2.field = whereTemp.field;
+                            whereTemp2.type = whereTemp.type;
+                        }
+                        if (this.data[key + 'Cond'].value == 'ne')// para fechas fuera del rango
+                        {
+                            whereTemp2.or=[];
+
+                            whereTemp.value = that.form.value[key].start;
+                            whereTemp.op    =  'le';
+
+                            whereTemp2.or.push(Object.assign({},whereTemp));
+
+                            whereTemp.value = that.form.value[key].end;
+                            whereTemp.op    =  'ge';
+
+                            whereTemp2.or.push(Object.assign({},whereTemp));
+
+                            whereTemp = Object.assign({},whereTemp2);
+
+                            whereTemp2=null;
+                        }
+                    }
+
+                    if (that.rules[key].object && that.searchId[key] && that.searchId[key].id) // si es un objecto y existe el id
+                    {
+                        whereTemp.value = that.searchId[key].id;
+                    }
+                }
+
+                if (that.rules[key].object) // si es un objecto y existe el id
+                {
+                    whereTemp.field = that.rules[key].paramsSearch.field;
+                }
+
+                dataWhere.push(whereTemp);
+                if(whereTemp2)
+                {
+                    dataWhere.push(whereTemp2);
+                }
             }
-
         });
-        let where = encodeURI("["+dataWhere.slice(0,-1)+"]");
-        dataWhere="&where="+where;
-
-        this.whereFilter.emit(dataWhere);
+        let where = "&where="+encodeURI(JSON.stringify(dataWhere).split('{').join('[').split('}').join(']'));
+        this.whereFilter.emit(where);
     }
     //reset
     onReset(event) {
         event.preventDefault();
+        this.date={};
+        this.searchId={};
         this.keys.forEach(key=>{
             if(this.form.controls[key]){
                 (<Control>this.form.controls[key]).updateValue("");
                 (<Control>this.form.controls[key]).setErrors(null);
-
-                (<Control>this.form.controls[key+'Cond']).updateValue("eq");
             }
         })
         this.whereFilter.emit("");
@@ -242,14 +308,16 @@ export class Filter extends RestController implements OnInit{
     setCondicion(cond,id){
         (<Control>this.form.controls[id+'Cond']).updateValue(cond);
     }
-    searchLength()
-    {
+    searchLength() {
         if(this.searchId)
             return Object.keys(this.searchId).length
         return 0;
     }
     searchIdKeys(){
         return Object.keys(this.searchId);
+    }
+    setValueSelect(data,key){
+        this.data[key].updateValue(data);
     }
 }
 
