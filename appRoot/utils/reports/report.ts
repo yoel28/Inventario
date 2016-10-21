@@ -10,6 +10,7 @@ import {Tables} from "../tables/tables";
 import {RestController} from "../../common/restController";
 import {DateRangepPicker} from "../../common/xeditable";
 import {Select2} from "../../common/multiSelect";
+import {Filter} from "../filter/filter";
 
 declare var moment:any;
 declare var SystemJS:any;
@@ -18,10 +19,10 @@ declare var SystemJS:any;
     selector: 'reports',
     templateUrl: SystemJS.map.app+'/utils/reports/index.html',
     styleUrls: [SystemJS.map.app+'/utils/reports/style.css'],
-    directives:[Tables,Datepicker,DateRangepPicker,Select2],
+    directives:[Tables,Datepicker,DateRangepPicker,Select2,Filter],
     pipes: [TranslatePipe],
     providers: [TranslateService],
-    inputs:['permissions','paramsTable','endPointHis','endPointAct','viewOptions','rules','listType','defaultGroup','totalTitle']
+    inputs:['permissions','paramsTable','paramsFilter','endPointHis','endPointAct','viewOptions','rules','listType','defaultGroup','totalTitle']
 })
 
 
@@ -34,7 +35,7 @@ export class Reports extends RestController implements OnInit {
     public endPointHis = "";
     public endPointAct = "";
     public viewOptions:any={};
-    public rules:any ={};
+    public rules:any={};
     public listType :any={};
     public defaultGroup :any={};
 
@@ -76,7 +77,19 @@ export class Reports extends RestController implements OnInit {
     }
 
 
+    //Cargar Where del filter
+    public paramsFilter:any = {};
+    existFilter()
+    {
+        let flag = false;
+        let  that =this;
 
+        Object.keys(this.rules).forEach(key=>{
+            if(that.rules[key].search)
+                flag = true
+        })
+        return flag
+    }
 
 
     private initDates() {
