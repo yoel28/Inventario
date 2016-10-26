@@ -10,3 +10,16 @@
 body{
     letter-spacing: 1pt !important;
 }
+.bg-yoel-1 > th,.bg-yoel-1 > td,.bg-yoel-1{
+    color: #ffffff !important;
+    background-color: rgba(30, 40, 44, 0.63) !important;
+    -webkit-print-color-adjust: exact;
+
+
+}
+.bg-yoel-2 > th,.bg-yoel-2 > td,.bg-yoel-2{
+    background-color: rgba(61, 97, 113, 0.14) !important;
+    color: #000000 !important;
+    -webkit-print-color-adjust: exact;
+
+}
