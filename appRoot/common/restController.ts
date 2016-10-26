@@ -145,6 +145,12 @@ export class RestController implements OnInit {
         this.loadAllData=true;
 
     }
-
+    loadMax(num){
+        this.max = parseFloat(num.currentTarget.value || '5');
+        if(this.max < 5)
+            this.max = 5;
+        if(this.max > 100)
+            this.max = 100;
+    }
 
 }
