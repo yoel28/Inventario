@@ -401,8 +401,20 @@ export class Tables extends RestController implements OnInit {
             if(type=='lotReco')
             {
 
-                that.printObject.elementPrint.push({"name":that.printObject.ExternalInfo.list[0][0].Cliente,"direc":that.printObject.ExternalInfo.list[0][0].direccionCliente,'contac':that.printObject.ExternalInfo.list[0][0].telefonoCliente,'ruc':that.printObject.ExternalInfo.list[0][0].rucCliente});
-                that.printObject.elementPrint.push({"name":that.printObject.ExternalInfo.list[0][0].nombreVendedor,"direc":that.printObject.ExternalInfo.list[0][0].direccionVendedor,'contac':that.printObject.ExternalInfo.list[0][0].telefonoVendedor,'ruc':that.printObject.ExternalInfo.list[0][0].rucVendedor});
+                that.printObject.elementPrint.push({
+                    "name": that.printObject.ExternalInfo.list[0][0].Cliente,
+                    "direc": that.printObject.ExternalInfo.list[0][0].direccionCliente,
+                    'contac': that.printObject.ExternalInfo.list[0][0].telefonoCliente,
+                    'ruc': that.printObject.ExternalInfo.list[0][0].rucCliente,
+                    'despachador': that.printObject.ExternalInfo.list[0][0].usernameCreator
+                });
+                that.printObject.elementPrint.push({
+                    "name": that.printObject.ExternalInfo.list[0][0].nombreVendedor,
+                    "direc": that.printObject.ExternalInfo.list[0][0].direccionVendedor,
+                    'contac': that.printObject.ExternalInfo.list[0][0].telefonoVendedor,
+                    'ruc': that.printObject.ExternalInfo.list[0][0].rucVendedor,
+                    'despachador': that.printObject.ExternalInfo.list[0][0].usernameCreator
+                });
 
                 this.printObject.type="1";
 
