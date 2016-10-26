@@ -72,6 +72,24 @@ export class Location_product extends BasicConfiguration implements OnInit {
 
         };
 
+        this.rules["cantidadActual"] = {
+            "update": false,
+            "visible": true,
+            'icon':'fa fa-barcode',
+            'search':this.permissions.filter,
+            "type": "number",
+            "step":"0",
+            "key": "cantidadActual",
+            "title": "Cant. Actual",
+            "placeholder": "Ingrese la cantidad actual",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio'
+                },
+            },
+
+        };
+
         this.rules["columna"] = {
             "update": this.permissions['update'],
             "visible": true,
@@ -201,8 +219,10 @@ export class Location_product extends BasicConfiguration implements OnInit {
             endpoint: this.endpoint,
         }
         this.rulesSave = Object.assign({},this.rules);
-        delete this.rulesSave['enabled']
-        delete this.rulesSave['id']
+        delete this.rulesSave['enabled'];
+        delete this.rulesSave['id'];
+        delete this.rulesSave['cantidadActual'];
+
     }
 
     initOptions() {
