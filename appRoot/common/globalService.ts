@@ -128,6 +128,18 @@ export class globalService extends RestController{
             return true;
         return false;
     }
+    getMenu(code):any
+    {
+        let that = this;
+        let menu={'title':''};
+        this.permissions.forEach(data=>{
+            if(data.code==code){
+                menu=data;
+                return;
+            }
+        })
+        return menu;
+    }
     getParams(key){
         let that = this;
         let valor="";
