@@ -39,6 +39,7 @@ import {Profile} from "./account/profile/profile";
 import {Kardex} from "./reports/kardex/kardex";
 import {Rules} from "./rules/rules";
 import {Info} from "./info/infos";
+import {ProductLocation} from "./reports/productLocation/productLocation";
 
 declare var SystemJS:any;
 declare var jQuery:any;
@@ -85,6 +86,7 @@ declare var jQuery:any;
   { path: '/user/profile',   name: 'Profile', component: Profile },
   { path: '/kardex',   name: 'Kardex', component: Kardex },
   { path: '/infos',   name: 'Info', component: Info },
+  { path: '/product/location',   name: 'ProductLocation', component: ProductLocation },
   { path: '/**', redirectTo: ['Dashboard'] }
 
 ])
@@ -98,7 +100,6 @@ export class AppComponent extends RestController implements OnInit{
   constructor(public router: Router,http: Http,public myglobal:globalService,public toastr: ToastsManager,public info:Info) {
     
       super(http)
-      //let url="https://192.168.0.108:9090";
       let url="https://dev.zippyttech.com:8080";
       localStorage.setItem('urlAPI',url+'/api');
       localStorage.setItem('url',url);
@@ -272,12 +273,18 @@ export class AppComponent extends RestController implements OnInit{
                 this.myglobal.existsPermission("MEN_DESP_PROV") ||
                 this.myglobal.existsPermission("MEN_MOV_FECH") ||
                 this.myglobal.existsPermission("MEN_PROD_ACC") ||
-                this.myglobal.existsPermission("MEN_KARDEX")
+                this.myglobal.existsPermission("MEN_KARDEX") || this.myglobal.existsPermission("MEN_PRO_LOCATION")
                 ,
                 'icon':'fa fa-list',
                 'title':'Reportes',
                 'key':'reportes',
                 'treeview':[
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_PRO_LOCATION"),
+                        'icon':'fa fa-list',
+                        'title':this.myglobal.getMenu("MEN_PRO_LOCATION").title,
+                        'routerLink':'ProductLocation'
+                    },
                     {
                         'visible':this.myglobal.existsPermission("MEN_KARDEX"),
                         'icon':'fa fa-list',
