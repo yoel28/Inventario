@@ -29,7 +29,7 @@ declare var SystemJS:any;
 
 export class Reports extends RestController implements OnInit {
 
-
+    public url:string="";
     public permissions:any={};
     public paramsTable:any = {};
     public endPointHis = "";
@@ -157,7 +157,7 @@ export class Reports extends RestController implements OnInit {
         this.tempScope = this;
 
 
-
+        this.paramsTable.disableExport=true;
 
 
         
@@ -453,7 +453,7 @@ export class Reports extends RestController implements OnInit {
             this.loadData();
 
         }
-
+        this.url = localStorage.getItem('urlAPI')+this.endpoint+"?access_token="+localStorage.getItem('bearer')+this.where;
 
     }
 

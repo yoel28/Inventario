@@ -116,6 +116,11 @@
                     </div>
 
                     <div *ngIf=" dataList && dataList.count > 0 " (click)="checkEndPoint()" class="col-lg-12">
+                        <div class="pull-right">
+                            <a target="_blank" [attr.href]="url+'&formatType=pdf'"><i class="fa fa-file-pdf-o"></i>&nbsp;Exportar PDF</a>
+                            <a target="_blank" [attr.href]="url+'&formatType=xls'"><i class="fa fa-file-excel-o"></i>&nbsp;Exportar Excel</a>
+                        </div>
+
                         <tables [dataList]="dataList" [rules]="rules"  [params]="paramsTable" [rulesSearch]="rulesSearch" [where]="where" [ext]="ext" [newSearch]="newSearch" [max]="max"></tables>
                     </div>
 

@@ -30,16 +30,16 @@
                     <button (click)="changePosition($event,key,'down')" class="btn btn-box-tool fa fa-angle-down" title="Bajar"></button>&nbsp;
                     <span class="btn" (click)="setCheckField($event,key)">{{rules[key].title}}&nbsp;<i *ngIf="rules[key].check" class="fa fa-check"></i></span>
             </li>
-            <li style="margin-left: 5px;">
+            <!--<li style="margin-left: 5px;">
                 <i class="fa fa-refresh text-blue fa-lg" (click)="loadData()"></i>&nbsp;Filas por pagina
                 <input [(ngModel)]="prueba" (change)="loadMax($event)" type="number" value="5" placeholder="Cantidad por pagina" step="0" min="5" max="100" class="form-control">
-            </li>
+            </li>-->
         </ul>
     </div>
     &nbsp;
 </div>
 
-<div class="pull-right noprint">
+<div class="pull-right noprint" *ngIf="!params.disableExport">
     <i (click)="onPrintReport()" class="btn fa fa-print fa-lg" title="Imprimir"></i>
     <i (click)="exportCSV()" class="btn fa fa-file-excel-o fa-lg" title="Exportar"></i>
 </div>
