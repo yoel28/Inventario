@@ -151,6 +151,7 @@ export class Info extends BasicConfiguration implements OnInit {
     }
 
     initParamsTable(){
+        this.paramsTable.title = this.viewOptions.title;
         this.paramsTable.endpoint=this.endpoint;
         this.paramsTable.actions={};
         this.paramsTable.actions.delete = {
@@ -200,10 +201,10 @@ export class Info extends BasicConfiguration implements OnInit {
     ngOnInit() {
 
         this.initRules();
-        this.initParamsTable();
         this.initSaveRules();
         this.initOptions();
         this.initSearch();
+        this.initParamsTable();
         this.loadData();
 
     }

@@ -126,7 +126,7 @@
     <save [rules]="info.rulesSave" [params]="info.paramsSave" (getInstance)="setInstance($event,info.prefix)" ></save>
     {{loadMenuMain()}}
 </div>
-<div class="main-footer-container" *ngIf="validToken() && myglobal.init">
+<div class="main-footer-container noprint" *ngIf="validToken() && myglobal.init">
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
             Inventario, C.A

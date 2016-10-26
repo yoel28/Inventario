@@ -361,7 +361,8 @@ export class Kardex extends BasicConfiguration implements OnInit {
     public changeGroupLocation(){
         this.groupLocation =  ! this.groupLocation;
         this.assignDate();
-        this.loadData();
+        if(this.dataProduct.value && this.dataProduct.value.id && this.dateStart.value)
+            this.loadData();
     }
 
 }

@@ -4,7 +4,7 @@
             <div class="box-header">
                 <h3 class="box-title">{{viewOptions.title | translate }}</h3>
 
-                <div class="pull-right" *ngIf="viewOptions['button']">
+                <div class="pull-right noprint" *ngIf="viewOptions['button']">
                     <button *ngFor="let buttom of viewOptions['button']"
                             class="{{buttom.class}}" type="button" data-toggle="modal"
                             [attr.data-target]="'#'+buttom.modal">
