@@ -59,6 +59,7 @@ export class Kardex extends BasicConfiguration implements OnInit {
 
     initOptions() {
         this.viewOptions["title"] = 'Kardex';
+        this.title= this.viewOptions['title'];
         this.order="asc";
         this.sort="fecha";
         this.max=1000;
@@ -243,7 +244,7 @@ export class Kardex extends BasicConfiguration implements OnInit {
     resultSearch(data){
         this.dataProduct.updateValue(data);
     }
-    fromButton(envet?) {
+    fromButton(event?) {
         if(event)
             event.preventDefault();
         this.assignDate();
