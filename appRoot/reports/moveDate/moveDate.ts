@@ -147,6 +147,7 @@ export class MovesByDate extends BasicConfiguration implements OnInit {
     }
 
     initParamsTable(){
+        this.paramsTable.title=this.viewOptions.title;
         this.paramsTable['endpoint']=this.endpoint;
         this.paramsTable['actions']={}
 
