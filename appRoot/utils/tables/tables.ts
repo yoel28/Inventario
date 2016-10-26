@@ -360,15 +360,13 @@ export class Tables extends RestController implements OnInit {
     onPrintReport(event?){
         if(event)
             event.preventDefault();
-        window.print();
 
-        /*
-        var printContents = document.getElementById("reporte").innerHTML;
+        var printContents = document.getElementById(this.configId).innerHTML;
         var popupWin = window.open('', '_blank');
         popupWin.document.open();
         popupWin.document.write('<body onload="window.print()">' + printContents + '</body>');
         popupWin.document.head.innerHTML = (document.head.innerHTML);
-        popupWin.document.close();*/
+        popupWin.document.close();
     }
     
     @ViewChild(Print)

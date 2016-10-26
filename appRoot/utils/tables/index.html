@@ -1,5 +1,5 @@
 
-
+<div [attr.id]="configId">
 <div *ngIf="rulesFilter">
     <filter [rules]="rulesFilter" [params]="paramsFilter" (whereFilter)="loadWhere($event)"></filter>
 </div>
@@ -281,6 +281,7 @@
 
 <div style="display: none;">
     <print></print>
+</div>
 </div>
 <!--div>
     <filter [rules]="rules" [params]="paramsFilter" (whereFilter)="loadWhere($event)"></filter>
