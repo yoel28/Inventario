@@ -31,7 +31,11 @@ export class OfficeSupplier extends BasicConfiguration implements OnInit {
     public defaultGroup={'/inventario/historico/proveedor/despacho':'["field":"cliente","show":["title","ruc"]],["field":"producto","show":["detail"]]','/inventario/diario/proveedor/despacho':'["field":"cliente","show":["title","ruc"]],["field":"producto","show":["detail"]]'}
     public totalEndPoint:any={};
     public totalTitle='Total';
-
+    public paramsFilter:any = {
+        title: "Despacho por Proveedor",
+        idModal: "modalFilter",
+        endpoint: "",
+    };
 
 
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public _formBuilder: FormBuilder) {
@@ -178,10 +182,12 @@ export class OfficeSupplier extends BasicConfiguration implements OnInit {
     }
 
     initParamsTable(){
+        this.paramsTable.title = this.viewOptions.title;
         this.paramsTable['endpoint']=this.endpoint;
         this.paramsTable['actions']={}
 
     }
+
 
     ngOnInit(){
 
