@@ -62,7 +62,7 @@ export class Print extends BasicConfiguration implements OnInit {
         return "col-lg-"+lg+" col-md-"+(md!=-1?md:lg)+" col-xs-"+(xs!=-1?xs:lg)+" col-sm-"+(sm!=-1?sm:lg);
     }
 
-    onPrint(id){
+    onPrint(id?){
         var printContents = document.getElementById(id).innerHTML;
         var popupWin = window.open('', '_blank');
         popupWin.document.open();

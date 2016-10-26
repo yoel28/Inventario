@@ -172,7 +172,7 @@ export abstract class  BasicConfiguration extends RestController{
         });
         table2excel.export(document.querySelectorAll("table.export"));
     }
-    onPrint(){
+    onPrint(id?){
         var printContents = document.getElementById("reporte").innerHTML;
         var popupWin = window.open('', '_blank');
         popupWin.document.open();
