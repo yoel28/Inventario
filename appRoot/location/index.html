@@ -15,7 +15,7 @@
 
             <div *ngIf="permissions.list"  class="box-body">
                 <div>
-                    <tables [dataList]="dataList" [rules]="rules" [params]="paramsTable" [rulesFilter]="rulesSave" [rulesSearch]="rulesSearch" [rulesFilter]="rules"></tables>
+                    <tables [dataList]="dataList" [rules]="rules" [params]="paramsTable" [rulesFilter]="rules" [rulesSearch]="rulesSearch" [rulesFilter]="rules"></tables>
                 </div>
                 <div *ngIf="dataList && dataList.count == 0">
                     <div class="alert alert-warning alert-dismissable">
