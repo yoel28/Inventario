@@ -39,6 +39,8 @@ export class Reports extends RestController implements OnInit {
     public listType :any={};
     public defaultGroup :any={};
 
+    public paramsFilter:any={};
+
 
     public totalTitle="";
     public totalObject:any={};
@@ -56,7 +58,9 @@ export class Reports extends RestController implements OnInit {
         'format':"DD/MM/YYYY"
     }
 
-    
+    public tempWhere=[];
+
+
     public firstSearch =false;
 
 
@@ -77,8 +81,6 @@ export class Reports extends RestController implements OnInit {
     }
 
 
-    //Cargar Where del filter
-    public paramsFilter:any = {};
     existFilter()
     {
         let flag = false;
@@ -159,6 +161,7 @@ export class Reports extends RestController implements OnInit {
 
         this.paramsTable.disableExport=true;
 
+        this.paramsFilter.filtertExtra = [];
 
         
     }
@@ -309,13 +312,14 @@ export class Reports extends RestController implements OnInit {
         this.firstSearch =true;
         this.where ="";
         this.totalObject.result="";
-        let tempWhere=[];
         let uriwhen ="";
         let inTemp="";
         this.newSearch = true;
         this.max=5;
         let start =[];
         let end=[];
+
+        this.tempWhere = [];
 
 
 
@@ -332,27 +336,27 @@ export class Reports extends RestController implements OnInit {
              start = event.start.split("/");
              end = event.end.split("/");
             
-            tempWhere = [{'op':'ge','field':'fecha','type':'long','value':start[2]+start[1]+start[0]}];
-            tempWhere.push({'op':'le','field':'fecha','type':'long','value':end[2]+end[1]+end[0]});
+            this.tempWhere = [{'op':'ge','field':'fecha','type':'long','value':start[2]+start[1]+start[0]}];
+            this.tempWhere.push({'op':'le','field':'fecha','type':'long','value':end[2]+end[1]+end[0]});
 
         }
 
         else 
         {
              start = moment(this.dateStart.value.toString()).format('DD-MM-YYYY').split("-");
-            tempWhere = [{'op':'ge','field':'fecha','type':'long','value':start[2]+start[1]+start[0]}];
+            this.tempWhere = [{'op':'ge','field':'fecha','type':'long','value':start[2]+start[1]+start[0]}];
 
 
 
             if(this.disabledRange == -2 || this.disabledRange == 1)
-                tempWhere[0].op='eq';
+                this.tempWhere[0].op='eq';
             
             if(this.disabledRange>1)
             {
                  end = moment(this.dateEnd.value.toString()).format('DD-MM-YYYY').split("-");
 
 
-                tempWhere.push({'op':'le','field':'fecha','type':'long','value':end[2]+end[1]+end[0]});
+                this.tempWhere.push({'op':'le','field':'fecha','type':'long','value':end[2]+end[1]+end[0]});
             }   
         }
 
@@ -361,7 +365,7 @@ export class Reports extends RestController implements OnInit {
         if(this.disabledRange ==1)
         {
             this.setEndpoint(this.endPointAct);
-            tempWhere=[];
+            this.tempWhere=[];
         }
         else
             this.setEndpoint(this.endPointHis);
@@ -393,7 +397,7 @@ export class Reports extends RestController implements OnInit {
         let flag =true;
 
         if(this.listTypeSelect && this.listTypeSelect.length  > 0)
-            tempWhere.push({"op":"eq","field":"tipoOperacion.id","value":this.listTypeSelect});
+            this.tempWhere.push({"op":"eq","field":"tipoOperacion.id","value":this.listTypeSelect});
 
         else if(this.viewOptions.multiselect)
         {
@@ -418,9 +422,9 @@ export class Reports extends RestController implements OnInit {
             }
         }
 
-        if(tempWhere.length>0)
+        if(this.tempWhere.length>0)
         {
-            uriwhen=JSON.stringify(tempWhere).split('{').join('[').split('}').join(']');
+            uriwhen=JSON.stringify(this.tempWhere).split('{').join('[').split('}').join(']');
             this.where="&where="+encodeURI(uriwhen);
 
         }
@@ -450,6 +454,12 @@ export class Reports extends RestController implements OnInit {
             }
 
             this.url = localStorage.getItem('urlAPI')+this.endpoint+"?access_token="+localStorage.getItem('bearer')+this.where+this.ext;
+
+            this.paramsFilter.filtertExtra = this.tempWhere;
+
+            if(this.table && this.table.filter)
+                this.table.filter.params.filtertExtra = this.tempWhere;
+
             this.loadData();
 
         }
@@ -458,6 +468,12 @@ export class Reports extends RestController implements OnInit {
         this.where = where;
 
         this.loadData();
+    }
+
+    public table:any={};
+    setInstance(instance){
+        this.table = instance;
+        this.table.paramsFilter.filtertExtra = this.tempWhere;
     }
 
 
