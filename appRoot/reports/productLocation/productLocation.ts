@@ -6,12 +6,13 @@ import {globalService} from "../../common/globalService";
 import {Tables} from "../../utils/tables/tables";
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {BasicConfiguration} from "../../common/basic-configuration";
+import {Reports} from "../../utils/reports/report";
 declare var SystemJS:any;
 @Component({
     selector: 'product-location',
     templateUrl: SystemJS.map.app+'/reports/productLocation/index.html',
     styleUrls: [SystemJS.map.app+'/reports/productLocation/style.css'],
-    directives: [Tables],
+    directives: [Reports],
     pipes: [TranslatePipe],
     providers: [TranslateService]
 })
@@ -19,19 +20,30 @@ declare var SystemJS:any;
 
 export class ProductLocation extends BasicConfiguration implements OnInit {
 
-
     public paramsTable:any={};
-
-    public externalSave:any={};
-    public rulesSearch:any={};
-    public rulesSave:any={}
-
-    public  extLocationProducto="&group=[['field':'ubicacion','show':['title','fila','columna']],['field':'producto','show':['code','detail']]]";
+    public endPointHis = "/inventario/historico/producto/ubicacion";
+    public endPointAct = "/inventario/diario/producto/ubicacion";
+    public defaultGroup={
+        "/inventario/historico/producto/ubicacion":"['field':'ubicacion','show':['title','fila','columna']],['field':'producto','show':['code','detail']]",
+        "/inventario/diario/producto/ubicacion":"['field':'ubicacion','show':['title','fila','columna']],['field':'producto','show':['code','detail']]",
+    }
+    public totalTitle='Total';
 
 
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService) {
 
         super("PRO_LOCATION","/inventario/diario/producto/ubicacion",http, toastr,myglobal,translate);
+    }
+
+    public paramsFilter:any = {
+        title: "Filtrar productos por ubicación",
+        idModal: "modalFilter",
+        endpoint: "",
+    };
+
+    initOptions() {
+        this.viewOptions["title"] = 'Productos por ubicación';
+        this.viewOptions["groupOptions"] = false;
     }
 
     initRules() {
@@ -42,7 +54,7 @@ export class ProductLocation extends BasicConfiguration implements OnInit {
 
             'productoCode':{
                 "visible": this.permissions.visible,
-                "search":this.permissions.filter,
+                "search":true,
                 'icon':'fa fa-list',
                 "type": "text",
                 "key": "code",
@@ -51,7 +63,7 @@ export class ProductLocation extends BasicConfiguration implements OnInit {
             },
             'productoDetail':{
                 "visible": this.permissions.visible,
-                "search":this.permissions.filter,
+                "search":true,
                 'icon':'fa fa-list',
                 "type": "textarea",
                 "key": "detail",
@@ -61,7 +73,7 @@ export class ProductLocation extends BasicConfiguration implements OnInit {
             },
             'ubicacionTitle':{
                 "visible": this.permissions.visible,
-                "search":this.permissions.filter,
+                "search":true,
                 'icon':'fa fa-list',
                 "type": "text",
                 "key": "title",
@@ -71,7 +83,7 @@ export class ProductLocation extends BasicConfiguration implements OnInit {
             },
             'ubicacionFila':{
                 "visible": this.permissions.visible,
-                "search":this.permissions.filter,
+                "search":true,
                 'icon':'fa fa-list',
                 "type": "text",
                 "key": "fila",
@@ -80,7 +92,7 @@ export class ProductLocation extends BasicConfiguration implements OnInit {
             },
             'ubicacionColumna':{
                 "visible": this.permissions.visible,
-                "search":this.permissions.filter,
+                "search":true,
                 'icon':'fa fa-list',
                 "type": "text",
                 "key": "columna",
@@ -89,7 +101,7 @@ export class ProductLocation extends BasicConfiguration implements OnInit {
             },
             'cantidadProductosUbicacion':{
                 "visible": this.permissions.visible,
-                "search":this.permissions.filter,
+                "search":false,
                 'icon':'fa fa-list',
                 "type": "number",
                 "key": "cantidad",
@@ -110,31 +122,15 @@ export class ProductLocation extends BasicConfiguration implements OnInit {
     initSaveRules() {
 
     }
-
-    initOptions() {
-        this.viewOptions["title"] = 'Productos por ubicación';
+    ngOnInit() {
+        this.initOptions();
+        this.initParamsTable();
+        this.initRules();
     }
+
 
     initSearch() {
-        this.paramsSearch['title']="Cantidad de Productos por Ubicación";
-        this.paramsSearch['idModal']="searchProductoLocation";
-        this.paramsSearch['placeholder']="Ingrese el producto";
     }
-
-
-    ngOnInit() {
-
-        this.initRules();
-        this.initSaveRules();
-        this.initOptions();
-        this.initSearch();
-        this.initParamsTable();
-
-        this.loadData_1(this.endpoint,this.dataList,this.extLocationProducto)
-
-
-    }
-
 
     externalRules()
     {
@@ -145,23 +141,6 @@ export class ProductLocation extends BasicConfiguration implements OnInit {
     {
 
     }
-
-
-    @ViewChild(Tables)
-    tables:Tables;
-    asignData(data) {
-        if(this.dataList.page && this.dataList.page.length>1)
-        {
-            this.dataList.list.pop();
-        }
-        this.dataList.list.unshift(data);
-
-        if(this.tables )
-        {
-            Object.assign(this.tables.dataList,this.dataList);
-        }
-    }
-
 
 
 }
