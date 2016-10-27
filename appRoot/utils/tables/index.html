@@ -1,7 +1,7 @@
 
 <div [attr.id]="configId">
 <div *ngIf="rulesFilter">
-    <filter [rules]="rulesFilter" [params]="paramsFilter" (whereFilter)="loadWhere($event)"></filter>
+    <filter [rules]="rulesFilter" [params]="paramsFilter" (whereFilter)="loadWhere($event)" (getInstance)="setFilter($event)" ></filter>
 </div>
 
 <div class="padding-bottom-4 text-left noprint">

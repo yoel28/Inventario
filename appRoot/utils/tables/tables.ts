@@ -22,7 +22,8 @@ declare var SystemJS:any;
     templateUrl: SystemJS.map.app+'/utils/tables/index.html',
     styleUrls: [SystemJS.map.app+'/utils/tables/style.css'],
     inputs:['params','rules','externalList','rulesSearch','dataList','externalSave','rulesFilter','where','ext','newSearch','max'],
-    directives:[Xeditable,Search,Filter,Save,Print,ColorPicker]
+    directives:[Xeditable,Search,Filter,Save,Print,ColorPicker],
+    outputs:['getInstance']
 })
 
 
@@ -51,10 +52,13 @@ export class Tables extends RestController implements OnInit {
     public rulesFilter :any ={};
     public configId=moment().valueOf();
 
+    public getInstance:any;
+
 
 
     constructor(public _formBuilder: FormBuilder,public http:Http,public toastr: ToastsManager, public myglobal:globalService) {
         super(http,toastr);
+        this.getInstance = new EventEmitter();
     }
 
     ngOnInit()
@@ -63,6 +67,9 @@ export class Tables extends RestController implements OnInit {
         this.keyActions=Object.keys(this.params.actions);
         this.setEndpoint(this.params.endpoint);
         this.title =  this.params.title;
+    }
+    ngAfterViewInit(){
+        this.getInstance.emit(this);
     }
 
 
@@ -244,6 +251,7 @@ export class Tables extends RestController implements OnInit {
         title: "Filtrar",
         idModal: "modalFilter",
         endpoint: "",
+        filterExtra:[],
     };
 
 
@@ -422,6 +430,11 @@ export class Tables extends RestController implements OnInit {
         }
         let where =encodeURI("[['op':'eq','field':'lote.id','value':"+id+"]]");
         this.httputils.doGet(endPoint+"?where="+where+"",successCallback,this.error)
+    }
+
+    public filter:any={};
+    setFilter(instance){
+        this.filter = instance;
     }
 }
 
