@@ -1,9 +1,7 @@
 import {Component, OnInit,ViewChild,Inject} from "@angular/core";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
-import {RestController} from "../../common/restController";
 import {globalService} from "../../common/globalService";
-import {Tables} from "../../utils/tables/tables";
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {BasicConfiguration} from "../../common/basic-configuration";
 import {Reports} from "../../utils/reports/report";
@@ -47,7 +45,6 @@ export class ProductLocation extends BasicConfiguration implements OnInit {
     }
 
     initRules() {
-
         this.rules={};
 
         this.rules={
@@ -119,9 +116,6 @@ export class ProductLocation extends BasicConfiguration implements OnInit {
         this.paramsTable.actions={};
     }
 
-    initSaveRules() {
-
-    }
     ngOnInit() {
         this.initOptions();
         this.initParamsTable();
