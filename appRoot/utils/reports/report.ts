@@ -446,16 +446,20 @@ export class Reports extends RestController implements OnInit {
                     that.totalObject.result = response.json().count.cantidad;
                 }
 
-                this.httputils.doGet(this.endpoint+"/total?max=5"+(uriwhen?"&where="+encodeURI(uriwhen):"")+(inTemp||""),sucTotal,this.error)
+                this.httputils.doGet(this.endpoint+"/total?max=5"+(uriwhen?"&where="+encodeURI(uriwhen):"")+(inTemp||""),sucTotal,this.error);
             }
 
-
+            this.url = localStorage.getItem('urlAPI')+this.endpoint+"?access_token="+localStorage.getItem('bearer')+this.where+this.ext;
             this.loadData();
 
         }
-        this.url = localStorage.getItem('urlAPI')+this.endpoint+"?access_token="+localStorage.getItem('bearer')+this.where;
-
     }
+    loadWhere(where) {
+        this.where = where;
+
+        this.loadData();
+    }
+
 
 
 }
