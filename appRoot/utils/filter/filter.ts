@@ -14,19 +14,21 @@ declare var SystemJS:any;
     styleUrls: [SystemJS.map.app+'/utils/filter/style.css'],
     directives:[SMDropdown],
     inputs: ['rules', 'params'],
-    outputs: ['whereFilter'],
+    outputs: ['whereFilter','getInstance'],
 })
 export class Filter extends RestController implements OnInit{
     //objeto con las reglas de modelo
     public rules:any = {};
     //parametro de salida
     public whereFilter:any;
+    public getInstance:any;
     //Parametros para visualizar el modal
     public params:any = {
-        title: "sin titulo",
-        idModal: "nomodal",
-        endpoint: "sin endpoint",
-        placeholder: "sin placeholder"
+        'title': "sin titulo",
+        'idModal': "nomodal",
+        'endpoint': "sin endpoint",
+        'placeholder': "sin placeholder",
+        'filtertExtra':[]
     };
     //objecto del search actual
     public search:any={};
@@ -105,9 +107,13 @@ export class Filter extends RestController implements OnInit{
     constructor(public _formBuilder:FormBuilder,public http: Http,public toastr: ToastsManager, public myglobal:globalService) {
         super(http,toastr);
         this.whereFilter = new EventEmitter();
+        this.getInstance = new EventEmitter();
     }
     ngOnInit() {
         this.loadForm();
+    }
+    ngAfterViewInit(){
+        this.getInstance.emit(this);
     }
     loadForm() {
         let that = this;
@@ -294,6 +300,10 @@ export class Filter extends RestController implements OnInit{
                 }
             }
         });
+
+        if(this.params.filtertExtra && this.params.filtertExtra.length > 0)
+            dataWhere = dataWhere.concat(this.params.filtertExtra);
+
         let where = "&where="+encodeURI(JSON.stringify(dataWhere).split('{').join('[').split('}').join(']'));
         this.whereFilter.emit(where);
     }
@@ -308,7 +318,9 @@ export class Filter extends RestController implements OnInit{
                 (<Control>this.form.controls[key]).setErrors(null);
             }
         })
-        this.whereFilter.emit("");
+        let where = "&where="+encodeURI(JSON.stringify(this.params.filtertExtra).split('{').join('[').split('}').join(']'));
+
+        this.whereFilter.emit(where);
     }
     //guardar condicion en el formulario
     setCondicion(cond,id){
