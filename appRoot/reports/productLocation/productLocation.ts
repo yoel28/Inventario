@@ -22,7 +22,7 @@ export class ProductLocation extends BasicConfiguration implements OnInit {
     public endPointHis = "/inventario/historico/producto/ubicacion";
     public endPointAct = "/inventario/diario/producto/ubicacion";
     public defaultGroup={
-        "/inventario/historico/producto/ubicacion":"['field':'ubicacion','show':['title','fila','columna']],['field':'producto','show':['code','detail']]",
+        "/inventario/historico/producto/ubicacion":"['field':'ubicacion','show':['code']],['field':'producto','show':['code','detail']]",
         "/inventario/diario/producto/ubicacion":"['field':'ubicacion','show':['title','fila','columna']],['field':'producto','show':['code','detail']]",
     }
     public totalTitle='Total';
@@ -51,7 +51,7 @@ export class ProductLocation extends BasicConfiguration implements OnInit {
 
             'productoCode':{
                 "visible": this.permissions.visible,
-                "search":true,
+                "search":false,
                 'icon':'fa fa-list',
                 "type": "text",
                 "key": "code",
@@ -60,7 +60,7 @@ export class ProductLocation extends BasicConfiguration implements OnInit {
             },
             'productoDetail':{
                 "visible": this.permissions.visible,
-                "search":true,
+                "search":false,
                 'icon':'fa fa-list',
                 "type": "textarea",
                 "key": "detail",
@@ -68,33 +68,15 @@ export class ProductLocation extends BasicConfiguration implements OnInit {
                 "title": "Prod. Detalle",
                 "placeholder": "Detalle del producto"
             },
-            'ubicacionTitle':{
+            'ubicacionCode':{
                 "visible": this.permissions.visible,
                 "search":true,
                 'icon':'fa fa-list',
                 "type": "text",
-                "key": "title",
+                "key": "code",
                 "join":"ubicacion",
-                "title": "Area",
-                "placeholder": "Area"
-            },
-            'ubicacionFila':{
-                "visible": this.permissions.visible,
-                "search":true,
-                'icon':'fa fa-list',
-                "type": "text",
-                "key": "fila",
-                "title": "Espacio",
-                "placeholder": "Espacio"
-            },
-            'ubicacionColumna':{
-                "visible": this.permissions.visible,
-                "search":true,
-                'icon':'fa fa-list',
-                "type": "text",
-                "key": "columna",
-                "title": "Estante",
-                "placeholder": "Estante"
+                "title": "Ubicación",
+                "placeholder": "Ubicación"
             },
             'cantidadProductosUbicacion':{
                 "visible": this.permissions.visible,
