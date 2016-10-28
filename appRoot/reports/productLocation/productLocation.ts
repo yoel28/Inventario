@@ -48,6 +48,16 @@ export class ProductLocation extends BasicConfiguration implements OnInit {
         this.rules={};
 
         this.rules={
+            'ubicacionCode':{
+                "visible": this.permissions.visible,
+                "search":true,
+                'icon':'fa fa-list',
+                "type": "text",
+                "key": "code",
+                "join":"ubicacion",
+                "title": "Ubicación",
+                "placeholder": "Ubicación"
+            },
 
             'productoCode':{
                 "visible": this.permissions.visible,
@@ -67,16 +77,6 @@ export class ProductLocation extends BasicConfiguration implements OnInit {
                 "join":"producto",
                 "title": "Prod. Detalle",
                 "placeholder": "Detalle del producto"
-            },
-            'ubicacionCode':{
-                "visible": this.permissions.visible,
-                "search":true,
-                'icon':'fa fa-list',
-                "type": "text",
-                "key": "code",
-                "join":"ubicacion",
-                "title": "Ubicación",
-                "placeholder": "Ubicación"
             },
             'cantidadProductosUbicacion':{
                 "visible": this.permissions.visible,
