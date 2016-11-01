@@ -47,6 +47,8 @@ export class Kardex extends BasicConfiguration implements OnInit {
     public date:any={};
     public paramsSearch:any={};
 
+    public groupLocation=true; // agrupar por ubicacion
+
 
 
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public _formBuilder: FormBuilder,public product:Product)
@@ -57,6 +59,7 @@ export class Kardex extends BasicConfiguration implements OnInit {
 
     initOptions() {
         this.viewOptions["title"] = 'Kardex';
+        this.title= this.viewOptions['title'];
         this.order="asc";
         this.sort="fecha";
         this.max=1000;
@@ -241,7 +244,7 @@ export class Kardex extends BasicConfiguration implements OnInit {
     resultSearch(data){
         this.dataProduct.updateValue(data);
     }
-    fromButton(envet?) {
+    fromButton(event?) {
         if(event)
             event.preventDefault();
         this.assignDate();
@@ -300,6 +303,8 @@ export class Kardex extends BasicConfiguration implements OnInit {
 
 
         tempGroup='["field":"fecha"],["field":"dia"],["field":"mes"],["field":"year"]';
+        if(this.groupLocation)
+            tempGroup+=',["field":"ubicacion"]';
         this.ext = "&group="+encodeURI("[" +(this.defaultGroup[this.endpoint]?this.defaultGroup[this.endpoint]+',':"")+ tempGroup + "]");
 
 
@@ -320,11 +325,17 @@ export class Kardex extends BasicConfiguration implements OnInit {
             that.dataList.data={};
             that.dataList.list.forEach(obj=>{
                 let index = obj.dia+'/'+obj.mes+'/'+obj.year;
+                if(this.groupLocation && obj.ubicacion)
+                    index+='/'+obj.ubicacion.id;
+
                 if(!that.dataList.data[index]){
                     that.dataList.data[index]=[];
                     that.dataList.data[index].dia=obj.dia;
                     that.dataList.data[index].mes=obj.mes;
                     that.dataList.data[index].year=obj.year;
+                    if(this.groupLocation && obj.ubicacion)
+                        that.dataList.data[index].ubicacion=obj.ubicacion;
+
                 }
                 that.dataList.data[index][obj.tipoOperacionTitle] = obj.cantidad;
             })
@@ -334,8 +345,8 @@ export class Kardex extends BasicConfiguration implements OnInit {
         let min=0;
         let max=0;
         if(this.dataList && this.dataList.data && this.getObjectKeys(this.dataList.data).length > 0){
-            min=this.dataList.amount;
-            max=this.dataList.amount;
+            min=999999999999999999999999999999;
+            max=-999999999999999999999999999999;
             this.getObjectKeys(this.dataList.data).forEach(key=>{
                 if(this.dataList.data[key]['Total Inventario']>max)
                     max=this.dataList.data[key]['Total Inventario'];
@@ -346,6 +357,12 @@ export class Kardex extends BasicConfiguration implements OnInit {
         }
 
         return {'min':min,'max':max};
+    }
+    public changeGroupLocation(){
+        this.groupLocation =  ! this.groupLocation;
+        this.assignDate();
+        if(this.dataProduct.value && this.dataProduct.value.id && this.dateStart.value)
+            this.loadData();
     }
 
 }

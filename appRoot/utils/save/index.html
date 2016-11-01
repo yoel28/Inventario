@@ -21,6 +21,9 @@
                                                         <span class="input-group-addon" [attr.id]="key">{{rules[key].title}}
                                                         <label *ngIf="rules[key].required" class="text-red">&nbsp;*</label>
                                                         </span>
+
+                                                        <input *ngIf="rules[key].type == 'color'" color-picker class="form-control" [hex]="data[key]" readonly>
+
                                                         <input *ngIf="rules[key].type == 'text' || rules[key].type == 'number' || rules[key].type == 'email' || rules[key].type == 'password'" ngControl="{{key}}" class="form-control"
                                                                [(ngModel)]="data[key].value"
                                                                placeholder="{{rules[key].placeholder}}"
@@ -141,7 +144,7 @@
                 <button (click)="submitForm($event)" data-dismiss="modal" type="button" class="btn btn-primary"
                         id="cntrlsubmit" [disabled]="!form.valid">
                     <i class="fa fa-save"></i>
-                    Registrar
+                    {{params.updateField?'Actualizar':'Registrar'}}
                 </button>
             </div>
         </div>

@@ -89,6 +89,42 @@ export class Product extends BasicConfiguration implements OnInit {
             },
 
         };
+        this.rules["minimo"] = {
+            "update": this.permissions['update'],
+            "visible": true,
+            "search":this.permissions.filter,
+            'required':true,
+            'icon':'fa fa-barcode',
+            "type": "number",
+            'step':'0',
+            "key": "minimo",
+            "title": "Minimo",
+            "placeholder": "ingrese el minimo",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio',
+                },
+            },
+
+        };
+        this.rules["maximo"] = {
+            "update": this.permissions['update'],
+            "visible": true,
+            "search":this.permissions.filter,
+            'required':true,
+            'icon':'fa fa-barcode',
+            "type": "number",
+            'step':'0',
+            "key": "maximo",
+            "title": "Maximo",
+            "placeholder": "ingrese el maximo",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio',
+                },
+            },
+
+        };
 
         this.rules["tipoProductoTitle"] = this.typesProduct.ruleObject;
         this.rules["tipoProductoTitle"].visible=true;
@@ -115,13 +151,14 @@ export class Product extends BasicConfiguration implements OnInit {
     
     
     initParamsTable(){
+        this.paramsTable.title = this.viewOptions.title;
         this.paramsTable.endpoint=this.endpoint;
         this.paramsTable.actions={};
         this.paramsTable.actions.delete = {
             "icon": "fa fa-trash",
             "exp": "",
             'title': 'Eliminar',
-            'permission': '1',
+            'permission': this.permissions.delete,
             'message': 'Esta seguro de eliminar el producto con el codigo ',
             'keyAction':'code'
         };
@@ -139,7 +176,6 @@ export class Product extends BasicConfiguration implements OnInit {
 
 
         this.rulesSave["code"] = this.rules['code'];
-        this.rulesSave["detail"] = this.rules['detail'];
 
         this.rulesSave["tipoProducto"] = this.typesProduct.ruleObject;
         this.rulesSave["tipoProducto"].required=true;
@@ -151,6 +187,10 @@ export class Product extends BasicConfiguration implements OnInit {
         this.rulesSave["modelo"] = this.modelProduct.ruleObject;
         this.rulesSave["modelo"].required=true;
 
+        this.rulesSave['minimo']=this.rules['minimo'];
+        this.rulesSave['maximo']=this.rules['maximo'];
+
+        this.rulesSave["detail"] = this.rules['detail'];
 
     }
 
@@ -178,9 +218,9 @@ export class Product extends BasicConfiguration implements OnInit {
         this.initExternalSave();
         this.initExternalRulesSearch();
         this.initRules();
-        this.initParamsTable();
         this.initSaveRules();
         this.initOptions();
+        this.initParamsTable();
         this.initSearch();
 
         this.loadData();

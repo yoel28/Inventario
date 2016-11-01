@@ -158,13 +158,14 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
     }
 
     initParamsTable() {
+        this.paramsTable.title = this.viewOptions.title;
         this.paramsTable.endpoint = this.endpoint;
         this.paramsTable.actions = {};
         this.paramsTable.actions.print = {
             "icon": "fa fa-print",
             "exp": "",
             'title': 'Imprimir Acta',
-            'permission': '1',
+            'permission': this.permissions.print,
             'type': 'lotReco',
             'endPoint':'/lote/recovery/',
             'keyAction': 'description'
@@ -187,9 +188,9 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
     ngOnInit() {
 
         this.initRules();
-        this.initParamsTable();
         this.initOptions();
         this.initSearch();
+        this.initParamsTable();
         this.loadData();
     }
 

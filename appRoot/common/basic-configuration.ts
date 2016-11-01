@@ -4,10 +4,12 @@ import {globalService} from "../common/globalService";
 import {TranslateService} from "ng2-translate/ng2-translate";
 import {RestController} from "./restController";
 
+declare var Table2Excel:any;
 export abstract class  BasicConfiguration extends RestController{
 
     public permissions:any={};
     private prefix="";
+    public title:string="";
 
     public viewOptions:any={};
     public rules:any = {};
@@ -44,7 +46,7 @@ export abstract class  BasicConfiguration extends RestController{
             "update": this.permissions['update'],
             "visible": true,
             'icon':'fa fa-list',
-            "search":true,
+            "search":this.permissions.filter,
             "type": "textarea",
             'showbuttons':true,
             "key": "detail",
@@ -100,6 +102,8 @@ export abstract class  BasicConfiguration extends RestController{
         this.permissions['delete']=this.myglobal.existsPermission(this.prefix+'_DELETE');
         this.permissions['filter']=this.myglobal.existsPermission(this.prefix+'_FILTER');
         this.permissions['lock']=this.myglobal.existsPermission(this.prefix+'_LOCK');
+        this.permissions['print']=this.myglobal.existsPermission(this.prefix+'_PRINT');
+        this.permissions['visible']=true; //this.myglobal.existsPermission(this.prefix+'_VISIBLE');
         this.permissions['audit']=this.myglobal.existsPermission(this.prefix+'_AUD');
         this.permissions['visible']=true;//this.myglobal.existsPermission(this.prefix+'_VISIBLE');
     }
@@ -128,9 +132,10 @@ export abstract class  BasicConfiguration extends RestController{
     private initConfigurationSave() {
 
         this.paramsSave= {
-            title: "Agregar Default",
-            idModal: "saveDefault",
-            endpoint: this.endpoint,
+            'title': 'Agregar Default',
+            'idModal': 'saveDefault',
+            'endpoint': this.endpoint,
+            'updateField':false,
         }
     }
 
@@ -155,8 +160,27 @@ export abstract class  BasicConfiguration extends RestController{
         }
     }
 
-
-
+    exportCSV(){
+        let table2excel = new Table2Excel({
+            'defaultFileName': this.title,
+        });
+        Table2Excel.extend((cell, cellText) => {
+            if (cell) return {
+                v:cellText,
+                t: 's',
+            };
+            return null;
+        });
+        table2excel.export(document.querySelectorAll("table.export"));
+    }
+    onPrint(id?){
+        var printContents = document.getElementById("reporte").innerHTML;
+        var popupWin = window.open('', '_blank');
+        popupWin.document.open();
+        popupWin.document.write('<body onload="window.print()">' + printContents + '</body>');
+        popupWin.document.head.innerHTML = (document.head.innerHTML);
+        popupWin.document.close();
+    }
     
 
     initLang() {
@@ -168,6 +192,7 @@ export abstract class  BasicConfiguration extends RestController{
     getObjectKeys(data){
         return Object.keys(data);
     }
+
 
 
     

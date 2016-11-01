@@ -58,13 +58,14 @@ export class ModelProduct extends BasicConfiguration implements OnInit {
     }
 
     initParamsTable(){
+        this.paramsTable.title = this.viewOptions.title;
         this.paramsTable.endpoint=this.endpoint;
         this.paramsTable.actions={};
         this.paramsTable.actions.delete = {
             "icon": "fa fa-trash",
             "exp": "",
             'title': 'Eliminar',
-            'permission': '1',
+            'permission': this.permissions.delete,
             'message': '¿ Esta seguro de eliminar el modelo de producto: ',
             'keyAction':'title'
         };
@@ -109,10 +110,10 @@ export class ModelProduct extends BasicConfiguration implements OnInit {
 
 
         this.initRules();
-        this.initParamsTable();
         this.initSaveRules();
         this.initOptions();
         this.initSearch();
+        this.initParamsTable();
         this.loadData();
     }
 

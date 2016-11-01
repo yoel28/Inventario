@@ -32,8 +32,6 @@ export class Permissions extends BasicConfiguration {
         this.initOptions();
         this.initSearch();
         this.loadData();
-
-
         this.initParamsTable();
         this.initSaveRules();
     }
@@ -41,13 +39,14 @@ export class Permissions extends BasicConfiguration {
 
 
     initParamsTable() {
+        this.paramsTable.title = this.viewOptions.title;
         this.paramsTable.endpoint = this.endpoint;
         this.paramsTable.actions = {};
         this.paramsTable.actions.delete = {
             "icon": "fa fa-trash",
             "exp": "",
             'title': 'Eliminar',
-            'permission': this.permissions['delete'],
+            'permission': this.permissions.delete,
             'message': 'Esta seguro de eliminar',
             'keyAction': 'title'
         };

@@ -5,14 +5,15 @@ import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
 import {Xcropit, Xfile} from "../../common/xeditable";
+import {ColorPicker} from "../../common/colorPicker";
 declare var SystemJS:any;
 @Component({
     selector: 'save',
     templateUrl: SystemJS.map.app+'/utils/save/index.html',
     styleUrls: [SystemJS.map.app+'/utils/save/style.css'],
     inputs:['params','rules'],
-    outputs:['save'],
-    directives:[Xcropit,Xfile]
+    outputs:['save','getInstance'],
+    directives:[Xcropit,Xfile,ColorPicker]
 })
 export class Save extends RestController implements OnInit{
 
@@ -62,6 +63,7 @@ export class Save extends RestController implements OnInit{
     public rules:any={};
 
     public save:any;
+    public getInstance:any;
 
     form:ControlGroup;
     data:any = [];
@@ -72,9 +74,13 @@ export class Save extends RestController implements OnInit{
     constructor(public _formBuilder: FormBuilder,public http:Http,public toastr: ToastsManager, public myglobal:globalService) {
         super(http,toastr);
         this.save = new EventEmitter();
+        this.getInstance = new EventEmitter();
     }
     ngOnInit(){
         this.initForm();
+    }
+    ngAfterViewInit(){
+        this.getInstance.emit(this);
     }
 
     initForm() {
@@ -164,7 +170,10 @@ export class Save extends RestController implements OnInit{
             }
 
         });
-        this.httputils.doPost(this.endpoint,JSON.stringify(body),successCallback,this.error);
+        if(this.params.updateField)
+            this.httputils.onUpdate(this.endpoint+this.id,JSON.stringify(body),{},this.error);
+        else
+            this.httputils.doPost(this.endpoint,JSON.stringify(body),successCallback,this.error);
     }
     //objecto del search actual
     public search:any={};
@@ -203,6 +212,7 @@ export class Save extends RestController implements OnInit{
         let that=this;
         this.search={};
         this.searchId={};
+        this.params.updateField=false;
         Object.keys(this.data).forEach(key=>{
             (<Control>that.data[key]).updateValue(null);
             (<Control>that.data[key]).setErrors(null);
@@ -216,6 +226,24 @@ export class Save extends RestController implements OnInit{
     }
     changeImage(data,key){
         (<Control>this.form.controls[key]).updateValue(data);
+    }
+
+    public id:string;
+    setLoadDataModel(data)
+    {
+        this.resetForm();
+        if(data.id)
+        {
+            this.id = data.id;
+            Object.keys(data).forEach(key=>{
+                if(this.data[key])
+                {
+                    (<Control>this.form.controls[key]).updateValue(data[key]);
+                    this.data[key].updateValue(data[key]);
+                }
+            })
+            this.params.updateField=true;
+        }
     }
 }
 

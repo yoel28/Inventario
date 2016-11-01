@@ -31,7 +31,11 @@ export class OfficeSupplier extends BasicConfiguration implements OnInit {
     public defaultGroup={'/inventario/historico/proveedor/despacho':'["field":"cliente","show":["title","ruc"]],["field":"producto","show":["detail"]]','/inventario/diario/proveedor/despacho':'["field":"cliente","show":["title","ruc"]],["field":"producto","show":["detail"]]'}
     public totalEndPoint:any={};
     public totalTitle='Total';
-
+    public paramsFilter:any = {
+        title: "Despacho por Proveedor",
+        idModal: "modalFilter",
+        endpoint: "",
+    };
 
 
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public _formBuilder: FormBuilder) {
@@ -53,13 +57,15 @@ export class OfficeSupplier extends BasicConfiguration implements OnInit {
 
         this.rules["clienteRuc"] = {
             "update": false,
+            "search":true,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
-            "key": "clienteRuc",
-            "title": "Ruc de Cliente",
-            "placeholder": "Ingrese el ruc cliente",
+            "key": "ruc",
+            "join":"cliente",
+            "title": "Ruc de proveedor",
+            "placeholder": "Ingrese el ruc del proveedor",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio'
@@ -68,13 +74,15 @@ export class OfficeSupplier extends BasicConfiguration implements OnInit {
         };
         this.rules["clienteTitle"] = {
             "update": false,
+            "search":true,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
-            "key": "clienteTitle",
-            "title": "nombre de cliente",
-            "placeholder": "Ingrese la cantidad",
+            "key": "title",
+            "join":"cliente",
+            "title": "Proveedor",
+            "placeholder": "proveedor",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio'
@@ -84,13 +92,15 @@ export class OfficeSupplier extends BasicConfiguration implements OnInit {
 
         this.rules["productoDetail"] = {
             "update": false,
+            "search":true,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
-            "key": "productoDetail",
-            "title": "Producto",
-            "placeholder": "Ingrese la cantidad",
+            "key": "detail",
+            "join":"producto",
+            "title": "Detalle de producto",
+            "placeholder": "Detalle del producto",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio'
@@ -99,6 +109,7 @@ export class OfficeSupplier extends BasicConfiguration implements OnInit {
         };
         this.rules["cantidad"] = {
             "update": false,
+            "search":false,
             "visible": true,
             'required':true,
             'icon':'fa fa-list',
@@ -117,6 +128,7 @@ export class OfficeSupplier extends BasicConfiguration implements OnInit {
             "update": false,
             "visible": true,
             'required':true,
+            "search":true,
             'icon':'fa fa-list',
             "type": "text",
             "key": "dia",
@@ -134,6 +146,7 @@ export class OfficeSupplier extends BasicConfiguration implements OnInit {
             "update": false,
             "visible": true,
             'required':true,
+            "search":true,
             'icon':'fa fa-list',
             "type": "text",
             "key": "mes",
@@ -151,6 +164,7 @@ export class OfficeSupplier extends BasicConfiguration implements OnInit {
             "update": false,
             "visible": true,
             'required':true,
+            "search":true,
             'icon':'fa fa-list',
             "type": "text",
             "key": "year",
@@ -178,10 +192,12 @@ export class OfficeSupplier extends BasicConfiguration implements OnInit {
     }
 
     initParamsTable(){
+        this.paramsTable.title = this.viewOptions.title;
         this.paramsTable['endpoint']=this.endpoint;
         this.paramsTable['actions']={}
 
     }
+
 
     ngOnInit(){
 
