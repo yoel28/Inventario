@@ -4,3 +4,5 @@ typings/
 #.gitignore
 app/*.js
 app/*.js.map
+appRoot/*.js
+appRoot/*.js.map
