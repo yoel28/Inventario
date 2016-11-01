@@ -38,7 +38,7 @@ export class Location_product extends BasicConfiguration implements OnInit {
             "update": this.permissions['update'],
             "visible": true,
             'required':true,
-            'maxLength':5,
+            'maxLength':50,
             'search':this.permissions.filter,
             'icon':'fa fa-barcode',
             "type": "text",
@@ -48,7 +48,7 @@ export class Location_product extends BasicConfiguration implements OnInit {
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
-                    'maxlength':'Maximo numero de caracteres 5'
+                    'maxlength':'Maximo numero de caracteres 50'
                 },
             },
 
@@ -76,7 +76,7 @@ export class Location_product extends BasicConfiguration implements OnInit {
             "update": this.permissions['update'],
             "visible": true,
             'required':true,
-            'maxLength':5,
+            'maxLength':50,
             'icon':'fa fa-barcode',
             'search':this.permissions.filter,
             "type": "text",
@@ -86,7 +86,7 @@ export class Location_product extends BasicConfiguration implements OnInit {
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
-                    'maxlength':'Maximo numero de caracteres 5'
+                    'maxlength':'Maximo numero de caracteres 50'
                 },
             },
 
@@ -96,7 +96,7 @@ export class Location_product extends BasicConfiguration implements OnInit {
             "update": this.permissions['update'],
             "visible": true,
             'required':true,
-            'maxLength':5,
+            'maxLength':50,
             'icon':'fa fa-barcode',
             "type": "text",
             'search':this.permissions.filter,
@@ -106,7 +106,7 @@ export class Location_product extends BasicConfiguration implements OnInit {
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
-                    'maxlength':'Maximo numero de caracteres 5'
+                    'maxlength':'Maximo numero de caracteres 50'
                 },
             },
 

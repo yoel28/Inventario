@@ -10,10 +10,10 @@
         </div>
         <div class="row" style="margin-bottom: 30px;">
             <div [attr.class]="onPrintCss(6)">
-                <label>Date :  {{formatDate(ExternalInfo.list[0][0].fecha,'DD-MM-YYYY')}}</label>
+                <label>Fecha :  {{formatDate(ExternalInfo.list[0][0].fecha,'DD-MM-YYYY')}}</label>
             </div>
             <div [attr.class]="onPrintCss(6)">
-                <label [attr.class]="onPrintCss(12)">Invoice No. {{ExternalInfo.list[0][0].Referencia}} </label>
+                <label [attr.class]="onPrintCss(12)">Factura No. {{ExternalInfo.list[0][0].Referencia}} </label>
                 <label [attr.class]="onPrintCss(12)">Orden de  Compra</label>
             </div>
 
@@ -36,10 +36,10 @@
                     <td [attr.class]="onPrintCss(5)"><label class="test-bold">Ruc : </label>{{elementPrint[0].ruc}}</td><td></td><td [attr.class]="onPrintCss(5)"><label class="test-bold">Ruc : </label>{{elementPrint[1].ruc}}</td>
                 </tr>
                 <tr>
-                    <td [attr.class]="onPrintCss(5)"><label class="test-bold">Direccion : </label>{{elementPrint[0].direc}}</td><td></td><td [attr.class]="onPrintCss(5)"><label class="test-bold">Direccion : </label>{{elementPrint[1].direc}}</td>
+                    <td [attr.class]="onPrintCss(5)"><label class="test-bold">Direcci&oacute;n : </label>{{elementPrint[0].direc}}</td><td></td><td [attr.class]="onPrintCss(5)"><label class="test-bold">Direcci&oacute;n : </label>{{elementPrint[1].direc}}</td>
                 </tr>
                 <tr>
-                    <td [attr.class]="onPrintCss(5)"><label class="test-bold">Telefono : </label>{{elementPrint[0].contac}}</td><td></td><td [attr.class]="onPrintCss(5)"><label class="test-bold">Contacto : </label>{{elementPrint[1].contac}}</td>
+                    <td [attr.class]="onPrintCss(5)"><label class="test-bold">Tel&eacute;fono : </label>{{elementPrint[0].contac}}</td><td></td><td [attr.class]="onPrintCss(5)"><label class="test-bold">Contacto : </label>{{elementPrint[1].contac}}</td>
                 </tr>
 
                 <tr >
@@ -54,7 +54,7 @@
             <table [attr.class]="onPrintCss(12)"  border="1" style=" border: 1px solid;">
                 <thead >
                 <tr style=" border: 1px solid;">
-                    <th style=" border: 1px solid;" class="col-lg-1">Cantidad</th><th class="text-center" style=" border: 1px solid;">Descripcion</th>
+                    <th style=" border: 1px solid;" class="col-lg-1">Cantidad</th><th class="text-center" style=" border: 1px solid;">Descripci&oacute;n</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -77,18 +77,18 @@
 
         <div class="row" style="margin-bottom: 30px">
             <div [attr.class]="onPrintCss(6)">
-                <label [attr.class]="onPrintCss(12)" >RECIVIDO POR: </label>
+                <label [attr.class]="onPrintCss(12)" >RECIBIDO POR: </label>
                 <label [attr.class]="onPrintCss(12)" >NOMBRE:    _____________________</label>
                 <label [attr.class]="onPrintCss(12)" >FECHA:     _____________________</label>
                 <label [attr.class]="onPrintCss(12)" >FIRMA:     _____________________</label>
-                <label [attr.class]="onPrintCss(12)" >CEDULA:    _____________________</label>
+                <label [attr.class]="onPrintCss(12)" >C&Eacute;DULA:    _____________________</label>
             </div>
             <div [attr.class]="onPrintCss(6)">
                 <label [attr.class]="onPrintCss(12)" >ENTREGADO POR:</label>
                 <label [attr.class]="onPrintCss(12)" >NOMBRE:    _____________________</label>
                 <label [attr.class]="onPrintCss(12)" >FECHA:     _____________________</label>
                 <label [attr.class]="onPrintCss(12)" >FIRMA:     _____________________</label>
-                <label [attr.class]="onPrintCss(12)" >CEDULA:    _____________________</label>
+                <label [attr.class]="onPrintCss(12)" >C&Eacute;DULA:    _____________________</label>
 
             </div>
         </div>

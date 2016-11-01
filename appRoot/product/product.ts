@@ -75,7 +75,7 @@ export class Product extends BasicConfiguration implements OnInit {
             "visible": true,
             "search":this.permissions.filter,
             'required':true,
-            'maxLength':5,
+            'maxLength':50,
             'icon':'fa fa-barcode',
             "type": "text",
             "key": "code",
@@ -84,7 +84,7 @@ export class Product extends BasicConfiguration implements OnInit {
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
-                    'maxlength':'Maximo numero de caracteres 5'
+                    'maxlength':'Maximo numero de caracteres 50'
                 },
             },
 

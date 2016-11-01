@@ -49,12 +49,18 @@
                 </div>
 
             </div>
-            <div class="modal-footer">
-                    <div *ngIf="dataList.page && dataList.page.length > 1 && dataList.count > 0" class="btn-group pull-right">
-                        <button (click)="loadData(val)" *ngFor="let val of dataList.page" type="button" class="btn btn-default">
-                            {{val}}
-                        </button>
-                    </div>
+            <div  class="modal-footer noprint" *ngIf="dataList && dataList.page && dataList.page.length > 1 ">
+                <div class="btn-group pull-right">
+                    <button *ngIf="MaxPager()>5" (click)="loadData(1)" type="button" class="btn btn-default">
+                        &#60;&#60;
+                    </button>
+                    <button *ngFor="let val of dataList.page" (click)="loadData(val)" type="button" class="btn btn-default" [class.btn-info]="offset == (val - 1) * max">
+                        {{val}}
+                    </button>
+                    <button *ngIf="MaxPager()>5" (click)="loadData(MaxPager())" type="button" class="btn btn-default">
+                        &#62;&#62;
+                    </button>
+                </div>
             </div>
         </div>
     </div>

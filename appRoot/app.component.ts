@@ -37,6 +37,7 @@ import {LotRecovery} from "./lotRecovery/lotRecovery";
 import {MovesByDate} from "./reports/moveDate/moveDate";
 import {Profile} from "./account/profile/profile";
 import {Tooltip} from "./tooltip/tooltip";
+import {Kardex} from "./reports/kardex/kardex";
 
 
 declare var SystemJS:any;
@@ -80,9 +81,9 @@ declare var jQuery:any;
   { path: '/buck/upload',   name: 'BuckUpload', component: BuckUpload },
   { path: '/lot/recovery',   name: 'LotRecovery', component: LotRecovery },
   { path: '/user/profile',   name: 'Profile', component: Profile }, 
-    { path: '/tooltip',   name: 'Tooltip', component: Tooltip },
-
-    { path: '/**', redirectTo: ['Dashboard'] }
+  { path: '/tooltip',   name: 'Tooltip', component: Tooltip }, 
+  { path: '/kardex',   name: 'Kardex', component: Kardex },
+  { path: '/**', redirectTo: ['Dashboard'] }
 
 ])
 export class AppComponent extends RestController implements OnInit{
@@ -95,7 +96,7 @@ export class AppComponent extends RestController implements OnInit{
   constructor(public router: Router,http: Http,public myglobal:globalService,public toastr: ToastsManager) {
     
       super(http)
-      let url = "http://dev.zippyttech.com:8080";
+      let url = "http://52.23.208.232:8080";
       localStorage.setItem('urlAPI',url+'/api');
       localStorage.setItem('url',url);
 
@@ -152,6 +153,7 @@ export class AppComponent extends RestController implements OnInit{
       let that = this;
       let successCallback= response => {
           this.myglobal.init=false;
+          this.menuItems = [];
           localStorage.removeItem('bearer');
           contentHeaders.delete('Authorization');
 
@@ -266,12 +268,19 @@ export class AppComponent extends RestController implements OnInit{
                 'visible':  this.myglobal.existsPermission("MEN_PROD_EXIST") ||
                 this.myglobal.existsPermission("MEN_DESP_PROV") ||
                 this.myglobal.existsPermission("MEN_MOV_FECH") ||
-                this.myglobal.existsPermission("MEN_PROD_ACC")
+                this.myglobal.existsPermission("MEN_PROD_ACC") ||
+                this.myglobal.existsPermission("MEN_KARDEX")
                 ,
                 'icon':'fa fa-list',
                 'title':'Reportes',
                 'key':'reportes',
                 'treeview':[
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_KARDEX"),
+                        'icon':'fa fa-list',
+                        'title':'Kardex',
+                        'routerLink':'Kardex'
+                    },
                     {
                         'visible':this.myglobal.existsPermission("MEN_PROD_EXIST"),
                         'icon':'fa fa-list',
@@ -359,7 +368,8 @@ export class AppComponent extends RestController implements OnInit{
             this.menuItems.push({
                 'visible':  this.myglobal.existsPermission("MEN_ROLE") ||
                 this.myglobal.existsPermission("MEN_ACL") ||
-                this.myglobal.existsPermission("MEN_PERMISSION") || this.myglobal.existsPermission("MEN_INFO"),
+                this.myglobal.existsPermission("MEN_PERMISSION") || 
+                this.myglobal.existsPermission("MEN_INFO"),
                 'icon':'fa fa-list',
                 'title':'Panel de Configuracion',
                 'key':'Panel de Configuracion',

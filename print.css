@@ -1,0 +1,12 @@
+.noprint{
+    display:none;
+}
+.content-wrapper{
+    margin-left: 10px !important;
+}
+.sidebar-mini .content-wrapper{
+    margin-left: 10px !important;
+}
+body{
+    letter-spacing: 1pt !important;
+}

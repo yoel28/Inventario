@@ -59,7 +59,7 @@ export class User extends BasicConfiguration implements OnInit{
             "update":this.permissions.update,
             'search':this.permissions.filter,
             'required':true,
-            'maxLength':30,
+            'maxLength':50,
             'icon':'fa fa-user',
             "type": "text",
             "key": "username",
@@ -68,7 +68,7 @@ export class User extends BasicConfiguration implements OnInit{
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
-                    'maxlength':'Maximo numero de caracteres 30'
+                    'maxlength':'Maximo numero de caracteres 50'
                 },
             },
 
@@ -78,7 +78,7 @@ export class User extends BasicConfiguration implements OnInit{
             'search':this.permissions.filter,
             "visible": true,
             'required':true,
-            'maxLength':30,
+            'maxLength':50,
             'icon':'fa fa-user',
             "type": "text",
             "key": "name",
@@ -87,7 +87,7 @@ export class User extends BasicConfiguration implements OnInit{
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
-                    'maxlength':'Maximo numero de caracteres 30'
+                    'maxlength':'Maximo numero de caracteres 50'
                 },
             },
 
@@ -98,7 +98,7 @@ export class User extends BasicConfiguration implements OnInit{
             'required':true,
             "update":this.permissions.update,
             'search':this.permissions.filter,
-            'maxLength':30,
+            'maxLength':50,
             'icon':'fa fa-email',
             "type": "text",
             "key": "email",
@@ -107,7 +107,7 @@ export class User extends BasicConfiguration implements OnInit{
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio',
-                    'maxlength':'Maximo numero de caracteres 30',
+                    'maxlength':'Maximo numero de caracteres 50',
                     'email':'Ingrese un correo valido'
                 },
             },
