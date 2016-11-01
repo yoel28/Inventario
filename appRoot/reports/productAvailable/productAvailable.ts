@@ -39,7 +39,11 @@ export class ProductAvailable extends BasicConfiguration implements OnInit {
 
     }
 
-
+    public paramsFilter:any = {
+        title: "Filtrar productos disponibles",
+        idModal: "modalFilter",
+        endpoint: "",
+    };
     
     initOptions() {
         this.viewOptions["title"] = 'Productos en Existencia';
@@ -55,11 +59,12 @@ export class ProductAvailable extends BasicConfiguration implements OnInit {
             "update": false,
             "visible": true,
             'required':true,
+            'search':true,
             'icon':'fa fa-list',
             "type": "text",
             "key": "code",
             "title": "Código",
-            "placeholder": "Ingrese el código",
+            "placeholder": "Ingrese el código del producto",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio'
@@ -70,11 +75,12 @@ export class ProductAvailable extends BasicConfiguration implements OnInit {
             "update": false,
             "visible": true,
             'required':true,
+            'search':true,
             'icon':'fa fa-list',
             "type": "text",
-            "key": "productoDetail",
+            "key": "p.detail",
             "title": "Producto",
-            "placeholder": "Ingrese la cantidad",
+            "placeholder": "Ingrese el producto",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio'
@@ -87,11 +93,12 @@ export class ProductAvailable extends BasicConfiguration implements OnInit {
             "update": false,
             "visible": true,
             'required':true,
+            'search':true,
             'icon':'fa fa-list',
             "type": "text",
-            "key": "modelo",
+            "key": "mo.title",
             "title": "modelo",
-            "placeholder": "Ingrese la cantidad",
+            "placeholder": "Ingrese el modelo",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio'
@@ -102,11 +109,12 @@ export class ProductAvailable extends BasicConfiguration implements OnInit {
             "update": false,
             "visible": true,
             'required':true,
+            'search':true,
             'icon':'fa fa-list',
             "type": "text",
-            "key": "tipoProducto",
+            "key": "tp.title",
             "title": "tipo producto",
-            "placeholder": "Ingrese la cantidad",
+            "placeholder": "Ingrese el tipo de producto",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio'
@@ -116,13 +124,14 @@ export class ProductAvailable extends BasicConfiguration implements OnInit {
 
         this.rules["tipoOperacion"] = {
             "update": false,
-            "visible": false,
+            "visible": true,
             'required':true,
+            'search':true,
             'icon':'fa fa-list',
             "type": "text",
             "key": "tipoOperacion",
             "title": "tipo operacion",
-            "placeholder": "Ingrese la cantidad",
+            "placeholder": "Ingrese la operacion",
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio'
@@ -135,8 +144,9 @@ export class ProductAvailable extends BasicConfiguration implements OnInit {
             "update": false,
             "visible": true,
             'required':true,
+            'search':false,
             'icon':'fa fa-list',
-            "type": "text",
+            "type": "number",
             "key": "cantidad",
             "title": "cantidad",
             "placeholder": "Ingrese la cantidad",
@@ -163,6 +173,7 @@ export class ProductAvailable extends BasicConfiguration implements OnInit {
     }
     
     initParamsTable(){
+        this.paramsTable.title=this.viewOptions.title;
         this.paramsTable['endpoint']=this.endpoint;
         this.paramsTable['actions']={}
 

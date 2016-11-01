@@ -101,19 +101,26 @@
 
 
                     <h3 class="text-bold col-lg-12">Resultados</h3><br>
-                    <h3 ><strong class="text-bold " style="margin-left: 20px;">Fecha del reporte </strong> :{{visualDate}}</h3>
+                    <h3 ><strong class="text-bold " style="margin-left: 20px;">Fecha del reporte</strong>:&nbsp;{{visualDate}}</h3>
                     <div  *ngIf="totalObject && totalObject.result != null" class="col-lg-8">
                         <label class="col-lg-12" style="margin-left: -10px;"><strong class="text-bold">{{totalObject.title}}: </strong> {{totalObject.result}} </label>
                     </div>
-                    <div  *ngIf="totalObject && totalObject.result != null" class="col-lg-4 noprint">
-                        <button (click)="print($event)" type="button" class="btn btn-success pull-right">
-                            <i class="fa fa-print"></i>
-                            Imprimir
+                    <div class="col-lg-12 noprint">
+                        <button  *ngIf="existFilter()"
+                                 type="button" class="btn btn-blue pull-right"
+                                 data-toggle="modal" [attr.data-target]="'#'+paramsFilter.idModal">
+                            <i class="fa fa-filter"></i>&nbsp;Filtrar&nbsp;
                         </button>
+                        <filter [rules]="rules" [params]="paramsFilter" (whereFilter)="loadWhere($event)"></filter>
                     </div>
 
                     <div *ngIf=" dataList && dataList.count > 0 " (click)="checkEndPoint()" class="col-lg-12">
-                        <tables [dataList]="dataList" [rules]="rules"  [params]="paramsTable" [rulesSearch]="rulesSearch" [where]="where" [ext]="ext" [newSearch]="newSearch" [max]="max"></tables>
+                        <div class="pull-right">
+                            <a target="_blank" [attr.href]="url+'&formatType=pdf'"><i class="fa fa-file-pdf-o"></i>&nbsp;Exportar PDF</a>
+                            <a target="_blank" [attr.href]="url+'&formatType=xls'"><i class="fa fa-file-excel-o"></i>&nbsp;Exportar Excel</a>
+                        </div>
+
+                        <tables (getInstance)="setInstance($event)" [dataList]="dataList" [rules]="rules"  [params]="paramsTable" [rulesSearch]="rulesSearch" [where]="where" [ext]="ext" [newSearch]="newSearch" [max]="max"></tables>
                     </div>
 
                     <div *ngIf=" dataList && dataList.count <= 0 " class="alert alert-warning row col-lg-11"  style="margin-left: 5px;margin-right: 5px;">

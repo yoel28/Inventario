@@ -10,22 +10,22 @@ import {BasicConfiguration} from "../common/basic-configuration";
 
 declare var SystemJS:any;
 @Component({
-    selector: 'model-product',
-    templateUrl: SystemJS.map.app+'/modelProduct/index.html',
-    styleUrls: [SystemJS.map.app+'/modelProduct/style.css'],
+    selector: 'tooltip',
+    templateUrl: SystemJS.map.app+'/tooltip/index.html',
+    styleUrls: [SystemJS.map.app+'/tooltip/style.css'],
     directives: [Tables,Save],
     pipes: [TranslatePipe],
     providers: [TranslateService]
 })
 @Injectable()
-export class ModelProduct extends BasicConfiguration implements OnInit {
+export class Tooltip extends BasicConfiguration implements OnInit {
 
 
     public paramsTable:any={};
 
     constructor(public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
 
-        super("MO_PRO","/modelos/",http, toastr,myglobal,translate);
+        super("INFO","/infos/",http, toastr,myglobal,translate);
 
     }
 
@@ -41,11 +41,73 @@ export class ModelProduct extends BasicConfiguration implements OnInit {
             "visible": true,
             'required':true,
             "search":this.permissions.filter,
-            'icon':'fa fa-list',
+            'icon':"fa fa-list",
             "type": "text",
             "key": "title",
             "title": "Titulo",
-            "placeholder": "ingrese el nombre del titulo",
+            "placeholder": "Ingrese el nombre del titulo",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio'
+                },
+            }
+        };
+        this.rules["code"] = {
+            "update": this.permissions['update'],
+            "visible": true,
+            'required':true,
+            "search":this.permissions.filter,
+            'icon':"fa fa-list",
+            "type": "text",
+            "key": "code",
+            "title": "Código",
+            "placeholder": "Ingrese el código",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio'
+                },
+            }
+        };
+        this.rules['color']= {
+            'type': 'select',
+            'required': true,
+            'update': this.permissions.update,
+            'visible': this.permissions.visible,
+            "title": "Color",
+            'source': [
+                {'value': 'bg-red', 'text': 'Rojo'},
+                {'value': 'bg-blue', 'text': 'Azul'},
+                {'value': 'bg-yellow', 'text': 'Amarillo'},
+                {'value': 'bg-green', 'text': 'Verde'},
+                {'value': 'bg-black', 'text': 'Negro'},
+                {'value': 'bg-white', 'text': 'Blanco'},
+                {'value': 'bg-purple', 'text': 'Purpura'},
+                {'value': 'bg-fuchsia', 'text': 'Fucsia'},
+                {'value': 'bg-grey', 'text': 'Gris'},
+                {'value': 'bg-lime', 'text': 'Lima'},
+                {'value': 'bg-maroon', 'text': 'Marron'},
+                {'value': 'bg-olive', 'text': 'Oliva'},
+                {'value': 'bg-orange', 'text': 'Naranja'},
+                {'value': 'bg-pink', 'text': 'Rosado'},
+                {'value': 'bg-aqua', 'text': 'Azul claro'},
+            ],
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio'
+                },
+            }
+        };
+        this.rules['icon']= {
+            'type': 'select',
+            'required': true,
+            'update': this.permissions.update,
+            'visible': this.permissions.visible,
+            "title": "Icono",
+            'source': [
+                {'value': 'fa fa-user', 'text': 'Usuario'},
+                {'value': 'fa fa-list', 'text': 'Lista'},
+                {'value': 'fa fa-book', 'text': 'Libro'},
+            ],
             'msg':{
                 'errors':{
                     'required':'El campo es obligatorio'
@@ -54,19 +116,18 @@ export class ModelProduct extends BasicConfiguration implements OnInit {
         };
         this.rules['detail'] = tempRules['detail'];
         this.rules['enabled'] = tempRules['enabled'];
-        
+
     }
 
     initParamsTable(){
-        this.paramsTable.title = this.viewOptions.title;
         this.paramsTable.endpoint=this.endpoint;
         this.paramsTable.actions={};
         this.paramsTable.actions.delete = {
             "icon": "fa fa-trash",
             "exp": "",
             'title': 'Eliminar',
-            'permission': this.permissions.delete,
-            'message': '¿ Esta seguro de eliminar el modelo de producto: ',
+            'permission': '1',
+            'message': '¿ Esta seguro de eliminar el tooltip: ',
             'keyAction':'title'
         };
     }
@@ -74,11 +135,11 @@ export class ModelProduct extends BasicConfiguration implements OnInit {
     initSaveRules(){
 
         this.paramsSave= {
-            title: "Agregar de modelo de producto",
-            idModal: "saveProductType",
+            title: "Agregar Tooltip",
+            idModal: "saveTooltip",
             endpoint: this.endpoint,
         }
-        
+
         this.rulesSave = Object.assign({},this.rules);
         delete this.rulesSave['enabled'];
         delete this.rulesSave['id'];
@@ -87,7 +148,7 @@ export class ModelProduct extends BasicConfiguration implements OnInit {
 
     initOptions() {
 
-        this.viewOptions["title"] = 'Modelo de producto';
+        this.viewOptions["title"] = 'Tooltips';
 
         this.viewOptions["button"].push({
             'title':'Agregar',
@@ -95,45 +156,45 @@ export class ModelProduct extends BasicConfiguration implements OnInit {
             'icon':'fa fa-plus',
             'modal':this.paramsSave.idModal
         });
-        
+
     }
 
 
 
     initSearch() {
-        this.paramsSearch['title']="Modelo Producto";
-        this.paramsSearch['idModal']="searchModelProducto";
-        this.paramsSearch['placeholder']="Ingrese el modelo de producto";
+        this.paramsSearch['title']="Tooltip";
+        this.paramsSearch['idModal']="searchTool";
+        this.paramsSearch['placeholder']="Ingrese Tooltip";
     }
-    
+
     ngOnInit() {
 
 
         this.initRules();
+        this.initParamsTable();
         this.initSaveRules();
         this.initOptions();
         this.initSearch();
-        this.initParamsTable();
         this.loadData();
     }
 
-    
-    
-    
+
+
+
     initRuleObject(){
         this.ruleObject={
             'icon':'fa fa-list',
             "type": "text",
-            "key": "modelo",
-            "title": "Modelo",
+            "key": "tooltip",
+            "title": "Tooltip",
             'object':true,
-            "placeholder": "Ingrese el codigo del modelo",
+            "placeholder": "Ingrese tooltip",
             'paramsSearch':this.paramsSearch,
             'permissions':this.permissions,
             'search':this.permissions.filter,
             'msg':{
                 'errors':{
-                    'object':'El modelo no esta registrado',
+                    'object':'El tooltip no esta registrado',
                     'required':'El campo es obligatorio'
                 },
             }
@@ -147,7 +208,7 @@ export class ModelProduct extends BasicConfiguration implements OnInit {
         this.initRuleObject();
         this.initSaveRules();
     }
-    
+
     @ViewChild(Tables)
     tables:Tables;
     asignData(data) {

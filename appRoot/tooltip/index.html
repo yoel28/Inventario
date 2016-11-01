@@ -1,11 +1,9 @@
 <div class="content-wrapper">
     <section class="content">
         <div class="box">
-            <div >
-                <div class="box-header">
-                    <h3 class="box-title">{{viewOptions.title | translate }}</h3>
-
-                <div class="pull-right noprint" *ngIf="viewOptions['button']">
+            <div class="box-header">
+                <h3 class="box-title">{{viewOptions.title | translate }}</h3>
+                <div class="pull-right" *ngIf="viewOptions['button']">
                     <button *ngFor="let buttom of viewOptions['button']"
                             class="{{buttom.class}}" type="button" data-toggle="modal"
                             [attr.data-target]="'#'+buttom.modal">
@@ -14,13 +12,11 @@
                     </button>
                 </div>
             </div>
-            </div>
             <div *ngIf="permissions.list"  class="box-body">
-
                 <div>
 
-                    <less-list [paramSearch]="paramsSearch" [externalEndPoint]="endpoint" [rulesDetails]="rules" [externalList]="externalList"></less-list>
-                    <!--card [dataList]="dataList" [rules]="rules" [params]="viewCardOption" ></card!-->
+                    <tables [dataList]="dataList" [rules]="rules" [params]="paramsTable" [rulesFilter]="rulesSave" [rulesSearch]="rulesSearch" [externalSave]="externalSave"></tables>
+
                 </div>
                 <div *ngIf="dataList && dataList.count == 0">
                     <div class="alert alert-warning alert-dismissable">

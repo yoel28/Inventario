@@ -14,6 +14,7 @@ import {ColorPicker} from "../../common/colorPicker";
 
 declare var moment:any;
 declare var jQuery:any;
+declare var Table2Excel:any;
 declare var SystemJS:any;
 
 @Component({
@@ -21,13 +22,14 @@ declare var SystemJS:any;
     templateUrl: SystemJS.map.app+'/utils/tables/index.html',
     styleUrls: [SystemJS.map.app+'/utils/tables/style.css'],
     inputs:['params','rules','externalList','rulesSearch','dataList','externalSave','rulesFilter','where','ext','newSearch','max'],
-    directives:[Xeditable,Search,Filter,Save,Print,ColorPicker]
+    directives:[Xeditable,Search,Filter,Save,Print,ColorPicker],
+    outputs:['getInstance']
 })
 
 
 export class Tables extends RestController implements OnInit {
-    
 
+    public title:string="table";
     public params:any={};
     public externalList:any={};
     public rules:any={};
@@ -50,10 +52,13 @@ export class Tables extends RestController implements OnInit {
     public rulesFilter :any ={};
     public configId=moment().valueOf();
 
+    public getInstance:any;
+
 
 
     constructor(public _formBuilder: FormBuilder,public http:Http,public toastr: ToastsManager, public myglobal:globalService) {
         super(http,toastr);
+        this.getInstance = new EventEmitter();
     }
 
     ngOnInit()
@@ -61,6 +66,10 @@ export class Tables extends RestController implements OnInit {
         this.initForm();
         this.keyActions=Object.keys(this.params.actions);
         this.setEndpoint(this.params.endpoint);
+        this.title =  this.params.title;
+    }
+    ngAfterViewInit(){
+        this.getInstance.emit(this);
     }
 
 
@@ -242,6 +251,7 @@ export class Tables extends RestController implements OnInit {
         title: "Filtrar",
         idModal: "modalFilter",
         endpoint: "",
+        filterExtra:[],
     };
 
 
@@ -342,6 +352,30 @@ export class Tables extends RestController implements OnInit {
          }
         this.loadData(0);
     }
+    exportCSV(){
+        let table2excel = new Table2Excel({
+            'defaultFileName': this.title,
+        });
+        Table2Excel.extend((cell, cellText) => {
+            if (cell) return {
+                v:cellText,
+                t: 's',
+            };
+            return null;
+        });
+        table2excel.export(document.querySelectorAll("table.export"));
+    }
+    onPrintReport(event?){
+        if(event)
+            event.preventDefault();
+
+        var printContents = document.getElementById(this.configId).innerHTML;
+        var popupWin = window.open('', '_blank');
+        popupWin.document.open();
+        popupWin.document.write('<body onload="window.print()">' + printContents + '</body>');
+        popupWin.document.head.innerHTML = (document.head.innerHTML);
+        popupWin.document.close();
+    }
     
     @ViewChild(Print)
     printObject:Print;
@@ -373,8 +407,20 @@ export class Tables extends RestController implements OnInit {
             if(type=='lotReco')
             {
 
-                that.printObject.elementPrint.push({"name":that.printObject.ExternalInfo.list[0][0].Cliente,"direc":that.printObject.ExternalInfo.list[0][0].direccionCliente,'contac':that.printObject.ExternalInfo.list[0][0].telefonoCliente,'ruc':that.printObject.ExternalInfo.list[0][0].rucCliente});
-                that.printObject.elementPrint.push({"name":that.printObject.ExternalInfo.list[0][0].nombreVendedor,"direc":that.printObject.ExternalInfo.list[0][0].direccionVendedor,'contac':that.printObject.ExternalInfo.list[0][0].telefonoVendedor,'ruc':that.printObject.ExternalInfo.list[0][0].rucVendedor});
+                that.printObject.elementPrint.push({
+                    "name": that.printObject.ExternalInfo.list[0][0].Cliente,
+                    "direc": that.printObject.ExternalInfo.list[0][0].direccionCliente,
+                    'contac': that.printObject.ExternalInfo.list[0][0].telefonoCliente,
+                    'ruc': that.printObject.ExternalInfo.list[0][0].rucCliente,
+                    'despachador': that.printObject.ExternalInfo.list[0][0].usernameCreator
+                });
+                that.printObject.elementPrint.push({
+                    "name": that.printObject.ExternalInfo.list[0][0].nombreVendedor,
+                    "direc": that.printObject.ExternalInfo.list[0][0].direccionVendedor,
+                    'contac': that.printObject.ExternalInfo.list[0][0].telefonoVendedor,
+                    'ruc': that.printObject.ExternalInfo.list[0][0].rucVendedor,
+                    'despachador': that.printObject.ExternalInfo.list[0][0].usernameCreator
+                });
 
                 this.printObject.type="1";
 
@@ -384,6 +430,11 @@ export class Tables extends RestController implements OnInit {
         }
         let where =encodeURI("[['op':'eq','field':'lote.id','value':"+id+"]]");
         this.httputils.doGet(endPoint+"?where="+where+"",successCallback,this.error)
+    }
+
+    public filter:any={};
+    setFilter(instance){
+        this.filter = instance;
     }
 }
 

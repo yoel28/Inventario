@@ -36,9 +36,12 @@ import {ProductsAction} from "./reports/ProductsAction/productsAction";
 import {LotRecovery} from "./lotRecovery/lotRecovery";
 import {MovesByDate} from "./reports/moveDate/moveDate";
 import {Profile} from "./account/profile/profile";
+import {Tooltip} from "./tooltip/tooltip";
 import {Kardex} from "./reports/kardex/kardex";
 import {Rules} from "./rules/rules";
 import {Info} from "./info/infos";
+import {ProductLocation} from "./reports/productLocation/productLocation";
+
 
 declare var SystemJS:any;
 declare var jQuery:any;
@@ -82,9 +85,11 @@ declare var jQuery:any;
   { path: '/product/audit',   name: 'ProductAudit', component: ProductAudit },
   { path: '/buck/upload',   name: 'BuckUpload', component: BuckUpload },
   { path: '/lot/recovery',   name: 'LotRecovery', component: LotRecovery },
-  { path: '/user/profile',   name: 'Profile', component: Profile },
+  { path: '/user/profile',   name: 'Profile', component: Profile }, 
+  { path: '/tooltip',   name: 'Tooltip', component: Tooltip }, 
   { path: '/kardex',   name: 'Kardex', component: Kardex },
   { path: '/infos',   name: 'Info', component: Info },
+  { path: '/product/location',   name: 'ProductLocation', component: ProductLocation },
   { path: '/**', redirectTo: ['Dashboard'] }
 
 ])
@@ -98,7 +103,7 @@ export class AppComponent extends RestController implements OnInit{
   constructor(public router: Router,http: Http,public myglobal:globalService,public toastr: ToastsManager,public info:Info) {
     
       super(http)
-      let url="https://dev.zippyttech.com:9090";
+      let url="http://52.23.208.232:8080";
       localStorage.setItem('urlAPI',url+'/api');
       localStorage.setItem('url',url);
 
@@ -199,21 +204,21 @@ export class AppComponent extends RestController implements OnInit{
                 'visible':this.myglobal.existsPermission("MEN_DASHBOARD"),
                 'routerLink':'Dashboard',
                 'icon':'fa fa-list',
-                'title':'Dashboard'
+                'title':this.myglobal.getMenu("MEN_DASHBOARD").title
 
             });
             this.menuItems.push({
                 'visible':this.myglobal.existsPermission("MEN_OPERACION"),
                 'routerLink':'Operation',
                 'icon':'fa fa-list',
-                'title':'Operacion'
+                'title':this.myglobal.getMenu("MEN_OPERACION").title
 
             });
             this.menuItems.push({
                 'visible':this.myglobal.existsPermission("MEN_LOCATION"),
                 'routerLink':'Location_product',
                 'icon':'fa fa-list',
-                'title':'Ubicacion'
+                'title':this.myglobal.getMenu("MEN_LOCATION").title
 
             });
             this.menuItems.push({
@@ -227,31 +232,31 @@ export class AppComponent extends RestController implements OnInit{
                     {
                         'visible':this.myglobal.existsPermission("MEN_PROD"),
                         'icon':'fa fa-list',
-                        'title':'Producto',
+                        'title':this.myglobal.getMenu("MEN_PROD").title,
                         'routerLink':'Product'
                     },
                     {
                         'visible':this.myglobal.existsPermission("MEN_TIPOPROD"),
                         'icon':'fa fa-list',
-                        'title':'Tipo',
+                        'title':this.myglobal.getMenu("MEN_TIPOPROD").title,
                         'routerLink':'TypeProduct'
                     },
                     {
                         'visible':this.myglobal.existsPermission("MEN_MARCA"),
                         'icon':'fa fa-list',
-                        'title':'Marca',
+                        'title':this.myglobal.getMenu("MEN_MARCA").title,
                         'routerLink':'BrandProduct'
                     },
                     {
                         'visible':this.myglobal.existsPermission("MEN_MODEL"),
                         'icon':'fa fa-list',
-                        'title':'Modelo',
+                        'title':this.myglobal.getMenu("MEN_MODEL").title,
                         'routerLink':'ModelProduct'
                     },
                     {
                         'visible':this.myglobal.existsPermission("MEN_AUDPROD"),
                         'icon':'fa fa-list',
-                        'title':'Auditoria de produtos',
+                        'title':this.myglobal.getMenu("MEN_AUDPROD").title,
                         'routerLink':'ProductAudit'
                     }
 
@@ -263,7 +268,7 @@ export class AppComponent extends RestController implements OnInit{
                 'visible':this.myglobal.existsPermission("MEN_USER"),
                 'routerLink':'User',
                 'icon':'fa fa-list',
-                'title':'Usuarios'
+                'title':this.myglobal.getMenu("MEN_USER").title,
 
             });
             this.menuItems.push({
@@ -271,40 +276,46 @@ export class AppComponent extends RestController implements OnInit{
                 this.myglobal.existsPermission("MEN_DESP_PROV") ||
                 this.myglobal.existsPermission("MEN_MOV_FECH") ||
                 this.myglobal.existsPermission("MEN_PROD_ACC") ||
-                this.myglobal.existsPermission("MEN_KARDEX")
+                this.myglobal.existsPermission("MEN_KARDEX") || this.myglobal.existsPermission("MEN_PRO_LOCATION")
                 ,
                 'icon':'fa fa-list',
                 'title':'Reportes',
                 'key':'reportes',
                 'treeview':[
                     {
+                        'visible':this.myglobal.existsPermission("MEN_PRO_LOCATION"),
+                        'icon':'fa fa-list',
+                        'title':this.myglobal.getMenu("MEN_PRO_LOCATION").title,
+                        'routerLink':'ProductLocation'
+                    },
+                    {
                         'visible':this.myglobal.existsPermission("MEN_KARDEX"),
                         'icon':'fa fa-list',
-                        'title':'Kardex',
+                        'title':this.myglobal.getMenu("MEN_KARDEX").title,
                         'routerLink':'Kardex'
                     },
                     {
                         'visible':this.myglobal.existsPermission("MEN_PROD_EXIST"),
                         'icon':'fa fa-list',
-                        'title':'Producto en existencia',
+                        'title':this.myglobal.getMenu("MEN_PROD_EXIST").title,
                         'routerLink':'ProductAvailable'
                     },
                     {
                         'visible':this.myglobal.existsPermission("MEN_DESP_PROV"),
                         'icon':'fa fa-list',
-                        'title':'Despacho por proveedor',
+                        'title':this.myglobal.getMenu("MEN_DESP_PROV").title,
                         'routerLink':'OfficeSupplier'
                     },
                     {
                         'visible':this.myglobal.existsPermission("MEN_MOV_FECH"),
                         'icon':'fa fa-list',
-                        'title':'Movimientos por fecha',
+                        'title':this.myglobal.getMenu("MEN_MOV_FECH").title,
                         'routerLink':'MovesByDate'
                     },
                     {
                         'visible':this.myglobal.existsPermission("MEN_PROD_ACC"),
                         'icon':'fa fa-list',
-                        'title':'Productos por accion',
+                        'title':this.myglobal.getMenu("MEN_PROD_ACC").title,
                         'routerLink':'ProductsAction'
                     },
                 ]
@@ -314,7 +325,7 @@ export class AppComponent extends RestController implements OnInit{
                 'visible':this.myglobal.existsPermission("MEN_ADM_LOT"),
                 'routerLink':'LotRecovery',
                 'icon':'fa fa-list',
-                'title':'Administracion de lotes'
+                'title':this.myglobal.getMenu("MEN_ADM_LOT").title,
 
             });
             this.menuItems.push({
@@ -326,13 +337,13 @@ export class AppComponent extends RestController implements OnInit{
                     {
                         'visible':this.myglobal.existsPermission("MEN_CLIENT"),
                         'icon':'fa fa-list',
-                        'title':'Clientes',
+                        'title':this.myglobal.getMenu("MEN_CLIENT").title,
                         'routerLink':'Client'
                     },
                     {
                         'visible':this.myglobal.existsPermission("MEN_TYPECLIENT"),
                         'icon':'fa fa-list',
-                        'title':'Tipo de clientes',
+                        'title':this.myglobal.getMenu("MEN_TYPECLIENT").title,
                         'routerLink':'TypeCompany'
                     }
 
@@ -350,31 +361,31 @@ export class AppComponent extends RestController implements OnInit{
                     {
                         'visible':this.myglobal.existsPermission("MEN_CARG_MASIVA"),
                         'icon':'fa fa-list',
-                        'title':'Carga masiva',
+                        'title':this.myglobal.getMenu("MEN_CARG_MASIVA").title,
                         'routerLink':'BuckUpload'
                     },
                     {
                         'visible':this.myglobal.existsPermission("MEN_TYPE_ACC"),
                         'icon':'fa fa-list',
-                        'title':'Tipo de acciones',
+                        'title':this.myglobal.getMenu("MEN_TYPE_ACC").title,
                         'routerLink':'AccionType'
                     },
                     {
                         'visible':this.myglobal.existsPermission("MEN_PARAMS"),
                         'icon':'fa fa-list',
-                        'title':'Parametros',
+                        'title':this.myglobal.getMenu("MEN_PARAMS").title,
                         'routerLink':'Params'
                     },
                     {
                         'visible':this.myglobal.existsPermission("MEN_RULES"),
                         'icon':'fa fa-list',
-                        'title':'Reglas',
+                        'title':this.myglobal.getMenu("MEN_RULES").title,
                         'routerLink':'Rules'
                     },
                     {
                         'visible':this.myglobal.existsPermission("MEN_INFO"),
                         'icon':'fa fa-list',
-                        'title':'Informacion',
+                        'title':this.myglobal.getMenu("MEN_INFO").title,
                         'routerLink':'Info'
                     }
                 ]
@@ -383,7 +394,8 @@ export class AppComponent extends RestController implements OnInit{
             this.menuItems.push({
                 'visible':  this.myglobal.existsPermission("MEN_ROLE") ||
                 this.myglobal.existsPermission("MEN_ACL") ||
-                this.myglobal.existsPermission("MEN_PERMISSION"),
+                this.myglobal.existsPermission("MEN_PERMISSION") || 
+                this.myglobal.existsPermission("MEN_INFO"),
                 'icon':'fa fa-list',
                 'title':'Panel de Configuracion',
                 'key':'Panel de Configuracion',
@@ -391,20 +403,26 @@ export class AppComponent extends RestController implements OnInit{
                     {
                         'visible':this.myglobal.existsPermission("MEN_ROLE"),
                         'icon':'fa fa-list',
-                        'title':'Roles',
+                        'title':this.myglobal.getMenu("MEN_ROLE").title,
                         'routerLink':'Roles'
                     },
                     {
                         'visible':this.myglobal.existsPermission("MEN_ACL"),
                         'icon':'fa fa-list',
-                        'title':'ACL',
+                        'title':this.myglobal.getMenu("MEN_ACL").title,
                         'routerLink':'PermissionsAcl'
                     },
                     {
                         'visible':this.myglobal.existsPermission("MEN_PERMISSION"),
                         'icon':'fa fa-list',
-                        'title':'Permisos',
+                        'title':this.myglobal.getMenu("MEN_PERMISSION").title,
                         'routerLink':'Permissions'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_INFO"),
+                        'icon':'fa fa-list',
+                        'title':'Tooltips',
+                        'routerLink':'Tooltip'
                     }
 
                 ]

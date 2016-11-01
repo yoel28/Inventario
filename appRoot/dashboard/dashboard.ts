@@ -205,7 +205,7 @@ export class Dashboard extends BasicConfiguration implements OnInit {
                 "type": "text",
                 "key": "cantidadProductosUbicacion",
                 "title": "Cantidad de productos",
-                "placeholder": "cantidad de prodcuto"
+                "placeholder": "cantidad de producto"
             }
         };
 

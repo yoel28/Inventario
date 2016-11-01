@@ -406,22 +406,18 @@
 
                     <div class="col-lg-10 col-lg-offset-1">
                         <label>Si acepta estas acciones no podran ser desechas</label>
+                        <br/>
+                        <input (keyup)="onKey($event)" type="text" class="form-control" placeholder="Factura" >
                     </div>
 
                 </div>
-
-
-
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outlined btn-warning fa fa-close" data-dismiss="modal">&nbsp;Cancelar</button>
                 <button (click)="saveResult($event)"  data-dismiss="modal" type="button"
-                        class="btn btn-warning fa fa-check-circle-o ">&nbsp;Aceptart
+                        class="btn btn-warning fa fa-check-circle-o ">&nbsp;Aceptar
                 </button>
             </div>
-
-
 
         </div>
     </div>

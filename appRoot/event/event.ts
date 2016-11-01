@@ -8,22 +8,22 @@ import {Save} from "../utils/save/save";
 import {BasicConfiguration} from "../common/basic-configuration";
 declare var SystemJS:any;
 @Component({
-    selector: 'infos',
-    templateUrl: SystemJS.map.app+'/info/index.html',
-    styleUrls: [SystemJS.map.app+'/info/style.css'],
+    selector: 'event',
+    templateUrl: SystemJS.map.app+'/event/index.html',
+    styleUrls: [SystemJS.map.app+'/event/style.css'],
     directives: [Tables,Save],
     pipes: [TranslatePipe],
     providers: [TranslateService]
 })
 @Injectable()
-export class Info extends BasicConfiguration implements OnInit {
+export class Event extends BasicConfiguration implements OnInit {
 
 
     public paramsTable:any = {};
 
 
     constructor(public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
-        super("INFO", "/infos/", http, toastr, myglobal, translate);
+        super("EVENT", "/events/", http, toastr, myglobal, translate);
     }
 
     initRules() {
@@ -42,10 +42,82 @@ export class Info extends BasicConfiguration implements OnInit {
             'title': 'Codigo',
             'placeholder': 'Ingrese el codigo',
             'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                },
-            },
+                'error':'Este campo es obligatorio',
+            }
+        }
+        this.rules['actionType']={
+            'type': 'select',
+            'required':true,
+            'update':this.permissions.update,
+            'search':this.permissions.filter,
+            'visible':this.permissions.visible,
+            'source': [],
+            'key': 'actionType',
+            'title': 'Tipo de acción',
+            'placeholder': 'Selecccione una opcion',
+            'msg':{
+                'error':'Este campo es obligatorio',
+            }
+        }
+        this.rules['way']={
+            'type': 'select',
+            'required':true,
+            'update':this.permissions.update,
+            'search':this.permissions.filter,
+            'visible':this.permissions.visible,
+            'source': [],
+            'key': 'way',
+            'title': 'Canal',
+            'placeholder': 'Selecccione una opcion',
+            'msg':{
+                'error':'Este campo es obligatorio',
+            }
+        }
+        this.rules['over']={
+            'type': 'select',
+            'required':true,
+            'update':this.permissions.update,
+            'search':this.permissions.filter,
+            'visible':this.permissions.visible,
+            'source':[],
+            'key': 'over',
+            'title': 'Dominio',
+            'placeholder': 'Seleccione un dominio',
+            'msg':{
+                'error':'Este campo es obligatorio',
+            }
+        }
+
+        this.rules['message']={
+            'type': 'textarea',
+            'required':true,
+            'showbuttons':true,
+            'update':this.permissions.update,
+            'search':this.permissions.filter,
+            'visible':this.permissions.visible,
+            'key': 'message',
+            'icon': 'fa fa-key',
+            'title': 'Mensaje',
+            'placeholder': 'Ingrese el mensaje',
+            'msg':{
+                'error':'Este campo es obligatorio',
+            }
+        }
+        //this.rules['rule']=this._MRegla.ruleObject;
+        //this.rules['rule'].required = true;
+        this.rules['target']={
+            'type': 'text',
+            'required':true,
+            'update':this.permissions.update,
+            'search':this.permissions.filter,
+            'visible':this.permissions.visible,
+            'key': 'target',
+            'icon': 'fa fa-key',
+            'title': 'Objectivo',
+            'placeholder': 'Ingrese el objetivo',
+            'msg':{
+                'error':'Este campo es obligatorio',
+            }
         }
         this.rules['title']={
             'type': 'text',
@@ -55,93 +127,25 @@ export class Info extends BasicConfiguration implements OnInit {
             'visible':this.permissions.visible,
             'key': 'title',
             'icon': 'fa fa-key',
-            'title': 'Título',
-            'placeholder': 'Ingrese el título',
+            'title': 'Titulo',
+            'placeholder': 'Ingrese el titulo',
             'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                },
-            },
-        }
-        this.rules['color']={
-            'type': 'color',
-            'required':true,
-            'update':this.permissions.update,
-            'search':false,
-            'visible':this.permissions.visible,
-            'key': 'color',
-            'value':'00ff00',
-            'title': 'Color',
-            'placeholder': '#000',
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                },
-            },
-        }
-        this.rules['position']={
-            'type': 'select',
-            'required':true,
-            'update':this.permissions.update,
-            'search':this.permissions.filter,
-            'visible':this.permissions.visible,
-            'source': [
-                {'value': 'top', 'text': 'Arriba'},
-                {'value': 'bottom', 'text':'Abajo'},
-                {'value': 'left', 'text': 'Izquierda'},
-                {'value': 'right', 'text': 'Derecha'},
-            ],
-            'key': 'position',
-            'title': 'Posición',
-            'placeholder': 'Selecccione una posición',
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                },
-            },
-        }
-        this.rules['size']={
-            'type': 'select',
-            'required':true,
-            'update':this.permissions.update,
-            'search':this.permissions.filter,
-            'visible':this.permissions.visible,
-            'source': [
-                {'value': 'fa', 'text': 'Normal'},
-                {'value': 'fa-lg', 'text':'Lg'},
-                {'value': 'fa-2x', 'text':'2x'},
-                {'value': 'fa-3x', 'text':'3x'},
-                {'value': 'fa-4x', 'text':'4x'},
-                {'value': 'fa-5x', 'text':'5x'},
-
-            ],
-            'key': 'size',
-            'title': 'Tamaño',
-            'placeholder': 'Selecccione un tamaño',
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                },
-            },
+                'error':'Este campo es obligatorio',
+            }
         }
         this.rules['icon']={
-            'type': 'select',
-            'required':true,
+            'type': 'text',
+            'required':false,
             'update':this.permissions.update,
             'search':this.permissions.filter,
             'visible':this.permissions.visible,
-            'source': [
-                {'value': 'fa fa-question-circle', 'text': 'Interrogante 1'},
-                {'value': 'fa fa-question', 'text': 'Interrogante 2'},
-            ],
             'key': 'icon',
+            'icon': 'fa fa-key',
             'title': 'Icono',
-            'placeholder': 'Selecccione un icono',
+            'placeholder': 'Ingrese el icono',
             'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio',
-                },
-            },
+                'error':'Este campo es obligatorio',
+            }
         }
 
 
