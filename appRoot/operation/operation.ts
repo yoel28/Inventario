@@ -79,8 +79,8 @@ export class Operation extends RestController implements OnInit {
     //se realizo la carga
     public flagSave=false;
 
-
-
+    //Reference
+    public codeReference="";
 
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService, public formBuilder:FormBuilder) {
 
@@ -510,7 +510,7 @@ export class Operation extends RestController implements OnInit {
             let arraySaveTemp =[];
 
 
-            let objectPost ={"cliente":that.user.value.id,"tipoAccion":that.tipoAccion.value,"acciones":[]};
+            let objectPost ={"reference":that.codeReference,"cliente":that.user.value.id,"tipoAccion":that.tipoAccion.value,"acciones":[]};
 
             for(var a of that.listAccion)
             {
@@ -573,9 +573,10 @@ export class Operation extends RestController implements OnInit {
 
         }
 
-
     }
-
+    onKey(event:any) {
+        this.codeReference = event.target.value;
+    }
 
 
 
