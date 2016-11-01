@@ -64,13 +64,11 @@ main{
     margin-left: 0px !important;
   }
 }
-<<<<<<< Temporary merge branch 1
 .cargar{
   color: white;
   font-size: 16pt;
   margin: 10pt;
-=======
+}
 body.no-menu .content-wrapper, body.no-menu .main-footer {
   margin-left: 0px !important;
->>>>>>> Temporary merge branch 2
 }
