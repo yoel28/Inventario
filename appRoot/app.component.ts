@@ -36,10 +36,12 @@ import {ProductsAction} from "./reports/ProductsAction/productsAction";
 import {LotRecovery} from "./lotRecovery/lotRecovery";
 import {MovesByDate} from "./reports/moveDate/moveDate";
 import {Profile} from "./account/profile/profile";
+import {Tooltip} from "./tooltip/tooltip";
 import {Kardex} from "./reports/kardex/kardex";
 import {Rules} from "./rules/rules";
 import {Info} from "./info/infos";
 import {ProductLocation} from "./reports/productLocation/productLocation";
+
 
 declare var SystemJS:any;
 declare var jQuery:any;
@@ -83,7 +85,8 @@ declare var jQuery:any;
   { path: '/product/audit',   name: 'ProductAudit', component: ProductAudit },
   { path: '/buck/upload',   name: 'BuckUpload', component: BuckUpload },
   { path: '/lot/recovery',   name: 'LotRecovery', component: LotRecovery },
-  { path: '/user/profile',   name: 'Profile', component: Profile },
+  { path: '/user/profile',   name: 'Profile', component: Profile }, 
+  { path: '/tooltip',   name: 'Tooltip', component: Tooltip }, 
   { path: '/kardex',   name: 'Kardex', component: Kardex },
   { path: '/infos',   name: 'Info', component: Info },
   { path: '/product/location',   name: 'ProductLocation', component: ProductLocation },
@@ -391,7 +394,8 @@ export class AppComponent extends RestController implements OnInit{
             this.menuItems.push({
                 'visible':  this.myglobal.existsPermission("MEN_ROLE") ||
                 this.myglobal.existsPermission("MEN_ACL") ||
-                this.myglobal.existsPermission("MEN_PERMISSION"),
+                this.myglobal.existsPermission("MEN_PERMISSION") || 
+                this.myglobal.existsPermission("MEN_INFO"),
                 'icon':'fa fa-list',
                 'title':'Panel de Configuracion',
                 'key':'Panel de Configuracion',
@@ -413,6 +417,12 @@ export class AppComponent extends RestController implements OnInit{
                         'icon':'fa fa-list',
                         'title':this.myglobal.getMenu("MEN_PERMISSION").title,
                         'routerLink':'Permissions'
+                    },
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_INFO"),
+                        'icon':'fa fa-list',
+                        'title':'Tooltips',
+                        'routerLink':'Tooltip'
                     }
 
                 ]
