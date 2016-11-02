@@ -40,8 +40,8 @@
 </div>
 
 <div class="pull-right noprint" *ngIf="!params.disableExport">
-    <i (click)="onPrintReport()" class="btn fa fa-print fa-lg" title="Imprimir"></i>
-    <i (click)="exportCSV()" class="btn fa fa-file-excel-o fa-lg" title="Exportar"></i>
+    <i (click)="export('print')" class="btn fa fa-print fa-lg" title="Imprimir"></i>
+    <i (click)="export('xls')" class="btn fa fa-file-excel-o fa-lg" title="Exportar"></i>
 </div>
 <div id="reporte">
     <table class="export table table-striped table-hover orderColumn text-left" *ngIf="dataList && dataList.count>0">
