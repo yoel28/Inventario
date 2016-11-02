@@ -39,8 +39,6 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
 
     initRules() {
 
-        this.rules ={};
-
         this.rules["reference"] = {
             "update": false,
             "visible": true,
@@ -160,6 +158,10 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
                 },
             }
         };
+        delete this.rules['enabled'];
+
+        this.rules.id.visible = true;
+        this.rules.id.search = this.permissions.filter;
 
     }
 
