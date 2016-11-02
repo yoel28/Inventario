@@ -64,14 +64,15 @@ export class RestController implements OnInit {
 
     };
 
-    getLoadDataAll(data,endpoint?,list?,offset?,max?,where?,successCallback?){
+    getLoadDataAll(data,endpoint?,list?,offset?,max?,where?,ext?,successCallback?){
         let that = this;
 
         endpoint = ( endpoint?endpoint:that.endpoint);
         list = (list?list:that.dataList);
         max = (max?max:that.max);
         where = (where?where:that.where);
-        this.httputils.onLoadList(endpoint+"?max="+max+"&offset="+offset+where,list,max,this.error).then(
+        ext = (ext?ext:that.ext);
+        this.httputils.onLoadList(endpoint+"?max="+max+"&offset="+offset+where+ext,list,max,this.error).then(
             response=>{
                 if(list.count > 0){
                     data=data.concat(list.list);
@@ -83,10 +84,10 @@ export class RestController implements OnInit {
                     }
                     else if(max > list.list.length){
                         max=list.list.length;
-                        that.getLoadDataAll(data,endpoint,list,offset+max,max,where,successCallback);
+                        that.getLoadDataAll(data,endpoint,list,offset+max,max,where,ext,successCallback);
                     }
                     else {
-                        that.getLoadDataAll(data,endpoint,list,offset+max,max,where,successCallback);
+                        that.getLoadDataAll(data,endpoint,list,offset+max,max,where,ext,successCallback);
                     }
                 }
 
