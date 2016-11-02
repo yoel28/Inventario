@@ -436,6 +436,40 @@ export class Tables extends RestController implements OnInit {
     setFilter(instance){
         this.filter = instance;
     }
+
+    export(type){
+        let that=this;
+        this.getLoadDataAll([],null,null,0,1000,null,()=>{
+                setTimeout(function(_jQuery=jQuery){
+                    if(type=='xls')
+                        that.exportXls();
+                    else if (type == 'print')
+                        that.onPrintPage();
+                }, 3000)
+            }
+        )
+    }
+    exportXls(){
+        let table2excel = new Table2Excel({
+            'defaultFileName': 'Excel',
+        });
+        Table2Excel.extend((cell, cellText) => {
+            if (cell) return {
+                v:cellText,
+                t: 's',
+            };
+            return null;
+        });
+        table2excel.export(document.querySelectorAll("table.export"+this.configId));
+    }
+    onPrintPage(){
+        var printContents = document.getElementById(this.configId+"_reporte").innerHTML;
+        var popupWin = window.open('', '_blank');
+        popupWin.document.open();
+        popupWin.document.write('<body onload="window.print()">' + printContents + '</body>');
+        popupWin.document.head.innerHTML = (document.head.innerHTML);
+        popupWin.document.close();
+    }
 }
 
 
