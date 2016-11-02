@@ -9,7 +9,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-lg-12 margin-bottom">
-                        <form role="form" [ngFormModel]="form"  [class.col-lg-7]="search.object">
+                        <form role="form" [ngFormModel]="form"  [class.col-lg-5]="search.object">
                             <div *ngFor="let key of keys">
                                 <div *ngIf="rules[key].search">
                                     <div class="col-lg-12">
@@ -17,7 +17,8 @@
                                             <div class="col-lg-8">
                                                 <div class="row">
                                                     <div class="col-lg-10">
-                                                        <div class="row" [class.object-invalid]="
+
+                                                        <div *ngIf="rules[key].type!='date' && rules[key].type!='select'" class="row" [class.object-invalid]="
                                                             rules[key].object && data[key].value.length > 0 &&
                                                             ((searchId[key] && searchId[key].detail != data[key].value) || !searchId[key])
                                                         ">
@@ -31,7 +32,24 @@
                                                                 El campo contiene errores
                                                             </div>
                                                         </div>
+
+                                                        <div *ngIf="rules[key].type=='date'" class="row">
+                                                            <div daterangepicker [params]="paramsDate" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; width: 100%" (fecha)="assignDate($event,key)">
+                                                                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+                                                                <span *ngIf="data[key].value && data[key].value.start && data[key].value.end">{{(data[key].value.start || 'Inicio') +' - '+ (data[key].value.end || 'Fin') }}</span>
+                                                                <span *ngIf="!data[key].value.start">{{rules[key].title}}</span> <b class="caret"></b>
+                                                            </div>
+                                                        </div>
+
+                                                        <div *ngIf="rules[key].type=='select'" class="row">
+                                                            <select [(ngModel)]="data[key].value"  (ngModelChange)="setValueSelect($event,key)"  sm-dropdown class="ui fluid search selection dropdown" title="Choose one of the following...">
+                                                                <option></option>
+                                                                <option *ngFor="let n of rules[key].source"  [attr.value]="n.id || n.value" >{{n.text}}</option>
+                                                            </select>
+                                                        </div>
+
                                                     </div>
+
                                                     <div class="col-lg-2 padding-top-4">
                                                         <button *ngIf="rules[key].object"
                                                                 class="btn btn-box-tool fa fa-search text-blue"
@@ -55,7 +73,7 @@
                                 </div>
                             </div>
                         </form>
-                        <div [class.col-lg-5]="search.object" *ngIf="search.object">
+                        <div [class.col-lg-7]="search.object" *ngIf="search.object">
                             <form role="form" (submit)="getSearch($event,find.value)">
                                 <div class="col-lg-12 form-margin">
                                     <strong>{{search.title}}</strong><br/>
@@ -105,34 +123,6 @@
                                         {{val}}
                                     </button>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12" >
-                        <div class="box box-success collapsed-box" *ngIf="searchId && searchLength() > 0">
-                            <div class="box-header">
-                                <h3 class="box-title">Detalles</h3>
-                                <div class="box-tools pull-right">
-                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
-                                </div>
-                            </div>
-                            <div class="box-body" style="display: none;">
-                                <table class="table table-striped table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Campo</th>
-                                            <th>Detalle</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let key of searchIdKeys()">
-                                            <td>{{rules[key].title || key}}</td>
-                                            <td>
-                                                {{rules[key].paramsSearch.label.title}}{{searchId[key].title}}, {{rules[key].paramsSearch.label.detail}}{{searchId[key].detail}}
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
                     </div>
