@@ -439,7 +439,7 @@ export class Tables extends RestController implements OnInit {
 
     export(type){
         let that=this;
-        this.getLoadDataAll([],null,null,0,1000,null,()=>{
+        this.getLoadDataAll([],null,null,0,1000,null,null,()=>{
                 setTimeout(function(_jQuery=jQuery){
                     if(type=='xls')
                         that.exportXls();
