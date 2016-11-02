@@ -78,7 +78,7 @@ export abstract class  BasicConfiguration extends RestController{
             "visible": this.permissions['audit'],
             'icon':'fa fa-list',
             "search":false,
-            "type": "text",
+            "type": "number",
             "key": "id",
             "title": "ID",
             "placeholder": "ID",
