@@ -509,7 +509,7 @@ export class Operation extends RestController implements OnInit {
 
             let arraySaveTemp =[];
 
-
+            that.codeReference=that.codeReference.trim();
             let objectPost ={"reference":that.codeReference,"cliente":that.user.value.id,"tipoAccion":that.tipoAccion.value,"acciones":[]};
 
             for(var a of that.listAccion)
