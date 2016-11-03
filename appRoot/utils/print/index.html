@@ -10,10 +10,10 @@
         </div>
         <div class="row" style="margin-bottom: 30px;">
             <div [attr.class]="onPrintCss(6)">
-                <label>Fecha :  {{formatDate(ExternalInfo.list[0][0].fecha,'DD-MM-YYYY')}}</label>
+                <label>INGRESADO EL :  {{formatDate(ExternalInfo.list[0][0].fecha,'DD-MM-YYYY')}}</label>
             </div>
             <div [attr.class]="onPrintCss(6)">
-                <label [attr.class]="onPrintCss(12)">Factura No. {{ExternalInfo.list[0][0].Referencia}} </label>
+                <label [attr.class]="onPrintCss(12)">FACTURA N°. {{ExternalInfo.list[0][0].Referencia}} </label>
                 <label [attr.class]="onPrintCss(12)">ORDEN DE {{ExternalInfo.list[0][0].nombreTipoAccion | uppercase }}&nbsp;:&nbsp;{{elementPrint[0].id}}</label>
             </div>
 
