@@ -412,14 +412,16 @@ export class Tables extends RestController implements OnInit {
                     "direc": that.printObject.ExternalInfo.list[0][0].direccionCliente,
                     'contac': that.printObject.ExternalInfo.list[0][0].telefonoCliente,
                     'ruc': that.printObject.ExternalInfo.list[0][0].rucCliente,
-                    'despachador': that.printObject.ExternalInfo.list[0][0].usernameCreator
+                    'despachador': that.printObject.ExternalInfo.list[0][0].usernameCreator,
+                    'id':id
                 });
                 that.printObject.elementPrint.push({
                     "name": that.printObject.ExternalInfo.list[0][0].nombreVendedor,
                     "direc": that.printObject.ExternalInfo.list[0][0].direccionVendedor,
                     'contac': that.printObject.ExternalInfo.list[0][0].telefonoVendedor,
                     'ruc': that.printObject.ExternalInfo.list[0][0].rucVendedor,
-                    'despachador': that.printObject.ExternalInfo.list[0][0].usernameCreator
+                    'despachador': that.printObject.ExternalInfo.list[0][0].usernameCreator,
+                    'id':id
                 });
 
                 this.printObject.type="1";
