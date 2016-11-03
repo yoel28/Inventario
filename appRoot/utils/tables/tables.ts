@@ -412,14 +412,16 @@ export class Tables extends RestController implements OnInit {
                     "direc": that.printObject.ExternalInfo.list[0][0].direccionCliente,
                     'contac': that.printObject.ExternalInfo.list[0][0].telefonoCliente,
                     'ruc': that.printObject.ExternalInfo.list[0][0].rucCliente,
-                    'despachador': that.printObject.ExternalInfo.list[0][0].usernameCreator
+                    'despachador': that.printObject.ExternalInfo.list[0][0].usernameCreator,
+                    'id':id
                 });
                 that.printObject.elementPrint.push({
                     "name": that.printObject.ExternalInfo.list[0][0].nombreVendedor,
                     "direc": that.printObject.ExternalInfo.list[0][0].direccionVendedor,
                     'contac': that.printObject.ExternalInfo.list[0][0].telefonoVendedor,
                     'ruc': that.printObject.ExternalInfo.list[0][0].rucVendedor,
-                    'despachador': that.printObject.ExternalInfo.list[0][0].usernameCreator
+                    'despachador': that.printObject.ExternalInfo.list[0][0].usernameCreator,
+                    'id':id
                 });
 
                 this.printObject.type="1";
@@ -435,6 +437,40 @@ export class Tables extends RestController implements OnInit {
     public filter:any={};
     setFilter(instance){
         this.filter = instance;
+    }
+
+    export(type){
+        let that=this;
+        this.getLoadDataAll([],null,null,0,1000,null,null,()=>{
+                setTimeout(function(_jQuery=jQuery){
+                    if(type=='xls')
+                        that.exportXls();
+                    else if (type == 'print')
+                        that.onPrintPage();
+                }, 3000)
+            }
+        )
+    }
+    exportXls(){
+        let table2excel = new Table2Excel({
+            'defaultFileName': 'Excel',
+        });
+        Table2Excel.extend((cell, cellText) => {
+            if (cell) return {
+                v:cellText,
+                t: 's',
+            };
+            return null;
+        });
+        table2excel.export(document.querySelectorAll("table.export"+this.configId));
+    }
+    onPrintPage(){
+        var printContents = document.getElementById(this.configId+"_reporte").innerHTML;
+        var popupWin = window.open('', '_blank');
+        popupWin.document.open();
+        popupWin.document.write('<body onload="window.print()">' + printContents + '</body>');
+        popupWin.document.head.innerHTML = (document.head.innerHTML);
+        popupWin.document.close();
     }
 }
 

@@ -110,7 +110,7 @@ export class HttpUtils {
                 that.pagerFunction(offset,list,max);
             }
         }
-        this.doGet(endpoint,successCallback,errorCallback,isEndpointAbsolute)
+        return this.doGet(endpoint,successCallback,errorCallback,isEndpointAbsolute)
     }
     
     onDelete(endpoint:string,id, list ,errorCallback = null,isEndpointAbsolute = false) {

@@ -16,6 +16,7 @@
     -moz-transition: none !important;
     -o-transition: none !important;
     transition: none !important;
+    text-transform: uppercase !important;
 }
 .content-wrapper, .right-side, .main-footer, div {
     -webkit-transition: none !important;

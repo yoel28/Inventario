@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit} from '@angular/core';
 import {FormBuilder, ControlGroup, Control, Validators} from "@angular/common";
-import {SMDropdown} from "../../common/xeditable";
+import {SMDropdown, DateRangepPicker} from "../../common/xeditable";
 import {RestController} from "../../common/restController";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
@@ -12,7 +12,7 @@ declare var SystemJS:any;
     selector: 'filter',
     templateUrl: SystemJS.map.app+'/utils/filter/index.html',
     styleUrls: [SystemJS.map.app+'/utils/filter/style.css'],
-    directives:[SMDropdown],
+    directives:[SMDropdown,DateRangepPicker],
     inputs: ['rules', 'params'],
     outputs: ['whereFilter','getInstance'],
 })
@@ -304,7 +304,7 @@ export class Filter extends RestController implements OnInit{
         if(this.params.filtertExtra && this.params.filtertExtra.length > 0)
             dataWhere = dataWhere.concat(this.params.filtertExtra);
 
-        let where = "&where="+encodeURI(JSON.stringify(dataWhere).split('{').join('[').split('}').join(']'));
+        let where = "&where="+encodeURI(JSON.stringify(dataWhere || {}).split('{').join('[').split('}').join(']'));
         this.whereFilter.emit(where);
     }
     //reset
@@ -318,7 +318,7 @@ export class Filter extends RestController implements OnInit{
                 (<Control>this.form.controls[key]).setErrors(null);
             }
         })
-        let where = "&where="+encodeURI(JSON.stringify(this.params.filtertExtra).split('{').join('[').split('}').join(']'));
+        let where = "&where="+encodeURI(JSON.stringify(this.params.filtertExtra || {}).split('{').join('[').split('}').join(']'));
 
         this.whereFilter.emit(where);
     }

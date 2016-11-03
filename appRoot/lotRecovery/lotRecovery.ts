@@ -39,7 +39,21 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
 
     initRules() {
 
-        this.rules ={};
+        this.rules["reference"] = {
+            "update": false,
+            "visible": true,
+            "search": this.permissions.filter,
+            'icon':'fa fa-list',
+            "type": "text",
+            "key": "reference",
+            "title": "Factura",
+            "placeholder": "ingrese el numero de factura",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio'
+                },
+            }
+        };
 
         this.rules["clienteTitle"] = {
             "update": false,
@@ -48,7 +62,8 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
-            "key": "clienteTitle",
+            "key": "title",
+            "join":"cliente",
             "title": "Cliente",
             "placeholder": "ingrese el nombre del cliente",
             'msg':{
@@ -64,7 +79,8 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
-            "key": "tipoAccionTitle",
+            "join":"tipoAccion",
+            "key": "title",
             "title": "Accion",
             "placeholder": "ingrese de la accion",
             'msg':{
@@ -80,7 +96,8 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
-            "key": "clienteRUC",
+            "join":"cliente",
+            "key": "ruc",
             "title": "Cliente Ruc",
             "placeholder": "ingrese el Ruc del cliente",
             'msg':{
@@ -96,7 +113,8 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
-            "key": "clienteDireccion",
+            "join":"cliente",
+            "key": "direccion",
             "title": "Direccion del cliente",
             "placeholder": "ingrese la direccion del cliente",
             'msg':{
@@ -105,22 +123,7 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
                 },
             }
         };
-        this.rules["clienteTelefono"] = {
-            "update": false,
-            "visible": true,
-            "search": this.permissions.filter,
-            'required':true,
-            'icon':'fa fa-list',
-            "type": "text",
-            "key": "clienteTelefono",
-            "title": "Telefono del cliente",
-            "placeholder": "ingrese el telefono del cliente",
-            'msg':{
-                'errors':{
-                    'required':'El campo es obligatorio'
-                },
-            }
-        };
+
         this.rules["clienteEmail"] = {
             "update": false,
             "visible": true,
@@ -128,7 +131,8 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
             'required':true,
             'icon':'fa fa-list',
             "type": "text",
-            "key": "clienteEmail",
+            "join":"cliente",
+            "key": "email",
             "title": "correo del cliente",
             "placeholder": "ingrese el email del cliente",
             'msg':{
@@ -154,6 +158,11 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
                 },
             }
         };
+        delete this.rules['enabled'];
+        delete this.rules['detail'];
+
+        this.rules.id.visible = true;
+        this.rules.id.search = this.permissions.filter;
 
     }
 

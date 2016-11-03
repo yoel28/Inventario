@@ -6,15 +6,15 @@
             </div>
         </div>
         <div class="row">
-            <h1 class="text-bold text-center" style="font-size: 20px; margin-bottom: 30px;">Acta de Entrega</h1>
+            <h1 class="text-bold text-center upper" style="font-size: 20px; margin-bottom: 30px;">Acta de Entrega</h1>
         </div>
         <div class="row" style="margin-bottom: 30px;">
             <div [attr.class]="onPrintCss(6)">
-                <label>Fecha :  {{formatDate(ExternalInfo.list[0][0].fecha,'DD-MM-YYYY')}}</label>
+                <label>INGRESADO EL :  {{formatDate(ExternalInfo.list[0][0].fecha,'DD-MM-YYYY')}}</label>
             </div>
-            <div [attr.class]="onPrintCss(6)">
-                <label [attr.class]="onPrintCss(12)">Factura No. {{ExternalInfo.list[0][0].Referencia}} </label>
-                <label [attr.class]="onPrintCss(12)">Orden de  Compra</label>
+            <div [attr.class]="onPrintCss(6)" class="upper">
+                <label [attr.class]="onPrintCss(12)" class="upper">FACTURA N°. {{ExternalInfo.list[0][0].Referencia}} </label>
+                <label [attr.class]="onPrintCss(12)" class="upper">ORDEN DE {{ExternalInfo.list[0][0].nombreTipoAccion | uppercase }}&nbsp;:&nbsp;{{elementPrint[0].id}}</label>
             </div>
 
         </div>
@@ -59,7 +59,8 @@
                 </thead>
                 <tbody>
                 <tr  style=" border: 1px solid;" *ngFor="let product of ExternalInfo.list[1]">
-                    <td  [attr.class]="onPrintCss(1)" style=" border: 1px solid;">{{product.CantidadProducto}}</td><td [attr.class]="onPrintCss(11)" style=" border: 1px solid;">{{product.detalleProducto}}</td>
+                    <td  [attr.class]="onPrintCss(1)" style=" border: 1px solid; text-align: right;">{{product.CantidadProducto}}</td>
+                    <td [attr.class]="onPrintCss(11)" style=" border: 1px solid;">{{product.detalleProducto}}</td>
                 </tr>
                 </tbody>
             </table>
