@@ -159,6 +159,7 @@ export class LotRecovery extends BasicConfiguration implements OnInit {
             }
         };
         delete this.rules['enabled'];
+        delete this.rules['detail'];
 
         this.rules.id.visible = true;
         this.rules.id.search = this.permissions.filter;

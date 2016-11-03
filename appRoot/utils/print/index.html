@@ -14,7 +14,7 @@
             </div>
             <div [attr.class]="onPrintCss(6)">
                 <label [attr.class]="onPrintCss(12)">Factura No. {{ExternalInfo.list[0][0].Referencia}} </label>
-                <label [attr.class]="onPrintCss(12)">Orden de  Compra</label>
+                <label [attr.class]="onPrintCss(12)">ORDEN DE {{ExternalInfo.list[0][0].nombreTipoAccion | uppercase }}&nbsp;:&nbsp;{{elementPrint[0].id}}</label>
             </div>
 
         </div>
