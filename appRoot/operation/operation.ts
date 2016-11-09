@@ -71,7 +71,7 @@ export class Operation extends RestController implements OnInit {
 
     //para imprimir cliente
     public elementPrint =[];
-    public lote ="";
+    public lote:any;
     public RUC ="";
     public CONTACTO="";
     public DIRECCION="";
@@ -530,7 +530,7 @@ export class Operation extends RestController implements OnInit {
 
 
 
-                    that.lote = objLote.lote;
+                    that.lote = objLote;
 
 
                     that.positionForm=3;
