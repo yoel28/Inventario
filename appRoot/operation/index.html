@@ -51,17 +51,18 @@
 
 
                                                 <div class=" form-group col-lg-5 pull-right">
-                                                    <div *ngIf="dataList.list && listClient.list" class="form-group">
+                                                    <div class="form-group">
 
                                                         <div *ngIf="!tipoAccion.valid" ><label>Por favor Ingrese un tipo de accion valida</label></div>
                                                         <div *ngIf="tipoAccion.valid" >
 
-                                                            <label class="text-blod">Seleccione el proveedor o cliente :</label>
-                                                            <select [(ngModel)]="tipoAccion_2" (ngModelChange)="changeClients($event)" sm-dropdown class="ui fluid search selection dropdown">
+                                                            <a data-toggle="modal" [attr.data-target]="'#'+client.paramsSearch.idModal" href="#">
+                                                                proveedor o cliente:&nbsp;{{user.value?user.value.title:''}}
+                                                                <i class="fa fa-search text-blue fa-lg" title="Buscar"></i>
+                                                            </a>
 
-                                                                <option value="-1">Seleccione un valor</option>
-                                                                <option *ngFor="let data of listClient.list" [attr.value]="data.id">{{data.title}}</option>
-                                                            </select>
+                                                            <search [params]="client.paramsSearch" (result)="changeClients($event)"></search>
+
 
                                                         </div>
 
