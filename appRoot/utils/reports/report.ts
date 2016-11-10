@@ -359,6 +359,18 @@ export class Reports extends RestController implements OnInit {
                 this.tempWhere.push({'op':'le','field':'fecha','type':'long','value':end[2]+end[1]+end[0]});
             }   
         }
+
+
+
+
+        if(this.disabledRange ==1)
+        {
+            this.setEndpoint(this.endPointAct);
+            this.tempWhere=[];
+        }
+        else
+            this.setEndpoint(this.endPointHis);
+
         this.tempWhere.push(
             {
                 "or": [
@@ -372,18 +384,7 @@ export class Reports extends RestController implements OnInit {
                 ]
             }
         );
-
-
-
-        if(this.disabledRange ==1)
-        {
-            this.setEndpoint(this.endPointAct);
-            this.tempWhere=[];
-        }
-        else
-            this.setEndpoint(this.endPointHis);
         
-
         this.checkEndPoint(false);
 
        let tempGroup = "";
