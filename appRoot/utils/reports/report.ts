@@ -359,6 +359,19 @@ export class Reports extends RestController implements OnInit {
                 this.tempWhere.push({'op':'le','field':'fecha','type':'long','value':end[2]+end[1]+end[0]});
             }   
         }
+        this.tempWhere.push(
+            {
+                "or": [
+                    {"op": "eq", "field": "tipoOperacion.id", "value": 0},
+                    {
+                        "and": [
+                            {"op": "ne", "field": "tipoOperacion.id", "value": 0},
+                            {"op": "ne", "field": "cantidad", "value": 0}
+                        ]
+                    }
+                ]
+            }
+        );
 
 
 
