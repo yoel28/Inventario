@@ -18,7 +18,15 @@
                                     <div class="material-switch">
                                         <input (click)="changeGroupLocation()" value="agrupar" id="agrupar" type="checkbox" [checked]="groupLocation"/>
                                         <label for="agrupar" class="label-success"></label>
-                                        &nbsp;<strong>{{groupLocation?'Ocultar ubicación':'Ver ubicación'}}</strong>&nbsp;
+                                        &nbsp;<strong>{{groupLocation?'Ubicaciones':'Sin ubicación'}}</strong>&nbsp;
+                                    </div>
+                                </label>
+
+                                <label>
+                                    <div class="material-switch">
+                                        <input (click)="changeFullKardex()" value="Full kardex" id="full" type="checkbox" [checked]="fullKardex"/>
+                                        <label for="full" class="label-success"></label>
+                                        &nbsp;<strong>{{fullKardex?'Full kardex':'kardex'}}</strong>&nbsp;
                                     </div>
                                 </label>
 

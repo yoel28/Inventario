@@ -48,6 +48,7 @@ export class Kardex extends BasicConfiguration implements OnInit {
     public paramsSearch:any={};
 
     public groupLocation=true; // agrupar por ubicacion
+    public fullKardex=true; // agrupar por ubicacion
 
 
 
@@ -300,7 +301,19 @@ export class Kardex extends BasicConfiguration implements OnInit {
                 tempWhere.push({'op':'le','field':'fecha','type':'long','value':end[2]+end[1]+end[0]});
             }
         }
-
+        tempWhere.push(
+            {
+                "or": [
+                    {"op": "eq", "field": "tipoOperacion.id", "value": 0},
+                    {
+                        "and": [
+                            {"op": "ne", "field": "tipoOperacion.id", "value": 0},
+                            {"op": "ne", "field": "cantidad", "value": 0}
+                        ]
+                    }
+                ]
+            }
+        );
 
         tempGroup='["field":"fecha"],["field":"dia"],["field":"mes"],["field":"year"]';
         if(this.groupLocation)
@@ -335,10 +348,19 @@ export class Kardex extends BasicConfiguration implements OnInit {
                     that.dataList.data[index].year=obj.year;
                     if(this.groupLocation && obj.ubicacion)
                         that.dataList.data[index].ubicacion=obj.ubicacion;
-
                 }
                 that.dataList.data[index][obj.tipoOperacionTitle] = obj.cantidad;
-            })
+            });
+
+            if(!this.fullKardex){
+                Object.keys(that.dataList.data).forEach(key=>{
+                    if((!that.dataList.data[key]['Entrada'] && !that.dataList.data[key]['Salida']) )
+                        delete that.dataList.data[key];
+                });
+
+            }
+            this.dataList.data = Object.assign({},this.dataList.data);
+
 
     }
     existenciaMinMax(){
@@ -363,6 +385,10 @@ export class Kardex extends BasicConfiguration implements OnInit {
         this.assignDate();
         if(this.dataProduct.value && this.dataProduct.value.id && this.dateStart.value)
             this.loadData();
+    }
+    public changeFullKardex(){
+        this.fullKardex =  !this.fullKardex;
+        this.orderData();
     }
 
 }
