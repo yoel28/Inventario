@@ -1,5 +1,6 @@
 <div class="wrapper" *ngIf="myglobal.init">
     <div *ngIf="validToken()">
+        {{loadMenuMain()}}
         <header class="main-header">
 
                     <a href="#" [routerLink]="['Dashboard']" class="logo">
@@ -124,7 +125,6 @@
     </div>
     <router-outlet></router-outlet>
     <save [rules]="info.rulesSave" [params]="info.paramsSave" (getInstance)="setInstance($event,info.prefix)" ></save>
-    {{loadMenuMain()}}
 </div>
 <div class="main-footer-container noprint" *ngIf="validToken() && myglobal.init">
     <footer class="main-footer">

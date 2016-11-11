@@ -58,7 +58,7 @@ export class LessTables extends RestController implements OnInit {
 
     ngOnInit() {
 
-
+        this.where="&where="+encodeURI('[["or":[["op":"eq","field":"tipoOperacion.id","value":0],["and":[["op":"ne","field":"tipoOperacion.id","value":0],["op":"ne","field":"cantidad","value":0]]]]]]');
         this.setEndpoint(this.paramSearch.endpoint);
         this.loadData();
 
@@ -81,7 +81,7 @@ export class LessTables extends RestController implements OnInit {
             let successCallback = response => {
                 Object.assign(data.detailsSearh, response.json());
             }
-            this.httputils.doGet(this.externalEndPoint+"?where="+encodeURI('[["op":"eq","field":"cliente.id","value":'+data.idCliente+'],["op":"eq","field":"tipoOperacion.id","value":'+data.idTipoOperacion+']]'), successCallback, this.error)
+            this.httputils.doGet(this.externalEndPoint+"?where="+encodeURI('[["op":"eq","field":"cliente.id","value":'+data.idCliente+'],["op":"ne","field":"cantidad","value":0],["op":"eq","field":"tipoOperacion.id","value":'+data.idTipoOperacion+']]'), successCallback, this.error)
         }
 
 

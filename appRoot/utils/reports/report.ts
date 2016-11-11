@@ -362,6 +362,7 @@ export class Reports extends RestController implements OnInit {
 
 
 
+
         if(this.disabledRange ==1)
         {
             this.setEndpoint(this.endPointAct);
@@ -369,8 +370,21 @@ export class Reports extends RestController implements OnInit {
         }
         else
             this.setEndpoint(this.endPointHis);
-        
 
+        this.tempWhere.push(
+            {
+                "or": [
+                    {"op": "eq", "field": "tipoOperacion.id", "value": 0},
+                    {
+                        "and": [
+                            {"op": "ne", "field": "tipoOperacion.id", "value": 0},
+                            {"op": "ne", "field": "cantidad", "value": 0}
+                        ]
+                    }
+                ]
+            }
+        );
+        
         this.checkEndPoint(false);
 
        let tempGroup = "";

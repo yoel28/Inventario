@@ -1,11 +1,14 @@
 import {Component, OnInit} from "@angular/core";
-import {Control,ControlGroup,FormBuilder,Validators,NgSwitch} from "@angular/common";
+import {Control,FormBuilder,Validators,NgSwitch} from "@angular/common";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {RestController} from "../common/restController";
 import {globalService} from "../common/globalService";
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {SMDropdown} from "../common/xeditable";
+import {Client} from "../client/client";
+import {Search} from "../utils/search/search";
+import {TypeCompany} from "../typeCompany/typeCompany";
 
 
 declare var moment:any;
@@ -16,8 +19,8 @@ declare var SystemJS:any;
     templateUrl: SystemJS.map.app+'/operation/index.html',
     styleUrls: [SystemJS.map.app+'/operation/style.css'],
     pipes: [TranslatePipe],
-    providers: [TranslateService],
-    directives:[SMDropdown,NgSwitch]
+    providers: [TranslateService,Client,TypeCompany],
+    directives:[SMDropdown,NgSwitch,Search]
 })
 export class Operation extends RestController implements OnInit {
 
@@ -68,7 +71,7 @@ export class Operation extends RestController implements OnInit {
 
     //para imprimir cliente
     public elementPrint =[];
-    public lote ="";
+    public lote:any;
     public RUC ="";
     public CONTACTO="";
     public DIRECCION="";
@@ -82,12 +85,13 @@ export class Operation extends RestController implements OnInit {
     //Reference
     public codeReference="";
 
-    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService, public formBuilder:FormBuilder) {
+    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService, public formBuilder:FormBuilder, public client:Client,public typeCompany:TypeCompany) {
 
         super(http, toastr);
         this.setEndpoint('/search/tipo/acciones')
 
         this.currentDay = moment().format('DD-MM-YYYY');
+        this.client.externalRules();
 
     }
 
@@ -155,19 +159,6 @@ export class Operation extends RestController implements OnInit {
                     {
                         this.toastr.error("por favor selccione una accion y un cliente valido");
                         flag =false;
-                    }
-                else {
-                        
-                        let that = this;
-                        this.listClient.list.find(o=>{
-
-                            if(o.id==that.user.value)
-                            {
-                                that.user.updateValue(o);
-                                return;
-                            }
-
-                        });
                     }
 
                 break;
@@ -294,24 +285,8 @@ export class Operation extends RestController implements OnInit {
 
     }
 
-    changeClients(value) {
-        this.user.updateValue(null);
-        if(value !='-1')
-        {
-            this.user.updateValue(value);
-        }
-
-    }
-    
-    //primer formulario    
-    initSearchClients() {
-
-        let that = this;
-        let successCallback= response => {
-            Object.assign(that.listClient, response.json());
-        }
-        
-        this.httputils.doGet("/clientes/",successCallback,this.error);
+       changeClients(value) {
+        this.user.updateValue(value);
     }
     
     initSearchTypeActions() {
@@ -342,7 +317,6 @@ export class Operation extends RestController implements OnInit {
     ngOnInit() {
         this.initForm();
         this.initSearchTypeActions();
-        this.initSearchClients();
 
 
         this.RUC =this.myglobal.getParams('EMP_RUC')
@@ -556,7 +530,7 @@ export class Operation extends RestController implements OnInit {
 
 
 
-                    that.lote = objLote.lote;
+                    that.lote = objLote;
 
 
                     that.positionForm=3;
