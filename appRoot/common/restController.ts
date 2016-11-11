@@ -72,29 +72,38 @@ export class RestController implements OnInit {
         max = (max?max:that.max);
         where = (where?where:that.where);
         ext = (ext?ext:that.ext);
-        this.httputils.onLoadList(endpoint+"?max="+max+"&offset="+offset+where+ext,list,max,this.error).then(
-            response=>{
-                if(list.count > 0){
-                    data=data.concat(list.list);
-                    if(list.count == list.list.length || list.count == data.length ){
-                        Object.assign(list.list,data);
-                        list.page=[];
-                        if(successCallback)
-                            successCallback();
+        list.page=[];
+        if(list.list.length==list.count && list.count > 0)
+        {
+            if(successCallback)
+                successCallback();
+        }
+        else
+        {
+            this.httputils.onLoadList(endpoint+"?max="+max+"&offset="+offset+where+ext,list,max,this.error).then(
+                response=>{
+                    if(list.count > 0){
+                        data=data.concat(list.list);
+                        if(list.count == list.list.length || list.count == data.length ){
+                            Object.assign(list.list,data);
+                            list.page=[];
+                            if(successCallback)
+                                successCallback();
+                        }
+                        else if(max > list.list.length){
+                            max=list.list.length;
+                            that.getLoadDataAll(data,endpoint,list,offset+max,max,where,ext,successCallback);
+                        }
+                        else {
+                            that.getLoadDataAll(data,endpoint,list,offset+max,max,where,ext,successCallback);
+                        }
                     }
-                    else if(max > list.list.length){
-                        max=list.list.length;
-                        that.getLoadDataAll(data,endpoint,list,offset+max,max,where,ext,successCallback);
-                    }
-                    else {
-                        that.getLoadDataAll(data,endpoint,list,offset+max,max,where,ext,successCallback);
-                    }
-                }
 
-            },error=>{
-                console.log("error");
-            }
-        );
+                },error=>{
+                    console.log("error");
+                }
+            );
+        }
     }
 
 
