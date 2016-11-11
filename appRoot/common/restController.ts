@@ -11,7 +11,7 @@ export class RestController implements OnInit {
     httputils:HttpUtils;
     endpoint:string;
     offset=0;
-    max=5;
+    max=20;
     sort="";
     order="";
     loadAllData=false;
@@ -19,7 +19,7 @@ export class RestController implements OnInit {
     where:string="";
     ext:string="";
     newSearch=false;
-    lastMax=5;
+    lastMax=20;
     
 
     constructor(public http: Http,public toastr?: ToastsManager) {
