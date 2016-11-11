@@ -371,12 +371,10 @@ export class Dashboard extends BasicConfiguration implements OnInit {
     }
 
     getDataProduct() {
-        
-       
-        this.loadData_1("/inventario/diario/producto/maximo",this.productListMore)
-        this.loadData_1("/inventario/diario/producto/minimo",this.productListLess)
-        this.loadData_1("/inventario/diario/producto/ubicacion",this.productLocationList,this.extLocationProducto)
-        this.loadData_1("/inventario/diario/producto/dia/dashboard",this.productEnterExitList,this.extExitEnterProducto)
+        this.loadData_1("/inventario/diario/producto/maximo",this.productListMore);
+        this.loadData_1("/inventario/diario/producto/minimo",this.productListLess);
+        this.loadData_1("/inventario/diario/producto/ubicacion",this.productLocationList,this.extLocationProducto);
+        this.loadData_1("/inventario/diario/producto/dia/dashboard",this.productEnterExitList,this.extExitEnterProducto);
     }
     
     ngOnInit() {

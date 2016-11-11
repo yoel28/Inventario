@@ -51,17 +51,18 @@
 
 
                                                 <div class=" form-group col-lg-5 pull-right">
-                                                    <div *ngIf="dataList.list && listClient.list" class="form-group">
+                                                    <div class="form-group">
 
                                                         <div *ngIf="!tipoAccion.valid" ><label>Por favor Ingrese un tipo de accion valida</label></div>
                                                         <div *ngIf="tipoAccion.valid" >
 
-                                                            <label class="text-blod">Seleccione el proveedor o cliente :</label>
-                                                            <select [(ngModel)]="tipoAccion_2" (ngModelChange)="changeClients($event)" sm-dropdown class="ui fluid search selection dropdown">
+                                                            <a data-toggle="modal" [attr.data-target]="'#'+client.paramsSearch.idModal" href="#">
+                                                                proveedor o cliente:&nbsp;{{user.value?user.value.title:''}}
+                                                                <i class="fa fa-search text-blue fa-lg" title="Buscar"></i>
+                                                            </a>
 
-                                                                <option value="-1">Seleccione un valor</option>
-                                                                <option *ngFor="let data of listClient.list" [attr.value]="data.id">{{data.title}}</option>
-                                                            </select>
+                                                            <search [params]="client.paramsSearch" (result)="changeClients($event)"></search>
+
 
                                                         </div>
 
@@ -175,10 +176,6 @@
                                     <div *ngSwitchWhen="3"  >
                                         <form action="#" class="form-horizontal ng-pristine ng-valid">
                                             <div class="form-group">
-
-
-
-
                                                 <div style="display: none;">
                                                    <div id="finalPrint" class=" row box " >
                                                         <div [attr.class]="onPrintCss(12)">
@@ -192,11 +189,11 @@
                                                             </div>
                                                             <div class="row" style="margin-bottom: 30px;">
                                                                 <div [attr.class]="onPrintCss(6)">
-                                                                    <label>Fecha :  {{currentDay}}</label>
+                                                                    <label>INGRESADO EL :  {{currentDay}}</label>
                                                                 </div>
                                                                 <div [attr.class]="onPrintCss(6)">
-                                                                    <label [attr.class]="onPrintCss(12)">Factura No. {{lote}}</label>
-                                                                    <label [attr.class]="onPrintCss(12)">Orden de Compra</label>
+                                                                    <label [attr.class]="onPrintCss(12)">FACTURA N°. {{lote.lote}}</label>
+                                                                    <label [attr.class]="onPrintCss(12)">ORDEN DE {{accionList}}:&nbsp;{{lote.loteId}}</label>
                                                                 </div>
 
                                                             </div>
@@ -207,7 +204,7 @@
                                                                 <table [attr.class]="onPrintCss(12)">
                                                                     <thead>
                                                                     <tr>
-                                                                        <td [attr.class]="onPrintCss(5)" style="border: 1px solid;">{{tipoAccion.value==1?'Cliente':'Proveedor'}}</td><td [attr.class]="onPrintCss(2)"></td><td [attr.class]="onPrintCss(5)" style="border: 1px solid;">Empresa</td>
+                                                                        <td [attr.class]="onPrintCss(5)" style="border: 1px solid;">{{tipoAccion.value==2?'CLIENTE':'PROVEEDOR'}}</td><td [attr.class]="onPrintCss(2)"></td><td [attr.class]="onPrintCss(5)" style="border: 1px solid;">Empresa</td>
                                                                     </tr>
                                                                     </thead>
                                                                     <tbody class="borderclass">
@@ -233,16 +230,6 @@
                                                             </div>
 
                                                             <div class="row" style="margin-bottom: 30px">
-                                                                <div class=" col-lg-5 col-md-5 col-xs-5 col-sm-5 pull-right" >
-                                                                    <table>
-                                                                        <tr>
-                                                                            <td ><div style="margin: 5px">Despachador: </div></td><td > <div style="margin: 5px">{{myglobal.user.name}}</div></td>
-                                                                        </tr>
-                                                                    </table>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="row" style="margin-bottom: 30px">
                                                                 <table [attr.class]="onPrintCss(12)"  border="1" style=" border: 1px solid;">
                                                                     <thead >
                                                                     <tr style=" border: 1px solid;">
@@ -251,10 +238,23 @@
                                                                     </thead>
                                                                     <tbody>
                                                                     <tr *ngFor="let result of printReport()" style=" border: 1px solid;">
-                                                                        <td  [attr.class]="onPrintCss(1)" style=" border: 1px solid;">{{result.count}}</td><td [attr.class]="onPrintCss(11)" style=" border: 1px solid;">{{result.title}}</td>
+                                                                        <td  [attr.class]="onPrintCss(1)" style="border: 1px solid; text-align: right;">{{result.count}}</td><td [attr.class]="onPrintCss(11)" style=" border: 1px solid;">{{result.title}}</td>
                                                                     </tr>
                                                                     </tbody>
                                                                 </table>
+                                                            </div>
+
+                                                            <div class="row" style="margin-bottom: 30px">
+                                                                <div class=" col-lg-5 col-md-5 col-xs-5 col-sm-5 pull-right" >
+                                                                    <table>
+                                                                        <tr>
+                                                                            <td ><div style="margin: 5px">Cargado por: </div></td><td > <div style="margin: 5px">{{myglobal.user.name | uppercase}}</div></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td ><div style="margin: 5px">Impreso por: </div></td><td > <div style="margin: 5px">{{myglobal.user.name | uppercase}}</div></td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </div>
                                                             </div>
 
                                                             <div class="row" style="margin-bottom: 30px">
@@ -297,7 +297,7 @@
 
 
                                                                     <div class="box-header">
-                                                                        <label ><strong class="text-bold">Ubicaci&oacute;n: </strong>{{casillero.title}}</label>
+                                                                        <label ><strong class="text-bold">Ubicaci&oacute;n: </strong>{{casillero.title}}</label><br/>
                                                                         <label ><strong class="text-bold">Cantidad: </strong>{{casillero.count}}</label>
                                                                         <br>
                                                                     </div>
