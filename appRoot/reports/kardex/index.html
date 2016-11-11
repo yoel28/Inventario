@@ -10,7 +10,7 @@
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <button data-toggle="modal" [attr.data-target]="'#'+product.paramsSearch.idModal" class="btn btn-box-tool">
-                                    {{dataProduct.value?dataProduct.value.title:'Seleccione un producto:'}}&nbsp;<i class="fa fa-lg fa-search text-blue"></i>
+                                    {{dataProduct.value?dataProduct.value.detail:'Seleccione un producto:'}}&nbsp;<i class="fa fa-lg fa-search text-blue"></i>
                                 </button>
 
 
@@ -80,18 +80,24 @@
                 <table class="export table  table-striped table-hover text-left borde-tabla-kardex" *ngIf="dataList && dataList.count>0">
                     <thead>
                         <tr class="bg-yoel-1 title-kardex">
-                            <th colspan="7" class="text-center">KARDEX - EXISTENCIA ACTUAL ({{dataList.totalProd}})</th>
+                            <th colspan="7" class="text-center">KARDEX</th>
+                        </tr>
+                        <tr class="bg-yoel-2 text-bold">
+                            <th colspan="2">CODIGO</th>
+                            <th colspan="3">{{dataProduct.value.title}}</th>
+                            <th>Existencia actual</th>
+                            <th>{{dataList.totalProd}}</th>
                         </tr>
                         <tr class="bg-yoel-2">
-                            <th colspan="4">ARTICULO</th>
-                            <th>{{dataProduct.value.title}}</th>
-                            <th>Existencia M&iacute;nima</th>
+                            <th colspan="2">DESCRIPCIÓN</th>
+                            <th colspan="3">{{dataProduct.value.detail}}</th>
+                            <th>Existencia m&iacute;nima</th>
                             <th>{{existenciaMinMax().min}}</th>
                         </tr>
                         <tr class="bg-yoel-2">
-                            <th colspan="4">METODO</th>
-                            <th>Promedio ponderado</th>
-                            <th>Existencia M&aacute;xima</th>
+                            <th colspan="2">METODO</th>
+                            <th colspan="3">Promedio ponderado</th>
+                            <th>Existencia m&aacute;xima</th>
                             <th>{{existenciaMinMax().max}}</th>
                         </tr>
                         <tr class="bg-yoel-1">
