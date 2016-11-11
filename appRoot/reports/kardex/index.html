@@ -24,9 +24,9 @@
 
                                 <label>
                                     <div class="material-switch">
-                                        <input (click)="changeFullKardex()" value="Full kardex" id="full" type="checkbox" [checked]="fullKardex"/>
+                                        <input (click)="changeResumeKardex()" value="Full kardex" id="full" type="checkbox" [checked]="resumeKardex"/>
                                         <label for="full" class="label-success"></label>
-                                        &nbsp;<strong>{{fullKardex?'Full kardex':'kardex'}}</strong>&nbsp;
+                                        &nbsp;<strong>{{resumeKardex?'Resumen':'Completo'}}</strong>&nbsp;
                                     </div>
                                 </label>
 
@@ -80,7 +80,7 @@
                 <table class="export table  table-striped table-hover text-left borde-tabla-kardex" *ngIf="dataList && dataList.count>0">
                     <thead>
                         <tr class="bg-yoel-1 title-kardex">
-                            <th colspan="7" class="text-center">KARDEX</th>
+                            <th colspan="7" class="text-center">KARDEX - EXISTENCIA ACTUAL ({{dataList.totalProd}})</th>
                         </tr>
                         <tr class="bg-yoel-2">
                             <th colspan="4">ARTICULO</th>

@@ -48,8 +48,7 @@ export class Kardex extends BasicConfiguration implements OnInit {
     public paramsSearch:any={};
 
     public groupLocation=true; // agrupar por ubicacion
-    public fullKardex=true; // agrupar por ubicacion
-
+    public resumeKardex=true;
 
 
     constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public _formBuilder: FormBuilder,public product:Product)
@@ -334,34 +333,40 @@ export class Kardex extends BasicConfiguration implements OnInit {
     }
     public orderData(){
         let that=this;
+        if(that.dataList.list) {
+            that.dataList.data = {};
+            that.dataList.totalProd=0;
+            that.dataList.list.forEach(obj=> {
+                let index = obj.dia + '/' + obj.mes + '/' + obj.year;
+                if (this.groupLocation && obj.ubicacion)
+                    index += '/' + obj.ubicacion.id;
 
-            that.dataList.data={};
-            that.dataList.list.forEach(obj=>{
-                let index = obj.dia+'/'+obj.mes+'/'+obj.year;
-                if(this.groupLocation && obj.ubicacion)
-                    index+='/'+obj.ubicacion.id;
-
-                if(!that.dataList.data[index]){
-                    that.dataList.data[index]=[];
-                    that.dataList.data[index].dia=obj.dia;
-                    that.dataList.data[index].mes=obj.mes;
-                    that.dataList.data[index].year=obj.year;
-                    if(this.groupLocation && obj.ubicacion)
-                        that.dataList.data[index].ubicacion=obj.ubicacion;
+                if (!that.dataList.data[index]) {
+                    that.dataList.data[index] = [];
+                    that.dataList.data[index].fecha = obj.fecha;
+                    that.dataList.data[index].dia = obj.dia;
+                    that.dataList.data[index].mes = obj.mes;
+                    that.dataList.data[index].year = obj.year;
+                    if (this.groupLocation && obj.ubicacion)
+                        that.dataList.data[index].ubicacion = obj.ubicacion;
                 }
                 that.dataList.data[index][obj.tipoOperacionTitle] = obj.cantidad;
+
+                if(that.dataList.list[that.dataList.list.length -1 ].fecha == obj.fecha && obj.tipoOperacionTitle == "Total Inventario"){
+                    that.dataList.totalProd+=obj.cantidad;
+                }
+                    
             });
 
-            if(!this.fullKardex){
-                Object.keys(that.dataList.data).forEach(key=>{
-                    if((!that.dataList.data[key]['Entrada'] && !that.dataList.data[key]['Salida']) )
+            if (this.resumeKardex) {
+                Object.keys(that.dataList.data).forEach(key=> {
+                    if ((!that.dataList.data[key]['Entrada'] && !that.dataList.data[key]['Salida']) && that.dataList.list[that.dataList.list.length -1 ].fecha != that.dataList.data[key].fecha)
                         delete that.dataList.data[key];
                 });
 
             }
-            this.dataList.data = Object.assign({},this.dataList.data);
-
-
+            this.dataList.data = Object.assign({}, this.dataList.data);
+        }
     }
     existenciaMinMax(){
         let min=0;
@@ -386,8 +391,8 @@ export class Kardex extends BasicConfiguration implements OnInit {
         if(this.dataProduct.value && this.dataProduct.value.id && this.dateStart.value)
             this.loadData();
     }
-    public changeFullKardex(){
-        this.fullKardex =  !this.fullKardex;
+    public changeResumeKardex(){
+        this.resumeKardex =  !this.resumeKardex;
         this.orderData();
     }
 
