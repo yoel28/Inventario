@@ -344,8 +344,8 @@ export class Kardex extends BasicConfiguration implements OnInit {
                 if (!that.dataList.data[index]) {
                     that.dataList.data[index] = [];
                     that.dataList.data[index].fecha = obj.fecha;
-                    that.dataList.data[index].dia = obj.dia;
-                    that.dataList.data[index].mes = obj.mes;
+                    that.dataList.data[index].dia = obj.dia > 9?(obj.dia):('0'+obj.dia);
+                    that.dataList.data[index].mes = obj.mes > 9?(obj.mes):('0'+obj.mes);
                     that.dataList.data[index].year = obj.year;
                     if (this.groupLocation && obj.ubicacion)
                         that.dataList.data[index].ubicacion = obj.ubicacion;
