@@ -9,6 +9,7 @@ import {Card} from "../utils/card/card";
 import {LessList} from "../utils/lessList/lessList";
 import {BasicConfiguration} from "../common/basic-configuration";
 import {Roles} from "../roles/roles";
+import { Router} from '@angular/router-deprecated';
 
 declare var SystemJS:any;
 
@@ -26,8 +27,8 @@ export class User extends BasicConfiguration implements OnInit{
 
     public externalList:any={};
 
-    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService, public  roles:Roles) {
-        super("US","/users/",http, toastr,myglobal,translate);
+    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public router:Router, public  roles:Roles) {
+        super("US","/users/",http, toastr,myglobal,translate,router);
 
         this.roles.externalRules();
 

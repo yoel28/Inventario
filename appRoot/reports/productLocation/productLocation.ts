@@ -5,6 +5,8 @@ import {globalService} from "../../common/globalService";
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {BasicConfiguration} from "../../common/basic-configuration";
 import {Reports} from "../../utils/reports/report";
+import { Router} from '@angular/router-deprecated';
+
 declare var SystemJS:any;
 @Component({
     selector: 'product-location',
@@ -28,9 +30,9 @@ export class ProductLocation extends BasicConfiguration implements OnInit {
     public totalTitle='Total';
 
 
-    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService) {
+    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public router:Router) {
 
-        super("PRO_LOCATION","/inventario/diario/producto/ubicacion",http, toastr,myglobal,translate);
+        super("PRO_LOCATION","/inventario/diario/producto/ubicacion",http, toastr,myglobal,translate,router);
     }
 
     public paramsFilter:any = {

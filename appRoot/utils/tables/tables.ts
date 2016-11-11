@@ -1,4 +1,5 @@
 import {Component, EventEmitter, OnInit,ViewChild} from "@angular/core";
+import { Router} from '@angular/router-deprecated';
 import {FormBuilder, Validators, Control, ControlGroup} from "@angular/common";
 import {RestController} from "../../common/restController";
 import {Http} from "@angular/http";
@@ -56,7 +57,7 @@ export class Tables extends RestController implements OnInit {
 
 
 
-    constructor(public _formBuilder: FormBuilder,public http:Http,public toastr: ToastsManager, public myglobal:globalService) {
+    constructor(public _formBuilder: FormBuilder,public router:Router,public http:Http,public toastr: ToastsManager, public myglobal:globalService) {
         super(http,toastr);
         this.getInstance = new EventEmitter();
     }

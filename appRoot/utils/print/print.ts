@@ -4,6 +4,7 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {BasicConfiguration} from "../../common/basic-configuration";
+import { Router} from '@angular/router-deprecated';
 
 declare var moment:any;
 declare var SystemJS:any;
@@ -28,8 +29,8 @@ export class Print extends BasicConfiguration implements OnInit {
     
 
 
-    constructor(public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
-        super("PRINT","",http, toastr,myglobal,translate);
+    constructor(public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService,public router:Router) {
+        super("PRINT","",http, toastr,myglobal,translate,router);
 
 
     }

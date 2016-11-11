@@ -4,6 +4,9 @@
         <div class="box">
 
             <div class="box-header">
+                <button (click)="goOperation($event)" class="btn btn-green" type="button" title="Agregar operacion">
+                    <i class="fa fa-plus fa-lg"></i>
+                </button>
                 <h3 *ngIf="viewOptions && viewOptions.title" class="box-title">{{viewOptions.title  }}</h3>
             </div>
             <div class="box-body">

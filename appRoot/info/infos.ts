@@ -6,6 +6,8 @@ import {Tables} from "../utils/tables/tables";
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {Save} from "../utils/save/save";
 import {BasicConfiguration} from "../common/basic-configuration";
+import { Router} from '@angular/router-deprecated';
+
 declare var SystemJS:any;
 @Component({
     selector: 'infos',
@@ -22,8 +24,8 @@ export class Info extends BasicConfiguration implements OnInit {
     public paramsTable:any = {};
 
 
-    constructor(public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
-        super("INFO", "/infos/", http, toastr, myglobal, translate);
+    constructor(public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService,public router:Router) {
+        super("INFO", "/infos/", http, toastr, myglobal, translate,router);
     }
 
     initRules() {

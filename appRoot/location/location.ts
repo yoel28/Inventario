@@ -7,6 +7,8 @@ import {Tables} from "../utils/tables/tables";
 import {Save} from "../utils/save/save";
 import {TranslatePipe, TranslateService} from "ng2-translate/ng2-translate";
 import {BasicConfiguration} from "../common/basic-configuration";
+import { Router} from '@angular/router-deprecated';
+
 declare var SystemJS:any;
 @Component({
     selector: 'location_product',
@@ -22,8 +24,8 @@ export class Location_product extends BasicConfiguration implements OnInit {
     public paramsTable:any={};
 
     
-    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService) {
-        super("LO","/ubicaciones/",http, toastr,myglobal,translate);
+    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public router:Router) {
+        super("LO","/ubicaciones/",http, toastr,myglobal,translate,router);
     
     }
 

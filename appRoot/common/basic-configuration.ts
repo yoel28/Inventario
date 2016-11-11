@@ -3,6 +3,7 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../common/globalService";
 import {TranslateService} from "ng2-translate/ng2-translate";
 import {RestController} from "./restController";
+import { Router} from '@angular/router-deprecated';
 
 declare var Table2Excel:any;
 export abstract class  BasicConfiguration extends RestController{
@@ -19,7 +20,7 @@ export abstract class  BasicConfiguration extends RestController{
     public ruleObject:any={};
     
     
-    constructor(prefix,endpoint,public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
+    constructor(prefix,endpoint,public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService,public router:Router) {
         super(http, toastr);
         
         this.setEndpoint(endpoint);
@@ -192,9 +193,10 @@ export abstract class  BasicConfiguration extends RestController{
     getObjectKeys(data){
         return Object.keys(data);
     }
-
-
-
-    
-   
+    goOperation(event){
+        if(event)
+            event.preventDefault();
+        let link = ['Operation', {}];
+        this.router.navigate(link);
+    }
 }

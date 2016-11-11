@@ -8,6 +8,7 @@ import {BasicConfiguration} from "../../common/basic-configuration";
 import {Datepicker} from "../../common/xeditable";
 import {Control,ControlGroup,FormBuilder,Validators} from "@angular/common";
 import {Reports} from "../../utils/reports/report";
+import { Router} from '@angular/router-deprecated';
 
 declare var moment:any;
 declare var SystemJS:any;
@@ -33,8 +34,8 @@ export class MovesByDate extends BasicConfiguration implements OnInit {
     public totalTitle='Total';
 
 
-    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public _formBuilder: FormBuilder) {
-        super("OP_AC_DE","/inventario/historico/operacion/fecha",http, toastr,myglobal,translate);
+    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public router:Router,public _formBuilder: FormBuilder) {
+        super("OP_AC_DE","/inventario/historico/operacion/fecha",http, toastr,myglobal,translate,router);
 
     }
 

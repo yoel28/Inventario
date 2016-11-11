@@ -12,6 +12,8 @@ import {Search} from "../../utils/search/search";
 import {TypeProduct} from "../../typeProduct/typeProduct";
 import {BrandProduct} from "../../brandProduct/brand";
 import {ModelProduct} from "../../modelProduct/modelProduct";
+import { Router} from '@angular/router-deprecated';
+
 
 declare var moment:any;
 declare var SystemJS:any;
@@ -51,9 +53,9 @@ export class Kardex extends BasicConfiguration implements OnInit {
     public resumeKardex=true;
 
 
-    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public _formBuilder: FormBuilder,public product:Product)
+    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public router:Router,public _formBuilder: FormBuilder,public product:Product)
     {
-        super("OP_KARDEX","/inventario/historico/kardex",http, toastr,myglobal,translate);
+        super("OP_KARDEX","/inventario/historico/kardex",http, toastr,myglobal,translate,router);
         product.initSearch();
     }
 

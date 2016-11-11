@@ -8,6 +8,8 @@ import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {Save} from "../utils/save/save";
 import {BasicConfiguration} from "../common/basic-configuration";
 import {TypeCompany} from "../typeCompany/typeCompany";
+import { Router} from '@angular/router-deprecated';
+
 declare var SystemJS:any;
 @Component({
     selector: 'client',
@@ -27,8 +29,8 @@ export class Client extends BasicConfiguration implements OnInit {
 
 
 
-    constructor(public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService, public typeCompany:TypeCompany) {
-        super("CI","/clientes/",http, toastr,myglobal,translate);
+    constructor(public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService, public typeCompany:TypeCompany,public router:Router) {
+        super("CI","/clientes/",http, toastr,myglobal,translate,router);
 
 
         this.typeCompany.externalRules();

@@ -11,6 +11,9 @@
                         <i class="{{buttom.icon}}"></i>
                         {{buttom.title | translate}}
                     </button>
+                    <button (click)="goOperation($event)" class="btn btn-green" type="button" title="Agregar operacion">
+                        <i class="fa fa-plus fa-lg"></i>
+                    </button>
                 </div>
             </div>
             <div *ngIf="permissions.list"  class="box-body">

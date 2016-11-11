@@ -176,6 +176,9 @@
                     <button *ngIf="MaxPager()>5" (click)="loadData(MaxPager())" type="button" class="btn btn-default">
                         &#62;&#62;
                     </button>
+                    <button type="button" class="btn btn-default" (click)="getLoadDataAll([],null,null,0,1000,null,null,null)">
+                        <i class="fa fa-list fa-lg"></i>
+                    </button>
                 </div>
             </td>
         </tr>
