@@ -91,9 +91,11 @@ body.no-menu .content-wrapper, body.no-menu .main-footer {
 .btn.flotando-redondo {
   position: fixed;
   z-index: 2000;
-  bottom: 15px;
-  right: 15px;
-  -webkit-border-radius: 20px !important;
-  -moz-border-radius: 20px !important;
-  border-radius: 20px !important;
+  bottom: 6%;
+  right: 1.5%;
+  -webkit-border-radius: 30px !important;
+  -moz-border-radius: 30px !important;
+  border-radius: 30px !important;
+  padding-top: 9px;
+  padding-bottom: 9px;
 }
