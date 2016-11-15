@@ -122,6 +122,9 @@
             </section>
             <!-- /.sidebar -->
         </aside>
+        <button (click)="goOperation($event)" class="flotando-redondo btn btn-green" type="button" title="Agregar operacion">
+            <i class="fa fa-plus fa-lg"></i>
+        </button>
     </div>
     <router-outlet></router-outlet>
     <save [rules]="info.rulesSave" [params]="info.paramsSave" (getInstance)="setInstance($event,info.prefix)" ></save>

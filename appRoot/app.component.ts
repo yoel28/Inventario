@@ -458,5 +458,11 @@ export class AppComponent extends RestController implements OnInit{
             this.myglobal.objectInstance[prefix]={};
         this.myglobal.objectInstance[prefix]=instance;
     }
+    goOperation(event){
+        if(event)
+            event.preventDefault();
+        let link = ['Operation', {}];
+        this.router.navigate(link);
+    }
     
 }
