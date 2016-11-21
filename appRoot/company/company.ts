@@ -268,7 +268,6 @@ export class Company extends BasicConfiguration implements OnInit {
                 'keys':[
                     {'key':'accountName'},
                     {'key':'accountRUC','pre':'(','post':') '},
-                    {'key':'accountEmail','pre':'Email:'}
                 ],
             },
             "key": "account",
