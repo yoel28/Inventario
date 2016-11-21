@@ -5,13 +5,14 @@ import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../../common/globalService";
 import {Xeditable} from "../../common/xeditable";
+import {Search} from "../search/search";
 declare var SystemJS:any;
 @Component({
     selector: 'less-list',
     templateUrl: SystemJS.map.app+'/utils/lessList/index.html',
     styleUrls: [SystemJS.map.app+'/utils/lessList/style.css'],
     inputs: ['paramSearch', 'externalEndPoint', 'rulesDetails','externalList'],
-    directives:[Xeditable]
+    directives:[Xeditable,Search]
 })
 
 
@@ -23,7 +24,8 @@ export class LessList extends RestController implements OnInit {
     public paramSearch:any = {};
     public externalEndPoint = "";
     public rulesDetails:any = {};
-    public dataList:any ={}
+    public dataList:any ={};
+    public dataSelect:any={};
 
 
     public externalList:any={};
@@ -136,6 +138,25 @@ export class LessList extends RestController implements OnInit {
         else
             this.onEditableRole("roles",this.dataArraySelect.data.detailsSearh,arraytemp,this.externalEndPoint+this.dataArraySelect.data.id+"/roles")
 
+    }
+
+    getFieldObjectText(){
+        let that=this;
+        let data=[];
+        Object.keys(this.rulesDetails).forEach(key=>{
+            if(that.rulesDetails[key].object &&  that.rulesDetails[key].type=='text'){
+                data.push(that.rulesDetails[key]);
+            }
+        });
+        return data;
+    }
+    getDataSearch(data,object){
+        if(data.id){
+            let json = {};
+            json[object.key] = data.id;
+            let body = JSON.stringify(json);
+            this.httputils.onUpdate(this.externalEndPoint + data.id, body, this.dataSelect)
+        }
     }
     
 }
