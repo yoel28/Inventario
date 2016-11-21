@@ -24,7 +24,7 @@ export class Company extends BasicConfiguration implements OnInit {
     public paramsTable:any={};
 
     constructor(public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService,public router:Router) {
-        super("ACCOUNT","/account/",http, toastr,myglobal,translate,router);
+        super("ACCOUNT","/accounts/",http, toastr,myglobal,translate,router);
     }
 
     initRules() {
@@ -95,13 +95,28 @@ export class Company extends BasicConfiguration implements OnInit {
                 },
             }
         };
-        this.rules["email"] = {
+        this.rules["telefono"] = {
             "update": this.permissions["update"],
             "visible": true,
-            "email":true,
+            "required":true,
             "search":this.permissions.filter,
             'icon':'fa fa-list',
             "type": 'text',
+            "key": "telefono",
+            "title": "Telefono",
+            "placeholder": "ingrese el telefono",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio'
+                },
+            }
+        };
+        this.rules["email"] = {
+            "update": this.permissions["update"],
+            "visible": true,
+            "search":this.permissions.filter,
+            'icon':'fa fa-list',
+            "type": 'email',
             "key": "email",
             "title": "Correo electronico",
             "placeholder": "ingrese el correo electronico",
@@ -199,13 +214,15 @@ export class Company extends BasicConfiguration implements OnInit {
             endpoint: this.endpoint,
         }
         this.rulesSave = Object.assign({},this.rules);
-        delete this.rulesSave['enabled']
-        delete this.rulesSave['id']
+        delete this.rulesSave['enabled'];
+        delete this.rulesSave['id'];
+        delete this.rulesSave['logo'];
+        delete this.rulesSave['miniLogo'];
 
     }
 
     initOptions() {
-        this.viewOptions["title"] = 'Companñias';
+        this.viewOptions["title"] = 'Compañias';
 
         this.viewOptions["button"].push({
             'title':'Agregar',
@@ -216,9 +233,11 @@ export class Company extends BasicConfiguration implements OnInit {
     }
 
     initSearch() {
-        this.paramsSearch['title']="Companñias";
+        this.paramsSearch['title']="Compañias";
         this.paramsSearch['idModal']="searchCompany";
         this.paramsSearch['placeholder']="Ingrese la compañia";
+        this.paramsSearch.label.title = "Nombre: ";
+        this.paramsSearch.label.detail = "RUC: ";
     }
 
 
@@ -245,6 +264,13 @@ export class Company extends BasicConfiguration implements OnInit {
         this.ruleObject={
             'icon':'fa fa-list',
             "type": "text",
+            'display':{
+                'keys':[
+                    {'key':'accountName'},
+                    {'key':'accountRUC','pre':'(','post':') '},
+                    {'key':'accountEmail','pre':'Email:'}
+                ],
+            },
             "key": "account",
             "title": "Compañia",
             'object':true,
