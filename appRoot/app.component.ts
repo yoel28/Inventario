@@ -41,6 +41,7 @@ import {Kardex} from "./reports/kardex/kardex";
 import {Rules} from "./rules/rules";
 import {Info} from "./info/infos";
 import {ProductLocation} from "./reports/productLocation/productLocation";
+import {Company} from "./company/company";
 
 
 declare var SystemJS:any;
@@ -90,6 +91,7 @@ declare var jQuery:any;
   { path: '/kardex',   name: 'Kardex', component: Kardex },
   { path: '/infos',   name: 'Info', component: Info },
   { path: '/product/location',   name: 'ProductLocation', component: ProductLocation },
+  { path: '/compania',   name: 'Company', component: Company },
   { path: '/**', redirectTo: ['Dashboard'] }
 
 ])
@@ -103,7 +105,7 @@ export class AppComponent extends RestController implements OnInit{
   constructor(public router: Router,http: Http,public myglobal:globalService,public toastr: ToastsManager,public info:Info) {
     
       super(http)
-      let url="http://52.23.208.232:8080";
+      let url="http://pescadorj:8080";
       localStorage.setItem('urlAPI',url+'/api');
       localStorage.setItem('url',url);
 
