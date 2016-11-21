@@ -106,7 +106,7 @@ export abstract class  BasicConfiguration extends RestController{
         this.permissions['print']=this.myglobal.existsPermission(this.prefix+'_PRINT');
         this.permissions['visible']=true; //this.myglobal.existsPermission(this.prefix+'_VISIBLE');
         this.permissions['audit']=this.myglobal.existsPermission(this.prefix+'_AUD');
-        this.permissions['visible']=true;//this.myglobal.existsPermission(this.prefix+'_VISIBLE');
+        this.permissions['search']=this.myglobal.existsPermission(this.prefix+'_SEARCH');
     }
 
 
