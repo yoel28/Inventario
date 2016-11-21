@@ -211,11 +211,18 @@ export class AppComponent extends RestController implements OnInit{
             });
             this.menuItems.push({
                 'visible': this.myglobal.existsPermission("MEN_OPERACION") || this.myglobal.existsPermission("MEN_LOCATION") || this.myglobal.existsPermission("MEN_CLIENT")
-                ||this.myglobal.existsPermission("MEN_TYPECLIENT") || this.myglobal.existsPermission("MEN_USER"),
+                ||this.myglobal.existsPermission("MEN_TYPECLIENT") || this.myglobal.existsPermission("MEN_USER")|| this.myglobal.existsPermission("MEN_ACCOUNT"),
                 'icon': 'fa fa-list',
                 'title': 'Agregar',
                 'key': 'Agregar',
                 'treeview': [
+                    {
+                        'visible':this.myglobal.existsPermission("MEN_ACCOUNT"),
+                        'routerLink':'Company',
+                        'icon':'fa fa-list',
+                        'title':this.myglobal.getMenu("MEN_ACCOUNT").title
+
+                    },
                     {
                         'visible':this.myglobal.existsPermission("MEN_OPERACION"),
                         'routerLink':'Operation',
