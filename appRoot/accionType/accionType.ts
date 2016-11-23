@@ -1,7 +1,6 @@
-import {Component,Injectable, OnInit,ViewChild} from "@angular/core";
+import {Component,Injectable, OnInit} from "@angular/core";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
-import {RestController} from "../common/restController";
 import {globalService} from "../common/globalService";
 import {Tables} from "../utils/tables/tables";
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
@@ -12,8 +11,8 @@ import { Router} from '@angular/router-deprecated';
 declare var SystemJS:any;
 @Component({
     selector: 'accion-type',
-    templateUrl: SystemJS.map.app+'/accionType/index.html',
-    styleUrls: [SystemJS.map.app+'/accionType/style.css'],
+    templateUrl: SystemJS.map.app+'/utils/viewBase/index.html',
+    styleUrls: [SystemJS.map.app+'/utils/viewBase/style.css'],
     directives: [Tables,Save],
     pipes: [TranslatePipe],
     providers: [TranslateService]
