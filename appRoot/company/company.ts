@@ -114,6 +114,7 @@ export class Company extends BasicConfiguration implements OnInit {
         this.rules["email"] = {
             "update": this.permissions["update"],
             "visible": true,
+            "required": true,
             "search":this.permissions.filter,
             'icon':'fa fa-list',
             "type": 'email',
@@ -129,6 +130,7 @@ export class Company extends BasicConfiguration implements OnInit {
         this.rules["administrador"] = {
             "update": this.permissions["update"],
             "visible": true,
+            "required": true,
             "search":this.permissions.filter,
             'icon':'fa fa-list',
             "type": 'text',
@@ -144,6 +146,7 @@ export class Company extends BasicConfiguration implements OnInit {
         this.rules["usuarios"] = {
             "update": this.permissions["update"],
             "visible": true,
+            "required": true,
             "search":this.permissions.filter,
             'icon':'fa fa-list',
             "type": 'number',
@@ -283,21 +286,6 @@ export class Company extends BasicConfiguration implements OnInit {
                     'required':'El campo es obligatorio'
                 },
             }
-        }
-    }
-
-    @ViewChild(Tables)
-    tables:Tables;
-    asignData(data) {
-        if(this.dataList.page && this.dataList.page.length>1)
-        {
-            this.dataList.list.pop();
-        }
-        this.dataList.list.unshift(data);
-
-        if(this.tables )
-        {
-            Object.assign(this.tables.dataList,this.dataList);
         }
     }
 
