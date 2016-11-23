@@ -199,4 +199,11 @@ export abstract class  BasicConfiguration extends RestController{
         let link = ['Operation', {}];
         this.router.navigate(link);
     }
+    asignData(data) {
+        this.dataList.count++;
+        this.dataList.list.unshift(data);
+        if(this.dataList.page && this.dataList.page.length>1) {
+            this.dataList.list.pop();
+        }
+    }
 }
