@@ -9,6 +9,7 @@ import {globalService} from "../../common/globalService";
 import {User} from "../../user/user";
 import {TranslatePipe, TranslateService} from "ng2-translate/ng2-translate";
 import {Roles} from "../../roles/roles";
+import {Company} from "../../company/company";
 
 declare var SystemJS:any;
 @Component({
@@ -17,7 +18,7 @@ declare var SystemJS:any;
     styleUrls: [SystemJS.map.app+'/account/profile/style.css'],
     directives: [Xeditable,Xcropit,Search,Xfile],
     pipes: [TranslatePipe],
-    providers: [TranslateService,User,Roles]
+    providers: [TranslateService,User,Roles,Company]
 })
 export class Profile extends RestController implements OnInit{
 
