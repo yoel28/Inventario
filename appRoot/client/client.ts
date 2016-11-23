@@ -222,9 +222,6 @@ export class Client extends BasicConfiguration implements OnInit {
             let key =that.typeCompany.ruleObject.key;
             that.externalList[key]={};
             that.externalList[key] = response.json();
-            if(that.tables)
-                that.tables.externalList=that.externalList;
-
         }
         this.httputils.doGet("/search"+this.typeCompany.endpoint,successCallback,this.error);
 
