@@ -9,7 +9,7 @@ declare var Table2Excel:any;
 export abstract class  BasicConfiguration extends RestController{
 
     public permissions:any={};
-    private prefix="";
+    public prefix="";
     public title:string="";
 
     public viewOptions:any={};
