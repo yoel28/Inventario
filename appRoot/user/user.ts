@@ -202,7 +202,9 @@ export class User extends BasicConfiguration implements OnInit{
     {}
 
     initRuleObject()
-    {}
+    {
+        this.permissions['move']=this.myglobal.existsPermission(this.prefix+'_MOVE');
+    }
 
     ngOnInit(){
 
