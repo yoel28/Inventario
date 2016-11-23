@@ -12,8 +12,8 @@ import { Router} from '@angular/router-deprecated';
 declare var SystemJS:any;
 @Component({
     selector: 'type-company',
-    templateUrl: SystemJS.map.app+'/typeProduct/index.html',
-    styleUrls: [SystemJS.map.app+'/typeProduct/style.css'],
+    templateUrl: SystemJS.map.app+'/utils/viewBase/index.html',
+    styleUrls: [SystemJS.map.app+'/utils/viewBase/style.css'],
     directives: [Tables,Save],
     pipes: [TranslatePipe],
     providers: [TranslateService]

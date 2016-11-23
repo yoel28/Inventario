@@ -12,8 +12,8 @@ import { Router} from '@angular/router-deprecated';
 declare var SystemJS:any;
 @Component({
     selector: 'roles',
-    templateUrl: SystemJS.map.app+'/roles/index.html',
-    styleUrls: [SystemJS.map.app+'/roles/style.css'],
+    templateUrl: SystemJS.map.app+'/utils/viewBase/index.html',
+    styleUrls: [SystemJS.map.app+'/utils/viewBase/style.css'],
     directives: [Tables,Save],
     pipes: [TranslatePipe],
     providers: [TranslateService]
@@ -87,7 +87,7 @@ export class Roles extends BasicConfiguration implements OnInit {
 
     initOptions() {
 
-        this.viewOptions["title"] = 'Marca de roles';
+        this.viewOptions["title"] = 'Roles';
 
         this.viewOptions["button"].push({
             'title':'Agregar',
