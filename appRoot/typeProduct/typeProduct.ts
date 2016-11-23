@@ -103,6 +103,7 @@ export class TypeProduct extends BasicConfiguration implements OnInit {
         this.paramsSearch['title']="Tipo Producto";
         this.paramsSearch['idModal']="searchProducto";
         this.paramsSearch['placeholder']="Ingrese el producto";
+        this.paramsSearch['field']="tipoProducto";
     }
 
     

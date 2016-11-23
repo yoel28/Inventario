@@ -106,6 +106,7 @@ export class ModelProduct extends BasicConfiguration implements OnInit {
         this.paramsSearch['title']="Modelo Producto";
         this.paramsSearch['idModal']="searchModelProducto";
         this.paramsSearch['placeholder']="Ingrese el modelo de producto";
+        this.paramsSearch['field']="modelo";
     }
     
     ngOnInit() {

@@ -101,6 +101,7 @@ export class BrandProduct extends BasicConfiguration implements OnInit {
         this.paramsSearch['title']="Marcas";
         this.paramsSearch['idModal']="searchMarcas";
         this.paramsSearch['placeholder']="Ingrese la marca";
+        this.paramsSearch['field']="marca";
     }
 
 

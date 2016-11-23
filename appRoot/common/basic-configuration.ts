@@ -126,7 +126,8 @@ export abstract class  BasicConfiguration extends RestController{
                 },
             },
             'where':'',
-            'imageGuest':'/assets/img/image-guest.png'
+            'imageGuest':'/assets/img/image-guest.png',
+            'field':'anyField'
         };
     }
     
