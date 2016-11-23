@@ -25,7 +25,7 @@
 
                             <div *ngIf="rulesDetails.image" class="col-lg-3 col-centered">
                                 <figure>
-                                    <img class="img-circle"  src="{{data.detailsSearh[image] || '/img/user.png' }}">
+                                    <img class="img-circle"  [attr.src]="data.detailsSearh['image'] || '/img/user.png'">
                                 </figure>
                             </div>
 
