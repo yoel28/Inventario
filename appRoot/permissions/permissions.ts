@@ -12,7 +12,7 @@ import { Router} from '@angular/router-deprecated';
 declare var SystemJS:any;
 @Component({
     selector: 'permissions',
-    templateUrl: SystemJS.map.app+'/permissions/index.html',
+    templateUrl: SystemJS.map.app+'/utils/viewBase/index.html',
     styleUrls: [SystemJS.map.app+'/permissions/style.css'],
     directives: [Tables,Save],
     pipes: [TranslatePipe],
