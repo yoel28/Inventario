@@ -11,8 +11,8 @@ import { Router} from '@angular/router-deprecated';
 declare var SystemJS:any;
 @Component({
     selector: 'infos',
-    templateUrl: SystemJS.map.app+'/info/index.html',
-    styleUrls: [SystemJS.map.app+'/info/style.css'],
+    templateUrl: SystemJS.map.app+'/utils/viewBase/index.html',
+    styleUrls: [SystemJS.map.app+'/utils/viewBase/style.css'],
     directives: [Tables,Save],
     pipes: [TranslatePipe],
     providers: [TranslateService]
