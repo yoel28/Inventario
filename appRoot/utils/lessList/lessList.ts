@@ -153,9 +153,17 @@ export class LessList extends RestController implements OnInit {
     getDataSearch(data,object){
         if(data.id){
             let json = {};
-            json[object.key] = data.id;
-            let body = JSON.stringify(json);
-            this.httputils.onUpdate(this.externalEndPoint + data.id, body, this.dataSelect)
+            if(object.key == 'account' /*&& object.permissions.move*/)
+            {
+                json['newAccount'] = data.id;
+                this.httputils.onUpdate('/move/'+this.dataSelect.id,JSON.stringify(json), this.dataSelect)
+            }
+            else
+            {
+                json[object.key] = data.id;
+                this.httputils.onUpdate(this.externalEndPoint + data.id, JSON.stringify(json), this.dataSelect)
+
+            }
         }
     }
     
