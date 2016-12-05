@@ -8,11 +8,13 @@ import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {Save} from "../utils/save/save";
 import {BasicConfiguration} from "../common/basic-configuration";
 import {TypeCompany} from "../typeCompany/typeCompany";
+import { Router} from '@angular/router-deprecated';
+
 declare var SystemJS:any;
 @Component({
     selector: 'client',
-    templateUrl: SystemJS.map.app+'/client/index.html',
-    styleUrls: [SystemJS.map.app+'/client/style.css'],
+    templateUrl: SystemJS.map.app+'/utils/viewBase/index.html',
+    styleUrls: [SystemJS.map.app+'/utils/viewBase/style.css'],
     directives: [Tables,Save],
     pipes: [TranslatePipe],
     providers: [TranslateService,TypeCompany]
@@ -27,8 +29,8 @@ export class Client extends BasicConfiguration implements OnInit {
 
 
 
-    constructor(public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService, public typeCompany:TypeCompany) {
-        super("CI","/clientes/",http, toastr,myglobal,translate);
+    constructor(public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService, public typeCompany:TypeCompany,public router:Router) {
+        super("CI","/clientes/",http, toastr,myglobal,translate,router);
 
 
         this.typeCompany.externalRules();
@@ -220,9 +222,6 @@ export class Client extends BasicConfiguration implements OnInit {
             let key =that.typeCompany.ruleObject.key;
             that.externalList[key]={};
             that.externalList[key] = response.json();
-            if(that.tables)
-                that.tables.externalList=that.externalList;
-
         }
         this.httputils.doGet("/search"+this.typeCompany.endpoint,successCallback,this.error);
 
@@ -253,21 +252,6 @@ export class Client extends BasicConfiguration implements OnInit {
                     'required':'El campo es obligatorio'
                 },
             }
-        }
-    }
-
-    @ViewChild(Tables)
-    tables:Tables;
-    asignData(data) {
-        if(this.dataList.page && this.dataList.page.length>1)
-        {
-            this.dataList.list.pop();
-        }
-        this.dataList.list.unshift(data);
-
-        if(this.tables )
-        {
-            Object.assign(this.tables.dataList,this.dataList);
         }
     }
 

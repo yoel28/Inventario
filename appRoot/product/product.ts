@@ -1,7 +1,6 @@
-import {Component, OnInit,ViewChild,ReflectiveInjector,Inject} from "@angular/core";
+import {Component, OnInit,ViewChild,Inject} from "@angular/core";
 import {Http} from "@angular/http";
 import {ToastsManager} from "ng2-toastr/ng2-toastr";
-import {RestController} from "../common/restController";
 import {globalService} from "../common/globalService";
 import {Tables} from "../utils/tables/tables";
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
@@ -10,11 +9,13 @@ import {TypeProduct} from "../typeProduct/typeProduct";
 import {BrandProduct} from "../brandProduct/brand";
 import {ModelProduct} from "../modelProduct/modelProduct";
 import {BasicConfiguration} from "../common/basic-configuration";
+import { Router} from '@angular/router-deprecated';
+
 declare var SystemJS:any;
 @Component({
     selector: 'products',
-    templateUrl: SystemJS.map.app+'/product/index.html',
-    styleUrls: [SystemJS.map.app+'/product/style.css'],
+    templateUrl: SystemJS.map.app+'/utils/viewBase/index.html',
+    styleUrls: [SystemJS.map.app+'/utils/viewBase/style.css'],
     directives: [Tables,Save],
     pipes: [TranslatePipe],
     providers: [TranslateService,TypeProduct,BrandProduct,ModelProduct]
@@ -31,17 +32,15 @@ export class Product extends BasicConfiguration implements OnInit {
     public rulesSave:any={}
 
 
-    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,  @Inject(TypeProduct) public typesProduct,@Inject(BrandProduct) public brandProduct, @Inject(ModelProduct) public modelProduct) {
+    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public router:Router,  @Inject(TypeProduct) public typesProduct,@Inject(BrandProduct) public brandProduct, @Inject(ModelProduct) public modelProduct) {
 
-        super("PRO","/productos/",http, toastr,myglobal,translate);
+        super("PRO","/productos/",http, toastr,myglobal,translate,router);
 
         //Search para los objetos en el momento de hacer un Save
         typesProduct.externalRules();
         brandProduct.externalRules();
         modelProduct.externalRules();
-
-
-    
+        
     }
 
 
@@ -238,23 +237,4 @@ export class Product extends BasicConfiguration implements OnInit {
     {
 
     }
-    
-    
-    @ViewChild(Tables)
-    tables:Tables;
-    asignData(data) {
-        if(this.dataList.page && this.dataList.page.length>1)
-        {
-            this.dataList.list.pop();
-        }
-        this.dataList.list.unshift(data);
-        
-        if(this.tables )
-        {
-            Object.assign(this.tables.dataList,this.dataList);
-        }
-    }
-
-
-
 }

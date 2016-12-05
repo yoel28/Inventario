@@ -88,3 +88,14 @@ body.no-menu .content-wrapper, body.no-menu .main-footer {
 .padding-error{
   padding: 5px;
 }
+.btn.flotando-redondo {
+  position: fixed;
+  z-index: 2000;
+  bottom: 6%;
+  right: 1.5%;
+  -webkit-border-radius: 30px !important;
+  -moz-border-radius: 30px !important;
+  border-radius: 30px !important;
+  padding-top: 9px;
+  padding-bottom: 9px;
+}

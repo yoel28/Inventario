@@ -8,6 +8,8 @@ import {BasicConfiguration} from "../../common/basic-configuration";
 import {Datepicker} from "../../common/xeditable";
 import {Control,ControlGroup,FormBuilder,Validators} from "@angular/common";
 import {Reports} from "../../utils/reports/report";
+import { Router} from '@angular/router-deprecated';
+
 
 declare var SystemJS:any;
 declare var moment:any;
@@ -38,8 +40,8 @@ export class OfficeSupplier extends BasicConfiguration implements OnInit {
     };
 
 
-    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public _formBuilder: FormBuilder) {
-        super("RE_OF_SU","/inventario/historico/proveedor/despacho",http, toastr,myglobal,translate);
+    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public router:Router,public _formBuilder: FormBuilder) {
+        super("RE_OF_SU","/inventario/historico/proveedor/despacho",http, toastr,myglobal,translate,router);
 
     }
 

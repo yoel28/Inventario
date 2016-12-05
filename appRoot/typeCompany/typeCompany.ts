@@ -7,12 +7,13 @@ import {Tables} from "../utils/tables/tables";
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {Save} from "../utils/save/save";
 import {BasicConfiguration} from "../common/basic-configuration";
+import { Router} from '@angular/router-deprecated';
 
 declare var SystemJS:any;
 @Component({
     selector: 'type-company',
-    templateUrl: SystemJS.map.app+'/typeProduct/index.html',
-    styleUrls: [SystemJS.map.app+'/typeProduct/style.css'],
+    templateUrl: SystemJS.map.app+'/utils/viewBase/index.html',
+    styleUrls: [SystemJS.map.app+'/utils/viewBase/style.css'],
     directives: [Tables,Save],
     pipes: [TranslatePipe],
     providers: [TranslateService]
@@ -24,9 +25,9 @@ export class TypeCompany extends BasicConfiguration implements OnInit {
     public paramsTable:any={};
 
 
-    constructor(public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
+    constructor(public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService,public router:Router) {
 
-        super("TIP_COM","/type/company/",http, toastr,myglobal,translate);
+        super("TIP_COM","/type/company/",http, toastr,myglobal,translate,router);
 
     }
 
@@ -165,23 +166,4 @@ export class TypeCompany extends BasicConfiguration implements OnInit {
         this.loadData();
 
     }
-
-
-
-
-    @ViewChild(Tables)
-    tables:Tables;
-    asignData(data) {
-        if(this.dataList.page && this.dataList.page.length>1)
-        {
-            this.dataList.list.pop();
-        }
-        this.dataList.list.unshift(data);
-
-        if(this.tables )
-        {
-            Object.assign(this.tables.dataList,this.dataList);
-        }
-    }
-
 }

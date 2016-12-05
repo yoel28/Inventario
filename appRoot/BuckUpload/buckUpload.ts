@@ -7,6 +7,7 @@ import {Http} from "@angular/http";
 import {UploadFile} from "../utils/uploadFile/uploadFile";
 import {BasicConfiguration} from "../common/basic-configuration";
 import {TranslateService} from "ng2-translate/ng2-translate";
+import { Router} from '@angular/router-deprecated';
 
 
 declare var jQuery:any;
@@ -27,9 +28,9 @@ export class BuckUpload extends BasicConfiguration implements OnInit
     public endPoint ="";
 
 
-    constructor( public http:Http, public toastr:ToastsManager, public myglobal:globalService,public translate:TranslateService) {
+    constructor( public http:Http, public toastr:ToastsManager, public myglobal:globalService,public translate:TranslateService,public router:Router) {
 
-        super("BUCK_PRO","/upload/masivo/",http, toastr,myglobal,translate);
+        super("BUCK_PRO","/upload/masivo/",http, toastr,myglobal,translate,router);
         
     }
 

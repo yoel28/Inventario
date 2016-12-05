@@ -7,11 +7,13 @@ import {Tables} from "../utils/tables/tables";
 import {Save} from "../utils/save/save";
 import {TranslatePipe, TranslateService} from "ng2-translate/ng2-translate";
 import {BasicConfiguration} from "../common/basic-configuration";
+import { Router} from '@angular/router-deprecated';
+
 declare var SystemJS:any;
 @Component({
     selector: 'location_product',
-    templateUrl: SystemJS.map.app+'/location/index.html',
-    styleUrls: [SystemJS.map.app+'/location/style.css'],
+    templateUrl: SystemJS.map.app+'/utils/viewBase/index.html',
+    styleUrls: [SystemJS.map.app+'/utils/viewBase/style.css'],
     pipes: [TranslatePipe],
     directives: [Tables,Save]
 })
@@ -22,8 +24,8 @@ export class Location_product extends BasicConfiguration implements OnInit {
     public paramsTable:any={};
 
     
-    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService) {
-        super("LO","/ubicaciones/",http, toastr,myglobal,translate);
+    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public router:Router) {
+        super("LO","/ubicaciones/",http, toastr,myglobal,translate,router);
     
     }
 
@@ -262,24 +264,4 @@ export class Location_product extends BasicConfiguration implements OnInit {
         this.initSaveRules();
         
     }
-    
-
-    
-    @ViewChild(Tables)
-    tables:Tables;
-    asignData(data) {
-        if(this.dataList.page && this.dataList.page.length>1)
-        {
-            this.dataList.list.pop();
-        }
-        this.dataList.list.unshift(data);
-
-        if(this.tables )
-        {
-            Object.assign(this.tables.dataList,this.dataList);
-        }
-    }
-    
-    
-
 }

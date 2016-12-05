@@ -6,11 +6,13 @@ import {Tables} from "../utils/tables/tables";
 import {TranslateService, TranslatePipe} from 'ng2-translate/ng2-translate';
 import {Save} from "../utils/save/save";
 import {BasicConfiguration} from "../common/basic-configuration";
+import { Router} from '@angular/router-deprecated';
+
 declare var SystemJS:any;
 @Component({
     selector: 'event',
-    templateUrl: SystemJS.map.app+'/event/index.html',
-    styleUrls: [SystemJS.map.app+'/event/style.css'],
+    templateUrl: SystemJS.map.app+'/utils/viewBase/index.html',
+    styleUrls: [SystemJS.map.app+'/utils/viewBase/style.css'],
     directives: [Tables,Save],
     pipes: [TranslatePipe],
     providers: [TranslateService]
@@ -22,8 +24,8 @@ export class Event extends BasicConfiguration implements OnInit {
     public paramsTable:any = {};
 
 
-    constructor(public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
-        super("EVENT", "/events/", http, toastr, myglobal, translate);
+    constructor(public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService,public router:Router) {
+        super("EVENT", "/events/", http, toastr, myglobal, translate,router);
     }
 
     initRules() {
@@ -239,26 +241,6 @@ export class Event extends BasicConfiguration implements OnInit {
             }
         }
     }
-
-    @ViewChild(Tables)
-    tables:Tables;
-    asignData(data) {
-        if(this.dataList.page && this.dataList.page.length>1)
-        {
-            this.dataList.list.pop();
-        }
-        this.dataList.list.unshift(data);
-
-        if(this.tables )
-        {
-            Object.assign(this.tables.dataList,this.dataList);
-        }
-
-        this.dataList.count++;
-    }
-
-
-
 }
 
 

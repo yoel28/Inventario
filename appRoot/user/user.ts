@@ -9,6 +9,8 @@ import {Card} from "../utils/card/card";
 import {LessList} from "../utils/lessList/lessList";
 import {BasicConfiguration} from "../common/basic-configuration";
 import {Roles} from "../roles/roles";
+import { Router} from '@angular/router-deprecated';
+import {Company} from "../company/company";
 
 declare var SystemJS:any;
 
@@ -17,7 +19,7 @@ declare var SystemJS:any;
     templateUrl: SystemJS.map.app+'/user/index.html',
     styleUrls: [SystemJS.map.app+'/user/style.css'],
     pipes: [TranslatePipe],
-    providers: [TranslateService,Roles],
+    providers: [TranslateService,Roles,Company],
     directives:[Save,Card,LessList]
 })
 @Injectable()
@@ -26,10 +28,11 @@ export class User extends BasicConfiguration implements OnInit{
 
     public externalList:any={};
 
-    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService, public  roles:Roles) {
-        super("US","/users/",http, toastr,myglobal,translate);
+    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public router:Router, public  roles:Roles,public  company:Company) {
+        super("US","/users/",http, toastr,myglobal,translate,router);
 
         this.roles.externalRules();
+        this.company.externalRules();
 
     }
 
@@ -150,6 +153,7 @@ export class User extends BasicConfiguration implements OnInit{
 
         };
 
+        this.rules["account"] = this.company.ruleObject;
 
         this.rules["roles"] = this.roles.ruleObject;
         this.rules["roles"].visible =true;
@@ -168,6 +172,7 @@ export class User extends BasicConfiguration implements OnInit{
         this.rulesSave = Object.assign({},this.rules);
         delete this.rulesSave['roles'];
         delete this.rulesSave['enabled'];
+        delete this.rulesSave['account'];
         delete this.rulesSave['id'];
 
     }
@@ -197,7 +202,9 @@ export class User extends BasicConfiguration implements OnInit{
     {}
 
     initRuleObject()
-    {}
+    {
+        this.permissions['move']=this.myglobal.existsPermission(this.prefix+'_MOVE');
+    }
 
     ngOnInit(){
 

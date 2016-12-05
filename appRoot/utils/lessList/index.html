@@ -25,7 +25,7 @@
 
                             <div *ngIf="rulesDetails.image" class="col-lg-3 col-centered">
                                 <figure>
-                                    <img class="img-circle"  src="{{data.detailsSearh[image] || '/img/user.png' }}">
+                                    <img class="img-circle"  [attr.src]="data.detailsSearh['image'] || '/img/user.png'">
                                 </figure>
                             </div>
 
@@ -33,16 +33,25 @@
 
                                 <label *ngFor="let key of getKeysText(data)" class="col-centered col-lg-12"><strong class="text-bold">{{rulesDetails[key].title}}:</strong>
                                     <a  x-editable  [disabled]="!rulesDetails[key].update "  [endpoint]="externalEndPoint" [function]="onEditable" [data]="data.detailsSearh" [rules]="rulesDetails" [field]="key"></a>
+                                </label>
 
-
-                                    <!--label>{{data.detailsSearh[key]}}</label-->
+                                <label *ngFor="let object of getFieldObjectText()" class="col-centered col-lg-12">
+                                    <strong class="text-bold">{{object.title}}:</strong>
+                                    <span *ngFor="let display of object.display.keys">{{display.pre}}&nbsp;{{data.detailsSearh[display.key]}}&nbsp;{{display.post}}</span>
+                                    <button class="btn btn-box-tool"
+                                            *ngIf="object.permissions.search" data-toggle="modal"
+                                            [attr.data-target]="'#'+object.paramsSearch.idModal"
+                                            (click)="dataSelect=data.detailsSearh"
+                                    >
+                                        <i class="fa fa-search text-blue"></i>
+                                    </button>
                                 </label>
 
                             </div>
                             <div class="col-lg-3">
                                 <div class="col-lg-12">
 
-                                    <button *ngFor="let keyArray of getKeysArray(data)" data-toggle="modal"  data-target='#modalArray'
+                                    <button *ngFor="let keyArray of getKeysArray(data)" data-toggle="modal"  data-target="#modalArray"
                                              class="btn " type="button" (click)="DataArraySelect(keyArray,data)">
                                         {{rulesDetails[keyArray].buttonTitle}}
                                     </button>
@@ -156,4 +165,8 @@
 
         </div>
     </div>
+</div>
+
+<div *ngFor="let object of getFieldObjectText()">
+    <search *ngIf="object.permissions.search" [params]="object.paramsSearch" (result)="getDataSearch($event,object)" ></search>
 </div>

@@ -3,7 +3,6 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">{{viewOptions.title | translate }}</h3>
-
                 <div class="pull-right noprint" *ngIf="viewOptions['button']">
                     <button *ngFor="let buttom of viewOptions['button']"
                             class="{{buttom.class}}" type="button" data-toggle="modal"
@@ -14,10 +13,8 @@
                 </div>
             </div>
             <div *ngIf="permissions.list"  class="box-body">
-                <div >
-
-                    <tables [dataList]="dataList" [rules]="rules" [params]="paramsTable" [rulesFilter]="rulesSave" [rulesSearch]="rulesSearch" [externalSave]="externalSave"></tables>
-
+                <div>
+                    <tables [dataList]="dataList || {}" [rules]="rules || {}" [rulesFilter]="rulesSave || {}" [params]="paramsTable || {}" [rulesSearch]="rulesSearch || {}" [externalSave]="externalSave || {}" [externalList]="externalList || {}"></tables>
                 </div>
                 <div *ngIf="dataList && dataList.count == 0">
                     <div class="alert alert-warning alert-dismissable">

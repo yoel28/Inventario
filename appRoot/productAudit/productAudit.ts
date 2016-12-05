@@ -7,6 +7,7 @@ import {Http} from "@angular/http";
 import {UploadFile} from "../utils/uploadFile/uploadFile";
 import {BasicConfiguration} from "../common/basic-configuration";
 import {TranslateService} from "ng2-translate/ng2-translate";
+import { Router} from '@angular/router-deprecated';
 
 
 declare var jQuery:any;
@@ -23,9 +24,9 @@ declare var Blob:any;
 export class ProductAudit extends BasicConfiguration implements OnInit
 {
 
-    constructor( public http:Http, public toastr:ToastsManager, public myglobal:globalService,public translate:TranslateService) {
+    constructor( public http:Http, public toastr:ToastsManager, public myglobal:globalService,public translate:TranslateService,public router:Router) {
 
-        super("UAD_PRO","/upload/auditoria/",http, toastr,myglobal,translate);
+        super("UAD_PRO","/upload/auditoria/",http, toastr,myglobal,translate,router);
 
     }
 

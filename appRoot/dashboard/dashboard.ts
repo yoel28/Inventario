@@ -63,7 +63,7 @@ export class Dashboard extends BasicConfiguration implements OnInit {
     
     
     constructor(public router:Router, http:Http, public _formBuilder:FormBuilder, public toastr:ToastsManager, public myglobal:globalService,public translate: TranslateService) {
-        super("DASH","",http, toastr,myglobal,translate);
+        super("DASH","",http, toastr,myglobal,translate,router);
 
     }
 

@@ -39,7 +39,7 @@
     &nbsp;
 </div>
 
-<div class="pull-right noprint" *ngIf="!params.disableExport">
+<div class="pull-right noprint" *ngIf="!params.disableExport && dataList && dataList.count > 0">
     <i (click)="export('print')" class="btn fa fa-print fa-lg" title="Imprimir"></i>
     <i (click)="export('xls')" class="btn fa fa-file-excel-o fa-lg" title="Exportar"></i>
 </div>
@@ -175,6 +175,9 @@
                     </button>
                     <button *ngIf="MaxPager()>5" (click)="loadData(MaxPager())" type="button" class="btn btn-default">
                         &#62;&#62;
+                    </button>
+                    <button type="button" class="btn btn-default" (click)="getLoadDataAll([],null,null,0,1000,null,null,null)">
+                        <i class="fa fa-list fa-lg"></i>
                     </button>
                 </div>
             </td>

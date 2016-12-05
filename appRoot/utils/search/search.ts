@@ -34,6 +34,7 @@ export class Search extends RestController{
     }
     ngOnInit(){
         this.initForm();
+        this.max=5;
 
     }
     initForm(){

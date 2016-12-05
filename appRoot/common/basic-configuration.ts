@@ -3,12 +3,13 @@ import {ToastsManager} from "ng2-toastr/ng2-toastr";
 import {globalService} from "../common/globalService";
 import {TranslateService} from "ng2-translate/ng2-translate";
 import {RestController} from "./restController";
+import { Router} from '@angular/router-deprecated';
 
 declare var Table2Excel:any;
 export abstract class  BasicConfiguration extends RestController{
 
     public permissions:any={};
-    private prefix="";
+    public prefix="";
     public title:string="";
 
     public viewOptions:any={};
@@ -19,7 +20,7 @@ export abstract class  BasicConfiguration extends RestController{
     public ruleObject:any={};
     
     
-    constructor(prefix,endpoint,public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService) {
+    constructor(prefix,endpoint,public http:Http, public toastr:ToastsManager, public myglobal:globalService, public translate:TranslateService,public router:Router) {
         super(http, toastr);
         
         this.setEndpoint(endpoint);
@@ -105,7 +106,7 @@ export abstract class  BasicConfiguration extends RestController{
         this.permissions['print']=this.myglobal.existsPermission(this.prefix+'_PRINT');
         this.permissions['visible']=true; //this.myglobal.existsPermission(this.prefix+'_VISIBLE');
         this.permissions['audit']=this.myglobal.existsPermission(this.prefix+'_AUD');
-        this.permissions['visible']=true;//this.myglobal.existsPermission(this.prefix+'_VISIBLE');
+        this.permissions['search']=this.myglobal.existsPermission(this.prefix+'_SEARCH');
     }
 
 
@@ -125,7 +126,8 @@ export abstract class  BasicConfiguration extends RestController{
                 },
             },
             'where':'',
-            'imageGuest':'/assets/img/image-guest.png'
+            'imageGuest':'/assets/img/image-guest.png',
+            'field':'anyField'
         };
     }
     
@@ -192,9 +194,17 @@ export abstract class  BasicConfiguration extends RestController{
     getObjectKeys(data){
         return Object.keys(data);
     }
-
-
-
-    
-   
+    goOperation(event){
+        if(event)
+            event.preventDefault();
+        let link = ['Operation', {}];
+        this.router.navigate(link);
+    }
+    asignData(data) {
+        this.dataList.count++;
+        this.dataList.list.unshift(data);
+        if(this.dataList.page && this.dataList.page.length>1) {
+            this.dataList.list.pop();
+        }
+    }
 }

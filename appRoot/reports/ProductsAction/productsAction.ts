@@ -9,7 +9,7 @@ import {Datepicker, Xeditable} from "../../common/xeditable";
 import {Control,ControlGroup,FormBuilder,Validators} from "@angular/common";
 import {Reports} from "../../utils/reports/report";
 import {Select2} from "../../common/multiSelect";
-
+import { Router} from '@angular/router-deprecated';
 
 declare var moment:any;
 declare var SystemJS:any;
@@ -40,8 +40,8 @@ export class ProductsAction extends BasicConfiguration implements OnInit {
 
 
 
-    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public _formBuilder: FormBuilder) {
-        super("RE_PRO_AC","/inventario/historico/producto/dia",http, toastr,myglobal,translate);
+    constructor(public http: Http, public toastr: ToastsManager, public myglobal: globalService,public translate: TranslateService,public router:Router,public _formBuilder: FormBuilder) {
+        super("RE_PRO_AC","/inventario/historico/producto/dia",http, toastr,myglobal,translate,router);
 
     }
 
