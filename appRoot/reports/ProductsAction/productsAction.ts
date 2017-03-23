@@ -50,7 +50,7 @@ export class ProductsAction extends BasicConfiguration implements OnInit {
 
 
     initOptions() {
-        this.viewOptions["title"] = 'Productos por accion';
+        this.viewOptions["title"] = 'Movimiento por productos';
         this.viewOptions["groupOptions"] = [{'title':'Dia','value':false,'key':'dia'},{'title':'Mes','value':false,'key':'mes'},{'title':'Año','value':false,'key':'year'}];
         this.viewOptions["listTypeTitle"] = "Tipo de accion";
         this.viewOptions["multiselect"] = 
