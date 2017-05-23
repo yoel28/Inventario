@@ -31,8 +31,28 @@
 
                             <div  class="col-lg-4 col-centered">
 
-                                <label *ngFor="let key of getKeysText(data)" class="col-centered col-lg-12"><strong class="text-bold">{{rulesDetails[key].title}}:</strong>
-                                    <a  x-editable  [disabled]="!rulesDetails[key].update "  [endpoint]="externalEndPoint" [function]="onEditable" [data]="data.detailsSearh" [rules]="rulesDetails" [field]="key"></a>
+                                <label *ngFor="let key of getKeysText(data)" class="col-centered col-lg-12">
+                                    <strong class="text-bold">{{rulesDetails[key].title}}:</strong>
+                                    <template [ngIf]="_fnIsType(key,'text','textarea','number')" >
+                                        <a  x-editable  [disabled]="!rulesDetails[key].update "  [endpoint]="externalEndPoint" [function]="onEditable" [data]="data.detailsSearh" [rules]="rulesDetails" [field]="key"></a>
+                                    </template>
+                                    <template [ngIf]="_fnIsType(key,'boolean')">
+                                        <button  *ngIf="key =='enabled'"
+                                                 class="btn"
+                                                 [class.btn-green]="data.detailsSearh[key]"
+                                                 [class.btn-red]="!data.detailsSearh[key]"
+                                                 (click)="onLock(key,data.detailsSearh)">
+                                            {{data.detailsSearh[key]?rulesDetails[key].states[0]:rulesDetails[key].states[1]}}
+                                        </button>
+                                        <button  *ngIf="key !='enabled'"
+                                                 class="btn"
+                                                 [class.btn-green]="data.detailsSearh[key]"
+                                                 [class.btn-red]="!data.detailsSearh[key]"
+                                                 (click)="onPatch(key,data.detailsSearh)">
+                                            {{data.detailsSearh[key]?rulesDetails[key].states[0]:rulesDetails[key].states[1]}}
+                                        </button>
+
+                                    </template>
                                 </label>
 
                                 <label *ngFor="let object of getFieldObjectText()" class="col-centered col-lg-12">
