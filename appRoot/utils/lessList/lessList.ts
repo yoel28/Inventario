@@ -43,6 +43,10 @@ export class LessList extends RestController implements OnInit {
 
     }
 
+    private _fnIsType(key:string,...list: string[]): boolean {
+        return list.indexOf(this.rulesDetails[key].type) >= 0;
+    }
+
     searchDetalles(data) {
 
         if(!data.detailsSearh)
@@ -72,7 +76,7 @@ export class LessList extends RestController implements OnInit {
         let data = [];
         let that = this;
         Object.keys(that.rulesDetails).forEach((key)=> {
-            if(item.detailsSearh[key] && key != 'image' && that.rulesDetails[key].type !='array')
+            if(item.detailsSearh[key]!=null && key != 'image' && that.rulesDetails[key].type !='array')
             data.push(key)
         });
         return data;
@@ -165,6 +169,18 @@ export class LessList extends RestController implements OnInit {
 
             }
         }
+    }
+    onPatch(field,data,value?){
+        let json = {};
+        json[field] = value?value:!data[field];
+        let body = JSON.stringify(json);
+        return (this.httputils.onUpdate(this.externalEndPoint + data.id, body, data, this.error));
+    }
+    onLock(field,data){
+        let json = {};
+        json[field] = !data[field];
+        let body = JSON.stringify(json);
+        return (this.httputils.onUpdate("/lock"+this.externalEndPoint + data.id, body, data, this.error));
     }
     
 }
