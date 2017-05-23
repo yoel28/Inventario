@@ -155,12 +155,29 @@ export class User extends BasicConfiguration implements OnInit{
 
         this.rules["account"] = this.company.ruleObject;
 
+        this.rules["accountLocked"] = {
+            "update": this.permissions['update'],
+            "visible": true,
+            'icon':'fa fa-list',
+            "type": "boolean",
+            'states':["Sin verificar","Verificada"],
+            "key": "accountLocked",
+            "title": "Cuenta",
+            "placeholder": "Estado de cuenta",
+            'msg':{
+                'errors':{
+                    'required':'El campo es obligatorio',
+                },
+            }
+        };
+
         this.rules["roles"] = this.roles.ruleObject;
         this.rules["roles"].visible =true;
         this.rules["roles"].type="array";
         this.rules["roles"].buttonTitle="Mostrar roles";
 
         this.rules['detail'] = tempRules['detail'];
+        this.rules['enabled'] = tempRules['enabled'];
     }
 
     initSaveRules() {
@@ -172,6 +189,7 @@ export class User extends BasicConfiguration implements OnInit{
         this.rulesSave = Object.assign({},this.rules);
         delete this.rulesSave['roles'];
         delete this.rulesSave['enabled'];
+        delete this.rulesSave['accountLocked'];
         delete this.rulesSave['account'];
         delete this.rulesSave['id'];
 
