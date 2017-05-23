@@ -163,7 +163,8 @@ export class Reports extends RestController implements OnInit {
 
         this.paramsFilter.filtertExtra = [];
 
-        
+        if(this.viewOptions.filterAuto)
+            this.setFecha(this.viewOptions.filterAuto);
     }
 
 

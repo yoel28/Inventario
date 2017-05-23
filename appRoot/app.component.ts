@@ -104,8 +104,8 @@ export class AppComponent extends RestController implements OnInit{
 
   constructor(public router: Router,http: Http,public myglobal:globalService,public toastr: ToastsManager,public info:Info) {
     
-      super(http)
-      let url="http://pescadorj:8080";
+      super(http);
+      let url="http://34.197.179.37:8080";
       localStorage.setItem('urlAPI',url+'/api');
       localStorage.setItem('url',url);
 
